@@ -1,8 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="project_testModelStoreContainer" CdmEntityContainer="project_testEntities">
-    <EntitySetMapping Name="tblAreas">
-      <EntityTypeMapping TypeName="project_testModel.tblArea">
+  <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_project">
+    <EntitySetMapping Name="stakeholders">
+      <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
+        <MappingFragment StoreEntitySet="stakeholders">
+          <ScalarProperty Name="stakeholder_id" ColumnName="stakeholder_id" />
+          <ScalarProperty Name="full_name" ColumnName="full_name" />
+          <ScalarProperty Name="stakeholder_email" ColumnName="stakeholder_email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="notifications" ColumnName="notifications" />
+          <ScalarProperty Name="chat" ColumnName="chat" />
+          <ScalarProperty Name="stakeholder_name" ColumnName="stakeholder_name" />
+          <ScalarProperty Name="approved" ColumnName="approved" />
+          <ScalarProperty Name="approvel_date" ColumnName="approvel_date" />
+          <ScalarProperty Name="stakeholder_type" ColumnName="stakeholder_type" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="igroup190_test1Model.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblArea">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblArea">
         <MappingFragment StoreEntitySet="tblArea">
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
@@ -10,8 +38,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblAskForHelps">
-      <EntityTypeMapping TypeName="project_testModel.tblAskForHelp">
+    <EntitySetMapping Name="tblAskForHelp">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblAskForHelp">
         <MappingFragment StoreEntitySet="tblAskForHelp">
           <ScalarProperty Name="requastNumber" ColumnName="requastNumber" />
           <ScalarProperty Name="details" ColumnName="details" />
@@ -26,37 +54,29 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tblComments">
-      <EntityTypeMapping TypeName="project_testModel.tblComment">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblComments">
         <MappingFragment StoreEntitySet="tblComments">
           <ScalarProperty Name="commentNumber" ColumnName="commentNumber" />
           <ScalarProperty Name="eventNumber" ColumnName="eventNumber" />
           <ScalarProperty Name="details" ColumnName="details" />
           <ScalarProperty Name="comment_date" ColumnName="comment_date" />
           <ScalarProperty Name="comment_time" ColumnName="comment_time" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tblConversations">
-      <EntityTypeMapping TypeName="project_testModel.tblConversation">
-        <MappingFragment StoreEntitySet="tblConversation">
-          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
-          <ScalarProperty Name="User_one" ColumnName="User_one" />
-          <ScalarProperty Name="User_two" ColumnName="User_two" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="travelerId" ColumnName="travelerId" />
+          <ScalarProperty Name="stackholderId" ColumnName="stackholderId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tblCountries">
-      <EntityTypeMapping TypeName="project_testModel.tblCountry">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblCountries">
         <MappingFragment StoreEntitySet="tblCountries">
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="country_name" ColumnName="country_name" />
+          <ScalarProperty Name="country_continent" ColumnName="country_continent" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tblEvents">
-      <EntityTypeMapping TypeName="project_testModel.tblEvent">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblEvents">
         <MappingFragment StoreEntitySet="tblEvents">
           <ScalarProperty Name="eventNumber" ColumnName="eventNumber" />
           <ScalarProperty Name="details" ColumnName="details" />
@@ -66,7 +86,8 @@
           <ScalarProperty Name="longitude" ColumnName="longitude" />
           <ScalarProperty Name="event_status" ColumnName="event_status" />
           <ScalarProperty Name="picture" ColumnName="picture" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="travelerId" ColumnName="travelerId" />
+          <ScalarProperty Name="stackholderId" ColumnName="stackholderId" />
           <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
@@ -74,7 +95,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tblLocations">
-      <EntityTypeMapping TypeName="project_testModel.tblLocation">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblLocations">
         <MappingFragment StoreEntitySet="tblLocations">
           <ScalarProperty Name="locationNumber" ColumnName="locationNumber" />
           <ScalarProperty Name="travelerId" ColumnName="travelerId" />
@@ -84,57 +105,59 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblStakeholders">
-      <EntityTypeMapping TypeName="project_testModel.tblStakeholder">
-        <MappingFragment StoreEntitySet="tblStakeholders">
-          <ScalarProperty Name="stakeholdersId" ColumnName="stakeholdersId" />
-          <ScalarProperty Name="approved" ColumnName="approved" />
-          <ScalarProperty Name="approvelDate" ColumnName="approvelDate" />
-          <ScalarProperty Name="stakeholderType" ColumnName="stakeholderType" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tblTraveleres">
-      <EntityTypeMapping TypeName="project_testModel.tblTravelere">
-        <MappingFragment StoreEntitySet="tblTraveleres">
-          <ScalarProperty Name="travelerId" ColumnName="travelerId" />
-          <ScalarProperty Name="insurence_company" ColumnName="insurence_company" />
-          <ScalarProperty Name="location" ColumnName="location" />
-          <ScalarProperty Name="birthday" ColumnName="birthday" />
-          <ScalarProperty Name="gender" ColumnName="gender" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tblTypes">
-      <EntityTypeMapping TypeName="project_testModel.tblType">
+    <EntitySetMapping Name="tblType">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblType">
         <MappingFragment StoreEntitySet="tblType">
           <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
           <ScalarProperty Name="typeName" ColumnName="typeName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblUsers">
-      <EntityTypeMapping TypeName="project_testModel.tblUser">
-        <MappingFragment StoreEntitySet="tblUsers">
-          <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="email" ColumnName="email" />
+    <EntitySetMapping Name="traveleres">
+      <EntityTypeMapping TypeName="igroup190_test1Model.traveleres">
+        <MappingFragment StoreEntitySet="traveleres">
+          <ScalarProperty Name="traveler_id" ColumnName="traveler_id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="travler_email" ColumnName="travler_email" />
           <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="chat" ColumnName="chat" />
           <ScalarProperty Name="notifications" ColumnName="notifications" />
+          <ScalarProperty Name="insurence_company" ColumnName="insurence_company" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="save_location" ColumnName="save_location" />
+          <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="firstName" ColumnName="firstName" />
-          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="chat" ColumnName="chat" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="tblinsuredBy" TypeName="project_testModel.tblinsuredBy" StoreEntitySet="tblinsuredBy">
-      <EndProperty Name="tblTraveleres">
-        <ScalarProperty Name="travelerId" ColumnName="travelerId" />
+    <EntitySetMapping Name="tblConversationTravelers">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTravelers">
+        <MappingFragment StoreEntitySet="tblConversationTravelers">
+          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+          <ScalarProperty Name="User_one" ColumnName="User_one" />
+          <ScalarProperty Name="User_two" ColumnName="User_two" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblConversationTravelerStack">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTravelerStack">
+        <MappingFragment StoreEntitySet="tblConversationTravelerStack">
+          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+          <ScalarProperty Name="User_one" ColumnName="User_one" />
+          <ScalarProperty Name="User_two" ColumnName="User_two" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="tblinsuredBy" TypeName="igroup190_test1Model.tblinsuredBy" StoreEntitySet="tblinsuredBy">
+      <EndProperty Name="stakeholders">
+        <ScalarProperty Name="stakeholder_id" ColumnName="stakeholdersId" />
       </EndProperty>
-      <EndProperty Name="tblStakeholders">
-        <ScalarProperty Name="stakeholdersId" ColumnName="stakeholdersId" />
+      <EndProperty Name="traveleres">
+        <ScalarProperty Name="traveler_id" ColumnName="travelerId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
