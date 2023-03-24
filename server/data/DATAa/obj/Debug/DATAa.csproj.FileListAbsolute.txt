@@ -45,3 +45,15 @@ C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\DATAa\bi
 C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\DATAa\bin\Debug\EntityFramework.xml
 C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\DATAa\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\DATAa\obj\Debug\DATAa.csproj.CopyComplete
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\DATAa.dll.config
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\DATAa.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\DATAa.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\EntityFramework.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\EntityFramework.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\obj\Debug\DATAa.csproj.AssemblyReference.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\obj\Debug\DATAa.csproj.CoreCompileInputs.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\obj\Debug\DATAa.csproj.CopyComplete
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\obj\Debug\DATAa.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\DATAa\obj\Debug\DATAa.pdb

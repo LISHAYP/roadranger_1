@@ -374,3 +374,7 @@ C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\WebAppli
 C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\WebApplication1\bin\Antlr3.Runtime.pdb
 C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\USER\OneDrive\שולחן העבודה\roadranger_1\server\data\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\WebApplication1\obj\Debug\WebApplication1.csproj.AssemblyReference.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\WebApplication1\obj\Debug\WebApplication1.pdb
