@@ -11,11 +11,11 @@ namespace WebApplication1.Controllers
    
     public class TravelerController : ApiController
     {
-        project_testEntities db = new project_testEntities();
+       igroup190_project db = new igroup190_project();
         // GET: api/Traveler
-        public IEnumerable<tblTravelere> Get()
+        public IEnumerable<traveleres> Get()
         {
-            List<tblTravelere> travelers = db.tblTraveleres.ToList();
+            List<traveleres> travelers = db.traveleres.ToList();
             return travelers;
         }
 
