@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,8 @@ namespace WebApplication1.Controllers
             try
             {
                 // create a new traveler user
-                travelere newTraveler = new travelere
+
+                db.traveleres.Add((travelere)new travelere
                 {
                     first_name = value.first_name,
                     last_name = value.last_name,
@@ -45,9 +46,7 @@ namespace WebApplication1.Controllers
                     location = value.location,
                     save_location = value.save_location
 
-                };
-
-                db.traveleres.Add(newTraveler);
+                });
                 db.SaveChanges();
                 return Ok("Traveler created successfully.");
             }
@@ -73,4 +72,3 @@ namespace WebApplication1.Controllers
         }
     }
 }
-
