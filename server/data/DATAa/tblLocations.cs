@@ -12,14 +12,14 @@ namespace DATAa
     using System;
     using System.Collections.Generic;
     
-    public partial class tblConversationTravelerStack
+    public partial class tblLocations
     {
-        public int ChatId { get; set; }
-        public int User_one { get; set; }
-        public int User_two { get; set; }
-        public byte[] created_at { get; set; }
+        public int locationNumber { get; set; }
+        public int travelerId { get; set; }
+        public System.DateTime dateAndTime { get; set; }
+        public decimal latitude { get; set; }
+        public decimal longitude { get; set; }
     
-        public virtual stakeholders stakeholders { get; set; }
         public virtual traveleres traveleres { get; set; }
     }
 }
