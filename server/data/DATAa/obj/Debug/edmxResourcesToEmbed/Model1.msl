@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="project_testModelStoreContainer" CdmEntityContainer="project_testEntities">
+    <EntitySetMapping Name="tblAreas">
+      <EntityTypeMapping TypeName="project_testModel.tblArea">
+        <MappingFragment StoreEntitySet="tblArea">
+          <ScalarProperty Name="country_number" ColumnName="country_number" />
+          <ScalarProperty Name="area_number" ColumnName="area_number" />
+          <ScalarProperty Name="area_name" ColumnName="area_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblAskForHelps">
+      <EntityTypeMapping TypeName="project_testModel.tblAskForHelp">
+        <MappingFragment StoreEntitySet="tblAskForHelp">
+          <ScalarProperty Name="requastNumber" ColumnName="requastNumber" />
+          <ScalarProperty Name="details" ColumnName="details" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
+          <ScalarProperty Name="country_number" ColumnName="country_number" />
+          <ScalarProperty Name="area_number" ColumnName="area_number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblComments">
+      <EntityTypeMapping TypeName="project_testModel.tblComment">
+        <MappingFragment StoreEntitySet="tblComments">
+          <ScalarProperty Name="commentNumber" ColumnName="commentNumber" />
+          <ScalarProperty Name="eventNumber" ColumnName="eventNumber" />
+          <ScalarProperty Name="details" ColumnName="details" />
+          <ScalarProperty Name="comment_date" ColumnName="comment_date" />
+          <ScalarProperty Name="comment_time" ColumnName="comment_time" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblConversations">
+      <EntityTypeMapping TypeName="project_testModel.tblConversation">
+        <MappingFragment StoreEntitySet="tblConversation">
+          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+          <ScalarProperty Name="User_one" ColumnName="User_one" />
+          <ScalarProperty Name="User_two" ColumnName="User_two" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCountries">
+      <EntityTypeMapping TypeName="project_testModel.tblCountry">
+        <MappingFragment StoreEntitySet="tblCountries">
+          <ScalarProperty Name="country_number" ColumnName="country_number" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblEvents">
+      <EntityTypeMapping TypeName="project_testModel.tblEvent">
+        <MappingFragment StoreEntitySet="tblEvents">
+          <ScalarProperty Name="eventNumber" ColumnName="eventNumber" />
+          <ScalarProperty Name="details" ColumnName="details" />
+          <ScalarProperty Name="event_date" ColumnName="event_date" />
+          <ScalarProperty Name="event_time" ColumnName="event_time" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="event_status" ColumnName="event_status" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
+          <ScalarProperty Name="country_number" ColumnName="country_number" />
+          <ScalarProperty Name="area_number" ColumnName="area_number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblLocations">
+      <EntityTypeMapping TypeName="project_testModel.tblLocation">
+        <MappingFragment StoreEntitySet="tblLocations">
+          <ScalarProperty Name="locationNumber" ColumnName="locationNumber" />
+          <ScalarProperty Name="travelerId" ColumnName="travelerId" />
+          <ScalarProperty Name="dateAndTime" ColumnName="dateAndTime" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblStakeholders">
+      <EntityTypeMapping TypeName="project_testModel.tblStakeholder">
+        <MappingFragment StoreEntitySet="tblStakeholders">
+          <ScalarProperty Name="stakeholdersId" ColumnName="stakeholdersId" />
+          <ScalarProperty Name="approved" ColumnName="approved" />
+          <ScalarProperty Name="approvelDate" ColumnName="approvelDate" />
+          <ScalarProperty Name="stakeholderType" ColumnName="stakeholderType" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTraveleres">
+      <EntityTypeMapping TypeName="project_testModel.tblTravelere">
+        <MappingFragment StoreEntitySet="tblTraveleres">
+          <ScalarProperty Name="travelerId" ColumnName="travelerId" />
+          <ScalarProperty Name="insurence_company" ColumnName="insurence_company" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTypes">
+      <EntityTypeMapping TypeName="project_testModel.tblType">
+        <MappingFragment StoreEntitySet="tblType">
+          <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
+          <ScalarProperty Name="typeName" ColumnName="typeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblUsers">
+      <EntityTypeMapping TypeName="project_testModel.tblUser">
+        <MappingFragment StoreEntitySet="tblUsers">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="chat" ColumnName="chat" />
+          <ScalarProperty Name="notifications" ColumnName="notifications" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="tblinsuredBy" TypeName="project_testModel.tblinsuredBy" StoreEntitySet="tblinsuredBy">
+      <EndProperty Name="tblTraveleres">
+        <ScalarProperty Name="travelerId" ColumnName="travelerId" />
+      </EndProperty>
+      <EndProperty Name="tblStakeholders">
+        <ScalarProperty Name="stakeholdersId" ColumnName="stakeholdersId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,35 @@
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\DATAa.dll.config
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\DATAa.dll
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\DATAa.pdb
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\EntityFramework.dll
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\EntityFramework.xml
+C:\Users\97250\Desktop\react\data\DATAa\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\97250\Desktop\react\data\DATAa\obj\Debug\DATAa.csproj.AssemblyReference.cache
+C:\Users\97250\Desktop\react\data\DATAa\obj\Debug\DATAa.csproj.CoreCompileInputs.cache
+C:\Users\97250\Desktop\react\data\DATAa\obj\Debug\DATAa.csproj.CopyComplete
+C:\Users\97250\Desktop\react\data\DATAa\obj\Debug\DATAa.dll
+C:\Users\97250\Desktop\react\data\DATAa\obj\Debug\DATAa.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\DATAa.dll.config
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\DATAa.dll
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\DATAa.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\EntityFramework.dll
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\EntityFramework.xml
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\obj\Debug\DATAa.csproj.AssemblyReference.cache
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\obj\Debug\DATAa.csproj.CoreCompileInputs.cache
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\obj\Debug\DATAa.csproj.CopyComplete
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\obj\Debug\DATAa.dll
+C:\Users\USER\OneDrive\שולחן העבודה\project_login\data\DATAa\obj\Debug\DATAa.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\DATAa.dll.config
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\DATAa.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\DATAa.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\EntityFramework.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\EntityFramework.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\obj\Debug\DATAa.csproj.AssemblyReference.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\obj\Debug\DATAa.csproj.CoreCompileInputs.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\obj\Debug\DATAa.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\project_login\data\DATAa\obj\Debug\DATAa.pdb
