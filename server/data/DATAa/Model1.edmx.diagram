@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bc5f2f0f0cbb409889330bed6061fe61" Name="Diagram1">
-        <EntityTypeShape EntityType="igroup190_test1Model.stakeholder" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="bc2404ad37424df285609b9999f6b513" Name="Diagram1">
+        <EntityTypeShape EntityType="igroup190_test1Model.stakeholders" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblComment" Width="1.5" PointX="8.25" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblCountry" Width="1.5" PointX="0.75" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblEvent" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblLocation" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblComments" Width="1.5" PointX="8.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblCountries" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblEvents" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblLocations" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblType" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.travelere" Width="1.5" PointX="3" PointY="23.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTraveler" Width="1.5" PointX="5.25" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.traveleres" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelers" Width="1.5" PointX="5.25" PointY="26.625" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="8.25" PointY="14.625" IsExpanded="true" />
         <AssociationConnector Association="igroup190_test1Model.comment_stackholder" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.event_stackholder" ManuallyRouted="false" />

@@ -12,14 +12,12 @@ namespace DATAa
     using System;
     using System.Collections.Generic;
     
-    public partial class tblLocation
+    public partial class sysdiagrams
     {
-        public int locationNumber { get; set; }
-        public int travelerId { get; set; }
-        public System.DateTime dateAndTime { get; set; }
-        public decimal latitude { get; set; }
-        public decimal longitude { get; set; }
-    
-        public virtual travelere travelere { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
