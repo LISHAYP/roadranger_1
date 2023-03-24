@@ -24,7 +24,7 @@ export default function SignIn() {
                 <Text style={styles.text}>Password:</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="***"
+                    placeholder="*******"
                     secureTextEntry={!this.state.showPassword}
                 >
                     {/* <Icon
