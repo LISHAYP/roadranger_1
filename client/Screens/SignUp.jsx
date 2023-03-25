@@ -62,6 +62,7 @@ export default function SignUp() {
           dateOfBirth: isCalendarOpen,
           gender: gender,
           password: password,
+          chat: isEnabledChatMode
         })
       });
 
