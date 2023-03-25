@@ -48,7 +48,7 @@ export default function SignUp() {
     last_name: lastName,
     travler_email: email,
     phone: phone,
-    notification: isEnabledNotification,
+    notifications: isEnabledNotification,
     insurence_company: selectedInsurance,
     location: isEnabledLocation,
     save_location: isEnabledLocation,
@@ -104,7 +104,7 @@ export default function SignUp() {
             </TextInput>
             <Text style={styles.text}>Password:</Text>
             <TextInput style={styles.input}
-              placeholder="****"
+              placeholder="*******"
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}>
