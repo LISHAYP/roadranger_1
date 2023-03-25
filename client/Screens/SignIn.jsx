@@ -7,6 +7,36 @@ import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 
 export default function SignIn() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const traveler = {
+        travler_email: email,
+        password: password
+    }
+
+    const handleLogin = () => {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(traveler),
+        })
+            .then(response =>  response.json())
+            .then(data => {
+                // Handle the response data as needed
+                console.log(email, password)
+                console.log(data);
+                navigation.navigate("Forgot password")
+            })
+            .catch(error => {
+                console.error(error);
+                Alert.alert('Error', 'Failed to sign in. Please try again later.');
+            });
+    };
+
 
     const navigation = useNavigation();
     state = {
@@ -19,11 +49,16 @@ export default function SignIn() {
                 <Image source={RoadRanger} style={styles.RoadRanger} />
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input}
+                    value={email}
+                    onChangeText={text => setEmail(text)}
                     placeholder="User Email">
                 </TextInput>
+                {console.log({ email })}
                 <Text style={styles.text}>Password:</Text>
                 <TextInput
                     style={styles.input}
+                    value={password}
+                    onChangeText={text => setPassword(text)}
                     placeholder="*******"
                     secureTextEntry={!this.state.showPassword}
                 >
@@ -37,15 +72,20 @@ export default function SignIn() {
                         }
                     /> */}
                 </TextInput>
+                {console.log({ password })}
+
 
 
                 <TouchableOpacity onPress={() => {
-                    navigation.navigate("Forgot password")}}>
+                    navigation.navigate("Forgot password")
+                }}>
                     <Text >
-                        Forgot you'r password?
+                        Forgot you're password?
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnLogIn}>
+
+                <TouchableOpacity style={styles.btnLogIn}
+                    onPress={handleLogin}>
                     <Text style={styles.btnText}>
                         Log In
                     </Text>
@@ -58,7 +98,7 @@ export default function SignIn() {
                     <Text style={styles.text1}> Click Here </Text>
 
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', marginTop:150}} onPress={() => {
+                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
                     navigation.navigate("Contact Us");
                 }}>
                     <Icon name="mail-open-outline" size={30} />
@@ -123,8 +163,8 @@ const styles = StyleSheet.create({
     },
     btnSignUp: {
         flexDirection: 'row',
-        marginBottom:20,
-        marginTop:20
+        marginBottom: 20,
+        marginTop: 20
     },
     contact: {
         fontSize: 20,
