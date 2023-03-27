@@ -10,3 +10,15 @@ C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Debug\data.
 C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Debug\data.csproj.CopyComplete
 C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Debug\data.dll
 C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Debug\data.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\data.dll.config
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\data.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\data.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\EntityFramework.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\EntityFramework.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.csproj.AssemblyReference.cache
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.csproj.CoreCompileInputs.cache
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.csproj.CopyComplete
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.pdb
