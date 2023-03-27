@@ -11,6 +11,7 @@ const GradientBackground = ({ children }) => {
 
         style={styles.gradient}
       >
+        // NADA
         {children}
       </LinearGradient>
     </View>

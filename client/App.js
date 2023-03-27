@@ -14,18 +14,18 @@ import ForgotPassword from './Screens/ForgotPassword';
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
-    <AroundYou/>
-    // <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Sign In">
-    //     <Stack.Screen name="Sign In" component={SignIn} />
-    //     <Stack.Screen name="Sign Up" component={SignUp} />
-    //     <Stack.Screen name="Around You" component={AroundYou} />
-    //     <Stack.Screen name="Contact Us" component={ContactUs} />
-    //     <Stack.Screen name="Forgot password" component={ForgotPassword} />
-    //     <Stack.Screen name="Setting" component={Setting} />
+    
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Sign In">
+        <Stack.Screen name="Sign In" component={SignIn} />
+        <Stack.Screen name="Sign Up" component={SignUp} />
+        <Stack.Screen name="Around You" component={AroundYou} />
+        <Stack.Screen name="Contact Us" component={ContactUs} />
+        <Stack.Screen name="Forgot password" component={ForgotPassword} />
+        <Stack.Screen name="Setting" component={Setting} />
 
-    //   </Stack.Navigator> 
-    // </NavigationContainer>
+      </Stack.Navigator> 
+    </NavigationContainer>
   );
 }
 

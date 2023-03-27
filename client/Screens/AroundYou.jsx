@@ -62,17 +62,24 @@ export default function App() {
                         <AntDesign name="close" size={24} color="black" />
                     </TouchableOpacity>
                    
-                    <TouchableOpacity style={styles.option}>
+                    <TouchableOpacity style={styles.option} 
+                    // onPress={() => {navigation.navigate("Setting");   }}
+                    >
                     <Icon name="add-circle-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>New Post</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}>
+                    <Icon name="chatbubble-ellipses-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}>
+                    <Icon name="search-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Search</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}>
+                    <TouchableOpacity style={styles.option}         
+                                onPress={() => {navigation.navigate("Setting");   }}
+>
+                    <Icon name="settings-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
                     </TouchableOpacity>
                 </View>
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
         left: 0,
         width: '80%',
         height: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: '#F0F8FF',
         
         // alignItems: 'center',
         // justifyContent: 'center',
@@ -123,7 +130,7 @@ const styles = StyleSheet.create({
     option:{
         flexDirection: 'row',
         // justifyContent: 'space-between',
-        backgroundColor: '#BFF4BE',
+        backgroundColor: '#8FBC8F',
         width:'100%',
         borderRadius: 30, 
         paddingVertical: 10,
