@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     input: {
-        flexDirection: 'row',
         marginVertical: 20,
         width: "90%",
         fontSize: 20,
