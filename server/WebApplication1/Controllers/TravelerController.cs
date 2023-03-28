@@ -7,18 +7,46 @@ using System.Net.Http;
 using System.Security.Policy;
 using System.Web.Http;
 using data;
+using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
 {
     public class TravelerController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities1 db = new igroup190_test1Entities1();
         // GET: api/Traveler
-        public IEnumerable<travelere> Get()
+        public IEnumerable<TravelerDto> Get()
         {
-            List<travelere> travelereList = db.traveleres.ToList();
-            return travelereList;
+            List<travelere> travelers = db.traveleres.ToList();
+
+            List<TravelerDto> travelerDtos = new List<TravelerDto>();
+
+            foreach (var traveler in travelers)
+            {
+                TravelerDto travelerDto = new TravelerDto
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat
+                };
+
+                travelerDtos.Add(travelerDto);
+            }
+
+            return travelerDtos;
         }
+
+
 
         [HttpPost]
         [Route("api/post/SignUp")]

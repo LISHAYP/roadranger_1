@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 {
     public class CommentController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities1 db = new igroup190_test1Entities1();
 
         // GET: api/Comment
         public IEnumerable<string> Get()
@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
         // POST: api/Comment
         [HttpPost]
         [Route("api/newcomment")]
-        public IHttpActionResult PostComment([FromBody]tblComment value)
+        public IHttpActionResult PostComment([FromBody] tblComment value)
         {
             try
             {
@@ -50,11 +50,11 @@ namespace WebApplication1.Controllers
 
                 return BadRequest(ex.Message);
             }
-           
+
         }
 
         // PUT: api/Comment/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 
