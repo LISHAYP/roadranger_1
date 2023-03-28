@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +12,7 @@ namespace WebApplication1.Controllers
 {
     public class TravelerController : ApiController
     {
-        igroup190_test1Entities db =  new igroup190_test1Entities();    
+        igroup190_test1Entities db = new igroup190_test1Entities();
         // GET: api/Traveler
         public IEnumerable<travelere> Get()
         {
@@ -84,14 +85,50 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/Traveler
-        public void Post([FromBody]string value)
+        public void Post([FromBody] string value)
         {
         }
 
         // PUT: api/Traveler/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("api/put/update/")]
+        //https://localhost:44319/api/put/update?email=Liel@gmail.com
+        public IHttpActionResult PutUpdate(string email, [FromBody] travelere value)
         {
+            try
+            {
+                var traveler = db.traveleres.Where(x => x.travler_email == email).FirstOrDefault();
+
+                if (traveler == null)
+                {
+                    return NotFound();
+                }
+
+                // update the traveler user
+                traveler.first_name = value.first_name;
+                traveler.last_name = value.last_name;
+                traveler.travler_email = value.travler_email;
+                traveler.phone = value.phone;
+                traveler.dateOfBirth = value.dateOfBirth;
+                traveler.gender = value.gender;
+                traveler.insurence_company = value.insurence_company;
+                traveler.notifications = value.notifications;
+                traveler.location = value.location;
+                traveler.save_location = value.save_location;
+                traveler.password = value.password;
+                traveler.chat = value.chat;
+
+                db.Entry(traveler).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok("Traveler updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         // DELETE: api/Traveler/5
         public void Delete(int id)
