@@ -83,7 +83,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("api/post/login")]
-        public IHttpActionResult Post([FromBody] travelere value)
+        public IHttpActionResult Post([FromBody] TravelerDto value)
         {
             var users = db.traveleres.Select(x => new
             {
@@ -121,7 +121,7 @@ namespace WebApplication1.Controllers
         [HttpPut]
         [Route("api/put/update/")]
         //https://localhost:44319/api/put/update?email=Liel@gmail.com
-        public IHttpActionResult PutUpdate(string email, [FromBody] travelere value)
+        public IHttpActionResult PutUpdate(string email, [FromBody] TravelerDto value)
         {
             try
             {

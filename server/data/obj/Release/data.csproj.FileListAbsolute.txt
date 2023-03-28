@@ -10,3 +10,15 @@ C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Release\dat
 C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Release\data.csproj.CopyComplete
 C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Release\data.dll
 C:\Users\97250\Desktop\לישי לימודים\RoadRanger_p\data\obj\Release\data.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\data.dll.config
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\data.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\data.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\EntityFramework.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\EntityFramework.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.csproj.AssemblyReference.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.csproj.CoreCompileInputs.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.csproj.CopyComplete
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.pdb
