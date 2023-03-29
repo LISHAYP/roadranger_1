@@ -10,6 +10,8 @@ import GradientBackground from '../Components/GradientBackground';
 
 
 export default function SignUp() {
+  const teavelEmail = props.route.params.email;
+
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -34,7 +36,7 @@ export default function SignUp() {
   const [isEnabledNotification, setIsEnabledNotification] = useState(false);
   const [selectedGender, setSelectedGender] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
-  const [Travel, setTravel] = useState([])
+  
 
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
@@ -59,32 +61,7 @@ export default function SignUp() {
 //     password: password,
 //     chat: isEnabledChatMode
 //   };
-useEffect(() => {
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
-     
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
-      })
-    })
-      .then(response => {
-        console.log('res=', response);
-        console.log('res.status', response.status);
-        console.log('res.ok', response.ok);
-        return response.json()
-      })
-      .then(
-        (result) => {
-          console.log("fetch  ", result);
-          setTravel(result)
-        
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
 
-  }, []);
 
     return (
       <ScrollView>
