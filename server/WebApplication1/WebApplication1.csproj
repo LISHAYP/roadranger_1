@@ -173,6 +173,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
     <Compile Include="Controllers\TravelerController.cs" />
+    <Compile Include="DTO\AskForHelpDto.cs" />
+    <Compile Include="DTO\CommentDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="Global.asax.cs">
