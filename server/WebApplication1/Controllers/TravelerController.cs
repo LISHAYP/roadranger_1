@@ -85,26 +85,38 @@ namespace WebApplication1.Controllers
         [Route("api/post/login")]
         public IHttpActionResult Post([FromBody] TravelerDto value)
         {
-            var users = db.traveleres.Select(x => new
+            var users = db.traveleres.Where(x => x.travler_email == value.travler_email && x.password == value.password).Select(x => new TravelerDto
             {
-                email = x.travler_email,
-                password = x.password
-            }).ToList();
+                traveler_id = x.traveler_id,
+                travler_email = x.travler_email,
+                password = x.password,
+                first_name = x.first_name,
+                last_name = x.last_name,
+                phone = x.phone,
+                dateOfBirth = x.dateOfBirth,
+                gender = x.gender,
+                insurence_company = x.insurence_company,
+                notifications = x.notifications,
+                location = x.location,
+                save_location = x.save_location,
+                chat = x.chat
+            })
+        .ToList();
             try
             {
-                foreach (var item in users)
+                if (users.Count == 1)
                 {
-                    if (item.email == value.travler_email && item.password == value.password)
-                    {
-                        return Ok("good!");
-                    }
+                    return Ok(users[0]);
+                }
+                else
+                {
+                    return BadRequest("bad");
                 }
             }
             catch
             {
                 return BadRequest("bad");
             }
-            return BadRequest("bad");
         }
         // GET: api/Traveler/5
         public string Get(int id)
