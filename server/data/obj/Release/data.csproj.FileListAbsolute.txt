@@ -22,3 +22,15 @@ C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר ח�
 C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.csproj.CopyComplete
 C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.dll
 C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Release\data.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\data.dll.config
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\data.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\data.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\EntityFramework.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\EntityFramework.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.csproj.AssemblyReference.cache
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.csproj.CoreCompileInputs.cache
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.csproj.CopyComplete
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.pdb
