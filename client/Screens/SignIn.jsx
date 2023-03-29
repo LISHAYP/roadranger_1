@@ -29,7 +29,7 @@ export default function SignIn() {
                 // Handle the response data as needed
                 console.log(email, password)
                 console.log(data);
-                navigation.navigate("Around You",{email})
+                navigation.navigate("Around You",{data})
             })
             .catch(error => {
                 console.error(error);
