@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
 
-export default function SignUp() {
+export default function Setting(props) {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -34,7 +34,6 @@ export default function SignUp() {
   const [isEnabledNotification, setIsEnabledNotification] = useState(false);
   const [selectedGender, setSelectedGender] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
-  const [Travel, setTravel] = useState([])
 
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
@@ -45,87 +44,51 @@ export default function SignUp() {
     setSelectedDate(formattedDate);
     setIsCalendarOpen(false);
   }
-//   const newTraveler = {
-//     first_name: firstName,
-//     last_name: lastName,
-//     travler_email: email,
-//     phone: phone,
-//     notifications: isEnabledNotification,
-//     insurence_company: selectedInsurance,
-//     location: isEnabledLocation,
-//     save_location: isEnabledLocation,
-//     dateOfBirth: selectedDate,
-//     gender:selectedGender ,
-//     password: password,
-//     chat: isEnabledChatMode
-//   };
-useEffect(() => {
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
-     
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
-      })
-    })
-      .then(response => {
-        console.log('res=', response);
-        console.log('res.status', response.status);
-        console.log('res.ok', response.ok);
-        return response.json()
-      })
-      .then(
-        (result) => {
-          console.log("fetch  ", result);
-          setTravel(result)
-        
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
 
-  }, []);
+  const traveler = props.route.params;
+  console.log(traveler);
+
 
     return (
       <ScrollView>
         < GradientBackground>
           <View style={styles.container}>
-            <Image source={RoadRanger} style={styles.RoadRanger} />
-            <Text style={styles.text}>First Name:</Text>
+          <Text style={styles.text}>First Name:</Text>
             <TextInput style={styles.input}
-              value={firstName}
-              onChangeText={(text) => setFirstName(text)}
+              value={traveler.first_name}
+              //onChangeText={(text) => setFirstName(text)}
               placeholder="First Name">
             </TextInput>
             <Text style={styles.text}>Last Name:</Text>
             <TextInput style={styles.input}
-              value={lastName}
-              onChangeText={(text) => setLastName(text)}
+              value={traveler.last_name}
+              //onChangeText={(text) => setLastName(text)}
               placeholder="Last Name">
             </TextInput>
             <Text style={styles.text}>Email:</Text>
             <TextInput style={styles.input}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
+              value={traveler.travler_email}
+             // onChangeText={(text) => setEmail(text)}
               placeholder="User Email">
             </TextInput>
             <Text style={styles.text}>Password:</Text>
             <TextInput style={styles.input}
               placeholder="*******"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}>
+              value={traveler.password}
+              //onChangeText={(text) => setPassword(text)}
+              secureTextEntry={false}>
             </TextInput>
             <Text style={styles.text}>Phone:</Text>
             <TextInput style={styles.input}
               placeholder="Phone"
-              value={phone}
-              onChangeText={(text) => setPhone(text)}
+              value={'0'+traveler.phone.toString()}
+              keyboardType='numeric'
+              //onChangeText={(text) => setPhone(text)}
             >
             </TextInput>
             <Text style={styles.text}>Gender:</Text>
 
-            <Dropdown
+            {/* <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
@@ -134,11 +97,11 @@ useEffect(() => {
               labelField="label"
               valueField="value"
               placeholder={"Select a gender"}
-              value={value}
-              onChange={item => {
-                setSelectedGender(item.value)
-              }} />
-            <Text style={styles.text}>Insurance Company:</Text>
+              value={traveler.gender}
+              // onChange={item => {
+              //   setSelectedGender(item.value)
+              // }} /> */}
+            {/* <Text style={styles.text}>Insurance Company:</Text>
 
             <Dropdown
               style={styles.dropdown}
@@ -152,11 +115,11 @@ useEffect(() => {
               value={value}
               onChange={item => {
                 setSelectedInsurance(item.value)
-            }}
+            }} */}
 
-            />
+            {/* /> */}
             <Text style={styles.text}>Date of Birth:</Text>
-            <View>
+            {/* <View>
               <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
                 <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
                 <Icon style={styles.icon} name="calendar-outline" />
@@ -166,16 +129,16 @@ useEffect(() => {
                   <CalendarPicker onDateChange={handleDateSelect} />
                 </View>
               )}
-            </View>
+            </View> */}
             <View style={styles.row}>
               <Text style={styles.text2}>Location Mode</Text>
               <Switch
                 style={styles.switch}
                 trackColor={{ false: "#767577", true: "#8FBC8F" }}
-                thumbColor={isEnabledLocation ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={traveler.location ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitchLocation}
-                value={isEnabledLocation}
+                value={traveler.location}
               />
             </View>
             <View style={styles.row}>
@@ -183,28 +146,28 @@ useEffect(() => {
               <Switch
                 style={styles.switch}
                 trackColor={{ false: "#767577", true: "#8FBC8F" }}
-                thumbColor={isEnabledNotification ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={traveler.notifications ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleNotification}
-                value={isEnabledNotification}
+                value={traveler.notifications}
               />
-            </View>
-            <View style={styles.row}>
+            </View> 
+             <View style={styles.row}>
               <Text style={styles.text2}>Chat Mode</Text>
               <Switch
                 style={styles.switch}
                 trackColor={{ false: "#767577", true: "#8FBC8F" }}
-                thumbColor={isEnabledChatMode ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={traveler.chat ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitchChatMode}
-                value={isEnabledChatMode}
+                value={traveler.chat}
               />
             </View>
-            <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
+            {/* <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
               <Text style={styles.btnText}>
                 Save
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity>        */}
           </View>
         </GradientBackground>
       </ScrollView >

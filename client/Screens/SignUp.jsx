@@ -113,6 +113,7 @@ export default function SignUp() {
             <TextInput style={styles.input}
               placeholder="Phone"
               value={phone}
+              keyboardType='numeric'
               onChangeText={(text) => setPhone(text)}
             >
             </TextInput>
