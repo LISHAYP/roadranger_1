@@ -44,10 +44,11 @@
     <Property Name="latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
     <Property Name="longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
     <Property Name="picture" Type="varchar" MaxLength="500" />
-    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="traveler_id" Type="int" Nullable="false" />
     <Property Name="serialTypeNumber" Type="int" Nullable="false" />
     <Property Name="country_number" Type="int" Nullable="false" />
     <Property Name="area_number" Type="int" Nullable="false" />
+    <Property Name="stakeholder_id" Type="int" />
   </EntityType>
   <EntityType Name="tblComments">
     <Key>
@@ -62,33 +63,23 @@
     <Property Name="travelerId" Type="int" />
     <Property Name="stackholderId" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'igroup190_test1.dbo.tblConversationTravelers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="tblConversationTravelers">
     <Key>
       <PropertyRef Name="ChatId" />
-      <PropertyRef Name="User_one" />
-      <PropertyRef Name="User_two" />
-      <PropertyRef Name="created_at" />
     </Key>
     <Property Name="ChatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="User_one" Type="int" Nullable="false" />
     <Property Name="User_two" Type="int" Nullable="false" />
-    <Property Name="created_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="created_at" Type="datetime" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'igroup190_test1.dbo.tblConversationTravelerStack' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="tblConversationTravelerStack">
     <Key>
       <PropertyRef Name="ChatId" />
-      <PropertyRef Name="User_one" />
-      <PropertyRef Name="User_two" />
-      <PropertyRef Name="created_at" />
     </Key>
     <Property Name="ChatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="User_one" Type="int" Nullable="false" />
     <Property Name="User_two" Type="int" Nullable="false" />
-    <Property Name="created_at" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="created_at" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="tblCountries">
     <Key>
@@ -260,6 +251,30 @@ warning 6002: The table/view 'igroup190_test1.dbo.tblConversationTravelerStack' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tblAskForHelp_stakeholders">
+    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="0..1" />
+    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="stakeholders">
+        <PropertyRef Name="stakeholder_id" />
+      </Principal>
+      <Dependent Role="tblAskForHelp">
+        <PropertyRef Name="stakeholder_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAskForHelp_traveleres">
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
+    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="traveleres">
+        <PropertyRef Name="traveler_id" />
+      </Principal>
+      <Dependent Role="tblAskForHelp">
+        <PropertyRef Name="traveler_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="single">
     <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
     <End Role="tblEvents1" Type="Self.tblEvents" Multiplicity="0..1" />
@@ -380,58 +395,20 @@ warning 6002: The table/view 'igroup190_test1.dbo.tblConversationTravelerStack' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="user_stackholder">
-    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="1" />
-    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="stakeholders">
-        <PropertyRef Name="stakeholder_id" />
-      </Principal>
-      <Dependent Role="tblAskForHelp">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="user_traveler">
-    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
-    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="traveleres">
-        <PropertyRef Name="traveler_id" />
-      </Principal>
-      <Dependent Role="tblAskForHelp">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="igroup190_test1ModelStoreContainer">
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTravelers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblConversationTravelerStack" EntityType="Self.tblConversationTravelerStack" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblCountries" EntityType="Self.tblCountries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblEvents" EntityType="Self.tblEvents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblinsuredBy" EntityType="Self.tblinsuredBy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblType" EntityType="Self.tblType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="traveleres" EntityType="Self.traveleres" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTravelers" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [tblConversationTravelers].[ChatId] AS [ChatId], 
-    [tblConversationTravelers].[User_one] AS [User_one], 
-    [tblConversationTravelers].[User_two] AS [User_two], 
-    [tblConversationTravelers].[created_at] AS [created_at]
-    FROM [dbo].[tblConversationTravelers] AS [tblConversationTravelers]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="tblConversationTravelerStack" EntityType="Self.tblConversationTravelerStack" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [tblConversationTravelerStack].[ChatId] AS [ChatId], 
-    [tblConversationTravelerStack].[User_one] AS [User_one], 
-    [tblConversationTravelerStack].[User_two] AS [User_two], 
-    [tblConversationTravelerStack].[created_at] AS [created_at]
-    FROM [dbo].[tblConversationTravelerStack] AS [tblConversationTravelerStack]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="comment_event" Association="Self.comment_event">
       <End Role="tblEvents" EntitySet="tblEvents" />
       <End Role="tblComments" EntitySet="tblComments" />
@@ -463,6 +440,14 @@ warning 6002: The table/view 'igroup190_test1.dbo.tblConversationTravelerStack' 
     <AssociationSet Name="event_traveler" Association="Self.event_traveler">
       <End Role="traveleres" EntitySet="traveleres" />
       <End Role="tblEvents" EntitySet="tblEvents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAskForHelp_stakeholders" Association="Self.FK_tblAskForHelp_stakeholders">
+      <End Role="stakeholders" EntitySet="stakeholders" />
+      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAskForHelp_traveleres" Association="Self.FK_tblAskForHelp_traveleres">
+      <End Role="traveleres" EntitySet="traveleres" />
+      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
     </AssociationSet>
     <AssociationSet Name="single" Association="Self.single">
       <End Role="tblEvents" EntitySet="tblEvents" />
@@ -503,14 +488,6 @@ warning 6002: The table/view 'igroup190_test1.dbo.tblConversationTravelerStack' 
     <AssociationSet Name="type_event" Association="Self.type_event">
       <End Role="tblType" EntitySet="tblType" />
       <End Role="tblEvents" EntitySet="tblEvents" />
-    </AssociationSet>
-    <AssociationSet Name="user_stackholder" Association="Self.user_stackholder">
-      <End Role="stakeholders" EntitySet="stakeholders" />
-      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
-    </AssociationSet>
-    <AssociationSet Name="user_traveler" Association="Self.user_traveler">
-      <End Role="traveleres" EntitySet="traveleres" />
-      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -12,14 +12,12 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class tblConversationTraveler
+    public partial class sysdiagrams
     {
-        public int ChatId { get; set; }
-        public int User_one { get; set; }
-        public int User_two { get; set; }
-        public byte[] created_at { get; set; }
-    
-        public virtual travelere travelere { get; set; }
-        public virtual travelere travelere1 { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

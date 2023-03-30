@@ -12,16 +12,16 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class stakeholder
+    public partial class stakeholders
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public stakeholder()
+        public stakeholders()
         {
-            this.tblComments = new HashSet<tblComment>();
-            this.tblEvents = new HashSet<tblEvent>();
-            this.tblConversationTravelerStacks = new HashSet<tblConversationTravelerStack>();
-            this.tblAskForHelps = new HashSet<tblAskForHelp>();
-            this.traveleres = new HashSet<travelere>();
+            this.tblComments = new HashSet<tblComments>();
+            this.tblEvents = new HashSet<tblEvents>();
+            this.tblAskForHelp = new HashSet<tblAskForHelp>();
+            this.tblConversationTravelerStack = new HashSet<tblConversationTravelerStack>();
+            this.traveleres = new HashSet<traveleres>();
         }
     
         public int stakeholder_id { get; set; }
@@ -37,14 +37,14 @@ namespace data
         public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblComment> tblComments { get; set; }
+        public virtual ICollection<tblComments> tblComments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblEvent> tblEvents { get; set; }
+        public virtual ICollection<tblEvents> tblEvents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblConversationTravelerStack> tblConversationTravelerStacks { get; set; }
+        public virtual ICollection<tblAskForHelp> tblAskForHelp { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAskForHelp> tblAskForHelps { get; set; }
+        public virtual ICollection<tblConversationTravelerStack> tblConversationTravelerStack { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<travelere> traveleres { get; set; }
+        public virtual ICollection<traveleres> traveleres { get; set; }
     }
 }

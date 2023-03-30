@@ -12,12 +12,12 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class tblCountry
+    public partial class tblCountries
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblCountry()
+        public tblCountries()
         {
-            this.tblAreas = new HashSet<tblArea>();
+            this.tblArea = new HashSet<tblArea>();
         }
     
         public int country_number { get; set; }
@@ -25,6 +25,6 @@ namespace data
         public string country_continent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblArea> tblAreas { get; set; }
+        public virtual ICollection<tblArea> tblArea { get; set; }
     }
 }

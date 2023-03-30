@@ -12,12 +12,12 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class tblEvent
+    public partial class tblEvents
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblEvent()
+        public tblEvents()
         {
-            this.tblComments = new HashSet<tblComment>();
+            this.tblComments = new HashSet<tblComments>();
         }
     
         public int eventNumber { get; set; }
@@ -34,13 +34,13 @@ namespace data
         public int country_number { get; set; }
         public int area_number { get; set; }
     
-        public virtual stakeholder stakeholder { get; set; }
+        public virtual stakeholders stakeholders { get; set; }
         public virtual tblArea tblArea { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblComment> tblComments { get; set; }
-        public virtual travelere travelere { get; set; }
-        public virtual tblEvent tblEvents1 { get; set; }
-        public virtual tblEvent tblEvent1 { get; set; }
+        public virtual ICollection<tblComments> tblComments { get; set; }
+        public virtual traveleres traveleres { get; set; }
+        public virtual tblEvents tblEvents1 { get; set; }
+        public virtual tblEvents tblEvents2 { get; set; }
         public virtual tblType tblType { get; set; }
     }
 }

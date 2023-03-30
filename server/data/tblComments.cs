@@ -12,7 +12,7 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class tblComment
+    public partial class tblComments
     {
         public int commentNumber { get; set; }
         public int eventNumber { get; set; }
@@ -22,8 +22,8 @@ namespace data
         public Nullable<int> travelerId { get; set; }
         public Nullable<int> stackholderId { get; set; }
     
-        public virtual stakeholder stakeholder { get; set; }
-        public virtual tblEvent tblEvent { get; set; }
-        public virtual travelere travelere { get; set; }
+        public virtual stakeholders stakeholders { get; set; }
+        public virtual tblEvents tblEvents { get; set; }
+        public virtual traveleres traveleres { get; set; }
     }
 }
