@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 {
     public class AskForHelpController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities1 db = new igroup190_test1Entities1();
         // GET: api/AskForHelp
         public IEnumerable<string> Get()
         {
@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         // POST: api/AskForHelp
         [HttpPost]
         [Route("api/askforhelp")]
-        public IHttpActionResult PostAskForHelp([FromBody]tblAskForHelp value)
+        public IHttpActionResult PostAskForHelp([FromBody] tblAskForHelp value)
         {
             try
             {
@@ -51,11 +51,11 @@ namespace WebApplication1.Controllers
 
                 return BadRequest(ex.Message);
             }
-           
+
         }
 
         // PUT: api/AskForHelp/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

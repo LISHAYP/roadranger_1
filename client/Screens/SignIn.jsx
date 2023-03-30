@@ -29,7 +29,7 @@ export default function SignIn() {
                 // Handle the response data as needed
                 console.log(email, password)
                 console.log(data);
-                navigation.navigate("Forgot password")
+                navigation.navigate("Around You",{data})
             })
             .catch(error => {
                 console.error(error);
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     input: {
-        flexDirection: 'row',
         marginVertical: 20,
         width: "90%",
         fontSize: 20,
