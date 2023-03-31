@@ -9,6 +9,8 @@ import GradientBackground from '../Components/GradientBackground';
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginFailed, setLoginFailed] = useState(false);
+
 
     const traveler = {
         travler_email: email,
@@ -16,6 +18,11 @@ export default function SignIn() {
     }
 
     const handleLogin = () => {
+        const traveler = {
+            travler_email: email,
+            password: password
+        };
+
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
             method: 'POST',
             headers: {
@@ -24,19 +31,20 @@ export default function SignIn() {
             },
             body: JSON.stringify(traveler),
         })
-            .then(response =>  response.json())
+            .then(response => response.json())
             .then(data => {
-                // Handle the response data as needed
-                console.log(email, password)
-                console.log(data);
-                navigation.navigate("Around You",{data})
+                if (data.travler_email === email && data.password === password) {
+                    navigation.navigate("Around You", { data });
+                } else {
+                    setLoginFailed(true);
+                    console.log('Error', 'Invalid email or password. Please try again.');
+                }
             })
             .catch(error => {
                 console.error(error);
-                Alert.alert('Error', 'Failed to sign in. Please try again later.');
+                console.log('Error', 'Failed to sign in. Please try again later.');
             });
     };
-
 
     const navigation = useNavigation();
     state = {
@@ -73,16 +81,10 @@ export default function SignIn() {
                     /> */}
                 </TextInput>
                 {console.log({ password })}
+                {loginFailed && (
+                    <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
+                )}
 
-
-
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate("Forgot password")
-                }}>
-                    <Text >
-                        Forgot you're password?
-                    </Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.btnLogIn}
                     onPress={handleLogin}>
@@ -90,7 +92,13 @@ export default function SignIn() {
                         Log In
                     </Text>
                 </TouchableOpacity>
-
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate("Forgot password")
+                }}>
+                    <Text >
+                        Forgot you're password?
+                    </Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.btnSignUp} onPress={() => {
                     navigation.navigate("Sign Up");
                 }}>

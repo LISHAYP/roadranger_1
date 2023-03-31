@@ -24,9 +24,7 @@ export default function ForgotPassword() {
         if (newPassword === confirmNewPassword) {
             setPasswordResetStatus('success');
             setErrorMessage('');
-            // passwords match, handle password reset logic
         } else {
-            // passwords don't match, display error message
             setErrorMessage('Passwords do not match. Please try again.');
             setNewPassword('');
             setConfirmNewPassword('');
