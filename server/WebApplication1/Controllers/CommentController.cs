@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 {
     public class CommentController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities1 db = new igroup190_test1Entities1();
 
         // GET: api/Comment
         public IEnumerable<string> Get()
@@ -33,7 +33,7 @@ namespace WebApplication1.Controllers
             {
                 tblComments NewComment = new tblComments
                 {
-                    commentNumber = value.commentNumber,
+                   
                     eventNumber = value.eventNumber,
                     details = value.details,
                     comment_date = value.comment_date,

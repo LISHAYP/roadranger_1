@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
 {
     public class TravelerController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities1 db = new igroup190_test1Entities1();
         // GET: api/Traveler
         public IEnumerable<TravelerDto> Get()
         {

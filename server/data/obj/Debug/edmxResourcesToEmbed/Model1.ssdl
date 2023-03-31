@@ -53,9 +53,8 @@
   <EntityType Name="tblComments">
     <Key>
       <PropertyRef Name="commentNumber" />
-      <PropertyRef Name="eventNumber" />
     </Key>
-    <Property Name="commentNumber" Type="int" Nullable="false" />
+    <Property Name="commentNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="eventNumber" Type="int" Nullable="false" />
     <Property Name="details" Type="varchar" MaxLength="500" />
     <Property Name="comment_date" Type="date" Nullable="false" />
