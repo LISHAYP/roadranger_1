@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities1">
+  <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities2">
     <EntitySetMapping Name="stakeholders">
       <EntityTypeMapping TypeName="igroup190_test1Model.stakeholder">
         <MappingFragment StoreEntitySet="stakeholders">
@@ -46,10 +46,11 @@
           <ScalarProperty Name="latitude" ColumnName="latitude" />
           <ScalarProperty Name="longitude" ColumnName="longitude" />
           <ScalarProperty Name="picture" ColumnName="picture" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="traveler_id" ColumnName="traveler_id" />
           <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
+          <ScalarProperty Name="stakeholder_id" ColumnName="stakeholder_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -63,6 +64,26 @@
           <ScalarProperty Name="comment_time" ColumnName="comment_time" />
           <ScalarProperty Name="travelerId" ColumnName="travelerId" />
           <ScalarProperty Name="stackholderId" ColumnName="stackholderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblConversationTravelers">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTraveler">
+        <MappingFragment StoreEntitySet="tblConversationTravelers">
+          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+          <ScalarProperty Name="User_one" ColumnName="User_one" />
+          <ScalarProperty Name="User_two" ColumnName="User_two" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblConversationTravelerStacks">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTravelerStack">
+        <MappingFragment StoreEntitySet="tblConversationTravelerStack">
+          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+          <ScalarProperty Name="User_one" ColumnName="User_one" />
+          <ScalarProperty Name="User_two" ColumnName="User_two" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -129,26 +150,6 @@
           <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="chat" ColumnName="chat" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tblConversationTravelers">
-      <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTraveler">
-        <MappingFragment StoreEntitySet="tblConversationTravelers">
-          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
-          <ScalarProperty Name="User_one" ColumnName="User_one" />
-          <ScalarProperty Name="User_two" ColumnName="User_two" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tblConversationTravelerStacks">
-      <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTravelerStack">
-        <MappingFragment StoreEntitySet="tblConversationTravelerStack">
-          <ScalarProperty Name="ChatId" ColumnName="ChatId" />
-          <ScalarProperty Name="User_one" ColumnName="User_one" />
-          <ScalarProperty Name="User_two" ColumnName="User_two" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -19,7 +19,7 @@ namespace data
         public int User_two { get; set; }
         public System.DateTime created_at { get; set; }
     
-        public virtual stakeholders stakeholders { get; set; }
-        public virtual traveleres traveleres { get; set; }
+        public virtual stakeholder stakeholder { get; set; }
+        public virtual travelere travelere { get; set; }
     }
 }

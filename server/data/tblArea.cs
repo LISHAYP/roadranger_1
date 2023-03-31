@@ -17,18 +17,18 @@ namespace data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblArea()
         {
-            this.tblAskForHelp = new HashSet<tblAskForHelp>();
-            this.tblEvents = new HashSet<tblEvents>();
+            this.tblAskForHelps = new HashSet<tblAskForHelp>();
+            this.tblEvents = new HashSet<tblEvent>();
         }
     
         public int country_number { get; set; }
         public int area_number { get; set; }
         public string area_name { get; set; }
     
-        public virtual tblCountries tblCountries { get; set; }
+        public virtual tblCountry tblCountry { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAskForHelp> tblAskForHelp { get; set; }
+        public virtual ICollection<tblAskForHelp> tblAskForHelps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblEvents> tblEvents { get; set; }
+        public virtual ICollection<tblEvent> tblEvents { get; set; }
     }
 }

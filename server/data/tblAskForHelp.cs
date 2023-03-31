@@ -25,9 +25,9 @@ namespace data
         public int area_number { get; set; }
         public Nullable<int> stakeholder_id { get; set; }
     
-        public virtual stakeholders stakeholders { get; set; }
+        public virtual stakeholder stakeholder { get; set; }
         public virtual tblArea tblArea { get; set; }
-        public virtual traveleres traveleres { get; set; }
+        public virtual travelere travelere { get; set; }
         public virtual tblType tblType { get; set; }
     }
 }
