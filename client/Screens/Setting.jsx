@@ -31,11 +31,11 @@ export default function Setting(props) {
   const [value, setValue] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [isEnabledLocation, setIsEnabledLocation] = useState(false);
-  const [isEnabledChatMode, setIsEnabledChatMode] = useState(false);
-  const [isEnabledNotification, setIsEnabledNotification] = useState(false);
-  const [selectedGender, setSelectedGender] = useState(null);
-  const [selectedInsurance, setSelectedInsurance] = useState(null);
+  // const [isEnabledLocation, setIsEnabledLocation] = useState(false);
+  // const [isEnabledChatMode, setIsEnabledChatMode] = useState(false);
+  // const [isEnabledNotification, setIsEnabledNotification] = useState(false);
+  // const [selectedGender, setSelectedGender] = useState(null);
+  // const [selectedInsurance, setSelectedInsurance] = useState(null);
 
 
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
@@ -50,10 +50,6 @@ export default function Setting(props) {
 
   const traveler = props.route.params;
   console.log(traveler);
-
-
-
-
     return (
       <ScrollView>
         < GradientBackground>
@@ -93,7 +89,7 @@ export default function Setting(props) {
             </TextInput>
             <Text style={styles.text}>Gender:</Text>
 
-            {/* <Dropdown
+            <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
@@ -103,10 +99,10 @@ export default function Setting(props) {
               valueField="value"
               placeholder={"Select a gender"}
               value={traveler.gender}
-              // onChange={item => {
-              //   setSelectedGender(item.value)
-              // }} /> */}
-            {/* <Text style={styles.text}>Insurance Company:</Text>
+              onChange={item => {
+                setSelectedGender(item.value)
+              }} />
+            <Text style={styles.text}>Insurance Company:</Text>
 
             <Dropdown
               style={styles.dropdown}
@@ -120,11 +116,11 @@ export default function Setting(props) {
               value={value}
               onChange={item => {
                 setSelectedInsurance(item.value)
-            }} */}
+            }}
 
-            {/* /> */}
+            />
             <Text style={styles.text}>Date of Birth:</Text>
-            {/* <View>
+            <View>
               <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
                 <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
                 <Icon style={styles.icon} name="calendar-outline" />
@@ -134,7 +130,7 @@ export default function Setting(props) {
                   <CalendarPicker onDateChange={handleDateSelect} />
                 </View>
               )}
-            </View> */}
+            </View>
             <View style={styles.row}>
               <Text style={styles.text2}>Location Mode</Text>
               <Switch

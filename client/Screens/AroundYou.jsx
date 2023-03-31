@@ -15,8 +15,7 @@ export default function AroundYou(props) {
     console.log(traveler)
     const teavelEmail = props.route.params.email;
 
-    const [location, setLocation] = useState(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+   
     const [Travels, setTravels] = useState([])
 
     useEffect(() => {
@@ -106,10 +105,11 @@ export default function AroundYou(props) {
                     </View>
 
                     <TouchableOpacity style={styles.option}
-                    // onPress={() => {navigation.navigate("Setting");   }}
-                    >
+                        onPress={() => { navigation.navigate("New event", traveler); }}
+                        >
                         <Icon name="add-circle-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>New Post</Text>
+
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}>
                         <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
@@ -195,6 +195,6 @@ const styles = StyleSheet.create({
     icon: {
         left: 30,
         size: 30,
-        top: 5
+        
     }
 });

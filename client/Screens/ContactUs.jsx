@@ -53,7 +53,13 @@ export default function ContactUs() {
                 />
                 <Text style={styles.text}>Message:</Text>
                 <TextInput style={styles.input1}
-                    placeholder="Write here...">
+                    placeholder="Write here..."
+                    multiline
+                    spellCheck="true"
+                    onSubmitEditing={() => {
+                      //close the keyboard
+                      TextInput.State.blur(TextInput.State.currentlyFocusedInput())
+                    }}>
                 </TextInput>
                 <TouchableOpacity style={styles.btnLogIn}>
                     <Text style={styles.btnText}>
