@@ -14,6 +14,8 @@ export default function AroundYou(props) {
     const traveler = props.route.params.data;
     console.log(traveler)
     const teavelEmail = props.route.params.email;
+
+   
     const [Travels, setTravels] = useState([])
 
     useEffect(() => {
