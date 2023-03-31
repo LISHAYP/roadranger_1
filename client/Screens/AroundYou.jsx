@@ -13,6 +13,11 @@ export default function AroundYou(props) {
 
     const traveler = props.route.params.data;
     console.log(traveler)
+    const teavelEmail = props.route.params.email;
+
+    const [location, setLocation] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [Travels, setTravels] = useState([])
 
     useEffect(() => {
         (async () => {
@@ -20,11 +25,39 @@ export default function AroundYou(props) {
             if (status !== 'granted') {
                 console.log('Permission denied');
             }
-
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
+            handleGet();
         })();
     }, []);
+
+    const handleGet=()=>{
+      
+            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler', {
+             
+              method: 'GET',
+              headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+              })
+            })
+              .then(response => {
+                console.log('res=', response);
+                console.log('res.status', response.status);
+                console.log('res.ok', response.ok);
+                return response.json()
+              })
+              .then(
+                (result) => {
+                  console.log("fetch  ", result);
+                  setTravels(result)        
+                },
+                (error) => {
+                  console.log("err post=", error);
+                
+        
+          }, []);
+    }
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -39,6 +72,7 @@ export default function AroundYou(props) {
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
                 <Icon name="menu" size={30} />
+
 
             </TouchableOpacity>
             {location && location.coords && (

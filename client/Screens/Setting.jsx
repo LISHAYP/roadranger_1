@@ -9,7 +9,9 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
 
+
 export default function Setting(props) {
+  
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -35,6 +37,7 @@ export default function Setting(props) {
   const [selectedGender, setSelectedGender] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
 
+
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
@@ -47,6 +50,8 @@ export default function Setting(props) {
 
   const traveler = props.route.params;
   console.log(traveler);
+
+
 
 
     return (
