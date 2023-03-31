@@ -13,10 +13,10 @@ namespace data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class igroup190_test1Entities1 : DbContext
+    public partial class igroup190_test1Entities2 : DbContext
     {
-        public igroup190_test1Entities1()
-            : base("name=igroup190_test1Entities1")
+        public igroup190_test1Entities2()
+            : base("name=igroup190_test1Entities2")
         {
         }
     
@@ -30,12 +30,12 @@ namespace data
         public virtual DbSet<tblArea> tblAreas { get; set; }
         public virtual DbSet<tblAskForHelp> tblAskForHelps { get; set; }
         public virtual DbSet<tblComment> tblComments { get; set; }
+        public virtual DbSet<tblConversationTraveler> tblConversationTravelers { get; set; }
+        public virtual DbSet<tblConversationTravelerStack> tblConversationTravelerStacks { get; set; }
         public virtual DbSet<tblCountry> tblCountries { get; set; }
         public virtual DbSet<tblEvent> tblEvents { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblType> tblTypes { get; set; }
         public virtual DbSet<travelere> traveleres { get; set; }
-        public virtual DbSet<tblConversationTraveler> tblConversationTravelers { get; set; }
-        public virtual DbSet<tblConversationTravelerStack> tblConversationTravelerStacks { get; set; }
     }
 }

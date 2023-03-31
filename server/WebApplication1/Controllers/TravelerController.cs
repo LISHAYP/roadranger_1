@@ -13,11 +13,11 @@ namespace WebApplication1.Controllers
 {
     public class TravelerController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities2 db = new igroup190_test1Entities2();
         // GET: api/Traveler
         public IEnumerable<TravelerDto> Get()
         {
-            List<traveleres> travelers = db.traveleres.ToList();
+            List<travelere> travelers = db.traveleres.ToList();
 
             List<TravelerDto> travelerDtos = new List<TravelerDto>();
 
@@ -50,12 +50,12 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("api/post/SignUp")]
-        public IHttpActionResult PostSignUp([FromBody] traveleres value)
+        public IHttpActionResult PostSignUp([FromBody] travelere value)
         {
             try
             {
                 // create a new traveler user
-                traveleres newTraveler = new traveleres
+                travelere newTraveler = new travelere
                 {
                     first_name = value.first_name,
                     last_name = value.last_name,

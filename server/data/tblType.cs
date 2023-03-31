@@ -17,16 +17,16 @@ namespace data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblType()
         {
-            this.tblAskForHelp = new HashSet<tblAskForHelp>();
-            this.tblEvents = new HashSet<tblEvents>();
+            this.tblAskForHelps = new HashSet<tblAskForHelp>();
+            this.tblEvents = new HashSet<tblEvent>();
         }
     
         public int serialTypeNumber { get; set; }
         public string typeName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAskForHelp> tblAskForHelp { get; set; }
+        public virtual ICollection<tblAskForHelp> tblAskForHelps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblEvents> tblEvents { get; set; }
+        public virtual ICollection<tblEvent> tblEvents { get; set; }
     }
 }
