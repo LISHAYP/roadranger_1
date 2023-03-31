@@ -12,7 +12,7 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class tblLocation
+    public partial class tblLocations
     {
         public int locationNumber { get; set; }
         public int travelerId { get; set; }
@@ -20,6 +20,6 @@ namespace data
         public decimal latitude { get; set; }
         public decimal longitude { get; set; }
     
-        public virtual travelere travelere { get; set; }
+        public virtual traveleres traveleres { get; set; }
     }
 }

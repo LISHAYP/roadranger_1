@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 {
     public class CommentController : ApiController
     {
-        igroup190_test1Entities1 db = new igroup190_test1Entities1();
+        igroup190_test1Entities db = new igroup190_test1Entities();
 
         // GET: api/Comment
         public IEnumerable<string> Get()
@@ -27,11 +27,11 @@ namespace WebApplication1.Controllers
         // POST: api/Comment
         [HttpPost]
         [Route("api/newcomment")]
-        public IHttpActionResult PostComment([FromBody] tblComment value)
+        public IHttpActionResult PostComment([FromBody] tblComments value)
         {
             try
             {
-                tblComment NewComment = new tblComment
+                tblComments NewComment = new tblComments
                 {
                     commentNumber = value.commentNumber,
                     eventNumber = value.eventNumber,

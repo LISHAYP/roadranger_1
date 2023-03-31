@@ -11,12 +11,12 @@ namespace WebApplication1.Controllers
 {
     public class NewEventController : ApiController
     {
-        igroup190_test1Entities1 db = new igroup190_test1Entities1();
+        igroup190_test1Entities db = new igroup190_test1Entities();
 
         // GET: api/NewEvent
         public IEnumerable<EventDto> Get()
         {
-            List<tblEvent> events = db.tblEvents.ToList();
+            List<tblEvents> events = db.tblEvents.ToList();
             List<EventDto> eventsDto= new List<EventDto>();
 
             foreach (var newevent in events)
@@ -51,11 +51,11 @@ namespace WebApplication1.Controllers
         // POST: api/NewEvent
         [HttpPost]
         [Route("api/post/newevent")]
-        public IHttpActionResult Post([FromBody]tblEvent value)
+        public IHttpActionResult Post([FromBody]tblEvents value)
         {
             try
             {
-                tblEvent NewEvent = new tblEvent
+                tblEvents NewEvent = new tblEvents
                 {
                     details = value.details,
                     event_date = value.event_date,

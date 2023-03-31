@@ -19,14 +19,15 @@ namespace data
         public decimal latitude { get; set; }
         public decimal longitude { get; set; }
         public string picture { get; set; }
-        public int userId { get; set; }
+        public int traveler_id { get; set; }
         public int serialTypeNumber { get; set; }
         public int country_number { get; set; }
         public int area_number { get; set; }
+        public Nullable<int> stakeholder_id { get; set; }
     
-        public virtual stakeholder stakeholder { get; set; }
+        public virtual stakeholders stakeholders { get; set; }
         public virtual tblArea tblArea { get; set; }
+        public virtual traveleres traveleres { get; set; }
         public virtual tblType tblType { get; set; }
-        public virtual travelere travelere { get; set; }
     }
 }

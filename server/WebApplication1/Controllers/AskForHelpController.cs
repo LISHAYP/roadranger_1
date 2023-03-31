@@ -5,12 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using data;
+using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
 {
     public class AskForHelpController : ApiController
     {
-        igroup190_test1Entities1 db = new igroup190_test1Entities1();
+        igroup190_test1Entities db = new igroup190_test1Entities();
         // GET: api/AskForHelp
         public IEnumerable<string> Get()
         {
@@ -30,28 +31,29 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                tblAskForHelp AskForHelp = new tblAskForHelp
+                tblAskForHelp askForHelp = new tblAskForHelp
                 {
-                    requastNumber = value.requastNumber,
                     details = value.details,
-                    latitude = value.latitude,//00.0000
-                    longitude = value.longitude,//-00.0000
+                    latitude = value.latitude,
+                    longitude = value.longitude,
                     picture = value.picture,
-                    userId = value.userId,
+                    traveler_id = value.traveler_id,
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
-                    area_number = value.area_number
+                    area_number = value.area_number,
+                    stakeholder_id = value.stakeholder_id
+
                 };
-                db.tblAskForHelps.Add(AskForHelp);
+
+                db.tblAskForHelp.Add(askForHelp);
                 db.SaveChanges();
+
                 return Ok("New ask for help was created");
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
-
         }
 
         // PUT: api/AskForHelp/5
