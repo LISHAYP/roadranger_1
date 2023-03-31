@@ -7,16 +7,15 @@ namespace WebApplication1.DTO
 {
     public class EventDto
     {
-        public int EventNumber { get; set; }
         public string Details { get; set; }
         public DateTime EventDate { get; set; }
         public TimeSpan EventTime { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
-        public bool? EventStatus { get; set; }
+        public Nullable<bool> EventStatus { get; set; }
         public string Picture { get; set; }
-        public int? TravelerId { get; set; }
-        public int? StackholderId { get; set; }
+        public Nullable<int> TravelerId { get; set; }
+        public Nullable<int> StackholderId { get; set; }
         public int SerialTypeNumber { get; set; }
         public int CountryNumber { get; set; }
         public int AreaNumber { get; set; }
