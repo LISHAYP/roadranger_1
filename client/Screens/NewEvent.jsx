@@ -68,14 +68,14 @@ export default function NewEvent(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newTraveler),
+      body: JSON.stringify(newEvent),
     })
       .then(response => response.json())
       .then(data => {
         // Handle the response data as needed
-        console.log(email, password, selectedGender, selectedInsurance, selectedDate)
         console.log(data);
-        navigation.navigate("Forgot password")
+        console.log({newEvent})
+alert('work')
       })
       .catch(error => {
         console.error(error);
