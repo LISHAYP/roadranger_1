@@ -9,15 +9,20 @@ import { useNavigation } from "@react-navigation/native";
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
+
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
     console.log(traveler)
-    const teavelEmail = props.route.params.email;
 
    
     const [Travels, setTravels] = useState([])
-
+    const getUserLocation = async () => {
+        const userlocation = await Location.getCurrentPositionAsync();
+        setUserLocation(userlocation); // Save user location in state
+console.log("************",userLocation.coords.latitude)
+    };
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -27,8 +32,10 @@ export default function AroundYou(props) {
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
             handleGet();
+            getUserLocation();
         })();
     }, []);
+    
 
     const handleGet=()=>{
       
@@ -41,14 +48,11 @@ export default function AroundYou(props) {
               })
             })
               .then(response => {
-                console.log('res=', response);
-                console.log('res.status', response.status);
-                console.log('res.ok', response.ok);
                 return response.json()
               })
               .then(
                 (result) => {
-                  console.log("fetch  ", result);
+                  //console.log("fetch  ", result);
                   setTravels(result)        
                 },
                 (error) => {
@@ -105,7 +109,10 @@ export default function AroundYou(props) {
                     </View>
 
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("New event", traveler); }}
+                        onPress={() => { navigation.navigate("New event", { 
+                            traveler: traveler, 
+                            userLocation: userLocation 
+                          });  }}
                         >
                         <Icon name="add-circle-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>New Post</Text>
@@ -120,7 +127,7 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>Search</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", traveler); }}
+                        onPress={() => { navigation.navigate("Setting", traveler,location); }}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
