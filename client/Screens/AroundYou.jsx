@@ -14,9 +14,6 @@ export default function AroundYou(props) {
     const traveler = props.route.params.data;
     console.log(traveler)
     const teavelEmail = props.route.params.email;
-
-    const [location, setLocation] = useState(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [Travels, setTravels] = useState([])
 
     useEffect(() => {
