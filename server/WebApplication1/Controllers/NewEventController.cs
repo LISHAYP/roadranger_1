@@ -23,7 +23,6 @@ namespace WebApplication1.Controllers
             {
                 EventDto eventDto = new EventDto
                 {
-                    EventNumber = newevent.eventNumber,
                     Details= newevent.details,
                     EventDate = newevent.event_date,
                     EventTime = newevent.event_time,
@@ -50,12 +49,12 @@ namespace WebApplication1.Controllers
 
         // POST: api/NewEvent
         [HttpPost]
-        [Route("api/post/newevent")]
-        public IHttpActionResult Post([FromBody]tblEvents value)
+        [Route("api/newevent")]
+        public IHttpActionResult PostNewEvent([FromBody] tblEvents value)
         {
             try
             {
-                tblEvents NewEvent = new tblEvents
+                tblEvents newEvent = new tblEvents
                 {
                     details = value.details,
                     event_date = value.event_date,
@@ -69,16 +68,15 @@ namespace WebApplication1.Controllers
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
                     area_number = value.area_number
-
                 };
-                db.tblEvents.Add(NewEvent);
+
+                db.tblEvents.Add(newEvent);
                 db.SaveChanges();
                 return Ok("New event created successfully!");
-
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
