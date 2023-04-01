@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
 
-export default function NewEvent(props) {
+export default function SOS(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
@@ -31,41 +31,38 @@ export default function NewEvent(props) {
   const [countryNumber, setCountryNumber] = useState('1');
   const [areaNumber, setAreaNumber] = useState('1');
 
-  const newEvent = {
+  const newSOS = {
     details: details,
-    event_date: new Date().toISOString().slice(0, 10),
-    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    event_status: eventStatus,
+    // event_date: new Date().toISOString().slice(0, 10),
+    // event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
     picture: picture,
     travelerId: id,
     country_number: countryNumber,
     area_number: areaNumber,
-    stackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     latitude: userLocation.coords.latitude,
     longitude: userLocation.coords.longitude
   };
-  console.log('new',newEvent);
+  console.log('new',newSOS);
 
-  const createEvent = async () => {
-   if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
+  const createSOS = async () => {
+   if (newSOS.details === '' || newSOS.serialTypeNumber === '') {
       alert('Please enter details and type');    
     }
 else{
     // Send a POST request to your backend API with the event data
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/askforhelp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newEvent),
+      body: JSON.stringify(newSOS),
     })
       .then(response => response.json())
       .then(data => {
 
         // Handle the response data as needed
-        console.log(data);
-        console.log({ newEvent })
+        console.log({ newSOS })
         alert('Publish')
       })
       .catch(error => {
@@ -78,10 +75,9 @@ else{
 
   return (
     < GradientBackground>
-
       <ScrollView>
         <View style={styles.container}>
-          <Image source={RoadRanger} style={styles.RoadRanger} />
+          {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -117,7 +113,7 @@ else{
             </Text>
           </TouchableOpacity>
         
-          <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
+          <TouchableOpacity style={styles.btnSave} onPress={createSOS}>
             <Text style={styles.btnText}>
               Publish
             </Text>

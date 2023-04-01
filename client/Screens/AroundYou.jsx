@@ -12,15 +12,16 @@ export default function AroundYou(props) {
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
 
     const navigation = useNavigation();
+
     const traveler = props.route.params.data;
     console.log(traveler)
 
-   
+
     const [Travels, setTravels] = useState([])
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
-console.log("************",userLocation.coords.latitude)
+        console.log("************", userLocation.coords.latitude)
     };
     useEffect(() => {
         (async () => {
@@ -34,31 +35,31 @@ console.log("************",userLocation.coords.latitude)
             getUserLocation();
         })();
     }, []);
-    
 
-    const handleGet=()=>{
-      
-            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler', {
-             
-              method: 'GET',
-              headers: new Headers({
+
+    const handleGet = () => {
+
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler', {
+
+            method: 'GET',
+            headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Accept': 'application/json; charset=UTF-8',
-              })
             })
-              .then(response => {
+        })
+            .then(response => {
                 return response.json()
-              })
-              .then(
+            })
+            .then(
                 (result) => {
-                  //console.log("fetch  ", result);
-                  setTravels(result)        
+                    //console.log("fetch  ", result);
+                    setTravels(result)
                 },
                 (error) => {
-                  console.log("err post=", error);
-                
-        
-          }, []);
+                    console.log("err post=", error);
+
+
+                }, []);
     }
 
     const toggleMenu = () => {
@@ -73,10 +74,15 @@ console.log("************",userLocation.coords.latitude)
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
-                <Icon name="menu" size={30} />
-
+                <Icon name="menu" size={30} color={'white'} top={10} />
+                <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
 
             </TouchableOpacity>
+
+            {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
+                <Text style={styles.sosText}>SOS</Text>
+            </TouchableOpacity> */}
+
             {location && location.coords && (
                 <MapView
                     style={styles.map}
@@ -105,15 +111,30 @@ console.log("************",userLocation.coords.latitude)
                     <View >
                         <Text style={styles.name}>
                             Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
-                           
+
                     </View>
 
+                    <TouchableOpacity style={styles.optionSOS}
+                        onPress={() => {
+                            navigation.navigate("SOS", {
+                                traveler: traveler,
+                                userLocation: userLocation
+                            });
+                        }}
+                    >
+                        <Icon name="help-buoy" size={35} style={styles.icon} />
+                        <Text style={styles.text}>SOS</Text>
+
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("New event", { 
-                            traveler: traveler, 
-                            userLocation: userLocation 
-                          });  }}
-                        >
+                        onPress={() => {
+                            navigation.navigate("New event", {
+                                traveler: traveler,
+                                userLocation: userLocation
+                            });
+                        }}
+                    >
                         <Icon name="add-circle-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>New Post</Text>
 
@@ -127,7 +148,7 @@ console.log("************",userLocation.coords.latitude)
                         <Text style={styles.text}>Search</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", traveler,location); }}
+                        onPress={() => { navigation.navigate("Setting", traveler, location); }}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
@@ -155,15 +176,46 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    hamburger: {
+    sosText: {
+        color: 'white',
+        fontSize: 20, fontWeight: 'bold',
+        alignSelf: 'center',
+        top: 15
+    },
+    sos: {
         position: 'absolute',
-        bottom: 90,
-        left: 40,
+        // bottom: 90,
+        top: 0,
+        right: 30,
         zIndex: 1,
-        borderRadius: 30,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#778899'
+        width: '15%',
+        height: '6%',
+        right: 0,
+        // borderRadius: 30,
+        // paddingVertical: 15,
+        // paddingHorizontal: 20,
+        backgroundColor: '#FF0000'
+
+    },
+    titlename: {
+        color: 'white',
+        width: '100%',
+         top:12,
+         left:70,
+         fontSize:20
+    },
+    hamburger: {
+        flexDirection: 'row',
+        position: 'absolute',
+        width: '100%',
+        height: '6%',
+        top: 0,
+        left: 0,
+        zIndex: 1,
+        // borderRadius: 30,
+        // paddingVertical: 10,
+        // paddingHorizontal: 25,
+        backgroundColor: '#8FBC8F'
 
     },
     menu: {
@@ -183,9 +235,20 @@ const styles = StyleSheet.create({
         top: 80,
         right: 20,
     },
+    optionSOS: {
+        flexDirection: 'row',
+        backgroundColor: '#8FBC8F',
+        width: '100%',
+        borderRadius: 12,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        right: 20,
+        top: 200,
+        marginBottom: 21,
+        backgroundColor: '#FF0000'
+    },
     option: {
         flexDirection: 'row',
-        // justifyContent: 'space-between',
         backgroundColor: '#8FBC8F',
         width: '100%',
         borderRadius: 12,
@@ -202,6 +265,6 @@ const styles = StyleSheet.create({
     icon: {
         left: 30,
         size: 30,
-        
+
     }
 });
