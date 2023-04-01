@@ -15,17 +15,16 @@ export default function NewEvent(props) {
   const navigation = useNavigation();
 
   const type = [
+    //creating type of different eventtypes
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
   ]
 
+  const id = traveler.traveler_id;
   const [value, setValue] = useState(null);
   const [details, setDetails] = useState('');
-  const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
-  const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
-  const id = traveler.traveler_id;
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('1');
@@ -33,8 +32,8 @@ export default function NewEvent(props) {
 
   const newEvent = {
     details: details,
-    event_date: eventDate,
-    event_time: eventTime,
+    event_date: new Date().toISOString().slice(0, 10),
+    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
     event_status: eventStatus,
     picture: picture,
     travelerId: id,
@@ -45,7 +44,6 @@ export default function NewEvent(props) {
     latitude:userLocation.coords.latitude,
     longitude:userLocation.coords.longitude
   };
-  console.log(newEvent);
 
   const createEvent = async () => {
     // Send a POST request to your backend API with the event data
@@ -60,11 +58,11 @@ export default function NewEvent(props) {
       .then(data => {
         // Handle the response data as needed
         console.log(data);
-        navigation.navigate("Forgot password")
+        navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
       })
       .catch(error => {
         console.error(error);
-        alert('Error', 'Failed to sign in. Please try again later.');
+        alert('Error',error);
       });
   }
 
