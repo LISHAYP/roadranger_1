@@ -6,6 +6,8 @@ import AroundYou from './Screens/AroundYou';
 import Setting from './Screens/Setting'
 import ContactUs from './Screens/ContactUs';
 import NewEvent from './Screens/NewEvent';
+import SOS from './Screens/SOS';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -25,7 +27,10 @@ export default function App() {
         <Stack.Screen name="Forgot password" component={ForgotPassword} />
         <Stack.Screen name="Setting" component={Setting} />
         <Stack.Screen name="New event" component={NewEvent} />
+        <Stack.Screen name="SOS" component={SOS} />
+
 <Stack.Screen name="Event Details" component={EventDetails} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
