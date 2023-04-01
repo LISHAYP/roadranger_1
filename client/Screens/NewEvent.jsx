@@ -15,17 +15,18 @@ export default function NewEvent(props) {
   const navigation = useNavigation();
 
   const type = [
+    //creating type of different eventtypes
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
   ]
 
+  const id = traveler.traveler_id;
   const [value, setValue] = useState(null);
   const [details, setDetails] = useState('');
   // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
   // const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
-  const id = traveler.traveler_id;
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('1');
@@ -45,6 +46,7 @@ export default function NewEvent(props) {
     latitude: userLocation.coords.latitude,
     longitude: userLocation.coords.longitude
   };
+
   console.log('new',newEvent);
 
   const createEvent = async () => {
@@ -65,12 +67,16 @@ else{
 
         // Handle the response data as needed
         console.log(data);
+
+        navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
+
         console.log({ newEvent })
         alert('Publish')
+
       })
       .catch(error => {
         console.error(error);
-        alert('Error', 'Failed to sign in. Please try again later.');
+        alert('Error',error);
       });
     }
   }
@@ -94,7 +100,6 @@ else{
               TextInput.State.blur(TextInput.State.currentlyFocusedInput())
             }}>
           </TextInput>
-
           <Text style={styles.text}>Type:</Text>
 
           <Dropdown

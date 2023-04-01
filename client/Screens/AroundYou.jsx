@@ -10,11 +10,10 @@ export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
-
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
-    console.log(traveler)
+
 
 
     const [Travels, setTravels] = useState([])
@@ -39,7 +38,7 @@ export default function AroundYou(props) {
 
     const handleGet = () => {
 
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler', {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
 
             method: 'GET',
             headers: new Headers({
@@ -52,13 +51,12 @@ export default function AroundYou(props) {
             })
             .then(
                 (result) => {
-                    //console.log("fetch  ", result);
-                    setTravels(result)
+
+                    console.log("fetch  ", result);
+                    setEvents(result)
                 },
                 (error) => {
                     console.log("err post=", error);
-
-
                 }, []);
     }
 
@@ -91,8 +89,7 @@ export default function AroundYou(props) {
                         longitude: location.coords.longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
-                    }}
-                >
+                    }}>
                     <Marker
                         coordinate={{
                             latitude: location.coords.latitude,
@@ -101,7 +98,25 @@ export default function AroundYou(props) {
                         title="My Location"
                         description="This is my current location"
                     />
+                    {Events.map(event => (
+                        <Marker
+                            key={event.EventNumber}
+                            coordinate={{
+                                latitude: event.Latitude,
+                                longitude: event.Longitude,
+                            }}
+                            title={event.Details}
+                            description={event.EventTime}
+                            pinColor={event.SerialTypeNumber === 1 ? 'yellow' : 'blue'} // add if statement for pin color
+                            onPress={() => {
+                                navigation.navigate('Event Details', { event });
+                            }}
+                        />
+                       
+                    ))}
+
                 </MapView>
+
             )}
             {isMenuOpen && (
                 <View style={styles.menu}>
