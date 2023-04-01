@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblComment" Width="1.5" PointX="8.25" PointY="19.875" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTraveler" Width="1.5" PointX="5.25" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="5.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="1" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblCountry" Width="1.5" PointX="3.75" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblEvent" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblLocation" Width="1.5" PointX="5.25" PointY="29.875" IsExpanded="true" />

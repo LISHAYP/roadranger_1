@@ -98,13 +98,16 @@ export default function AroundYou(props) {
                             }}
                             title={event.Details}
                             description={event.EventTime}
-    
                             pinColor={event.SerialTypeNumber === 1 ? 'yellow' : 'blue'} // add if statement for pin color
-                            
+                            onPress={() => {
+                                navigation.navigate('Event Details', { event });
+                            }}
                         />
+                       
                     ))}
 
                 </MapView>
+
             )}
             {isMenuOpen && (
                 <View style={styles.menu}>
@@ -114,7 +117,7 @@ export default function AroundYou(props) {
                     <View >
                         <Text style={styles.name}>
                             Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
-                           
+
                     </View>
 
                     <TouchableOpacity style={styles.option}
