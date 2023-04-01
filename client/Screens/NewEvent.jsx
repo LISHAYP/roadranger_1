@@ -23,6 +23,11 @@ export default function NewEvent(props) {
   const id = traveler.traveler_id;
   const [value, setValue] = useState(null);
   const [details, setDetails] = useState('');
+<<<<<<< HEAD
+=======
+  // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
+  // const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
+>>>>>>> orian
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
   const [stackholderId, setStackholderId] = useState('null');
@@ -41,11 +46,19 @@ export default function NewEvent(props) {
     area_number: areaNumber,
     stackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
-    latitude:userLocation.coords.latitude,
-    longitude:userLocation.coords.longitude
+    latitude: userLocation.coords.latitude,
+    longitude: userLocation.coords.longitude
   };
+<<<<<<< HEAD
+=======
+  console.log('new',newEvent);
+>>>>>>> orian
 
   const createEvent = async () => {
+   if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
+      alert('Please enter details and type');    
+    }
+else{
     // Send a POST request to your backend API with the event data
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
       method: 'POST',
@@ -56,14 +69,21 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
+
         // Handle the response data as needed
         console.log(data);
+<<<<<<< HEAD
         navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
+=======
+        console.log({ newEvent })
+        alert('Publish')
+>>>>>>> orian
       })
       .catch(error => {
         console.error(error);
         alert('Error',error);
       });
+    }
   }
 
 
@@ -106,7 +126,7 @@ export default function NewEvent(props) {
               Add Photo
             </Text>
           </TouchableOpacity>
-
+        
           <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
             <Text style={styles.btnText}>
               Publish
