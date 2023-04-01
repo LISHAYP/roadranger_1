@@ -10,19 +10,8 @@ import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
 
 export default function NewEvent(props) {
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission denied');
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      setLatitude(location.coords.latitude);
-      setLongitude(location.coords.longitude);
-      handleGet();
-    })();
-  }, []);
-  const traveler = props.route.params;
+  const traveler = props.route.params.traveler;
+  const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
 
   const type = [
@@ -30,9 +19,18 @@ export default function NewEvent(props) {
     { label: 'Car Accidents', value: '2' },
   ]
 
-
   const [value, setValue] = useState(null);
-  // const [selectedType, setSelectedType] = useState(null);
+  const [details, setDetails] = useState('');
+  const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
+  const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
+  const [eventStatus, setEventStatus] = useState('true');
+  const [picture, setPicture] = useState('#');
+  const id = traveler.traveler_id;
+  const [stackholderId, setStackholderId] = useState('null');
+  const [serialTypeNumber, setSerialTypeNumber] = useState('');
+  const [countryNumber, setCountryNumber] = useState('1');
+  const [areaNumber, setAreaNumber] = useState('1');
+
   const newEvent = {
     details: details,
     event_date: eventDate,
@@ -44,23 +42,11 @@ export default function NewEvent(props) {
     area_number: areaNumber,
     stackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
-    latitude:latitude,
-    longitude:longitude
+    latitude:userLocation.coords.latitude,
+    longitude:userLocation.coords.longitude
   };
+  console.log(newEvent);
 
-  const [details, setDetails] = useState('');
-  const eventDate = `${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()}`;
-  const eventTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [eventStatus, setEventStatus] = useState('true');
-  const [picture, setPicture] = useState('#');
-  const id = traveler.traveler_id;
-  const [stackholderId, setStackholderId] = useState('null');
-  const [serialTypeNumber, setSerialTypeNumber] = useState('');
-  const [countryNumber, setCountryNumber] = useState('1');
-  const [areaNumber, setAreaNumber] = useState('1');
- 
   const createEvent = async () => {
     // Send a POST request to your backend API with the event data
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
