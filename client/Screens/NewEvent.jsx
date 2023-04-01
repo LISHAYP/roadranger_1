@@ -23,11 +23,8 @@ export default function NewEvent(props) {
   const id = traveler.traveler_id;
   const [value, setValue] = useState(null);
   const [details, setDetails] = useState('');
-<<<<<<< HEAD
-=======
   // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
   // const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
->>>>>>> orian
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
   const [stackholderId, setStackholderId] = useState('null');
@@ -49,10 +46,8 @@ export default function NewEvent(props) {
     latitude: userLocation.coords.latitude,
     longitude: userLocation.coords.longitude
   };
-<<<<<<< HEAD
-=======
+
   console.log('new',newEvent);
->>>>>>> orian
 
   const createEvent = async () => {
    if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
@@ -72,12 +67,12 @@ else{
 
         // Handle the response data as needed
         console.log(data);
-<<<<<<< HEAD
+
         navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
-=======
+
         console.log({ newEvent })
         alert('Publish')
->>>>>>> orian
+
       })
       .catch(error => {
         console.error(error);
