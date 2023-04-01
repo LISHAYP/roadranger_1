@@ -21,8 +21,8 @@ export default function NewEvent(props) {
 
   const [value, setValue] = useState(null);
   const [details, setDetails] = useState('');
-  const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
-  const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
+  // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
+  // const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
   const id = traveler.traveler_id;
@@ -33,8 +33,8 @@ export default function NewEvent(props) {
 
   const newEvent = {
     details: details,
-    event_date: eventDate,
-    event_time: eventTime,
+    event_date: new Date().toISOString().slice(0, 10),
+    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
     event_status: eventStatus,
     picture: picture,
     travelerId: id,
@@ -42,12 +42,16 @@ export default function NewEvent(props) {
     area_number: areaNumber,
     stackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
-    latitude:userLocation.coords.latitude,
-    longitude:userLocation.coords.longitude
+    latitude: userLocation.coords.latitude,
+    longitude: userLocation.coords.longitude
   };
-  console.log(newEvent);
+  console.log('new',newEvent);
 
   const createEvent = async () => {
+   if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
+      alert('Please enter details and type');    
+    }
+else{
     // Send a POST request to your backend API with the event data
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
       method: 'POST',
@@ -58,15 +62,17 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
+
         // Handle the response data as needed
         console.log(data);
-        console.log({newEvent})
-alert('work')
+        console.log({ newEvent })
+        alert('Publish')
       })
       .catch(error => {
         console.error(error);
         alert('Error', 'Failed to sign in. Please try again later.');
       });
+    }
   }
 
 
@@ -110,7 +116,7 @@ alert('work')
               Add Photo
             </Text>
           </TouchableOpacity>
-
+        
           <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
             <Text style={styles.btnText}>
               Publish

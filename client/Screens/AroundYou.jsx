@@ -12,7 +12,6 @@ export default function AroundYou(props) {
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
 
     const navigation = useNavigation();
-
     const traveler = props.route.params.data;
     console.log(traveler)
 
@@ -106,6 +105,7 @@ console.log("************",userLocation.coords.latitude)
                     <View >
                         <Text style={styles.name}>
                             Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
+                           
                     </View>
 
                     <TouchableOpacity style={styles.option}
