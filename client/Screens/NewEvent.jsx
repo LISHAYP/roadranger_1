@@ -49,7 +49,7 @@ export default function NewEvent(props) {
 
   const createEvent = async () => {
     // Send a POST request to your backend API with the event data
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -87,7 +87,6 @@ export default function NewEvent(props) {
               TextInput.State.blur(TextInput.State.currentlyFocusedInput())
             }}>
           </TextInput>
-
           <Text style={styles.text}>Type:</Text>
 
           <Dropdown

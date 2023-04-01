@@ -10,18 +10,16 @@ export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
-
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
     console.log(traveler)
 
-   
+
     const [Travels, setTravels] = useState([])
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
-console.log("************",userLocation.coords.latitude)
     };
     useEffect(() => {
         (async () => {
@@ -33,33 +31,35 @@ console.log("************",userLocation.coords.latitude)
             setLocation(location);
             handleGet();
             getUserLocation();
+            console.log("User location:", userLocation); // Log the user location here
+
         })();
     }, []);
-    
 
-    const handleGet=()=>{
-      
-            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler', {
-             
-              method: 'GET',
-              headers: new Headers({
+
+    const handleGet = () => {
+
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler', {
+
+            method: 'GET',
+            headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Accept': 'application/json; charset=UTF-8',
-              })
             })
-              .then(response => {
+        })
+            .then(response => {
                 return response.json()
-              })
-              .then(
+            })
+            .then(
                 (result) => {
-                  //console.log("fetch  ", result);
-                  setTravels(result)        
+                    //console.log("fetch  ", result);
+                    setTravels(result)
                 },
                 (error) => {
-                  console.log("err post=", error);
-                
-        
-          }, []);
+                    console.log("err post=", error);
+
+
+                }, []);
     }
 
     const toggleMenu = () => {
@@ -86,8 +86,7 @@ console.log("************",userLocation.coords.latitude)
                         longitude: location.coords.longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
-                    }}
-                >
+                    }}>
                     <Marker
                         coordinate={{
                             latitude: location.coords.latitude,
@@ -109,11 +108,13 @@ console.log("************",userLocation.coords.latitude)
                     </View>
 
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("New event", { 
-                            traveler: traveler, 
-                            userLocation: userLocation 
-                          });  }}
-                        >
+                        onPress={() => {
+                            navigation.navigate("New event", {
+                                traveler: traveler,
+                                userLocation: userLocation
+                            });
+                        }}
+                    >
                         <Icon name="add-circle-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>New Post</Text>
 
@@ -127,7 +128,7 @@ console.log("************",userLocation.coords.latitude)
                         <Text style={styles.text}>Search</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", traveler,location); }}
+                        onPress={() => { navigation.navigate("Setting", traveler, location); }}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
@@ -202,6 +203,6 @@ const styles = StyleSheet.create({
     icon: {
         left: 30,
         size: 30,
-        
+
     }
 });
