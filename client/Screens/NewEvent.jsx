@@ -21,8 +21,13 @@ export default function NewEvent(props) {
     { label: 'Car Accidents', value: '2' },
   ]
 
+ 
+  const countryObj = {
+    country_name: country,
+  };
+
   const id = traveler.traveler_id;
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('null');
   const [details, setDetails] = useState('');
   // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
   // const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
@@ -44,6 +49,8 @@ export default function NewEvent(props) {
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
+        console.log('-------',countryComponent.long_name)
+        addContry();
         // setContinent(continentComponent.long_name)
 
       })
@@ -51,6 +58,7 @@ export default function NewEvent(props) {
   }, []);
 
   console.log('contry:', { country })
+
   // console.log('continent:', { continent })
 
   const newEvent = {
@@ -71,19 +79,21 @@ export default function NewEvent(props) {
   console.log('new', newEvent);
 
   addContry = () => {
+    console.log('*****',{country})
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(country),
+      body: JSON.stringify(countryObj),
     })
       .then(response => response.json())
       .then(data => {
-        setCountryNumber(data) 
-      console.log('********',{data})}
-        )
+        console.log('********', { data })
+        setCountryNumber(data)
+      }
+      )
       .catch(error => {
         console.error(error);
         console.log('Error');
@@ -96,7 +106,6 @@ export default function NewEvent(props) {
       alert('Please enter details and type');
     }
     else {
-      addContry()
       // Send a POST request to your backend API with the event data
       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
         method: 'POST',
@@ -157,7 +166,7 @@ export default function NewEvent(props) {
             placeholder={"Select type of event"}
             value={selectedSerialType}
             onChange={item => {
-              setSerialTypeNumber(item)
+              setSerialTypeNumber(item.value)
               setSelectedSerialType(item) // Update the selected item state variable
 
             }} />
@@ -294,5 +303,5 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 25,
     backgroundColor: '#144800'
-  },
+  },
 });
