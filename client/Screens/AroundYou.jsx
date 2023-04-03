@@ -38,6 +38,7 @@ export default function AroundYou(props) {
             setLocation(location);
             handleGet();
             getUserLocation();
+            
         })();
     }, []);
 
