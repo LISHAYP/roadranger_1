@@ -64,10 +64,12 @@ else{
       .then(data => {
 
         // Handle the response data as needed
+
         console.log(data);
 
         navigation.navigate('Forgot password'); 
         // Navigate back to the "Around You" screen
+
 
         console.log({ newEvent })
         alert('Publish')

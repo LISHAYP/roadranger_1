@@ -12,11 +12,6 @@ export default function SignIn() {
     const [loginFailed, setLoginFailed] = useState(false);
 
 
-    const traveler = {
-        travler_email: email,
-        password: password
-    }
-
     const handleLogin = () => {
         const traveler = {
             travler_email: email,
