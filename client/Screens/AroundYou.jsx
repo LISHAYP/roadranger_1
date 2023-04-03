@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         left: 30,
-        size: 30,
+        size: 30,
 
-    }
+    }
 });

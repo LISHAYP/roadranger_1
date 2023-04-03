@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 15,
 
-    }
+    }
 });
