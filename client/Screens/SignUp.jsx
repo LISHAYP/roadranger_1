@@ -32,7 +32,9 @@ export default function SignUp() {
   const [isEnabledChatMode, setIsEnabledChatMode] = useState(false);
   const [isEnabledNotification, setIsEnabledNotification] = useState(false);
   const [selectedGender, setSelectedGender] = useState(null);
+  const [genderSelection, setGenderSelection] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
+  const [insuranceSelection, setInsuranceSelection] = useState(null);
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
@@ -127,9 +129,10 @@ export default function SignUp() {
               labelField="label"
               valueField="value"
               placeholder={"Select a gender"}
-              value={value}
+              value={genderSelection}
               onChange={item => {
                 setSelectedGender(item.value)
+                setGenderSelection(item)
               }} />
             <Text style={styles.text}>Insurance Company:</Text>
 
@@ -142,9 +145,10 @@ export default function SignUp() {
               labelField="label"
               valueField="value"
               placeholder={"select an Insurance Company"}
-              value={value}
+              value={insuranceSelection}
               onChange={item => {
                 setSelectedInsurance(item.value)
+                setInsuranceSelection(item)
             }}
 
             />

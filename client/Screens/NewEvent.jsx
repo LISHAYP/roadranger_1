@@ -4,10 +4,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-import { useEffect } from 'react';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
@@ -31,6 +28,7 @@ export default function NewEvent(props) {
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('1');
   const [areaNumber, setAreaNumber] = useState('1');
+  const [selectedSerialType, setSelectedSerialType] = useState(null);
 
   const newEvent = {
     details: details,
@@ -111,9 +109,11 @@ else{
             labelField="label"
             valueField="value"
             placeholder={"Select type of event"}
-            value={serialType}
+            value={selectedSerialType}
             onChange={item => {
-              setSerialTypeNumber(item.value)
+              setSerialTypeNumber(item)
+              setSelectedSerialType(item) // Update the selected item state variable
+
             }} />
             
           <TouchableOpacity style={styles.photo} >

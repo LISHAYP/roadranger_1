@@ -30,6 +30,8 @@ export default function SOS(props) {
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('1');
   const [areaNumber, setAreaNumber] = useState('1');
+  const [selectedSerialType, setSelectedSerialType] = useState(null);
+
 
   const newSOS = {
     details: details,
@@ -102,9 +104,11 @@ else{
             labelField="label"
             valueField="value"
             placeholder={"Select type of event"}
-            value={serialType}
+            value={selectedSerialType}
             onChange={item => {
-              setSerialTypeNumber(item.value)
+              setSerialTypeNumber(item)
+              setSelectedSerialType(item) // Update the selected item state variable
+
             }} />
           <TouchableOpacity style={styles.photo} >
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
