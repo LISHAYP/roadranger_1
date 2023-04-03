@@ -11,19 +11,18 @@ namespace WebApplication1.Controllers
 {
     public class NewEventController : ApiController
     {
-        igroup190_test1Entities2 db = new igroup190_test1Entities2();
+        igroup190_test1Entities db = new igroup190_test1Entities();
 
         // GET: api/NewEvent
         public IEnumerable<EventDto> Get()
         {
-            List<tblEvent> events = db.tblEvents.ToList();
+            List<tblEvents> events = db.tblEvents.ToList();
             List<EventDto> eventsDto= new List<EventDto>();
 
             foreach (var newevent in events)
             {
                 EventDto eventDto = new EventDto
                 {
-                    EventNumber = newevent.eventNumber,
                     Details= newevent.details,
                     EventDate = newevent.event_date,
                     EventTime = newevent.event_time,
@@ -50,12 +49,12 @@ namespace WebApplication1.Controllers
 
         // POST: api/NewEvent
         [HttpPost]
-        [Route("api/post/newevent")]
-        public IHttpActionResult Post([FromBody]tblEvent value)
+        [Route("api/newevent")]
+        public IHttpActionResult PostNewEvent([FromBody] tblEvents value)
         {
             try
             {
-                tblEvent NewEvent = new tblEvent
+                tblEvents newEvent = new tblEvents
                 {
                     details = value.details,
                     event_date = value.event_date,
@@ -69,16 +68,15 @@ namespace WebApplication1.Controllers
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
                     area_number = value.area_number
-
                 };
-                db.tblEvents.Add(NewEvent);
+
+                db.tblEvents.Add(newEvent);
                 db.SaveChanges();
                 return Ok("New event created successfully!");
-
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 

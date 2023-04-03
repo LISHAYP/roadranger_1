@@ -65,9 +65,8 @@
   <EntityType Name="tblComments">
     <Key>
       <PropertyRef Name="commentNumber" />
-      <PropertyRef Name="eventNumber" />
     </Key>
-    <Property Name="commentNumber" Type="Int32" Nullable="false" />
+    <Property Name="commentNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="eventNumber" Type="Int32" Nullable="false" />
     <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="comment_date" Type="DateTime" Nullable="false" Precision="0" />
@@ -405,7 +404,7 @@
     <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="*" />
     <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="igroup190_test1Entities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" />
