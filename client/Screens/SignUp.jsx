@@ -7,7 +7,6 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-import { useEffect } from 'react';
 
 export default function SignUp() {
   const navigation = useNavigation();

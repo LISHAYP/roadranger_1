@@ -102,7 +102,7 @@ else{
             labelField="label"
             valueField="value"
             placeholder={"Select type of event"}
-            value={value}
+            value={type}
             onChange={item => {
               setSerialTypeNumber(item.value)
             }} />

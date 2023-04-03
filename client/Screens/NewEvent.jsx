@@ -14,7 +14,7 @@ export default function NewEvent(props) {
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
 
-  const type = [
+  const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
@@ -106,15 +106,16 @@ else{
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
-            data={type}
+            data={serialType}
             maxHeight={300}
             labelField="label"
             valueField="value"
             placeholder={"Select type of event"}
-            value={value}
+            value={serialType}
             onChange={item => {
               setSerialTypeNumber(item.value)
             }} />
+            
           <TouchableOpacity style={styles.photo} >
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
             <Text style={styles.btnText}>
