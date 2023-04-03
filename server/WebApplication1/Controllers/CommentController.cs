@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 {
     public class CommentController : ApiController
     {
-        igroup190_test1Entities1 db = new igroup190_test1Entities1();
+        igroup190_test1Entities db = new igroup190_test1Entities();
 
         // GET: api/Comment
         public IEnumerable<string> Get()

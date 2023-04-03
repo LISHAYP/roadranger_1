@@ -34,3 +34,15 @@ C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פ�
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.csproj.CopyComplete
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.dll
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Release\data.pdb
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\data.dll.config
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\data.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\data.pdb
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\EntityFramework.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\EntityFramework.xml
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Release\data.csproj.AssemblyReference.cache
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Release\data.csproj.CoreCompileInputs.cache
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Release\data.csproj.CopyComplete
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Release\data.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Release\data.pdb

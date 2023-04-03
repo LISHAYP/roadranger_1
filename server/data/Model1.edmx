@@ -75,6 +75,7 @@
           <Property Name="User_one" Type="int" Nullable="false" />
           <Property Name="User_two" Type="int" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="message" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblConversationTravelerStack">
           <Key>
@@ -84,6 +85,7 @@
           <Property Name="User_one" Type="int" Nullable="false" />
           <Property Name="User_two" Type="int" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="message" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblCountries">
           <Key>
@@ -584,6 +586,7 @@
           <Property Name="User_one" Type="Int32" Nullable="false" />
           <Property Name="User_two" Type="Int32" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="traveleres" Relationship="Self.travelers_traveler1" FromRole="tblConversationTravelers" ToRole="traveleres" />
           <NavigationProperty Name="traveleres1" Relationship="Self.travelers_traveler2" FromRole="tblConversationTravelers" ToRole="traveleres" />
         </EntityType>
@@ -595,6 +598,7 @@
           <Property Name="User_one" Type="Int32" Nullable="false" />
           <Property Name="User_two" Type="Int32" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="stakeholders" Relationship="Self.stackholder_con" FromRole="tblConversationTravelerStack" ToRole="stakeholders" />
           <NavigationProperty Name="traveleres" Relationship="Self.travelers_con" FromRole="tblConversationTravelerStack" ToRole="traveleres" />
         </EntityType>
@@ -903,7 +907,7 @@
           <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="*" />
           <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="igroup190_test1Entities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" />
@@ -998,7 +1002,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities1">
+        <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
           <EntitySetMapping Name="stakeholders">
             <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
               <MappingFragment StoreEntitySet="stakeholders">
@@ -1072,6 +1076,7 @@
                 <ScalarProperty Name="User_one" ColumnName="User_one" />
                 <ScalarProperty Name="User_two" ColumnName="User_two" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="message" ColumnName="message" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1082,6 +1087,7 @@
                 <ScalarProperty Name="User_one" ColumnName="User_one" />
                 <ScalarProperty Name="User_two" ColumnName="User_two" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="message" ColumnName="message" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

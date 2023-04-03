@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="stakeholder">
+  <EntityType Name="stakeholders">
     <Key>
       <PropertyRef Name="stakeholder_id" />
     </Key>
@@ -17,11 +17,11 @@
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_stackholder" FromRole="stakeholders" ToRole="tblComments" />
     <NavigationProperty Name="tblEvents" Relationship="Self.event_stackholder" FromRole="stakeholders" ToRole="tblEvents" />
-    <NavigationProperty Name="tblConversationTravelerStacks" Relationship="Self.stackholder_con" FromRole="stakeholders" ToRole="tblConversationTravelerStack" />
-    <NavigationProperty Name="tblAskForHelps" Relationship="Self.user_stackholder" FromRole="stakeholders" ToRole="tblAskForHelp" />
+    <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_stakeholders" FromRole="stakeholders" ToRole="tblAskForHelp" />
+    <NavigationProperty Name="tblConversationTravelerStack" Relationship="Self.stackholder_con" FromRole="stakeholders" ToRole="tblConversationTravelerStack" />
     <NavigationProperty Name="traveleres" Relationship="Self.tblinsuredBy" FromRole="stakeholders" ToRole="traveleres" />
   </EntityType>
-  <EntityType Name="sysdiagram">
+  <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
@@ -39,8 +39,8 @@
     <Property Name="country_number" Type="Int32" Nullable="false" />
     <Property Name="area_number" Type="Int32" Nullable="false" />
     <Property Name="area_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tblCountry" Relationship="Self.country_area" FromRole="tblArea" ToRole="tblCountries" />
-    <NavigationProperty Name="tblAskForHelps" Relationship="Self.country_area_AFH" FromRole="tblArea" ToRole="tblAskForHelp" />
+    <NavigationProperty Name="tblCountries" Relationship="Self.country_area" FromRole="tblArea" ToRole="tblCountries" />
+    <NavigationProperty Name="tblAskForHelp" Relationship="Self.country_area_AFH" FromRole="tblArea" ToRole="tblAskForHelp" />
     <NavigationProperty Name="tblEvents" Relationship="Self.country_area_event" FromRole="tblArea" ToRole="tblEvents" />
   </EntityType>
   <EntityType Name="tblAskForHelp">
@@ -52,41 +52,63 @@
     <Property Name="latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
     <Property Name="longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
     <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="traveler_id" Type="Int32" Nullable="false" />
     <Property Name="serialTypeNumber" Type="Int32" Nullable="false" />
     <Property Name="country_number" Type="Int32" Nullable="false" />
     <Property Name="area_number" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="stakeholder" Relationship="Self.user_stackholder" FromRole="tblAskForHelp" ToRole="stakeholders" />
+    <Property Name="stakeholder_id" Type="Int32" />
+    <NavigationProperty Name="stakeholders" Relationship="Self.FK_tblAskForHelp_stakeholders" FromRole="tblAskForHelp" ToRole="stakeholders" />
     <NavigationProperty Name="tblArea" Relationship="Self.country_area_AFH" FromRole="tblAskForHelp" ToRole="tblArea" />
+    <NavigationProperty Name="traveleres" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="tblAskForHelp" ToRole="traveleres" />
     <NavigationProperty Name="tblType" Relationship="Self.type_" FromRole="tblAskForHelp" ToRole="tblType" />
-    <NavigationProperty Name="travelere" Relationship="Self.user_traveler" FromRole="tblAskForHelp" ToRole="traveleres" />
   </EntityType>
-  <EntityType Name="tblComment">
+  <EntityType Name="tblComments">
     <Key>
       <PropertyRef Name="commentNumber" />
-      <PropertyRef Name="eventNumber" />
     </Key>
-    <Property Name="commentNumber" Type="Int32" Nullable="false" />
+    <Property Name="commentNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="eventNumber" Type="Int32" Nullable="false" />
     <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="comment_date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="comment_time" Type="Time" Nullable="false" Precision="7" />
     <Property Name="travelerId" Type="Int32" />
     <Property Name="stackholderId" Type="Int32" />
-    <NavigationProperty Name="stakeholder" Relationship="Self.comment_stackholder" FromRole="tblComments" ToRole="stakeholders" />
-    <NavigationProperty Name="tblEvent" Relationship="Self.comment_event" FromRole="tblComments" ToRole="tblEvents" />
-    <NavigationProperty Name="travelere" Relationship="Self.comment_traveler" FromRole="tblComments" ToRole="traveleres" />
+    <NavigationProperty Name="stakeholders" Relationship="Self.comment_stackholder" FromRole="tblComments" ToRole="stakeholders" />
+    <NavigationProperty Name="tblEvents" Relationship="Self.comment_event" FromRole="tblComments" ToRole="tblEvents" />
+    <NavigationProperty Name="traveleres" Relationship="Self.comment_traveler" FromRole="tblComments" ToRole="traveleres" />
   </EntityType>
-  <EntityType Name="tblCountry">
+  <EntityType Name="tblConversationTravelers">
+    <Key>
+      <PropertyRef Name="ChatId" />
+    </Key>
+    <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_one" Type="Int32" Nullable="false" />
+    <Property Name="User_two" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="traveleres" Relationship="Self.travelers_traveler1" FromRole="tblConversationTravelers" ToRole="traveleres" />
+    <NavigationProperty Name="traveleres1" Relationship="Self.travelers_traveler2" FromRole="tblConversationTravelers" ToRole="traveleres" />
+  </EntityType>
+  <EntityType Name="tblConversationTravelerStack">
+    <Key>
+      <PropertyRef Name="ChatId" />
+    </Key>
+    <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_one" Type="Int32" Nullable="false" />
+    <Property Name="User_two" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="stakeholders" Relationship="Self.stackholder_con" FromRole="tblConversationTravelerStack" ToRole="stakeholders" />
+    <NavigationProperty Name="traveleres" Relationship="Self.travelers_con" FromRole="tblConversationTravelerStack" ToRole="traveleres" />
+  </EntityType>
+  <EntityType Name="tblCountries">
     <Key>
       <PropertyRef Name="country_number" />
     </Key>
     <Property Name="country_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="country_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="country_continent" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="tblAreas" Relationship="Self.country_area" FromRole="tblCountries" ToRole="tblArea" />
+    <NavigationProperty Name="tblArea" Relationship="Self.country_area" FromRole="tblCountries" ToRole="tblArea" />
   </EntityType>
-  <EntityType Name="tblEvent">
+  <EntityType Name="tblEvents">
     <Key>
       <PropertyRef Name="eventNumber" />
     </Key>
@@ -103,15 +125,15 @@
     <Property Name="serialTypeNumber" Type="Int32" Nullable="false" />
     <Property Name="country_number" Type="Int32" Nullable="false" />
     <Property Name="area_number" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="stakeholder" Relationship="Self.event_stackholder" FromRole="tblEvents" ToRole="stakeholders" />
+    <NavigationProperty Name="stakeholders" Relationship="Self.event_stackholder" FromRole="tblEvents" ToRole="stakeholders" />
     <NavigationProperty Name="tblArea" Relationship="Self.country_area_event" FromRole="tblEvents" ToRole="tblArea" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_event" FromRole="tblEvents" ToRole="tblComments" />
-    <NavigationProperty Name="travelere" Relationship="Self.event_traveler" FromRole="tblEvents" ToRole="traveleres" />
+    <NavigationProperty Name="traveleres" Relationship="Self.event_traveler" FromRole="tblEvents" ToRole="traveleres" />
     <NavigationProperty Name="tblEvents1" Relationship="Self.single" FromRole="tblEvents" ToRole="tblEvents1" />
-    <NavigationProperty Name="tblEvent1" Relationship="Self.single" FromRole="tblEvents1" ToRole="tblEvents" />
+    <NavigationProperty Name="tblEvents2" Relationship="Self.single" FromRole="tblEvents1" ToRole="tblEvents" />
     <NavigationProperty Name="tblType" Relationship="Self.type_event" FromRole="tblEvents" ToRole="tblType" />
   </EntityType>
-  <EntityType Name="tblLocation">
+  <EntityType Name="tblLocations">
     <Key>
       <PropertyRef Name="locationNumber" />
       <PropertyRef Name="travelerId" />
@@ -121,7 +143,7 @@
     <Property Name="dateAndTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
     <Property Name="longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
-    <NavigationProperty Name="travelere" Relationship="Self.traveler_location" FromRole="tblLocations" ToRole="traveleres" />
+    <NavigationProperty Name="traveleres" Relationship="Self.traveler_location" FromRole="tblLocations" ToRole="traveleres" />
   </EntityType>
   <EntityType Name="tblType">
     <Key>
@@ -129,10 +151,10 @@
     </Key>
     <Property Name="serialTypeNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="typeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tblAskForHelps" Relationship="Self.type_" FromRole="tblType" ToRole="tblAskForHelp" />
+    <NavigationProperty Name="tblAskForHelp" Relationship="Self.type_" FromRole="tblType" ToRole="tblAskForHelp" />
     <NavigationProperty Name="tblEvents" Relationship="Self.type_event" FromRole="tblType" ToRole="tblEvents" />
   </EntityType>
-  <EntityType Name="travelere">
+  <EntityType Name="traveleres">
     <Key>
       <PropertyRef Name="traveler_id" />
     </Key>
@@ -149,46 +171,18 @@
     <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="chat" Type="Boolean" />
-    <NavigationProperty Name="tblAskForHelps" Relationship="Self.user_traveler" FromRole="traveleres" ToRole="tblAskForHelp" />
+    <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
-    <NavigationProperty Name="tblEvents" Relationship="Self.event_traveler" FromRole="traveleres" ToRole="tblEvents" />
-    <NavigationProperty Name="tblLocations" Relationship="Self.traveler_location" FromRole="traveleres" ToRole="tblLocations" />
-    <NavigationProperty Name="tblConversationTravelerStacks" Relationship="Self.travelers_con" FromRole="traveleres" ToRole="tblConversationTravelerStack" />
     <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
     <NavigationProperty Name="tblConversationTravelers1" Relationship="Self.travelers_traveler2" FromRole="traveleres" ToRole="tblConversationTravelers" />
+    <NavigationProperty Name="tblConversationTravelerStack" Relationship="Self.travelers_con" FromRole="traveleres" ToRole="tblConversationTravelerStack" />
+    <NavigationProperty Name="tblEvents" Relationship="Self.event_traveler" FromRole="traveleres" ToRole="tblEvents" />
+    <NavigationProperty Name="tblLocations" Relationship="Self.traveler_location" FromRole="traveleres" ToRole="tblLocations" />
     <NavigationProperty Name="stakeholders" Relationship="Self.tblinsuredBy" FromRole="traveleres" ToRole="stakeholders" />
   </EntityType>
-  <EntityType Name="tblConversationTraveler">
-    <Key>
-      <PropertyRef Name="ChatId" />
-      <PropertyRef Name="User_one" />
-      <PropertyRef Name="User_two" />
-      <PropertyRef Name="created_at" />
-    </Key>
-    <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="User_one" Type="Int32" Nullable="false" />
-    <Property Name="User_two" Type="Int32" Nullable="false" />
-    <Property Name="created_at" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-    <NavigationProperty Name="travelere" Relationship="Self.travelers_traveler1" FromRole="tblConversationTravelers" ToRole="traveleres" />
-    <NavigationProperty Name="travelere1" Relationship="Self.travelers_traveler2" FromRole="tblConversationTravelers" ToRole="traveleres" />
-  </EntityType>
-  <EntityType Name="tblConversationTravelerStack">
-    <Key>
-      <PropertyRef Name="ChatId" />
-      <PropertyRef Name="User_one" />
-      <PropertyRef Name="User_two" />
-      <PropertyRef Name="created_at" />
-    </Key>
-    <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="User_one" Type="Int32" Nullable="false" />
-    <Property Name="User_two" Type="Int32" Nullable="false" />
-    <Property Name="created_at" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-    <NavigationProperty Name="stakeholder" Relationship="Self.stackholder_con" FromRole="tblConversationTravelerStack" ToRole="stakeholders" />
-    <NavigationProperty Name="travelere" Relationship="Self.travelers_con" FromRole="tblConversationTravelerStack" ToRole="traveleres" />
-  </EntityType>
   <Association Name="comment_stackholder">
-    <End Role="stakeholders" Type="Self.stakeholder" Multiplicity="0..1" />
-    <End Role="tblComments" Type="Self.tblComment" Multiplicity="*" />
+    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="0..1" />
+    <End Role="tblComments" Type="Self.tblComments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="stakeholders">
         <PropertyRef Name="stakeholder_id" />
@@ -199,8 +193,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="event_stackholder">
-    <End Role="stakeholders" Type="Self.stakeholder" Multiplicity="0..1" />
-    <End Role="tblEvents" Type="Self.tblEvent" Multiplicity="*" />
+    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="0..1" />
+    <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="stakeholders">
         <PropertyRef Name="stakeholder_id" />
@@ -210,8 +204,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tblAskForHelp_stakeholders">
+    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="0..1" />
+    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="stakeholders">
+        <PropertyRef Name="stakeholder_id" />
+      </Principal>
+      <Dependent Role="tblAskForHelp">
+        <PropertyRef Name="stakeholder_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="stackholder_con">
-    <End Role="stakeholders" Type="Self.stakeholder" Multiplicity="1" />
+    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="1" />
     <End Role="tblConversationTravelerStack" Type="Self.tblConversationTravelerStack" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="stakeholders">
@@ -222,20 +228,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="user_stackholder">
-    <End Role="stakeholders" Type="Self.stakeholder" Multiplicity="1" />
-    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="stakeholders">
-        <PropertyRef Name="stakeholder_id" />
-      </Principal>
-      <Dependent Role="tblAskForHelp">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="country_area">
-    <End Role="tblCountries" Type="Self.tblCountry" Multiplicity="1" />
+    <End Role="tblCountries" Type="Self.tblCountries" Multiplicity="1" />
     <End Role="tblArea" Type="Self.tblArea" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblCountries">
@@ -262,7 +256,7 @@
   </Association>
   <Association Name="country_area_event">
     <End Role="tblArea" Type="Self.tblArea" Multiplicity="1" />
-    <End Role="tblEvents" Type="Self.tblEvent" Multiplicity="*" />
+    <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblArea">
         <PropertyRef Name="country_number" />
@@ -271,6 +265,18 @@
       <Dependent Role="tblEvents">
         <PropertyRef Name="country_number" />
         <PropertyRef Name="area_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAskForHelp_traveleres">
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
+    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="traveleres">
+        <PropertyRef Name="traveler_id" />
+      </Principal>
+      <Dependent Role="tblAskForHelp">
+        <PropertyRef Name="traveler_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -286,21 +292,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="user_traveler">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="1" />
-    <End Role="tblAskForHelp" Type="Self.tblAskForHelp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="traveleres">
-        <PropertyRef Name="traveler_id" />
-      </Principal>
-      <Dependent Role="tblAskForHelp">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="comment_event">
-    <End Role="tblEvents" Type="Self.tblEvent" Multiplicity="1" />
-    <End Role="tblComments" Type="Self.tblComment" Multiplicity="*" />
+    <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
+    <End Role="tblComments" Type="Self.tblComments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblEvents">
         <PropertyRef Name="eventNumber" />
@@ -311,8 +305,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="comment_traveler">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="0..1" />
-    <End Role="tblComments" Type="Self.tblComment" Multiplicity="*" />
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="0..1" />
+    <End Role="tblComments" Type="Self.tblComments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="traveleres">
         <PropertyRef Name="traveler_id" />
@@ -322,9 +316,45 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="travelers_traveler1">
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
+    <End Role="tblConversationTravelers" Type="Self.tblConversationTravelers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="traveleres">
+        <PropertyRef Name="traveler_id" />
+      </Principal>
+      <Dependent Role="tblConversationTravelers">
+        <PropertyRef Name="User_one" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="travelers_traveler2">
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
+    <End Role="tblConversationTravelers" Type="Self.tblConversationTravelers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="traveleres">
+        <PropertyRef Name="traveler_id" />
+      </Principal>
+      <Dependent Role="tblConversationTravelers">
+        <PropertyRef Name="User_two" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="travelers_con">
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
+    <End Role="tblConversationTravelerStack" Type="Self.tblConversationTravelerStack" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="traveleres">
+        <PropertyRef Name="traveler_id" />
+      </Principal>
+      <Dependent Role="tblConversationTravelerStack">
+        <PropertyRef Name="User_one" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="event_traveler">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="0..1" />
-    <End Role="tblEvents" Type="Self.tblEvent" Multiplicity="*" />
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="0..1" />
+    <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="traveleres">
         <PropertyRef Name="traveler_id" />
@@ -335,8 +365,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="single">
-    <End Role="tblEvents" Type="Self.tblEvent" Multiplicity="1" />
-    <End Role="tblEvents1" Type="Self.tblEvent" Multiplicity="0..1" />
+    <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
+    <End Role="tblEvents1" Type="Self.tblEvents" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="tblEvents">
         <PropertyRef Name="eventNumber" />
@@ -348,7 +378,7 @@
   </Association>
   <Association Name="type_event">
     <End Role="tblType" Type="Self.tblType" Multiplicity="1" />
-    <End Role="tblEvents" Type="Self.tblEvent" Multiplicity="*" />
+    <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblType">
         <PropertyRef Name="serialTypeNumber" />
@@ -359,8 +389,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="traveler_location">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="1" />
-    <End Role="tblLocations" Type="Self.tblLocation" Multiplicity="*" />
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="1" />
+    <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="traveleres">
         <PropertyRef Name="traveler_id" />
@@ -370,59 +400,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="travelers_con">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="1" />
-    <End Role="tblConversationTravelerStack" Type="Self.tblConversationTravelerStack" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="traveleres">
-        <PropertyRef Name="traveler_id" />
-      </Principal>
-      <Dependent Role="tblConversationTravelerStack">
-        <PropertyRef Name="User_one" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="travelers_traveler1">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="1" />
-    <End Role="tblConversationTravelers" Type="Self.tblConversationTraveler" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="traveleres">
-        <PropertyRef Name="traveler_id" />
-      </Principal>
-      <Dependent Role="tblConversationTravelers">
-        <PropertyRef Name="User_one" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="travelers_traveler2">
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="1" />
-    <End Role="tblConversationTravelers" Type="Self.tblConversationTraveler" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="traveleres">
-        <PropertyRef Name="traveler_id" />
-      </Principal>
-      <Dependent Role="tblConversationTravelers">
-        <PropertyRef Name="User_two" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="tblinsuredBy">
-    <End Role="stakeholders" Type="Self.stakeholder" Multiplicity="*" />
-    <End Role="traveleres" Type="Self.travelere" Multiplicity="*" />
+    <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="*" />
+    <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
   </Association>
   <EntityContainer Name="igroup190_test1Entities1" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="stakeholders" EntityType="Self.stakeholder" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-    <EntitySet Name="tblAreas" EntityType="Self.tblArea" />
-    <EntitySet Name="tblAskForHelps" EntityType="Self.tblAskForHelp" />
-    <EntitySet Name="tblComments" EntityType="Self.tblComment" />
-    <EntitySet Name="tblCountries" EntityType="Self.tblCountry" />
-    <EntitySet Name="tblEvents" EntityType="Self.tblEvent" />
-    <EntitySet Name="tblLocations" EntityType="Self.tblLocation" />
-    <EntitySet Name="tblTypes" EntityType="Self.tblType" />
-    <EntitySet Name="traveleres" EntityType="Self.travelere" />
-    <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTraveler" />
-    <EntitySet Name="tblConversationTravelerStacks" EntityType="Self.tblConversationTravelerStack" />
+    <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="tblArea" EntityType="Self.tblArea" />
+    <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" />
+    <EntitySet Name="tblComments" EntityType="Self.tblComments" />
+    <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTravelers" />
+    <EntitySet Name="tblConversationTravelerStack" EntityType="Self.tblConversationTravelerStack" />
+    <EntitySet Name="tblCountries" EntityType="Self.tblCountries" />
+    <EntitySet Name="tblEvents" EntityType="Self.tblEvents" />
+    <EntitySet Name="tblLocations" EntityType="Self.tblLocations" />
+    <EntitySet Name="tblType" EntityType="Self.tblType" />
+    <EntitySet Name="traveleres" EntityType="Self.traveleres" />
     <AssociationSet Name="comment_stackholder" Association="Self.comment_stackholder">
       <End Role="stakeholders" EntitySet="stakeholders" />
       <End Role="tblComments" EntitySet="tblComments" />
@@ -431,33 +425,33 @@
       <End Role="stakeholders" EntitySet="stakeholders" />
       <End Role="tblEvents" EntitySet="tblEvents" />
     </AssociationSet>
+    <AssociationSet Name="FK_tblAskForHelp_stakeholders" Association="Self.FK_tblAskForHelp_stakeholders">
+      <End Role="stakeholders" EntitySet="stakeholders" />
+      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
+    </AssociationSet>
     <AssociationSet Name="stackholder_con" Association="Self.stackholder_con">
       <End Role="stakeholders" EntitySet="stakeholders" />
-      <End Role="tblConversationTravelerStack" EntitySet="tblConversationTravelerStacks" />
-    </AssociationSet>
-    <AssociationSet Name="user_stackholder" Association="Self.user_stackholder">
-      <End Role="stakeholders" EntitySet="stakeholders" />
-      <End Role="tblAskForHelp" EntitySet="tblAskForHelps" />
+      <End Role="tblConversationTravelerStack" EntitySet="tblConversationTravelerStack" />
     </AssociationSet>
     <AssociationSet Name="country_area" Association="Self.country_area">
       <End Role="tblCountries" EntitySet="tblCountries" />
-      <End Role="tblArea" EntitySet="tblAreas" />
+      <End Role="tblArea" EntitySet="tblArea" />
     </AssociationSet>
     <AssociationSet Name="country_area_AFH" Association="Self.country_area_AFH">
-      <End Role="tblArea" EntitySet="tblAreas" />
-      <End Role="tblAskForHelp" EntitySet="tblAskForHelps" />
+      <End Role="tblArea" EntitySet="tblArea" />
+      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
     </AssociationSet>
     <AssociationSet Name="country_area_event" Association="Self.country_area_event">
-      <End Role="tblArea" EntitySet="tblAreas" />
+      <End Role="tblArea" EntitySet="tblArea" />
       <End Role="tblEvents" EntitySet="tblEvents" />
     </AssociationSet>
-    <AssociationSet Name="type_" Association="Self.type_">
-      <End Role="tblType" EntitySet="tblTypes" />
-      <End Role="tblAskForHelp" EntitySet="tblAskForHelps" />
-    </AssociationSet>
-    <AssociationSet Name="user_traveler" Association="Self.user_traveler">
+    <AssociationSet Name="FK_tblAskForHelp_traveleres" Association="Self.FK_tblAskForHelp_traveleres">
       <End Role="traveleres" EntitySet="traveleres" />
-      <End Role="tblAskForHelp" EntitySet="tblAskForHelps" />
+      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
+    </AssociationSet>
+    <AssociationSet Name="type_" Association="Self.type_">
+      <End Role="tblType" EntitySet="tblType" />
+      <End Role="tblAskForHelp" EntitySet="tblAskForHelp" />
     </AssociationSet>
     <AssociationSet Name="comment_event" Association="Self.comment_event">
       <End Role="tblEvents" EntitySet="tblEvents" />
@@ -466,6 +460,18 @@
     <AssociationSet Name="comment_traveler" Association="Self.comment_traveler">
       <End Role="traveleres" EntitySet="traveleres" />
       <End Role="tblComments" EntitySet="tblComments" />
+    </AssociationSet>
+    <AssociationSet Name="travelers_traveler1" Association="Self.travelers_traveler1">
+      <End Role="traveleres" EntitySet="traveleres" />
+      <End Role="tblConversationTravelers" EntitySet="tblConversationTravelers" />
+    </AssociationSet>
+    <AssociationSet Name="travelers_traveler2" Association="Self.travelers_traveler2">
+      <End Role="traveleres" EntitySet="traveleres" />
+      <End Role="tblConversationTravelers" EntitySet="tblConversationTravelers" />
+    </AssociationSet>
+    <AssociationSet Name="travelers_con" Association="Self.travelers_con">
+      <End Role="traveleres" EntitySet="traveleres" />
+      <End Role="tblConversationTravelerStack" EntitySet="tblConversationTravelerStack" />
     </AssociationSet>
     <AssociationSet Name="event_traveler" Association="Self.event_traveler">
       <End Role="traveleres" EntitySet="traveleres" />
@@ -476,24 +482,12 @@
       <End Role="tblEvents1" EntitySet="tblEvents" />
     </AssociationSet>
     <AssociationSet Name="type_event" Association="Self.type_event">
-      <End Role="tblType" EntitySet="tblTypes" />
+      <End Role="tblType" EntitySet="tblType" />
       <End Role="tblEvents" EntitySet="tblEvents" />
     </AssociationSet>
     <AssociationSet Name="traveler_location" Association="Self.traveler_location">
       <End Role="traveleres" EntitySet="traveleres" />
       <End Role="tblLocations" EntitySet="tblLocations" />
-    </AssociationSet>
-    <AssociationSet Name="travelers_con" Association="Self.travelers_con">
-      <End Role="traveleres" EntitySet="traveleres" />
-      <End Role="tblConversationTravelerStack" EntitySet="tblConversationTravelerStacks" />
-    </AssociationSet>
-    <AssociationSet Name="travelers_traveler1" Association="Self.travelers_traveler1">
-      <End Role="traveleres" EntitySet="traveleres" />
-      <End Role="tblConversationTravelers" EntitySet="tblConversationTravelers" />
-    </AssociationSet>
-    <AssociationSet Name="travelers_traveler2" Association="Self.travelers_traveler2">
-      <End Role="traveleres" EntitySet="traveleres" />
-      <End Role="tblConversationTravelers" EntitySet="tblConversationTravelers" />
     </AssociationSet>
     <AssociationSet Name="tblinsuredBy" Association="Self.tblinsuredBy">
       <End Role="stakeholders" EntitySet="stakeholders" />
