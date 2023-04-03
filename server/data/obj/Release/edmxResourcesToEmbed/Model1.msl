@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities1">
+  <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
     <EntitySetMapping Name="stakeholders">
       <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
         <MappingFragment StoreEntitySet="stakeholders">
@@ -74,6 +74,7 @@
           <ScalarProperty Name="User_one" ColumnName="User_one" />
           <ScalarProperty Name="User_two" ColumnName="User_two" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="message" ColumnName="message" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -84,6 +85,7 @@
           <ScalarProperty Name="User_one" ColumnName="User_one" />
           <ScalarProperty Name="User_two" ColumnName="User_two" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="message" ColumnName="message" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
