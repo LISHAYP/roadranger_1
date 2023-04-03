@@ -6,14 +6,15 @@ import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
-import { useEffect
- } from 'react';
+import { useEffect } from 'react';
+
+
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
-  const [address, setAddress] = useState('');
-
+  const [country, setCountry] = useState('');
+  // const [continent, setContinent] = useState('');
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
@@ -29,23 +30,29 @@ export default function NewEvent(props) {
   const [picture, setPicture] = useState('#');
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
-  const [countryNumber, setCountryNumber] = useState('1');
+  const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('1');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
-  
-  useEffect(() => {
-    // Initialize Geocoder with your API key
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
-    // Perform reverse geocoding
-    Geocoder.from(userLocation.coords.latitude,userLocation.coords.longitude)
-      .then((json) => {
-        const addressComponent = json.results[0].formatted_address;
-        setAddress(addressComponent);
+
+  useEffect(() => {
+    //insert the API Key
+    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
+      .then(json => {
+        const addressComponents = json.results[0].address_components;
+        const countryComponent = addressComponents.find(component => component.types.includes('country'));
+        // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
+        setCountry(countryComponent.long_name);
+        // setContinent(continentComponent.long_name)
+
       })
-      .catch((error) => console.warn(error));
+      .catch(error => console.warn(error))
   }, []);
-console.log(address)
+
+  console.log('contry:', { country })
+  // console.log('continent:', { continent })
+
   const newEvent = {
     details: details,
     event_date: new Date().toISOString().slice(0, 10),
@@ -61,40 +68,60 @@ console.log(address)
     longitude: userLocation.coords.longitude
   };
 
-  console.log('new',newEvent);
-  
+  console.log('new', newEvent);
 
-  const createEvent = async () => {
-   if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
-      alert('Please enter details and type');    
-    }
-else{
- 
-    // Send a POST request to your backend API with the event data
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+  addContry = () => {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newEvent),
+      body: JSON.stringify(country),
     })
       .then(response => response.json())
       .then(data => {
-
-        // Handle the response data as needed
-        console.log(data);
-
-        navigation.navigate('Forgot password'); 
-        // Navigate back to the "Around You" screen
-
-        console.log({ newEvent })
-        alert('Publish')
-
-      })
+        setCountryNumber(data) 
+      console.log('********',{data})}
+        )
       .catch(error => {
         console.error(error);
-        alert('Error',error);
+        console.log('Error');
       });
+  }
+
+  const createEvent = async () => {
+
+    if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
+      alert('Please enter details and type');
+    }
+    else {
+      addContry()
+      // Send a POST request to your backend API with the event data
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEvent),
+      })
+        .then(response => response.json())
+        .then(data => {
+
+          // Handle the response data as needed
+          console.log(data);
+
+          navigation.navigate('Forgot password');
+          // Navigate back to the "Around You" screen
+
+          console.log({ newEvent })
+          alert('Publish')
+
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Error', error);
+        });
     }
   }
 
@@ -134,14 +161,14 @@ else{
               setSelectedSerialType(item) // Update the selected item state variable
 
             }} />
-            
+
           <TouchableOpacity style={styles.photo} >
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
             <Text style={styles.btnText}>
               Add Photo
             </Text>
           </TouchableOpacity>
-        
+
           <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
             <Text style={styles.btnText}>
               Publish
