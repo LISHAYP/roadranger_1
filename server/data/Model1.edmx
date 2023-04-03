@@ -93,6 +93,7 @@
           </Key>
           <Property Name="country_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="country_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="country_continent" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblEvents">
           <Key>
@@ -607,6 +608,7 @@
           </Key>
           <Property Name="country_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="country_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="country_continent" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblArea" Relationship="Self.country_area" FromRole="tblCountries" ToRole="tblArea" />
         </EntityType>
         <EntityType Name="tblEvents">
@@ -1094,6 +1096,7 @@
               <MappingFragment StoreEntitySet="tblCountries">
                 <ScalarProperty Name="country_number" ColumnName="country_number" />
                 <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="country_continent" ColumnName="country_continent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

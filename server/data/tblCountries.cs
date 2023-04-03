@@ -22,6 +22,7 @@ namespace data
     
         public int country_number { get; set; }
         public string country_name { get; set; }
+        public string country_continent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblArea> tblArea { get; set; }

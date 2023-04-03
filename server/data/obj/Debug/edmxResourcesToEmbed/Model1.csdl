@@ -107,6 +107,7 @@
     </Key>
     <Property Name="country_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="country_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="country_continent" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tblArea" Relationship="Self.country_area" FromRole="tblCountries" ToRole="tblArea" />
   </EntityType>
   <EntityType Name="tblEvents">

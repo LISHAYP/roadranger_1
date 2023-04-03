@@ -88,6 +88,7 @@
     </Key>
     <Property Name="country_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="country_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="country_continent" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblEvents">
     <Key>
