@@ -7,7 +7,7 @@ import Setting from './Screens/Setting'
 import ContactUs from './Screens/ContactUs';
 import NewEvent from './Screens/NewEvent';
 import SOS from './Screens/SOS';
-
+import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -28,6 +28,7 @@ export default function App() {
         <Stack.Screen name="Setting" component={Setting} />
         <Stack.Screen name="New event" component={NewEvent} />
         <Stack.Screen name="SOS" component={SOS} />
+        <Stack.Screen name="TimeLine" component={Timeline} />
 
 <Stack.Screen name="Event Details" component={EventDetails} />
 
