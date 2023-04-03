@@ -197,12 +197,14 @@
     <Compile Include="Controllers\AskForHelpController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ConversationController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
     <Compile Include="Controllers\TravelerController.cs" />
     <Compile Include="DTO\AskForHelpDto.cs" />
     <Compile Include="DTO\CommentDto.cs" />
     <Compile Include="DTO\ConversationControllerDto.cs" />
+    <Compile Include="DTO\CountriesDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="Global.asax.cs">

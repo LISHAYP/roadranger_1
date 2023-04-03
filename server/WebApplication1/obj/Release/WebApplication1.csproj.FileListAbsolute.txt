@@ -378,3 +378,21 @@ C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\WebApplication1\o
 C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\WebApplication1\obj\Release\WebApplication1.csproj.CopyComplete
 C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\WebApplication1\obj\Release\WebApplication1.dll
 C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\WebApplication1\obj\Release\WebApplication1.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\BouncyCastle.Crypto.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\MailKit.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\MimeKit.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Buffers.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Memory.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Numerics.Vectors.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\BouncyCastle.Crypto.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\MailKit.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\MailKit.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\MimeKit.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\MimeKit.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Buffers.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Memory.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Numerics.Vectors.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Threading.Tasks.Extensions.xml

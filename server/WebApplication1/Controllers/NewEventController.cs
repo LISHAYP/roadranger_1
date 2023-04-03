@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
 
         // POST: api/NewEvent
         [HttpPost]
-        [Route("api/newevent")]
+        [Route("api/post/newevent")]
         public IHttpActionResult PostNewEvent([FromBody] tblEvents value)
         {
             try
