@@ -14,7 +14,7 @@ export default function SOS(props) {
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
 
-  const type = [
+  const serialType = [
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
   ]
@@ -97,12 +97,12 @@ else{
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
-            data={type}
+            data={serialType}
             maxHeight={300}
             labelField="label"
             valueField="value"
             placeholder={"Select type of event"}
-            value={type}
+            value={serialType}
             onChange={item => {
               setSerialTypeNumber(item.value)
             }} />
