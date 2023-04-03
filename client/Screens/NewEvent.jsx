@@ -5,11 +5,14 @@ import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
-
+import Geocoder from 'react-native-geocoding';
+import { useEffect
+ } from 'react';
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
+  const [address, setAddress] = useState('');
 
   const serialType = [
     //creating type of different eventtypes
@@ -29,7 +32,20 @@ export default function NewEvent(props) {
   const [countryNumber, setCountryNumber] = useState('1');
   const [areaNumber, setAreaNumber] = useState('1');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
+  
+  useEffect(() => {
+    // Initialize Geocoder with your API key
+    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
+    // Perform reverse geocoding
+    Geocoder.from(userLocation.coords.latitude,userLocation.coords.longitude)
+      .then((json) => {
+        const addressComponent = json.results[0].formatted_address;
+        setAddress(addressComponent);
+      })
+      .catch((error) => console.warn(error));
+  }, []);
+console.log(address)
   const newEvent = {
     details: details,
     event_date: new Date().toISOString().slice(0, 10),
@@ -46,12 +62,14 @@ export default function NewEvent(props) {
   };
 
   console.log('new',newEvent);
+  
 
   const createEvent = async () => {
    if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
       alert('Please enter details and type');    
     }
 else{
+ 
     // Send a POST request to your backend API with the event data
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
       method: 'POST',
