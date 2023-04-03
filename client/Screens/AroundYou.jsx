@@ -4,7 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
@@ -14,9 +14,15 @@ export default function AroundYou(props) {
 
     const traveler = props.route.params.data;
 
+    useFocusEffect(
+        React.useCallback(() => {
+        handleGet();
+        return () => {
+        };
+        }, [])
+        );
 
-
-    const [Travels, setTravels] = useState([])
+    const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
