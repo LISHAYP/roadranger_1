@@ -14,6 +14,7 @@ export default function NewEvent(props) {
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
+  const [region,setRegion]=useState('');
   // const [continent, setContinent] = useState('');
   const serialType = [
     //creating type of different eventtypes
@@ -47,9 +48,13 @@ export default function NewEvent(props) {
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
+        const regionComponent = addressComponents.find(component => component.types.includes('administrative_area_level_1'));
+
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
+        setRegion(regionComponent.long_name);
         console.log('-------',countryComponent.long_name)
+        console.log(regionComponent.long_name)
         addContry();
         // setContinent(continentComponent.long_name)
 
@@ -58,6 +63,7 @@ export default function NewEvent(props) {
   }, []);
 
   console.log('contry:', { country })
+  console.log('region:', {region })
 
   // console.log('continent:', { continent })
 
