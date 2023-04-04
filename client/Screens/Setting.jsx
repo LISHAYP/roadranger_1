@@ -11,13 +11,14 @@ import GradientBackground from '../Components/GradientBackground';
 
 
 export default function Setting(props) {
-  
+  const traveler = props.route.params;
+  console.log(traveler);
   const navigation = useNavigation();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [firstName, setFirstName] = useState(traveler.first_name);
+  const [lastName, setLastName] = useState(traveler.lastName);
+  const [email, setEmail] = useState(traveler.travler_email);
+  const [password, setPassword] = useState(traveler.password);
+  const [phone, setPhone] = useState(traveler.phone);
   const gender = [
     { label: 'Male', value: 'M' },
     { label: 'Female', value: 'F' },
@@ -30,12 +31,12 @@ export default function Setting(props) {
   ]
   const [value, setValue] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  // const [isEnabledLocation, setIsEnabledLocation] = useState(false);
-  // const [isEnabledChatMode, setIsEnabledChatMode] = useState(false);
-  // const [isEnabledNotification, setIsEnabledNotification] = useState(false);
-  // const [selectedGender, setSelectedGender] = useState(null);
-  // const [selectedInsurance, setSelectedInsurance] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(traveler.dateOfBirth);
+  const [isEnabledLocation, setIsEnabledLocation] = useState(traveler.location);
+  const [isEnabledChatMode, setIsEnabledChatMode] = useState(traveler.chat);
+  const [isEnabledNotification, setIsEnabledNotification] = useState(traveler.notifications);
+  const [selectedGender, setSelectedGender] = useState(traveler.gender);
+  const [selectedInsurance, setSelectedInsurance] = useState(traveler.insurence_company);
 
 
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
@@ -47,44 +48,74 @@ export default function Setting(props) {
     setSelectedDate(formattedDate);
     setIsCalendarOpen(false);
   }
+  const changeTraveler = {
+    first_name: firstName,
+    last_name: lastName,
+    travler_email: email,
+    phone: phone,
+    notifications: isEnabledNotification,
+    insurence_company: selectedInsurance,
+    location: isEnabledLocation,
+    save_location: isEnabledLocation,
+    dateOfBirth: selectedDate,
+    gender:selectedGender ,
+    password: password,
+    chat: isEnabledChatMode
+  };
+  console.log('*******',changeTraveler)
+  const saveChanges = async () => {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/put/update?email=${traveler.travler_email}', {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(changeTraveler),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); // Traveler updated successfully.
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
-  const traveler = props.route.params;
-  console.log(traveler);
     return (
       <ScrollView>
         < GradientBackground>
           <View style={styles.container}>
           <Text style={styles.text}>First Name:</Text>
             <TextInput style={styles.input}
-              value={traveler.first_name}
-              //onChangeText={(text) => setFirstName(text)}
-              placeholder="First Name">
+              // value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+              placeholder={traveler.first_name}>
             </TextInput>
             <Text style={styles.text}>Last Name:</Text>
             <TextInput style={styles.input}
-              value={traveler.last_name}
-              //onChangeText={(text) => setLastName(text)}
-              placeholder="Last Name">
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
+              placeholder={traveler.last_name}>
             </TextInput>
             <Text style={styles.text}>Email:</Text>
             <TextInput style={styles.input}
-              value={traveler.travler_email}
-             // onChangeText={(text) => setEmail(text)}
-              placeholder="User Email">
+              // value={email}
+             onChangeText={(text) => setEmail(text)}
+              placeholder={traveler.travler_email}>
             </TextInput>
             <Text style={styles.text}>Password:</Text>
             <TextInput style={styles.input}
-              placeholder="*******"
-              value={traveler.password}
-              //onChangeText={(text) => setPassword(text)}
+              placeholder={traveler.password}
+              // value={password}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry={false}>
             </TextInput>
             <Text style={styles.text}>Phone:</Text>
             <TextInput style={styles.input}
-              placeholder="Phone"
-              value={'0'+traveler.phone.toString()}
+              placeholder={'0'+traveler.phone.toString()}
+              value={phone}
               keyboardType='numeric'
-              //onChangeText={(text) => setPhone(text)}
+              onChangeText={(text) => setPhone(text)}
             >
             </TextInput>
             <Text style={styles.text}>Gender:</Text>
@@ -97,8 +128,8 @@ export default function Setting(props) {
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={"Select a gender"}
-              value={traveler.gender}
+              placeholder={traveler.gender}
+              // value={selectedGender}
               onChange={item => {
                 setSelectedGender(item.value)
               }} />
@@ -112,8 +143,8 @@ export default function Setting(props) {
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={"select an Insurance Company"}
-              value={value}
+              placeholder={traveler.insurence_company}
+              // value={traveler.insurance_company}
               onChange={item => {
                 setSelectedInsurance(item.value)
             }}
@@ -122,7 +153,7 @@ export default function Setting(props) {
             <Text style={styles.text}>Date of Birth:</Text>
             <View>
               <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-                <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
+                <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
                 <Icon style={styles.icon} name="calendar-outline" />
               </TouchableOpacity>
               {isCalendarOpen && (
@@ -139,7 +170,7 @@ export default function Setting(props) {
                 thumbColor={traveler.location ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitchLocation}
-                value={traveler.location}
+                value={isEnabledLocation}
               />
             </View>
             <View style={styles.row}>
@@ -150,7 +181,7 @@ export default function Setting(props) {
                 thumbColor={traveler.notifications ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleNotification}
-                value={traveler.notifications}
+                value={isEnabledNotification}
               />
             </View> 
              <View style={styles.row}>
@@ -161,14 +192,14 @@ export default function Setting(props) {
                 thumbColor={traveler.chat ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitchChatMode}
-                value={traveler.chat}
+                value={isEnabledChatMode}
               />
             </View>
-            {/* <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
+            <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
               <Text style={styles.btnText}>
-                Save
+                Save Changes
               </Text>
-            </TouchableOpacity>        */}
+            </TouchableOpacity>       
           </View>
         </GradientBackground>
       </ScrollView >
