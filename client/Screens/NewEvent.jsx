@@ -62,18 +62,20 @@ export default function NewEvent(props) {
   // console.log('continent:', { continent })
 
   const newEvent = {
-    details: details,
+    Details: details,
     event_date: new Date().toISOString().slice(0, 10),
     event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+    Latitude: userLocation.coords.latitude,
+    Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
-    picture: picture,
-    travelerId: id,
+    Picture: picture,
+    TravelerId: id,
+    StackholderId: stackholderId,
+    serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
-    stackholderId: stackholderId,
-    serialTypeNumber: serialTypeNumber,
-    latitude: userLocation.coords.latitude,
-    longitude: userLocation.coords.longitude
+   
+    
   };
 
   console.log('new', newEvent);
@@ -116,15 +118,11 @@ export default function NewEvent(props) {
       })
         .then(response => response.json())
         .then(data => {
-
           // Handle the response data as needed
           console.log(data);
-
-          navigation.navigate('Forgot password');
-          // Navigate back to the "Around You" screen
-
-          console.log({ newEvent })
-          alert('Publish')
+          navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
+          //console.log({ newEvent })
+          //alert('Publish')
 
         })
         .catch(error => {
