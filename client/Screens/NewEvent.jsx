@@ -26,6 +26,11 @@ export default function NewEvent(props) {
   const countryObj = {
     country_name: country,
   };
+  const areaObj = {
+    country_number: countryNumber,
+    area_number: areaNumber,
+    area_name: region
+  }
 
   const id = traveler.traveler_id;
   const [value, setValue] = useState('null');
@@ -56,8 +61,6 @@ export default function NewEvent(props) {
         setRegion(regionComponent.long_name);
         console.log('-------',countryComponent.long_name)
         console.log(regionComponent.long_name)
-
-
         addContry();
         // setContinent(continentComponent.long_name)
 
@@ -66,24 +69,28 @@ export default function NewEvent(props) {
   }, []);
 
   console.log('contry:', { country })
+
+
   console.log('region:', {region })
 
 
   // console.log('continent:', { continent })
 
   const newEvent = {
-    details: details,
+    Details: details,
     event_date: new Date().toISOString().slice(0, 10),
     event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+    Latitude: userLocation.coords.latitude,
+    Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
-    picture: picture,
-    travelerId: id,
+    Picture: picture,
+    TravelerId: id,
+    StackholderId: stackholderId,
+    serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
-    stackholderId: stackholderId,
-    serialTypeNumber: serialTypeNumber,
-    latitude: userLocation.coords.latitude,
-    longitude: userLocation.coords.longitude
+   
+    
   };
 
   console.log('new', newEvent);
@@ -126,15 +133,11 @@ export default function NewEvent(props) {
       })
         .then(response => response.json())
         .then(data => {
-
           // Handle the response data as needed
           console.log(data);
-
-          navigation.navigate('Forgot password');
-          // Navigate back to the "Around You" screen
-
-          console.log({ newEvent })
-          alert('Publish')
+          navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
+          //console.log({ newEvent })
+          //alert('Publish')
 
         })
         .catch(error => {
@@ -312,8 +315,6 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 2,
     borderRadius: 25,
-    backgroundColor: '#144800'
-
-  },
+    backgroundColor: '#144800'},
 
 });
