@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class AskForHelpController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities2 db = new igroup190_test1Entities2();
         // GET: api/AskForHelp
         public IEnumerable<string> Get()
         {
@@ -49,6 +49,35 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
 
                 return Ok("New ask for help was created");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("api/askforhelp/{requastNumber}")]
+        public IHttpActionResult ShowAskForHelp(int requastNumber)
+        {
+            try
+            {
+                var askForHelp = db.tblAskForHelp.FirstOrDefault(a => a.requastNumber == requastNumber);
+
+
+                // If no matching record was found, return a not found response
+                if (askForHelp == null)
+                {
+                    return NotFound();
+                }
+                var ShowAskForHelpDto = new ShowAskForHelpDto
+                {
+                    Details = askForHelp.details,
+                    Latitude = askForHelp.latitude,
+                    Longitude = askForHelp.longitude,
+                    Picture = askForHelp.picture
+                };
+
+                return Ok(ShowAskForHelpDto);
             }
             catch (Exception ex)
             {

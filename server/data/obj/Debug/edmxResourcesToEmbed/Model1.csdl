@@ -406,7 +406,9 @@
     <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="*" />
     <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
+
+  <EntityContainer Name="igroup190_test1Entities2" annotation:LazyLoadingEnabled="true">
+
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" />

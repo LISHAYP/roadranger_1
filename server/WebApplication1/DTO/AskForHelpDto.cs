@@ -18,4 +18,13 @@ namespace WebApplication1.DTO
         public int AreaNumber { get; set; }
       
     }
+    public class ShowAskForHelpDto
+    {
+        public string Details { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string Picture { get; set; }
+       
+
+    }
 }

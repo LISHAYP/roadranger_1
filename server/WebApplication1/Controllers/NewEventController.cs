@@ -1,4 +1,4 @@
-﻿using data;
+using data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +11,30 @@ namespace WebApplication1.Controllers
 {
     public class NewEventController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities2 db = new igroup190_test1Entities2();
 
         // GET: api/NewEvent
         public IEnumerable<EventDto> Get()
         {
             List<tblEvents> events = db.tblEvents.ToList();
-            List<EventDto> eventsDto= new List<EventDto>();
+            List<EventDto> eventsDto = new List<EventDto>();
 
             foreach (var newevent in events)
             {
                 EventDto eventDto = new EventDto
                 {
-                    Details= newevent.details,
+                    Details = newevent.details,
                     EventDate = newevent.event_date,
                     EventTime = newevent.event_time,
                     Latitude = newevent.latitude,
                     Longitude = newevent.longitude,
-                    EventStatus= newevent.event_status,
-                    Picture= newevent.picture,
+                    EventStatus = newevent.event_status,
+                    Picture = newevent.picture,
                     TravelerId = newevent.travelerId,
                     StackholderId = newevent.stackholderId,
                     SerialTypeNumber = newevent.serialTypeNumber,
                     CountryNumber = newevent.country_number,
-                    AreaNumber= newevent.area_number
+                    AreaNumber = newevent.area_number
                 };
                 eventsDto.Add(eventDto);
             }
@@ -79,15 +79,46 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
-
-        // PUT: api/NewEvent/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        [Route("api/events/{eventId}/comments")]
+        public IHttpActionResult GetCommentsForEvent(int eventId)
         {
+            try
+            {
+                var comments = db.tblComments.Where(c => c.eventNumber == eventId)
+                                              .Select(c => new CommentDto
+                                              {
+                                                  CommentNumber = c.commentNumber,
+                                                  EventNumber = c.eventNumber,
+                                                  Details = c.details,
+                                                  CommentDate = c.comment_date,
+                                                  CommentTime = c.comment_time,
+                                                  TravelerId = c.travelerId,
+                                                  StackholderId = c.stackholderId,
+                                                  TravelerName = c.traveleres.first_name+ c.traveleres.last_name,
+                                                  StakeholderName = c.stakeholders.stakeholder_name
+                                              }).ToList();
+
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+            // PUT: api/NewEvent/5
+            public void Put(int id, [FromBody] string value)
+        {
+
         }
 
         // DELETE: api/NewEvent/5
         public void Delete(int id)
         {
+
         }
     }
+
 }
+
