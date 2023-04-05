@@ -79,15 +79,46 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
-
-        // PUT: api/NewEvent/5
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("api/events/{eventId}/comments")]
+        public IHttpActionResult GetCommentsForEvent(int eventId)
         {
+            try
+            {
+                var comments = db.tblComments.Where(c => c.eventNumber == eventId)
+                                              .Select(c => new CommentDto
+                                              {
+                                                  CommentNumber = c.commentNumber,
+                                                  EventNumber = c.eventNumber,
+                                                  Details = c.details,
+                                                  CommentDate = c.comment_date,
+                                                  CommentTime = c.comment_time,
+                                                  TravelerId = c.travelerId,
+                                                  StackholderId = c.stackholderId,
+                                                  TravelerName = c.traveleres.first_name+ c.traveleres.last_name,
+                                                  StakeholderName = c.stakeholders.stakeholder_name
+                                              }).ToList();
+
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+            // PUT: api/NewEvent/5
+            public void Put(int id, [FromBody] string value)
+        {
+
         }
 
         // DELETE: api/NewEvent/5
         public void Delete(int id)
         {
+
         }
     }
+
 }
+

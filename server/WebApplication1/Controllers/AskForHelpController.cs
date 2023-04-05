@@ -55,6 +55,35 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost]
+        [Route("api/askforhelp/{requastNumber}")]
+        public IHttpActionResult ShowAskForHelp(int requastNumber)
+        {
+            try
+            {
+                var askForHelp = db.tblAskForHelp.FirstOrDefault(a => a.requastNumber == requastNumber);
+
+
+                // If no matching record was found, return a not found response
+                if (askForHelp == null)
+                {
+                    return NotFound();
+                }
+                var ShowAskForHelpDto = new ShowAskForHelpDto
+                {
+                    Details = askForHelp.details,
+                    Latitude = askForHelp.latitude,
+                    Longitude = askForHelp.longitude,
+                    Picture = askForHelp.picture
+                };
+
+                return Ok(ShowAskForHelpDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         // PUT: api/AskForHelp/5
         public void Put(int id, [FromBody] string value)

@@ -71,11 +71,13 @@ namespace WebApplication1.Controllers
         // PUT: api/Area/5
         public void Put(int id, [FromBody] string value)
         {
+
         }
 
         // DELETE: api/Area/5
         public void Delete(int id)
         {
+
         }
     }
 }
