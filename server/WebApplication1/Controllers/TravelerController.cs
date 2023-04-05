@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
 {
     public class TravelerController : ApiController
     {
-        igroup190_test1Entities2 db = new igroup190_test1Entities2();
+        igroup190_test1Entities db = new igroup190_test1Entities();
         // GET: api/Traveler
         public IEnumerable<TravelerDto> Get()
         {
@@ -214,6 +214,41 @@ namespace WebApplication1.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("api/traveler/details")]
+        public IHttpActionResult GetTravelerDetails([FromBody] TravelerDto travelerId)
+        {
+            // Find the traveler in the database based on the ID
+            var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerId.traveler_id);
+
+            if (traveler == null)
+            {
+                // If the traveler is not found, return a 404 Not Found response
+                return NotFound();
+            }
+
+            // Map the traveler entity to a DTO and return it
+            var travelerDto = new TravelerDto
+            {
+                traveler_id = traveler.traveler_id,
+                first_name = traveler.first_name,
+                last_name = traveler.last_name,
+                travler_email = traveler.travler_email,
+                phone = traveler.phone,
+                notifications = traveler.notifications,
+                insurence_company = traveler.insurence_company,
+                location = traveler.location,
+                save_location = traveler.save_location,
+                dateOfBirth = traveler.dateOfBirth,
+                gender = traveler.gender,
+                password = traveler.password,
+                chat = traveler.chat
+            };
+
+            return Ok(travelerDto);
+        }
+
 
         private string GeneratePassword()
         {

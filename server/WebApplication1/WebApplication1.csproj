@@ -201,12 +201,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
     <Compile Include="Controllers\TravelerController.cs" />
+    <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="DTO\AskForHelpDto.cs" />
     <Compile Include="DTO\CommentDto.cs" />
     <Compile Include="DTO\ConversationControllerDto.cs" />
     <Compile Include="DTO\CountriesDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
+    <Compile Include="DTO\TypeDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

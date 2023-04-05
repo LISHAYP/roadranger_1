@@ -153,9 +153,9 @@
           <Property Name="location" Type="bit" />
           <Property Name="save_location" Type="bit" />
           <Property Name="dateOfBirth" Type="date" Nullable="false" />
-          <Property Name="gender" Type="char" MaxLength="1" />
           <Property Name="password" Type="nvarchar" MaxLength="50" />
           <Property Name="chat" Type="bit" />
+          <Property Name="gender" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="comment_event">
           <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
@@ -671,9 +671,9 @@
           <Property Name="location" Type="Boolean" />
           <Property Name="save_location" Type="Boolean" />
           <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="chat" Type="Boolean" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
           <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
@@ -907,7 +907,7 @@
           <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="*" />
           <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="igroup190_test1Entities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" />
@@ -1002,7 +1002,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities2">
+        <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
           <EntitySetMapping Name="stakeholders">
             <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
               <MappingFragment StoreEntitySet="stakeholders">
@@ -1151,9 +1151,9 @@
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="save_location" ColumnName="save_location" />
                 <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="chat" ColumnName="chat" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

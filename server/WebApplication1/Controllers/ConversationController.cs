@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class ConversationController : ApiController
     {
-        readonly igroup190_test1Entities2 db = new igroup190_test1Entities2();
+        readonly igroup190_test1Entities db = new igroup190_test1Entities();
 
         // GET: api/Conversation
         public IEnumerable<string> Get()

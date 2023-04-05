@@ -170,9 +170,9 @@
     <Property Name="location" Type="Boolean" />
     <Property Name="save_location" Type="Boolean" />
     <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="chat" Type="Boolean" />
+    <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
     <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
@@ -406,9 +406,7 @@
     <End Role="stakeholders" Type="Self.stakeholders" Multiplicity="*" />
     <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
   </Association>
-
-  <EntityContainer Name="igroup190_test1Entities2" annotation:LazyLoadingEnabled="true">
-
+  <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" />
