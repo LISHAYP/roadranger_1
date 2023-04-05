@@ -59,7 +59,6 @@ export default function AroundYou(props) {
             .then(
                 (result) => {
 
-                    console.log("fetch  ", result);
                     setEvents(result)
                 },
                 (error) => {
