@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import ForgotPassword from './Screens/ForgotPassword';
 import EventDetails from './Screens/EventDetails';
-
+import OpenCamera from './Components/OpenCamera';
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
@@ -29,6 +29,7 @@ export default function App() {
         <Stack.Screen name="New event" component={NewEvent} />
         <Stack.Screen name="SOS" component={SOS} />
         {/* <Stack.Screen name="TimeLine" component={Timeline} /> */}
+        <Stack.Screen name="Camera" component={OpenCamera} />
 
 <Stack.Screen name="Event Details" component={EventDetails} />
 
@@ -43,5 +44,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  },
 });
