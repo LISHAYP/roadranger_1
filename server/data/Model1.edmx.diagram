@@ -4,37 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8485d20a931e4f3685e70e5060cf5b91" Name="Diagram1">
-        <EntityTypeShape EntityType="igroup190_test1Model.stakeholder" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblComment" Width="1.5" PointX="8.25" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblCountry" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblEvent" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblLocation" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblType" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.travelere" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTraveler" Width="1.5" PointX="5.25" PointY="26.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="8.25" PointY="14.625" IsExpanded="true" />
+
+      <Diagram DiagramId="b8625c3aac504deb992f94283868bae0" Name="Diagram1">
+
+        <EntityTypeShape EntityType="igroup190_test1Model.stakeholders" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblComments" Width="1.5" PointX="8.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelers" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblCountries" Width="1.5" PointX="3.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblEvents" Width="1.5" PointX="8.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblLocations" Width="1.5" PointX="5.25" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblType" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.traveleres" Width="1.5" PointX="3" PointY="27.375" IsExpanded="true" />
         <AssociationConnector Association="igroup190_test1Model.comment_stackholder" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.event_stackholder" ManuallyRouted="false" />
+        <AssociationConnector Association="igroup190_test1Model.FK_tblAskForHelp_stakeholders" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.stackholder_con" ManuallyRouted="false" />
-        <AssociationConnector Association="igroup190_test1Model.user_stackholder" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.country_area" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.country_area_AFH" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.country_area_event" ManuallyRouted="false" />
+        <AssociationConnector Association="igroup190_test1Model.FK_tblAskForHelp_traveleres" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.type_" ManuallyRouted="false" />
-        <AssociationConnector Association="igroup190_test1Model.user_traveler" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.comment_event" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.comment_traveler" ManuallyRouted="false" />
+        <AssociationConnector Association="igroup190_test1Model.travelers_traveler1" ManuallyRouted="false" />
+        <AssociationConnector Association="igroup190_test1Model.travelers_traveler2" ManuallyRouted="false" />
+        <AssociationConnector Association="igroup190_test1Model.travelers_con" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.event_traveler" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.single" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.type_event" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.traveler_location" ManuallyRouted="false" />
-        <AssociationConnector Association="igroup190_test1Model.travelers_con" ManuallyRouted="false" />
-        <AssociationConnector Association="igroup190_test1Model.travelers_traveler1" ManuallyRouted="false" />
-        <AssociationConnector Association="igroup190_test1Model.travelers_traveler2" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.tblinsuredBy" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

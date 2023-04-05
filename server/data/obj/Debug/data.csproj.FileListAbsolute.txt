@@ -22,3 +22,27 @@ C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פ�
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.csproj.CopyComplete
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.dll
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\data\obj\Debug\data.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\data.dll.config
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\data.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\data.pdb
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\EntityFramework.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\EntityFramework.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Debug\data.csproj.AssemblyReference.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Debug\data.csproj.CoreCompileInputs.cache
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Debug\data.csproj.CopyComplete
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Debug\data.dll
+C:\Users\97250\Desktop\לישי לימודים\שנה ג\פרויקט גמר חדש\final_project\roadranger_1\server\data\obj\Debug\data.pdb
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\data.dll.config
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\data.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\data.pdb
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\EntityFramework.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\EntityFramework.xml
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.csproj.AssemblyReference.cache
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.csproj.CoreCompileInputs.cache
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.csproj.CopyComplete
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.dll
+C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.pdb

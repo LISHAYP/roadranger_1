@@ -17,9 +17,10 @@ namespace data
         public int ChatId { get; set; }
         public int User_one { get; set; }
         public int User_two { get; set; }
-        public byte[] created_at { get; set; }
+        public System.DateTime created_at { get; set; }
+        public string message { get; set; }
     
-        public virtual stakeholder stakeholder { get; set; }
-        public virtual travelere travelere { get; set; }
+        public virtual stakeholders stakeholders { get; set; }
+        public virtual traveleres traveleres { get; set; }
     }
 }

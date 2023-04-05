@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-
+import { useEffect } from 'react';
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -48,7 +48,7 @@ export default function SignUp() {
     last_name: lastName,
     travler_email: email,
     phone: phone,
-    notification: isEnabledNotification,
+    notifications: isEnabledNotification,
     insurence_company: selectedInsurance,
     location: isEnabledLocation,
     save_location: isEnabledLocation,
@@ -104,7 +104,7 @@ export default function SignUp() {
             </TextInput>
             <Text style={styles.text}>Password:</Text>
             <TextInput style={styles.input}
-              placeholder="****"
+              placeholder="*******"
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}>
@@ -113,6 +113,7 @@ export default function SignUp() {
             <TextInput style={styles.input}
               placeholder="Phone"
               value={phone}
+              keyboardType='numeric'
               onChangeText={(text) => setPhone(text)}
             >
             </TextInput>
