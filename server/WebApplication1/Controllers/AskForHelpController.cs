@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class AskForHelpController : ApiController
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
+        igroup190_test1Entities2 db = new igroup190_test1Entities2();
         // GET: api/AskForHelp
         public IEnumerable<string> Get()
         {
