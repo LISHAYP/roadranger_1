@@ -24,11 +24,6 @@ export default function NewEvent(props) {
   const countryObj = {
     country_name: country,
   };
-  const areaObj = {
-    country_number: countryNumber,
-    area_number: areaNumber,
-    area_name: region
-  }
 
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
@@ -148,9 +143,10 @@ export default function NewEvent(props) {
         .then(data => {
           // Handle the response data as needed
           console.log(data);
-          navigation.navigate('Forgot password'); // Navigate back to the "Around You" screen
+           alert('Publish')
+          navigation.goBack(); // Navigate back to the "Around You" screen
           //console.log({ newEvent })
-          //alert('Publish')
+         
 
         })
         .catch(error => {
