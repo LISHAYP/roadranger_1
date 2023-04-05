@@ -15,34 +15,24 @@ export default function NewEvent(props) {
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [region,setRegion]=useState('');
-  // const [continent, setContinent] = useState('');
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
   ]
 
- 
   const countryObj = {
     country_name: country,
   };
-  const areaObj = {
-    country_number: countryNumber,
-    area_number: areaNumber,
-    area_name: region
-  }
 
   const id = traveler.traveler_id;
-  const [value, setValue] = useState('null');
   const [details, setDetails] = useState('');
-  // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
-  // const [eventTime, setEventTime] = useState(`${new Date().getHours()}:${new Date().getMinutes()}`);
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
-  const [areaNumber, setAreaNumber] = useState('1');
+  const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
 
 
@@ -57,20 +47,14 @@ export default function NewEvent(props) {
 
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
-
         setRegion(regionComponent.long_name);
-        console.log('-------',countryComponent.long_name)
-        console.log(regionComponent.long_name)
         addContry();
-        // setContinent(continentComponent.long_name)
-
+        
       })
       .catch(error => console.warn(error))
   }, []);
 
   console.log('contry:', { country })
-
-
   console.log('region:', {region })
 
 
@@ -89,8 +73,6 @@ export default function NewEvent(props) {
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
-   
-    
   };
 
   console.log('new', newEvent);
@@ -109,6 +91,7 @@ export default function NewEvent(props) {
       .then(data => {
         console.log('********', { data })
         setCountryNumber(data)
+        addRegion();
       }
       )
       .catch(error => {
@@ -117,9 +100,34 @@ export default function NewEvent(props) {
       });
   }
 
+  addRegion = () => {
+    const areaObj = {
+      country_number: countryNumber,
+      area_name: region
+    }
+    console.log('*****',{areaObj})
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(areaObj),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('********', { data })
+        setAreaNumber(data)
+      }
+      )
+      .catch(error => {
+        console.error(error);
+        console.log('Error');
+      });
+  }
   const createEvent = async () => {
 
-    if (newEvent.details === '' || newEvent.serialTypeNumber === '') {
+    if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       alert('Please enter details and type');
     }
     else {
