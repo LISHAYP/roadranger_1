@@ -52,9 +52,12 @@ export default function NewEvent(props) {
 
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
+
         setRegion(regionComponent.long_name);
         console.log('-------',countryComponent.long_name)
         console.log(regionComponent.long_name)
+
+
         addContry();
         // setContinent(continentComponent.long_name)
 
@@ -64,6 +67,7 @@ export default function NewEvent(props) {
 
   console.log('contry:', { country })
   console.log('region:', {region })
+
 
   // console.log('continent:', { continent })
 
@@ -309,5 +313,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 25,
     backgroundColor: '#144800'
-  },
+
+  },
+
 });
