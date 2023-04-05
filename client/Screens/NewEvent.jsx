@@ -24,6 +24,11 @@ export default function NewEvent(props) {
   const countryObj = {
     country_name: country,
   };
+  const areaObj = {
+    country_number: countryNumber,
+    area_number: areaNumber,
+    area_name: region
+  }
 
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
@@ -324,5 +329,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 25,
     backgroundColor: '#144800'},
-
 });
+
+
+
