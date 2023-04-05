@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
-import User from'../assets/User.jpg';
-// import User from '../assets/User.png';
+// import User from'../assets/User.jpg';
+import User from '../assets/User.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
-export default function SignUp() {
+export default function SignUp(props) {
+  useEffect(() => {
+    imgeUser = props.route.params.image;
+    console.log(imgeUser)
+    if (imgeUser !== null) { 
+      setImage(imgeUser)        
+      }
+  }, []);
+
+  // setImage(props.route.params.image)
+  // const [image, setImage] = useState(User);
+  const [image, setImage] = useState('../assets/User.png');
+  console.log(image)
+  // console.log(image)
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -90,7 +103,7 @@ export default function SignUp() {
         <View style={styles.container}>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <TouchableOpacity onPress={openCamera}>
-            <Image source={User} style={styles.user} />
+            <Image source={image} style={styles.user} />
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
@@ -237,7 +250,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderRadius: 50,
     width: '40%',
-    marginBottom:25
+    marginBottom: 25
   },
   text: {
     color: '#144800',

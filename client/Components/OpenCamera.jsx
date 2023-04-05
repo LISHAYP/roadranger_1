@@ -32,9 +32,13 @@ export default function OpenCamera() {
   }
 
   const takePicture = async () => {
+    
     if (camera) {
-      const photo = await camera.takePictureAsync();
-      setImage(photo);
+      camera.takePictureAsync().then(photo => {
+        setImage(photo);
+      }).catch(error => {
+        console.log(error);
+      });
     }
   };
 
@@ -49,11 +53,12 @@ export default function OpenCamera() {
       return;
     }
     setImage(pickerResult);
+    console.log({ pickerResult })
   }
 
-  
-  const onPictureSaved = photo => {
-    console.log(photo);
+  const savePhoto = () => {
+    navigation.goBack({ image: image.uri });
+    console.log({image})
   }
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
@@ -67,14 +72,18 @@ export default function OpenCamera() {
           <TouchableOpacity style={styles.previewButton} onPress={() => setImage(null)}>
             <Icon name="close-outline" size={35} color='white' />
           </TouchableOpacity>
+          <TouchableOpacity style={styles.save} onPress={savePhoto} >
+            <Icon name="download-outline" size={35}  />
+            <Text style={styles.textSave}>Save</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <Camera style={styles.camera} type={type} ref={(ref) => { setCamera(ref) }}>
           <TouchableOpacity style={styles.buttonClose} onPress={closeCamera}>
             <Icon name="close-outline" size={35} color='white' />
           </TouchableOpacity>
-          <View style={styles.buttonContainer} onPress={openGallery}>
-            <TouchableOpacity style={styles.button} >
+          <View style={styles.buttonContainer} >
+            <TouchableOpacity style={styles.button} onPress={openGallery}>
               <Icon name="images-outline" size={45} color='white' style={styles.iconLeft} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
@@ -141,6 +150,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 32,
     right: 16
-  }
+  },
+  save:{
+    flexDirection: 'row',
+    marginBottom:50,
+  },
+  textSave:{
+    fontSize:25,
+    marginTop:10
 
+  }
 });
