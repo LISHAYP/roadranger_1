@@ -3,27 +3,31 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView,
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
-// import User from'../assets/User.jpg';
-import User from '../assets/User.png';
+import User from '../assets/User.jpg';
+//import User from '../assets/User.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
-export default function SignUp(props) {
-  useEffect(() => {
-    imgeUser = props.route.params.image;
-    console.log(imgeUser)
-    if (imgeUser !== null) { 
-      setImage(imgeUser)        
-      }
-  }, []);
+export default function SignUp({ route }) {
+  const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
 
-  // setImage(props.route.params.image)
-  // const [image, setImage] = useState(User);
-  const [image, setImage] = useState('../assets/User.png');
-  console.log(image)
-  // console.log(image)
+  const [profilePic, setProfilePic] = useState(defaultPic);
+  const [newProfilePic, setNewProfilePic] = useState(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (route.params?.image) {
+        setNewProfilePic(route.params.image.uri);
+        console.log(route.params.image.uri);
+      }
+    }, [route.params?.image])
+  );
+  
+
+
+
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -103,7 +107,11 @@ export default function SignUp(props) {
         <View style={styles.container}>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <TouchableOpacity onPress={openCamera}>
-            <Image source={image} style={styles.user} />
+            {newProfilePic ? (
+              <Image source={{ uri: newProfilePic }} style={styles.user} />
+            ) : (
+              <Image source={{ uri: profilePic }} style={styles.user} />
+            )}
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
@@ -244,14 +252,12 @@ const styles = StyleSheet.create({
   },
   user: {
     alignSelf: 'center',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     height: 150,
-    borderColor: '#144800',
-    borderWidth: 5,
-    borderRadius: 50,
-    width: '40%',
+    borderRadius: 75,
+    width: 150,
     marginBottom: 25
-  },
+  },  
   text: {
     color: '#144800',
     fontSize: 20,

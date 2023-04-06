@@ -49,16 +49,21 @@ export default function OpenCamera() {
       return;
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    if (pickerResult.canceled === true) {
-      return;
+    console.log({pickerResult}); // Log the pickerResult object
+    if (pickerResult.canceled || pickerResult.cancelled) {
+      console.log('Image selection cancelled'); // Handle cancel event
+    } else {
+      const selectedAsset = pickerResult.assets[0];
+      const image = { uri: selectedAsset.uri, width: selectedAsset.width, height: selectedAsset.height };
+      console.log({image});
+      setImage(image);
     }
-    setImage(pickerResult);
-    console.log({ pickerResult })
-  }
-
+  };
+  
+  
   const savePhoto = () => {
-    navigation.goBack({ image: image.uri });
-    console.log({image})
+    navigation.navigate('Sign Up', { image });
+    console.log('img',{image})
   }
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
