@@ -201,12 +201,15 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
+    <Compile Include="Controllers\SearchEventController.cs" />
     <Compile Include="Controllers\TravelerController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="DTO\AreaDto.cs" />
     <Compile Include="DTO\AskForHelpDto.cs" />
     <Compile Include="DTO\CommentDto.cs" />
     <Compile Include="DTO\ConversationControllerDto.cs" />
     <Compile Include="DTO\CountriesDto.cs" />
+    <Compile Include="DTO\CountryAreaDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="DTO\TypeDto.cs" />

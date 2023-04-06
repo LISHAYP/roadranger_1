@@ -57,6 +57,7 @@ namespace WebApplication1.Controllers
             {
                 tblEvents newEvent = new tblEvents
                 {
+                    eventNumber = value.eventNumber,
                     details = value.details,
                     event_date = value.event_date,
                     event_time = value.event_time,
@@ -117,7 +118,7 @@ namespace WebApplication1.Controllers
             try
             {
                 // Retrieve the existing event from the database
-                tblEvents existingEvent = db.tblEvents.FirstOrDefault(x => x.eventNumber== updatedEvent.eventNumber);
+                tblEvents existingEvent = db.tblEvents.FirstOrDefault(x => x.eventNumber == updatedEvent.eventNumber);
 
                 // If the existing event does not exist, return a bad request
                 if (existingEvent == null)
@@ -149,7 +150,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
-    
+
         // PUT: api/NewEvent/5
         public void Put(int id, [FromBody] string value)
         {

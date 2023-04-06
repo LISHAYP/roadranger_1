@@ -70,7 +70,8 @@ namespace WebApplication1.Controllers
                     location = value.location,
                     save_location = value.save_location,
                     password = value.password,
-                    chat = value.chat
+                    chat = value.chat,
+                    picture = value.picture
                 };
 
                 db.traveleres.Add(newTraveler);
@@ -102,6 +103,7 @@ namespace WebApplication1.Controllers
                 location = x.location,
                 save_location = x.save_location,
                 chat = x.chat
+
             })
         .ToList();
             try
@@ -112,7 +114,7 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    return BadRequest("bad");
+                    return BadRequest("wrong email or password");
                 }
             }
             catch
@@ -159,6 +161,7 @@ namespace WebApplication1.Controllers
                 traveler.save_location = value.save_location;
                 traveler.password = value.password;
                 traveler.chat = value.chat;
+                traveler.picture = value.Picture;
 
                 db.Entry(traveler).State = EntityState.Modified;
                 db.SaveChanges();
