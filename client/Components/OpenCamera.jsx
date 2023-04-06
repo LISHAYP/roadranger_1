@@ -5,12 +5,13 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function OpenCamera() {
+export default function OpenCamera(props) {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
+  const imageSource =props.route.params;
 
   if (!permission) {
     // Camera permissions are still loading
@@ -57,9 +58,9 @@ export default function OpenCamera() {
   }
 
   const savePhoto = () => {
-    navigation.goBack({ image: image.uri });
-    console.log({image})
-  }
+    navigation.goBack({ imageSource});
+    
+  };
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
   }
@@ -88,6 +89,7 @@ export default function OpenCamera() {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
               <Icon name="radio-button-on-outline" size={100} color='white' style={styles.iconCenter} />
+             
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Icon name="sync-circle-outline" size={45} color='white' style={styles.iconRight} />

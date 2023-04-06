@@ -4,26 +4,24 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
 // import User from'../assets/User.jpg';
-import User from '../assets/User.png';
+// import User from '../assets/User.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
-export default function SignUp(props) {
+export default function SignUp({ route }) {
+
   useEffect(() => {
-    imgeUser = props.route.params.image;
-    console.log(imgeUser)
-    if (imgeUser !== null) { 
-      setImage(imgeUser)        
-      }
+    const imageSource = route.params.imageSource;
+    if (imageSource !== null) 
+    { setImage(imageSource) }
+    else(setImage(require('../assets/User.png')))
+   
   }, []);
 
-  // setImage(props.route.params.image)
-  // const [image, setImage] = useState(User);
-  const [image, setImage] = useState('../assets/User.png');
+  const [image, setImage] = useState('');
   console.log(image)
-  // console.log(image)
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -93,8 +91,10 @@ export default function SignUp(props) {
         alert('Error', 'Failed to sign in. Please try again later.');
       });
   };
+
+
   const openCamera = () => {
-    navigation.navigate('Camera');
+    navigation.navigate('Camera',{imageSource});
   }
 
   return (
