@@ -1,21 +1,27 @@
-import { Dimensions, StyleSheet, Text, View, Image } from 'react-native'
+import { useState, useEffect, Dimensions, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
+import { fetch } from 'react-native';
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height ;
+const height = Dimensions.get('window').height;
 
 const EventDetails = (props) => {
   const event = props.route.params.event;
+  //const [traveler, setTraveler] = useState('');
+ const travelerobj = {
+      traveler_Id: event.TravelerId
+    };
+
   return (
     <GradientBackground>
       <View style={styles.container}>
         <View style={styles.pictureContainer}>
-          <Image source={{ uri: 'https://ynet-pic1.yit.co.il/picserver5/wcm_upload/2022/09/17/ByEIVD711j/photo_2022_09_17_18_14_09.jpg' }} style={styles.picture} resizeMode="contain" />
+          <Image source={{ uri: 'https://img.mako.co.il/2021/10/07/photo5978846621133289432_autoOrient_i.jpg' }} style={styles.picture} resizeMode="contain" />
         </View>
         <View style={styles.locationContainer}>
-          <Icon name="location-outline" size={30} color={'red'} style={styles.locationIcon} />
+          <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
           <Text style={styles.locationText}>{event.Details}</Text>
         </View>
         <View style={styles.rowContainer}>
@@ -23,11 +29,10 @@ const EventDetails = (props) => {
             <View style={styles.circle}>
               <Image source={{ uri: 'https://image.flaticon.com/icons/png/512/16/16363.png' }} style={styles.icon} resizeMode="contain" />
             </View>
-            <Text style={styles.text}>Traveler ID: {event.TravelerId}</Text>
+            <Text style={styles.text}>aaaa </Text>
           </View>
           <View style={styles.dateTimeContainer}>
-            <Text style={styles.textdateTime}>{new Date(event.EventDate).toLocaleDateString('en-US')}</Text>
-            <Text style={styles.textdateTime}>{event.EventTime}</Text>
+            <Text style={styles.textdateTime}>{event.EventTime} {new Date(event.EventDate).toLocaleDateString('en-US')}</Text>
           </View>
         </View>
       </View>
@@ -39,75 +44,66 @@ export default EventDetails
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // take up all available space
-    marginVertical: 10,
-    marginHorizontal: 10,
-    padding: 20,
-  },
-  text: {
-    color: 'black',
-    fontSize: 15,
-    marginBottom: 25,
+    flex: 1,
+    justifyContent: 'flex-start',
+    padding: 10
   },
   pictureContainer: {
-    alignItems: 'center', // center the picture horizontally
-    width: width,
-    height: height*0.2, // set a fixed height for the container
+    height: height * 0.2, // adjust this value as needed
+    width: width + 30,
   },
   picture: {
+    flex: 1,
     width: width,
-    height: height, // set the height of the image to fill the container
+    height: height,
+    padding: 10
+  },
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  locationIcon: {
+    marginRight: 10,
+  },
+  locationText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 10,
   },
   idContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 'auto',
   },
   circle: {
-    width: 40,
     height: 40,
+    width: 40,
     borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
   },
   icon: {
-    width: '50%',
-    height: '50%',
+    height: '70%',
+    width: '70%',
+  },
+  text: {
+    fontSize: 16,
   },
   dateTimeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
+    alignItems: 'flex-end',
+    marginLeft: 'auto',
   },
-  dateTimeText: {
-    color: '#144800',
-    fontSize: 10,
-    marginRight: 10,
-  },
-  locationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  locationIcon: {
-    marginRight: 10,
-    marginBottom:20
-  },
-  locationText: {
-    color: 'black',
-    fontSize: 20,
+  textdateTime: {
+    fontSize: 16,
+    marginVertical: 5,
     marginTop: 30,
+    fontSize: 10
   },
-  textdateTime:{
-    color: 'black',
-    fontSize: 10,
-    marginTop: 30,
-  }
 });
+

@@ -54,11 +54,8 @@ export default function NewEvent(props) {
       .catch(error => console.warn(error))
   }, []);
 
-  console.log('contry:', { country })
-  console.log('region:', {region })
-
-
-  // console.log('continent:', { continent })
+  console.log('1 contry:', { country })
+  console.log('2 region:', {region })
 
   const newEvent = {
     Details: details,
@@ -75,10 +72,10 @@ export default function NewEvent(props) {
     area_number: areaNumber,
   };
 
-  console.log('new', newEvent);
+  console.log('3  new', newEvent);
 
-  addContry = () => {
-    console.log('*****',{country})
+   addContry = () => {
+    console.log('4  *****',{country})
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
@@ -89,23 +86,23 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('********', { data })
+        console.log('5  ********', { data })
         setCountryNumber(data)
         addRegion();
       }
       )
       .catch(error => {
         console.error(error);
-        console.log('Error');
+        console.log('6 Error');
       });
   }
 
-  addRegion = () => {
+   addRegion = () => {
     const areaObj = {
       country_number: countryNumber,
       area_name: region
     }
-    console.log('*****',{areaObj})
+    console.log('7  *****',{areaObj})
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
@@ -116,7 +113,7 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('********', { data })
+        console.log('8  ********', { data })
         setAreaNumber(data)
       }
       )
@@ -142,7 +139,7 @@ export default function NewEvent(props) {
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log(data);
+          console.log("9", data);
            alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
           //console.log({ newEvent })
