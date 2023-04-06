@@ -1,18 +1,38 @@
-import { useState, useEffect, Dimensions, StyleSheet, Text, View, Image } from 'react-native'
+import { useState, Dimensions, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
-import { fetch } from 'react-native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const EventDetails = (props) => {
+export default function EventDetails(props) {
   const event = props.route.params.event;
-  //const [traveler, setTraveler] = useState('');
- const travelerobj = {
-      traveler_Id: event.TravelerId
-    };
+  const travelerobj = {
+    traveler_Id: event.TravelerId
+  };
+const [Traveler, setTraveler] = useState('');
+
+  fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(travelerobj),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setTraveler(data);
+    }
+    )
+    .catch(error => {
+      console.error(error);
+      console.log('Error');
+    });
+
+
 
   return (
     <GradientBackground>
@@ -29,7 +49,7 @@ const EventDetails = (props) => {
             <View style={styles.circle}>
               <Image source={{ uri: 'https://image.flaticon.com/icons/png/512/16/16363.png' }} style={styles.icon} resizeMode="contain" />
             </View>
-            <Text style={styles.text}>aaaa </Text>
+            {Traveler ? <Text style={styles.text}>{Traveler.first_name}</Text> : null}
           </View>
           <View style={styles.dateTimeContainer}>
             <Text style={styles.textdateTime}>{event.EventTime} {new Date(event.EventDate).toLocaleDateString('en-US')}</Text>
@@ -40,7 +60,6 @@ const EventDetails = (props) => {
   )
 };
 
-export default EventDetails
 
 const styles = StyleSheet.create({
   container: {
