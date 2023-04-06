@@ -7,6 +7,8 @@ namespace WebApplication1.DTO
 {
     public class EventDto
     {
+        public int eventNumber { get; set; }
+
         public string Details { get; set; }
         public DateTime EventDate { get; set; }
         public TimeSpan EventTime { get; set; }

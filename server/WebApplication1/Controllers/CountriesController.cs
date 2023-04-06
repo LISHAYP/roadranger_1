@@ -70,27 +70,53 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/Countries/countryarea
+        //[HttpPost]
+        //[Route("api/post/countryarea")]
+        //public IHttpActionResult LookupCountryOrArea([FromBody] CountriesDto lookup)
+        //{
+        //    if (lookup == null)
+        //    {
+        //        return BadRequest();
+        //    }
+
+
+        //    var country = db.tblCountries.FirstOrDefault(x => x.country_number == lookup.country_number);
+        //    var area = db.tblArea.FirstOrDefault(x => x.area_number == lookup.area_number);
+
+        //    if (country != null )
+        //    {
+        //        return Ok(country.country_name + " " + area.area_name );
+        //    }
+
+        //    return NotFound();
+        //}
+
         [HttpPost]
         [Route("api/post/countryarea")]
-        public IHttpActionResult LookupCountryOrArea([FromBody] CountriesDto lookup)
+        public IHttpActionResult LookupCountryOrArea([FromBody] EventDto lookup)
         {
             if (lookup == null)
             {
                 return BadRequest();
             }
 
+            var @event = db.tblEvents.FirstOrDefault(x => x.eventNumber == lookup.eventNumber);
 
-            var country = db.tblCountries.FirstOrDefault(x => x.country_number == lookup.country_number);
-            var area = db.tblArea.FirstOrDefault(x => x.area_number == lookup.area_number);
-
-            if (country != null )
+            if (@event == null)
             {
-                return Ok(country.country_name + " " + area.area_name );
+                return NotFound();
+            }
+
+            var country = db.tblCountries.FirstOrDefault(a => a.country_number == @event.country_number);
+            var area = db.tblArea.FirstOrDefault(b => b.area_number == @event.area_number);
+
+            if (country != null && area != null)
+            {
+                return Ok(country.country_name + " " + area.area_name);
             }
 
             return NotFound();
         }
-
 
         // PUT: api/Countries/5
         public void Put(int id, [FromBody] string value)

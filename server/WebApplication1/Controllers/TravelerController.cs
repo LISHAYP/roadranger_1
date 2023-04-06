@@ -217,7 +217,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("api/traveler/details")]
-        public IHttpActionResult GetTravelerDetails([FromBody] TravelerDto travelerId)
+        public IHttpActionResult GetTravelerDetails([FromBody]TravelerDto travelerId)
         {
             // Find the traveler in the database based on the ID
             var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerId.traveler_id);

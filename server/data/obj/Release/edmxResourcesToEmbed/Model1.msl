@@ -149,9 +149,10 @@
           <ScalarProperty Name="location" ColumnName="location" />
           <ScalarProperty Name="save_location" ColumnName="save_location" />
           <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
-          <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="chat" ColumnName="chat" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
