@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class AreaController : ApiController
     {
-        igroup190_test1Entities2 db = new igroup190_test1Entities2();
+        igroup190_test1Entities db = new igroup190_test1Entities();
         // GET: api/Area
         public IEnumerable<string> Get()
         {
