@@ -83,12 +83,12 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        [Route("api/events/{eventId}/comments")]
-        public IHttpActionResult GetCommentsForEvent(int eventId)
+        [Route("api/events/comments")]
+        public IHttpActionResult GetCommentsForEvent([FromBody]CommentDto eventId)
         {
             try
             {
-                var comments = db.tblComments.Where(c => c.eventNumber == eventId)
+                var comments = db.tblComments.Where(c => c.eventNumber == eventId.EventNumber)
                                               .Select(c => new CommentDto
                                               {
                                                   CommentNumber = c.commentNumber,
@@ -109,7 +109,6 @@ namespace WebApplication1.Controllers
                 return InternalServerError(ex);
             }
         }
-
         // POST api/post/updateevent
         [HttpPost]
         [Route("api/post/updateevent")]
