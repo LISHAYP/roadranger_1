@@ -25,9 +25,6 @@ export default function SignUp({ route }) {
     }, [route.params?.image])
   );
   
-
-
-
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -75,7 +72,8 @@ export default function SignUp({ route }) {
     dateOfBirth: selectedDate,
     gender: selectedGender,
     password: password,
-    chat: isEnabledChatMode
+    chat: isEnabledChatMode,
+    Picture : newProfilePic ?? profilePic
   };
   const handleSignUp = async () => {
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
@@ -88,7 +86,7 @@ export default function SignUp({ route }) {
       .then(response => response.json())
       .then(data => {
         // Handle the response data as needed
-        console.log(email, password, selectedGender, selectedInsurance, selectedDate)
+        console.log(newTraveler)
         console.log(data);
         navigation.navigate("Forgot password")
       })
@@ -147,7 +145,6 @@ export default function SignUp({ route }) {
           >
           </TextInput>
           <Text style={styles.text}>Gender:</Text>
-
           <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
@@ -159,7 +156,7 @@ export default function SignUp({ route }) {
             placeholder={"Select a gender"}
             value={genderSelection}
             onChange={item => {
-              setSelectedGender(item.value)
+              setSelectedGender(item.label)
               setGenderSelection(item)
             }} />
           <Text style={styles.text}>Insurance Company:</Text>
