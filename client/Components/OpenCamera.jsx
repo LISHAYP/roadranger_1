@@ -32,7 +32,7 @@ export default function OpenCamera() {
   }
 
   const takePicture = async () => {
-    
+
     if (camera) {
       camera.takePictureAsync().then(photo => {
         setImage(photo);
@@ -49,21 +49,24 @@ export default function OpenCamera() {
       return;
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log({pickerResult}); // Log the pickerResult object
+    console.log({ pickerResult }); // Log the pickerResult object
     if (pickerResult.canceled || pickerResult.cancelled) {
       console.log('Image selection cancelled'); // Handle cancel event
     } else {
       const selectedAsset = pickerResult.assets[0];
       const image = { uri: selectedAsset.uri, width: selectedAsset.width, height: selectedAsset.height };
-      console.log({image});
+      console.log({ image });
       setImage(image);
     }
   };
-  
-  
+
+
   const savePhoto = () => {
-    navigation.navigate('Sign Up', { image });
-    console.log('img',{image})
+    console.log('img', { image })
+    navigation.goBack({ image });
+    // navigation.getParam({image});
+    // navigation.navigate('Sign Up', { image });
+    // console.log('img',{image})
   }
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
@@ -78,7 +81,7 @@ export default function OpenCamera() {
             <Icon name="close-outline" size={35} color='white' />
           </TouchableOpacity>
           <TouchableOpacity style={styles.save} onPress={savePhoto} >
-            <Icon name="download-outline" size={35}  />
+            <Icon name="download-outline" size={35} />
             <Text style={styles.textSave}>Save</Text>
           </TouchableOpacity>
         </View>
@@ -93,7 +96,7 @@ export default function OpenCamera() {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
               <Icon name="radio-button-on-outline" size={100} color='white' style={styles.iconCenter} />
-             
+
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Icon name="sync-circle-outline" size={45} color='white' style={styles.iconRight} />
@@ -157,13 +160,13 @@ const styles = StyleSheet.create({
     top: 32,
     right: 16
   },
-  save:{
+  save: {
     flexDirection: 'row',
-    marginBottom:50,
+    marginBottom: 50,
   },
-  textSave:{
-    fontSize:25,
-    marginTop:10
+  textSave: {
+    fontSize: 25,
+    marginTop: 10
 
   }
 });
