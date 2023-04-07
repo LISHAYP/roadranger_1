@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
 import User from '../assets/User.jpg';
-//import User from '../assets/User.png';
+
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
@@ -95,8 +95,10 @@ export default function SignUp({ route }) {
         alert('Error', 'Failed to sign in. Please try again later.');
       });
   };
+
+
   const openCamera = () => {
-    navigation.navigate('Camera');
+    navigation.navigate('Camera',{imageSource});
   }
 
   return (
