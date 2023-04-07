@@ -5,13 +5,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function OpenCamera(props) {
+export default function OpenCamera() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
-  const imageSource =props.route.params;
 
   if (!permission) {
     // Camera permissions are still loading
