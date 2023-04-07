@@ -55,13 +55,19 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
-        [Route("api/askforhelp/{requastNumber}")]
-        public IHttpActionResult ShowAskForHelp(int requastNumber)
+       [HttpPost]
+        [Route("api/post/showAskforhelp")]
+        public IHttpActionResult ShowAskForHelp([FromBody] AskForHelpDto requastNumber)
         {
             try
             {
-                var askForHelp = db.tblAskForHelp.FirstOrDefault(a => a.requastNumber == requastNumber);
+                var askForHelp = db.tblAskForHelp.Where(a => a.requastNumber == requastNumber.RequastNumber).Select(
+                    x => new ShowAskForHelpDto { 
+                     Details = x.details,
+                    Latitude = x.latitude,
+                    Longitude = x.longitude,
+                    Picture = x.picture
+                    }).ToList();
 
 
                 // If no matching record was found, return a not found response
@@ -69,15 +75,9 @@ namespace WebApplication1.Controllers
                 {
                     return NotFound();
                 }
-                var ShowAskForHelpDto = new ShowAskForHelpDto
-                {
-                    Details = askForHelp.details,
-                    Latitude = askForHelp.latitude,
-                    Longitude = askForHelp.longitude,
-                    Picture = askForHelp.picture
-                };
+                
 
-                return Ok(ShowAskForHelpDto);
+                return Ok(askForHelp);
             }
             catch (Exception ex)
             {
