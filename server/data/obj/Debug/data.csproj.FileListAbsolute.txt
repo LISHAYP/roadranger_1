@@ -46,3 +46,15 @@ C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\da
 C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.csproj.CopyComplete
 C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.dll
 C:\Users\rotem\OneDrive\Desktop\RoadRanger\roadranger_1\server\data\obj\Debug\data.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\data.dll.config
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\data.dll
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\data.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\EntityFramework.dll
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\EntityFramework.xml
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\obj\Debug\data.csproj.AssemblyReference.cache
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\obj\Debug\data.csproj.CoreCompileInputs.cache
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\obj\Debug\data.csproj.CopyComplete
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\obj\Debug\data.dll
+C:\Users\USER\OneDrive\שולחן העבודה\example\roadranger_1\server\data\obj\Debug\data.pdb

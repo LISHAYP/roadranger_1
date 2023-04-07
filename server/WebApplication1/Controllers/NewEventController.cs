@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class NewEventController : ApiController
     {
-        igroup190_test1Entities2 db = new igroup190_test1Entities2();
+        igroup190_test1Entities db = new igroup190_test1Entities();
 
         // GET: api/NewEvent
         public IEnumerable<EventDto> Get()
@@ -23,6 +23,7 @@ namespace WebApplication1.Controllers
             {
                 EventDto eventDto = new EventDto
                 {
+                    eventNumber = newevent.eventNumber,
                     Details = newevent.details,
                     EventDate = newevent.event_date,
                     EventTime = newevent.event_time,
@@ -56,6 +57,7 @@ namespace WebApplication1.Controllers
             {
                 tblEvents newEvent = new tblEvents
                 {
+                    eventNumber = value.eventNumber,
                     details = value.details,
                     event_date = value.event_date,
                     event_time = value.event_time,
@@ -79,6 +81,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+
         [HttpPost]
         [Route("api/events/{eventId}/comments")]
         public IHttpActionResult GetCommentsForEvent(int eventId)
@@ -95,7 +98,7 @@ namespace WebApplication1.Controllers
                                                   CommentTime = c.comment_time,
                                                   TravelerId = c.travelerId,
                                                   StackholderId = c.stackholderId,
-                                                  TravelerName = c.traveleres.first_name+ c.traveleres.last_name,
+                                                  TravelerName = c.traveleres.first_name + c.traveleres.last_name,
                                                   StakeholderName = c.stakeholders.stakeholder_name
                                               }).ToList();
 
@@ -107,8 +110,49 @@ namespace WebApplication1.Controllers
             }
         }
 
-            // PUT: api/NewEvent/5
-            public void Put(int id, [FromBody] string value)
+        // POST api/post/updateevent
+        [HttpPost]
+        [Route("api/post/updateevent")]
+        public IHttpActionResult PostUpdateEvent([FromBody] tblEvents updatedEvent)
+        {
+            try
+            {
+                // Retrieve the existing event from the database
+                tblEvents existingEvent = db.tblEvents.FirstOrDefault(x => x.eventNumber == updatedEvent.eventNumber);
+
+                // If the existing event does not exist, return a bad request
+                if (existingEvent == null)
+                {
+                    return BadRequest("Event not found.");
+                }
+
+                // Update the existing event with the new values
+                existingEvent.details = updatedEvent.details;
+                existingEvent.event_date = updatedEvent.event_date;
+                existingEvent.event_time = updatedEvent.event_time;
+                existingEvent.latitude = updatedEvent.latitude;
+                existingEvent.longitude = updatedEvent.longitude;
+                existingEvent.event_status = updatedEvent.event_status;
+                existingEvent.picture = updatedEvent.picture;
+                existingEvent.travelerId = updatedEvent.travelerId;
+                existingEvent.stackholderId = updatedEvent.stackholderId;
+                existingEvent.serialTypeNumber = updatedEvent.serialTypeNumber;
+                existingEvent.country_number = updatedEvent.country_number;
+                existingEvent.area_number = updatedEvent.area_number;
+
+                // Save the changes to the database
+                db.SaveChanges();
+
+                return Ok("Event updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+        // PUT: api/NewEvent/5
+        public void Put(int id, [FromBody] string value)
         {
 
         }
@@ -118,6 +162,36 @@ namespace WebApplication1.Controllers
         {
 
         }
+
+        [HttpDelete]
+        [Route("api/deleteevent")]
+        public IHttpActionResult DeleteEvent([FromBody] tblEvents value)
+        {
+            try
+            {
+                // Find the event to delete by traveler ID and event ID
+                var eventToDelete = db.tblEvents.SingleOrDefault(x => x.travelerId == value.travelerId && x.eventNumber == value.eventNumber);
+
+                // If no event was found with the given traveler ID and event ID, return a not found response
+                if (eventToDelete == null)
+                {
+                    return NotFound();
+                }
+
+                // Delete the event from the database
+                db.tblEvents.Remove(eventToDelete);
+                db.SaveChanges();
+
+                // Return a success message
+                return Ok("Event deleted successfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+
     }
 
 }

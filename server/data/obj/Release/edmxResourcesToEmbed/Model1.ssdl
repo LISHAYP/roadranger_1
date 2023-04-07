@@ -148,9 +148,10 @@
     <Property Name="location" Type="bit" />
     <Property Name="save_location" Type="bit" />
     <Property Name="dateOfBirth" Type="date" Nullable="false" />
-    <Property Name="gender" Type="char" MaxLength="1" />
     <Property Name="password" Type="nvarchar" MaxLength="50" />
     <Property Name="chat" Type="bit" />
+    <Property Name="gender" Type="varchar" MaxLength="50" />
+    <Property Name="picture" Type="varchar" MaxLength="500" />
   </EntityType>
   <Association Name="comment_event">
     <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
