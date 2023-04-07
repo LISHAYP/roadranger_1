@@ -3,17 +3,14 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView,
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
-import User from '../assets/User.jpg';
-
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
+
 export default function SignUp({ route }) {
   const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
-
-  const [profilePic, setProfilePic] = useState(defaultPic);
   const [newProfilePic, setNewProfilePic] = useState(null);
 
   useFocusEffect(
@@ -73,7 +70,7 @@ export default function SignUp({ route }) {
     gender: selectedGender,
     password: password,
     chat: isEnabledChatMode,
-    Picture : newProfilePic ?? profilePic
+    Picture : newProfilePic ?? defaultPic 
   };
   const handleSignUp = async () => {
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
@@ -98,7 +95,7 @@ export default function SignUp({ route }) {
 
 
   const openCamera = () => {
-    navigation.navigate('Camera',{imageSource});
+    navigation.navigate('Camera');
   }
 
   return (
@@ -110,7 +107,7 @@ export default function SignUp({ route }) {
             {newProfilePic ? (
               <Image source={{ uri: newProfilePic }} style={styles.user} />
             ) : (
-              <Image source={{ uri: profilePic }} style={styles.user} />
+              <Image source={{ uri: defaultPic  }} style={styles.user} />
             )}
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
@@ -255,7 +252,8 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     width: 150,
-    marginBottom: 25
+    marginBottom: 25,
+
   },  
   text: {
     color: '#144800',
