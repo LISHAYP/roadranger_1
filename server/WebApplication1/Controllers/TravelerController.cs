@@ -39,7 +39,8 @@ namespace WebApplication1.Controllers
                     dateOfBirth = traveler.dateOfBirth,
                     gender = traveler.gender,
                     password = traveler.password,
-                    chat = traveler.chat
+                    chat = traveler.chat,
+                    Picture=traveler.picture
                 };
 
                 travelerDtos.Add(travelerDto);
@@ -102,7 +103,8 @@ namespace WebApplication1.Controllers
                 notifications = x.notifications,
                 location = x.location,
                 save_location = x.save_location,
-                chat = x.chat
+                chat = x.chat,
+                Picture=x.picture
 
             })
         .ToList();
@@ -246,7 +248,8 @@ namespace WebApplication1.Controllers
                 dateOfBirth = traveler.dateOfBirth,
                 gender = traveler.gender,
                 password = traveler.password,
-                chat = traveler.chat
+                chat = traveler.chat,
+                Picture=traveler.picture
             };
 
             return Ok(travelerDto);
