@@ -10,17 +10,16 @@ const height = Dimensions.get('window').height;
 
 export default function EventDetails(props) {
   const event = props.route.params.event;
-  // console.log(event)
+  console.log(event)
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
   const [comments, setComments] = useState('')
 
-  //get details travel that post a event
   const fetchTravelerDetails = async () => {
     const travelerobj = {
       traveler_Id: event.TravelerId
     };
-  
+
     try {
       const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
         method: 'POST',
@@ -33,20 +32,21 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setTraveler(data);
-      // console.log(data);
+      console.log(data);
+      fetchNumberEvent();
     } catch (error) {
       console.error(error);
-      // console.log('Error');
+      console.log('Error');
     }
   };
-
-  //get all the comments for event by event ID
-  const fetchNumberEvent = async () => {
+  const fetchNumberEvent  = async () => {
+    console.log("in fetchNumberEvent")
     const eventNumberObj = {
       eventNumber: event.eventNumber
     };
 
     try {
+      console.log("in try fretchfetchNumberEvent",{eventNumberObj})
       const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/events/comments', {
         method: 'POST',
         headers: {
@@ -58,7 +58,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log(data);
+      console.log(comments);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -66,15 +66,9 @@ export default function EventDetails(props) {
   
 
   };
-  useEffect(() => {
-    // fetchTravelerDetails();
-    // fetchNumberEvent();
-    const fetchDetails = async () => {
-      await fetchTravelerDetails();
-      await fetchNumberEvent();
-    };
-    fetchDetails();
 
+  useEffect(() => {
+    fetchTravelerDetails();
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
       .then((json) => {
@@ -90,7 +84,6 @@ export default function EventDetails(props) {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-
   }, []);
 
 
