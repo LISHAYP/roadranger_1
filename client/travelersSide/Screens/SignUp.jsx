@@ -95,7 +95,7 @@ export default function SignUp({ route }) {
 
 
   const openCamera = () => {
-    navigation.navigate('Camera');
+    navigation.navigate('Camera',email);
   }
 
   return (

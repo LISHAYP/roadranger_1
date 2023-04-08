@@ -48,7 +48,7 @@ export default function OpenCamera(props) {
         formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
-
+        urlAPI='http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
         fetch(urlAPI, {
           method: 'POST',
           headers: {

@@ -127,7 +127,7 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
-                                navigation.navigate('Event Details', { event });
+                                navigation.navigate('Event Details', { event ,traveler});
                             }}
                         />
                        
