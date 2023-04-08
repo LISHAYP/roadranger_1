@@ -57,8 +57,14 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                // create a new traveler user
-                traveleres newTraveler = new traveleres
+                var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email == value.travler_email);
+                if (existingUser != null)
+                {
+                    return BadRequest("This email is already in use, please registar with another email.");
+                }
+
+                // create a new traveler user
+                traveleres newTraveler = new traveleres
                 {
                     first_name = value.first_name,
                     last_name = value.last_name,
@@ -84,6 +90,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost]
         [Route("api/post/login")]
