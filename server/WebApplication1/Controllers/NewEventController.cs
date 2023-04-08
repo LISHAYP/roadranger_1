@@ -86,75 +86,75 @@ namespace WebApplication1.Controllers
         }
 
 
-        [HttpPost]
-        [Route("api/post/neweventwithpicture")]
-        public async Task<IHttpActionResult> PostNewEvent()
-        {
-            try
-            {
-                // Check if the request contains multipart/form-data.
-                if (!Request.Content.IsMimeMultipartContent())
-                {
-                    return BadRequest("Unsupported media type");
-                }
+        //[HttpPost]
+        //[Route("api/post/neweventwithpicture")]
+        //public async Task<IHttpActionResult> PostNewEvent()
+        //{
+        //    try
+        //    {
+        //        // Check if the request contains multipart/form-data.
+        //        if (!Request.Content.IsMimeMultipartContent())
+        //        {
+        //            return BadRequest("Unsupported media type");
+        //        }
 
-                // Set the path for storing uploaded files.
-                var root = HttpContext.Current.Server.MapPath("~/App_Data/uploads");
-                Directory.CreateDirectory(root);
-                var provider = new MultipartFormDataStreamProvider(root);
+        //        // Set the path for storing uploaded files.
+        //        var root = HttpContext.Current.Server.MapPath("~/App_Data/uploads");
+        //        Directory.CreateDirectory(root);
+        //        var provider = new MultipartFormDataStreamProvider(root);
 
-                // Read the form data and store the files.
-                await Request.Content.ReadAsMultipartAsync(provider);
-
-                // Get the event data from the request.
-                var formData = provider.FormData;
-                var eventData = new tblEvents
-                {
-
-                    eventNumber = int.Parse(formData.Get("eventNumber")),
-                    details = formData.Get("details"),
-                    event_date = DateTime.Parse(formData.Get("event_date")),
-                    event_time = TimeSpan.Parse(formData.Get("event_time")),
-                    latitude = (decimal)double.Parse(formData.Get("latitude")),
-                    longitude = (decimal)double.Parse(formData.Get("longitude")),
-                    event_status = bool.TryParse(formData.Get("event_status"), out bool status) ? status : false,
-                    travelerId = int.Parse(formData.Get("travelerId")),
-                    stackholderId = int.Parse(formData.Get("stackholderId")),
-                    serialTypeNumber = int.Parse(formData.Get("serialTypeNumber")),
-                    country_number = int.Parse(formData.Get("country_number")),
-                    area_number = int.Parse(formData.Get("area_number")),
-                    picture = formData.Get("picture")
+        //        // Read the form data and store the files.
+        //        await Request.Content.ReadAsMultipartAsync(provider);
 
 
-                };
+        //        // Get the event data from the request.
+        //        var formData = provider.FormData;
+        //        var eventData = new tblEvents
+        //        {
 
-                // Upload the picture and set the picture property of the event data.
-                if (provider.FileData.Count > 0)
-                {
-                    var fileData = provider.FileData[0];
-                    var fileName = fileData.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
-                    var fileExtension = Path.GetExtension(fileName);
-                    var newFileName = $"{Guid.NewGuid()}{fileExtension}";
-                    var filePath = Path.Combine(root, newFileName);
-                    Console.WriteLine($"File uploaded to {filePath}");
-                    File.Move(fileData.LocalFileName, filePath);
-                    eventData.picture = $"/App_Data/uploads/{newFileName}";
+        //            eventNumber = int.Parse(formData.Get("eventNumber")),
+        //            details = formData.Get("details"),
+        //            event_date = DateTime.Parse(formData.Get("event_date")),
+        //            event_time = TimeSpan.Parse(formData.Get("event_time")),
+        //            latitude = (decimal)double.Parse(formData.Get("latitude")),
+        //            longitude = (decimal)double.Parse(formData.Get("longitude")),
+        //            event_status = bool.TryParse(formData.Get("event_status"), out bool status) ? status : false,
+        //            travelerId = int.Parse(formData.Get("travelerId")),
+        //            stackholderId = int.Parse(formData.Get("stackholderId")),
+        //            serialTypeNumber = int.Parse(formData.Get("serialTypeNumber")),
+        //            country_number = int.Parse(formData.Get("country_number")),
+        //            area_number = int.Parse(formData.Get("area_number")),
+        //            picture = formData.Get("picture")
 
 
-                }
+        //        };
 
-                // Save the event data to the database.
-                db.tblEvents.Add(eventData);
-                db.SaveChanges();
+        //        // Upload the picture and set the picture property of the event data.
+        //        if (provider.FileData.Count > 0)
+        //        {
+        //            var fileData = provider.FileData[0];
+        //            var fileName = fileData.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+        //            var fileExtension = Path.GetExtension(fileName);
+        //            var newFileName = $"{Guid.NewGuid()}{fileExtension}";
+        //            var filePath = Path.Combine(root, newFileName);
+        //            Console.WriteLine($"File uploaded to {filePath}");
+        //            File.Move(fileData.LocalFileName, filePath);
+        //            eventData.picture = $"/App_Data/uploads/{newFileName}";
+        //        }
 
-                return Ok("New event created successfully!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-        }
+        //        // Save the event data to the database.
+        //        db.tblEvents.Add(eventData);
+        //        db.SaveChanges();
 
+        //        return Ok("New event created successfully!");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
+
+      
         [HttpPost]
         [Route("api/events/comments")]
         public IHttpActionResult GetCommentsForEvent([FromBody]CommentDto eventId)

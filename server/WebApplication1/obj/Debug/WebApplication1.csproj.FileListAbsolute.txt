@@ -640,3 +640,13 @@ C:\Users\rotem\OneDrive\Desktop\roadranger_1\server\WebApplication1\obj\Debug\We
 C:\Users\rotem\OneDrive\Desktop\roadranger_1\server\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
 C:\Users\rotem\OneDrive\Desktop\roadranger_1\server\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\rotem\OneDrive\Desktop\roadranger_1\server\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\grpc_csharp_ext.x86.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\grpc_csharp_ext.x64.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\libgrpc_csharp_ext.x64.so
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\libgrpc_csharp_ext.x64.dylib
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\Grpc.Core.Api.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\Grpc.Core.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\Grpc.Core.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\Grpc.Core.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\Grpc.Core.Api.pdb
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\Grpc.Core.Api.xml
