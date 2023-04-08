@@ -44,7 +44,8 @@ export default function Setting({ route }) {
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
 
   const handleDateSelect = (date) => {
-    const formattedDate = moment(date).format('DD/MM/YY');
+    console.log(date);
+    const formattedDate = moment.utc(date).format('DD/MM/YY');
     setSelectedDate(formattedDate);
     setIsCalendarOpen(false);
   }
@@ -96,11 +97,11 @@ export default function Setting({ route }) {
       < GradientBackground>
         <View style={styles.container}>
           {/* <TouchableOpacity onPress={openCamera}> */}
-            {userPic ? (
-              <Image source={{ uri: traveler.Picture }} style={styles.user} />
-            ) : (
-              <Image source={{ uri: traveler.Picture }} style={styles.user} />
-            )}
+          {userPic ? (
+            <Image source={{ uri: traveler.Picture }} style={styles.user} />
+          ) : (
+            <Image source={{ uri: traveler.Picture }} style={styles.user} />
+          )}
           {/* </TouchableOpacity > */}
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
@@ -125,7 +126,7 @@ export default function Setting({ route }) {
             placeholder={traveler.password}
             // value={password}
             onChangeText={(text) => setPassword(text)}
-            secureTextEntry={false}>
+            secureTextEntry={true}>
           </TextInput>
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
@@ -167,10 +168,12 @@ export default function Setting({ route }) {
             }}
 
           />
-          {/* <Text style={styles.text}>Date of Birth:</Text>
+          <Text style={styles.text}>Date of Birth:</Text>
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-              <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
+              <Text style={styles.text1}>{moment(selectedDate, 'DD/MM/YY').format('MM/DD/YY')
+              }</Text>
+
               <Icon style={styles.icon} name="calendar-outline" />
             </TouchableOpacity>
             {isCalendarOpen && (
@@ -178,7 +181,7 @@ export default function Setting({ route }) {
                 <CalendarPicker onDateChange={handleDateSelect} />
               </View>
             )}
-          </View> */}
+          </View>
           <View style={styles.row}>
             <Text style={styles.text2}>Location Mode</Text>
             <Switch
