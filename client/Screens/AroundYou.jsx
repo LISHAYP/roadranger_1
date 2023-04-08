@@ -115,7 +115,7 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={event.SerialTypeNumber === 1 ? 'yellow' : 'blue'} // add if statement for pin color
                             onPress={() => {
-                                navigation.navigate('Event Details', { event });
+                                navigation.navigate('Event Details', { event ,traveler});
                             }}
                         />
                        
