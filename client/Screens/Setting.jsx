@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -9,22 +9,14 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
 
-
-export default function Setting(props ) {
-  useFocusEffect(
-    React.useCallback(() => {
-      if (props.route.params?.image) {
-        setUserPic(props.route.params.image.uri);
-        console.log('props',props.route.params.image.uri);
-      }
-    }, [props.route.params?.image])
-  );
-
-  const traveler = props.route.params;
+export default function Setting({ route }) {
+  const [tempTraveler, setTempTraveler] = useState(route.params.travelerParams.traveler);
+  const traveler = tempTraveler;
   console.log(traveler);
+
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState(traveler.first_name);
-  const [lastName, setLastName] = useState(traveler.lastName);
+  const [lastName, setLastName] = useState(traveler.last_name);
   const [email, setEmail] = useState(traveler.travler_email);
   const [password, setPassword] = useState(traveler.password);
   const [phone, setPhone] = useState(traveler.phone);
@@ -47,7 +39,6 @@ export default function Setting(props ) {
   const [selectedGender, setSelectedGender] = useState(traveler.gender);
   const [selectedInsurance, setSelectedInsurance] = useState(traveler.insurence_company);
   const [userPic, setUserPic] = useState(traveler.picture)
-
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
@@ -70,10 +61,11 @@ export default function Setting(props ) {
     gender: selectedGender,
     password: password,
     chat: isEnabledChatMode,
-    Picture: userPic
+    picture: traveler.Picture
   };
   console.log('*******', changeTraveler)
   const saveChanges = async () => {
+    console.log("IM IN saveChanges");
     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/update?email=${traveler.travler_email}`, {
       method: 'PUT',
       headers: {
@@ -85,14 +77,17 @@ export default function Setting(props ) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Traveler updated successfully.
+        alert('Traveler updated successfully')
+
       })
       .catch((error) => {
         console.error(error);
       });
   }
-  const openCamera = () => {
-    navigation.navigate('Camera');
-  }
+  const id = traveler.traveler_id;
+  // const openCamera = () => {
+  //   navigation.navigate('Camera',{id});
+  // }
   // const handleSavePhoto = (photo) => {
   //   setUserPic(photo);
   // }
@@ -100,13 +95,13 @@ export default function Setting(props ) {
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
-          <TouchableOpacity onPress={openCamera}>
+          {/* <TouchableOpacity onPress={openCamera}> */}
             {userPic ? (
-             <Image source={{ uri: userPic.uri }} style={styles.user} />
+              <Image source={{ uri: traveler.Picture }} style={styles.user} />
             ) : (
-              <Image source={{ uri: traveler.picture}} style={styles.user} />
+              <Image source={{ uri: traveler.Picture }} style={styles.user} />
             )}
-          </TouchableOpacity >
+          {/* </TouchableOpacity > */}
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
             // value={firstName}
@@ -115,7 +110,7 @@ export default function Setting(props ) {
           </TextInput>
           <Text style={styles.text}>Last Name:</Text>
           <TextInput style={styles.input}
-            value={lastName}
+            //value={lastName}
             onChangeText={(text) => setLastName(text)}
             placeholder={traveler.last_name}>
           </TextInput>
@@ -172,7 +167,7 @@ export default function Setting(props ) {
             }}
 
           />
-          <Text style={styles.text}>Date of Birth:</Text>
+          {/* <Text style={styles.text}>Date of Birth:</Text>
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
               <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
@@ -183,7 +178,7 @@ export default function Setting(props ) {
                 <CalendarPicker onDateChange={handleDateSelect} />
               </View>
             )}
-          </View>
+          </View> */}
           <View style={styles.row}>
             <Text style={styles.text2}>Location Mode</Text>
             <Switch
