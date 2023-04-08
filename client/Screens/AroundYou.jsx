@@ -74,6 +74,18 @@ export default function AroundYou(props) {
         setIsMenuOpen(false);
     };
 
+    const typePinColors = {
+        1: 'yellow',   // Weather
+        2: 'blue',     // Road closures
+        3: 'green',    // Natural disasters
+        4: 'red',      // Health emergencies
+        5: 'purple',   // Accommodation issues
+        6: 'orange',   // Protests
+        7: 'pink',     // Strikes
+        8: 'brown',    // Security threats
+        9: 'black',    // Animal-related incidents
+        10: 'gray',    // Financial issues
+      };
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
@@ -113,7 +125,7 @@ export default function AroundYou(props) {
                             }}
                             title={event.Details}
                             description={event.EventTime}
-                            pinColor={event.SerialTypeNumber === 1 ? 'yellow' : 'blue'} // add if statement for pin color
+                            pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
                                 navigation.navigate('Event Details', { event });
                             }}
@@ -169,7 +181,7 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>Search</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", traveler, location); }}
+                        onPress={() => { navigation.navigate("Setting",{ travelerParams: {traveler }})}}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>

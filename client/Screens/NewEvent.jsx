@@ -19,6 +19,15 @@ export default function NewEvent(props) {
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
+    { label: 'Road closures', value: '3' },
+    { label: 'Natural disasters', value: '4' },
+    { label: 'Health emergencies', value: '5' },
+    { label: 'Accommodation issues', value: '6' },
+    { label: 'Protests', value: '7' },
+    { label: 'Strikes', value: '8' },
+    { label: 'Security threats', value: '9' },
+    { label: 'Animal-related incidents', value: '10' },
+    { label: 'Financial issues', value: '11' }
   ]
 
   const countryObj = {
