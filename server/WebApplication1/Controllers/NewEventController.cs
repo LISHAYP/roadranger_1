@@ -87,7 +87,6 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-<<<<<<< HEAD
         [Route("api/post/neweventwithpicture")]
         public async Task<IHttpActionResult> PostNewEvent()
         {
@@ -162,13 +161,6 @@ namespace WebApplication1.Controllers
         {
             try
             {
-=======
-        [Route("api/events/comments")]
-        public IHttpActionResult GetCommentsForEvent([FromBody]CommentDto eventId)
-        {
-            try
-            {
->>>>>>> 4850f99df510b32afa6b6de130ddabe2707b82c2
                 var comments = db.tblComments.Where(c => c.eventNumber == eventId.EventNumber)
                                               .Select(c => new CommentDto
                                               {
