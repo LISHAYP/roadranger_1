@@ -44,16 +44,17 @@ export default function OpenCamera(props) {
         const pic64base = photo.base64;
         const picName64base = `user_${new Date().getTime()}.jpg `;
         const picUri = `data:image/gif;base64,${photo.base64}`;
-
+        const formData = new FormData();
+        formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
-        let urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/';
+
         fetch(urlAPI, {
           method: 'POST',
-          body: JSON.stringify({
-            base64img: pic64base,
-            base64imgName: picName64base,
-          }),
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          body: formData,
         })
           .then((response) => response.json())
           .then((responseJson) => {
