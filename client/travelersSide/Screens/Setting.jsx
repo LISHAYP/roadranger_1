@@ -9,9 +9,9 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
 
-export default function Setting({ route }) {
-  const [tempTraveler, setTempTraveler] = useState(route.params.travelerParams.traveler);
-  const traveler = tempTraveler;
+export default function Setting(props) {
+ 
+  const traveler =  props.route.params.traveler;
   console.log(traveler);
 
   const navigation = useNavigation();
