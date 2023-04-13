@@ -51,7 +51,9 @@ namespace WebApplication1.Controllers
                     {
                         country_number = area.country_number,
                         area_number = newAreaNumber,
-                        area_name = area.area_name
+                        area_name = area.area_name,
+                        city=area.city
+                         
                     };
                     // The area doesn't exist, so add a new row to the table
                     db.tblArea.Add(newArea);

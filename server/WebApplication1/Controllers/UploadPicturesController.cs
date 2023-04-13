@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
                         string name = item.Headers.ContentDisposition.FileName.Replace("\"", "");
                         outputForNir += " ---here2=" + name;
                         //need the guid because in react native in order to refresh an inamge it has to have a new name
-                        string newFileName = Path.GetFileNameWithoutExtension(name) + "_" + Guid.NewGuid() + Path.GetExtension(name);
+                        string newFileName = Path.GetFileNameWithoutExtension(name)+ "_" + Guid.NewGuid() + Path.GetExtension(name);
                         //string newFileName = name + "" + Guid.NewGuid();
                         outputForNir += " ---here3" + newFileName;
                         //delete all files begining with the same name

@@ -156,6 +156,7 @@ namespace WebApplication1.Controllers
             return Ok(events);
         }
 
+
         [HttpPost]
         [Route("api/post/searchByMultipleParameters")]
         public IHttpActionResult SearchByMultipleParameters([FromBody] EventDto searchParams)

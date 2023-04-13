@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="69577222104543e8ac748568491a422c" Name="Diagram1">
+      <Diagram DiagramId="a57f6fc2cb994ba29fa6c094a07fbf86" Name="Diagram1">
         <EntityTypeShape EntityType="igroup190_test1Model.stakeholders" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="6" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblComments" Width="1.5" PointX="8.25" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelers" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />

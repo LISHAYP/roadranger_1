@@ -39,6 +39,7 @@
           <Property Name="country_number" Type="int" Nullable="false" />
           <Property Name="area_number" Type="int" Nullable="false" />
           <Property Name="area_name" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tblAskForHelp">
           <Key>
@@ -541,6 +542,7 @@
           <Property Name="country_number" Type="Int32" Nullable="false" />
           <Property Name="area_number" Type="Int32" Nullable="false" />
           <Property Name="area_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tblCountries" Relationship="Self.country_area" FromRole="tblArea" ToRole="tblCountries" />
           <NavigationProperty Name="tblAskForHelp" Relationship="Self.country_area_AFH" FromRole="tblArea" ToRole="tblAskForHelp" />
           <NavigationProperty Name="tblEvents" Relationship="Self.country_area_event" FromRole="tblArea" ToRole="tblEvents" />
@@ -1039,6 +1041,7 @@
                 <ScalarProperty Name="country_number" ColumnName="country_number" />
                 <ScalarProperty Name="area_number" ColumnName="area_number" />
                 <ScalarProperty Name="area_name" ColumnName="area_name" />
+                <ScalarProperty Name="city" ColumnName="city" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

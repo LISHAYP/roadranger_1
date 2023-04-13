@@ -4,12 +4,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Policy;
+using System.Threading.Tasks;
 using System.Web.Http;
 using data;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using WebApplication1.DTO;
+
 
 namespace WebApplication1.Controllers
 {
@@ -40,7 +46,7 @@ namespace WebApplication1.Controllers
                     gender = traveler.gender,
                     password = traveler.password,
                     chat = traveler.chat,
-                    Picture=traveler.picture
+                    Picture = traveler.picture
                 };
 
                 travelerDtos.Add(travelerDto);
@@ -111,7 +117,7 @@ namespace WebApplication1.Controllers
                 location = x.location,
                 save_location = x.save_location,
                 chat = x.chat,
-                Picture=x.picture
+                Picture = x.picture
 
             })
         .ToList();
@@ -191,7 +197,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("api/post/forgotpassword")]
-        public IHttpActionResult ForgotPassword([FromBody] TravelerDto value)
+        public async Task<IHttpActionResult> ForgotPasswordAsync([FromBody] TravelerDto value)
         {
             // Find the user with the specified email address
             var user = db.traveleres.SingleOrDefault(x => x.travler_email == value.travler_email);
@@ -206,30 +212,22 @@ namespace WebApplication1.Controllers
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
 
-            // Send an email to the user with the new password
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Road Ranger Admin", "roadranger1@walla.com"));
-            message.To.Add(new MailboxAddress("Dear: " + user.first_name, user.travler_email));
-            message.Subject = "Password Reset";
-            message.Body = new TextPart("plain")
-            {
-                Text = $"Your new password is: {newPassword}"
-            };
 
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                client.Connect("smtp.walla.com", 587, SecureSocketOptions.StartTls);
-                client.Authenticate("roadranger1@walla.com", "Ro1357.");
-                client.Send(message);
-                client.Disconnect(true);
-            }
+            var sendGridClient = new SendGridClient("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");
+            var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
+            var subject = "New Password";
+            var to = new EmailAddress(user.travler_email, user.first_name);
+            var plainContent = "Dear " + user.first_name;
+            var htmlContent = $"Your new password is: {newPassword}";
+            var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
+            await sendGridClient.SendEmailAsync(mailMessage);
 
-            return Ok();
+            return Ok("new password email was sent succesfully (:");
         }
 
         [HttpPost]
         [Route("api/traveler/details")]
-        public IHttpActionResult GetTravelerDetails([FromBody]TravelerDto travelerId)
+        public IHttpActionResult GetTravelerDetails([FromBody] TravelerDto travelerId)
         {
             // Find the traveler in the database based on the ID
             var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerId.traveler_id);
@@ -256,7 +254,7 @@ namespace WebApplication1.Controllers
                 gender = traveler.gender,
                 password = traveler.password,
                 chat = traveler.chat,
-                Picture=traveler.picture
+                Picture = traveler.picture
             };
 
             return Ok(travelerDto);
