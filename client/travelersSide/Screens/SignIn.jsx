@@ -47,7 +47,6 @@ export default function SignIn() {
     };
     return (
         < GradientBackground>
-
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
                 <Text style={styles.text}>Email:</Text>

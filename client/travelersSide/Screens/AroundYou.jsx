@@ -176,12 +176,13 @@ export default function AroundYou(props) {
                         <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}>
+                    <TouchableOpacity style={styles.option}  onPress={() => { navigation.navigate("Search")}}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search</Text>
+                        <Text style={styles.text}>Search </Text>
+                        
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting",{ travelerParams: {traveler }})}}
+                        onPress={() => { navigation.navigate("Setting",{ traveler })}}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
