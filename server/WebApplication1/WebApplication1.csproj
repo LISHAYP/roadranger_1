@@ -228,6 +228,7 @@
     <Compile Include="DTO\CountriesDto.cs" />
     <Compile Include="DTO\CountryAreaDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
+    <Compile Include="DTO\EventParam.cs" />
     <Compile Include="DTO\StackholderDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="DTO\TypeDto.cs" />
