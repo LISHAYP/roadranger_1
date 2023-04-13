@@ -14,7 +14,6 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   //user-the user who use the app
   const user = props.route.params.traveler;
-  console.log("uuuuuuuuuuuu", user)
   console.log(event);
   //traveler-the user how post event
   const [traveler, setTraveler] = useState('');
@@ -141,7 +140,7 @@ export default function EventDetails(props) {
             <View >
               <View style={styles.event}>
                 <View style={styles.row}>
-                  <Image style={styles.img} source={{ uri: traveler.Picture}} resizeMode="contain" />
+                  <Image style={styles.img} source={{ uri: traveler.Picture }} resizeMode="contain" />
                   <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
                 </View>
                 <View>
@@ -151,14 +150,13 @@ export default function EventDetails(props) {
               <View>
                 <Text style={styles.detailsText}>{event.Details}</Text>
               </View>
-            </View>
-
-            <View style={styles.locationContainer}>
-              <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
-              <Text style={styles.locationText}>{addressComponents}</Text>
-            </View>
-            <View style={styles.pictureContainer}>
-              <Image source={{ uri: 'https://img.mako.co.il/2021/10/07/photo5978846621133289432_autoOrient_i.jpg' }} style={styles.picture} resizeMode="contain" />
+              <View style={styles.locationContainer}>
+                <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
+                <Text style={styles.locationText}>{addressComponents}</Text>
+              </View>
+              <View style={styles.pictureContainer}>
+                <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+              </View>
             </View>
             <ScrollView>
               <View>
