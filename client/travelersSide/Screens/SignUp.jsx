@@ -9,19 +9,15 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
 
-export default function SignUp({ route }) {
-  const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
-  const [newProfilePic, setNewProfilePic] = useState(null);
+export default function SignUp() {
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (route.params?.image) {
-        setNewProfilePic(route.params.image.uri);
-        console.log(route.params.image.uri);
-      }
-    }, [route.params?.image])
-  );
-  
+  const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
+  const [newProfilePic, setNewProfilePic] = useState(defaultPic);
+
+  useEffect(() => {
+    setupdatednewProfilePic(`http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/U_${email}.jpg`);
+    
+  }, [email]);
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -48,6 +44,16 @@ export default function SignUp({ route }) {
   const [genderSelection, setGenderSelection] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
   const [insuranceSelection, setInsuranceSelection] = useState(null);
+  const [updatednewProfilePic, setupdatednewProfilePic] = useState(
+    `http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`
+  );
+  
+  useEffect(() => {
+    setupdatednewProfilePic(
+      `http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`
+    );
+  }, [email]);
+  
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
@@ -70,7 +76,7 @@ export default function SignUp({ route }) {
     gender: selectedGender,
     password: password,
     chat: isEnabledChatMode,
-    Picture : newProfilePic ?? defaultPic 
+    Picture: updatednewProfilePic
   };
   const handleSignUp = async () => {
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
@@ -95,21 +101,24 @@ export default function SignUp({ route }) {
 
 
   const openCamera = () => {
-    navigation.navigate('Camera',email);
-  }
-
+    if (email.trim() === '') {
+      alert('Please enter your email before taking a photo.');
+    } else {
+      navigation.navigate('Camera', { email });
+      presentPic();
+    }
+  };
+const presentPic = () =>{
+  console.log(updatednewProfilePic)
+}
   return (
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <TouchableOpacity onPress={openCamera}>
-            {newProfilePic ? (
-              <Image source={{ uri: newProfilePic }} style={styles.user} />
-            ) : (
-              <Image source={{ uri: defaultPic  }} style={styles.user} />
-            )}
-          </TouchableOpacity >
+            <Image source={{ uri: newProfilePic  }} style={styles.user} />
+          </TouchableOpacity>
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
             value={firstName}
@@ -254,7 +263,7 @@ const styles = StyleSheet.create({
     width: 150,
     marginBottom: 25,
 
-  },  
+  },
   text: {
     color: '#144800',
     fontSize: 20,
