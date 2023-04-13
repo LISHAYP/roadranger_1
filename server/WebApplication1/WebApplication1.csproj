@@ -216,9 +216,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
     <Compile Include="Controllers\SearchEventController.cs" />
+    <Compile Include="Controllers\StackholderController.cs" />
     <Compile Include="Controllers\TravelerController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
-    <Compile Include="Controllers\UploadPicturesController.cs" />
+    <Compile Include="Controllers\UploadEventPicController.cs" />
+    <Compile Include="Controllers\UploadUserPictureController.cs" />
     <Compile Include="DTO\AreaDto.cs" />
     <Compile Include="DTO\AskForHelpDto.cs" />
     <Compile Include="DTO\CommentDto.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="DTO\CountriesDto.cs" />
     <Compile Include="DTO\CountryAreaDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
+    <Compile Include="DTO\StackholderDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="DTO\TypeDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,7 +290,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="uploadFiles\" />
+    <Folder Include="uploadEventPic\" />
+    <Folder Include="uploadUserPic\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
