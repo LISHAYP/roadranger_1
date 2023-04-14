@@ -1,12 +1,16 @@
 ﻿using data;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 using WebApplication1.DTO;
+using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
+using RouteAttribute = System.Web.Http.RouteAttribute;
 
 namespace WebApplication1.Controllers
 {
@@ -25,6 +29,22 @@ namespace WebApplication1.Controllers
         {
             return "value";
         }
+
+        [Route("api/getcountries")]
+        public IHttpActionResult GetCountryData()
+        {
+            var result = db.tblCountries
+                            .Select(c => new
+                            {
+                                country_name = c.country_name,
+                                country_number = c.country_number
+                            })
+                            .ToList();
+
+            return Ok(result);
+        }
+
+
 
         // POST: api/Countries
         [HttpPost]

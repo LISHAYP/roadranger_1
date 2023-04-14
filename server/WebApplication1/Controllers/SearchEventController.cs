@@ -207,6 +207,7 @@ namespace WebApplication1.Controllers
             {
                 // Filter areas based on selected country
                 events = events.Where(x => x.country_number == countryNumber);
+               
             }
 
             foreach (var param in searchParams)
