@@ -30,9 +30,7 @@ export default function NewEvent(props) {
     { label: 'Financial issues', value: '11' }
   ]
 
-  const countryObj = {
-    country_name: country,
-  };
+
 
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
@@ -78,7 +76,9 @@ export default function NewEvent(props) {
     area_number: areaNumber,
   };
 console.log("--------",{newEvent})
-
+  const countryObj = {
+    country_name: country,
+  };
    addContry = () => {
 
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {

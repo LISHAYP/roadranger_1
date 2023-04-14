@@ -14,7 +14,7 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   //user-the user who use the app
   const user = props.route.params.traveler;
-  console.log(event);
+  console.log("///////", event.Picture);
   //traveler-the user how post event
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
@@ -40,7 +40,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setTraveler(data);
-      console.log(data);
+      console.log("***", data);
       fetchNumberEvent();
     } catch (error) {
       console.error(error);
@@ -137,7 +137,6 @@ export default function EventDetails(props) {
   return (
     <GradientBackground>
       <View style={styles.container}>
-        <KeyboardAwareScrollView >
         <View style={styles.eventContainer}>
           <View >
             <View style={styles.event}>
@@ -183,6 +182,7 @@ export default function EventDetails(props) {
           </ScrollView>
         </View>
 
+
         <View style={styles.addComment}>
           <View style={styles.event}>
             <View style={styles.row}>
@@ -195,17 +195,15 @@ export default function EventDetails(props) {
           </View>
           <View style={styles.row}>
             <TextInput style={styles.input}
-                placeholder="Add Comment..."
-                value={details}
-                multiline={true}
-                numberOfLines={4}
-                editable={true}
-                onChangeText={(text) => setDetails(text)}>
-              </TextInput>  
+              placeholder="Add Comment..."
+              value={details}
+              multiline={true}
+              numberOfLines={4}
+              editable={true}
+              onChangeText={(text) => setDetails(text)}>
+            </TextInput>
           </View>
         </View>
-        </KeyboardAwareScrollView>
-
       </View>
     </GradientBackground >
   )
@@ -217,8 +215,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-
-
+    marginTop: 80
   },
 
 

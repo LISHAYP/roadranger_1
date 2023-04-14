@@ -13,7 +13,10 @@ export default function Setting(props) {
  
   const traveler =  props.route.params.traveler;
   console.log(traveler);
-
+  useEffect(() => {
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/U_${email}.jpg`);
+    
+  }, [userPic]);
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState(traveler.first_name);
   const [lastName, setLastName] = useState(traveler.last_name);
@@ -62,7 +65,7 @@ export default function Setting(props) {
     gender: selectedGender,
     password: password,
     chat: isEnabledChatMode,
-    picture: traveler.Picture
+    picture: userPic
   };
   console.log('*******', changeTraveler)
   const saveChanges = async () => {
@@ -85,24 +88,21 @@ export default function Setting(props) {
         console.error(error);
       });
   }
-  const id = traveler.traveler_id;
-  // const openCamera = () => {
-  //   navigation.navigate('Camera',{id});
-  // }
-  // const handleSavePhoto = (photo) => {
-  //   setUserPic(photo);
-  // }
+  console.log(email)
+  const openCamera = () => {
+    navigation.navigate('Camera', { email });
+    handleSavePhoto( );
+  }
+  const handleSavePhoto = () => {
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
+  }
   return (
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
-          {/* <TouchableOpacity onPress={openCamera}> */}
-          {userPic ? (
+          <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
-          ) : (
-            <Image source={{ uri: traveler.Picture }} style={styles.user} />
-          )}
-          {/* </TouchableOpacity > */}
+          </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
             // value={firstName}
@@ -171,9 +171,8 @@ export default function Setting(props) {
           <Text style={styles.text}>Date of Birth:</Text>
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-              <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')
-              }</Text>
 
+            <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
               <Icon style={styles.icon} name="calendar-outline" />
             </TouchableOpacity>
             {isCalendarOpen && (

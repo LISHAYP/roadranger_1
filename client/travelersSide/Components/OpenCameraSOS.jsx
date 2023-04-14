@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function OpenCamera(props) {
+export default function OpenCameraE(props) {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
@@ -32,25 +32,27 @@ export default function OpenCamera(props) {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
-  const email = props.route.params.email;
-  console.log(email)
+  const ide = props.route.params.idE;
+  const idee = ide.replace(':', '_')
+  console.log("1", idee)
   const takePicture = async () => {
     if (camera) {
       try {
         const photo = await camera.takePictureAsync({
           quality: 0.1,
           base64: true,
+          width:500
         });
         setImage(photo);
         const pic64base = photo.base64;
-        const picName64base = `U_${email}.jpg `;
+        const picName64base = `SOS_${idee}.jpg `;
         const picUri = `data:image/gif;base64,${photo.base64}`;
         const formData = new FormData();
         formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
 
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
-        urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
+        urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
         fetch(urlAPI, {
           method: 'POST',
           headers: {
@@ -73,7 +75,6 @@ export default function OpenCamera(props) {
     }
   };
 
- 
   const openGallery = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
@@ -91,7 +92,7 @@ export default function OpenCamera(props) {
       const image = { uri: pickerResult.uri };
       setImage(image);
       const pic64base = pickerResult.base64;
-      const picName64base = `U_${email}.jpg`;
+      const picName64base = `SOS_${idee}.jpg`;
       console.log(picName64base);
       const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
       const formData = new FormData();
@@ -99,7 +100,7 @@ export default function OpenCamera(props) {
   
       // Add the following lines to call the uploadBase64ToASMX function
       setAnimate(true);
-      const urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
+      const urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
       fetch(urlAPI, {
         method: 'POST',
         headers: {
@@ -109,7 +110,7 @@ export default function OpenCamera(props) {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
+          console.log("1", responseJson);
           setAnimate(false);
         })
         .catch((error) => {

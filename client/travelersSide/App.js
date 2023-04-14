@@ -16,12 +16,16 @@ import ForgotPassword from './Screens/ForgotPassword';
 import EventDetails from './Screens/EventDetails';
 import OpenCamera from './Components/OpenCamera';
 import OpenCameraE from './Components/OpenCameraE';
+import OpenCameraSOS from './Components/OpenCameraSOS';
 const Stack = createNativeStackNavigator()
 export default function App() {
+  App.navigationOptions = {
+    headerShown: false,
+  };
   return (
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Sign In">
+      <Stack.Navigator initialRouteName="Sign In"  screenOptions={{headerShown: false}}>
         <Stack.Screen name="Sign In" component={SignIn} />
         <Stack.Screen name="Sign Up" component={SignUp} />
         <Stack.Screen name="Around You" component={AroundYou} />
@@ -33,6 +37,7 @@ export default function App() {
         {/* <Stack.Screen name="TimeLine" component={Timeline} /> */}
         <Stack.Screen name="Camera" component={OpenCamera} />
         <Stack.Screen name="CameraE" component={OpenCameraE} />
+        <Stack.Screen name="CameraSOS" component={OpenCameraSOS} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="Event Details" component={EventDetails} />
 

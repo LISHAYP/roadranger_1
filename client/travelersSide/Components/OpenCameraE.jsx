@@ -41,6 +41,7 @@ export default function OpenCameraE(props) {
         const photo = await camera.takePictureAsync({
           quality: 0.1,
           base64: true,
+          width:500
         });
         setImage(photo);
         const pic64base = photo.base64;

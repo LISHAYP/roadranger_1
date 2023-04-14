@@ -4,21 +4,45 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
+import Geocoder from 'react-native-geocoding';
 
 export default function SOS(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
-
+  const [country, setCountry] = useState('');
+  const [city,setCity]=useState('');
   const serialType = [
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
+    { label: 'Road closures', value: '3' },
+    { label: 'Natural disasters', value: '4' },
+    { label: 'Health emergencies', value: '5' },
+    { label: 'Accommodation issues', value: '6' },
+    { label: 'Protests', value: '7' },
+    { label: 'Strikes', value: '8' },
+    { label: 'Security threats', value: '9' },
+    { label: 'Animal-related incidents', value: '10' },
+    { label: 'Financial issues', value: '11' }
   ]
-
+  useEffect(() => {
+    //insert the API Key
+    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
+      .then(json => {
+        const addressComponents = json.results[0].address_components;
+        const countryComponent = addressComponents.find(component => component.types.includes('country'));
+        const cityComponent = addressComponents.find(component => component.types.includes('locality'));
+        // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
+        setCountry(countryComponent.long_name);
+        setCity(cityComponent.long_name);
+        addContry();
+        
+      })
+      .catch(error => console.warn(error))
+  }, []);
   const [value, setValue] = useState(null);
   const [details, setDetails] = useState('');
   // const [eventDate, setEventDate] = useState(new Date().toISOString().slice(0, 10));
@@ -28,17 +52,67 @@ export default function SOS(props) {
   const id = traveler.traveler_id;
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
-  const [countryNumber, setCountryNumber] = useState('1');
-  const [areaNumber, setAreaNumber] = useState('1');
+  const [countryNumber, setCountryNumber] = useState('');
+  const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
 
+  const countryObj = {
+    country_name: country,
+  };
+   addContry = () => {
 
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(countryObj),
+    })
+      .then(response => response.json())
+      .then(data => {
+      
+        setCountryNumber(data)
+        addCity();
+      }
+      )
+      .catch(error => {
+        console.error(error);
+       
+      });
+  }
+
+   addCity = () => {
+    const areaObj = {
+      country_number: countryNumber,
+      area_name: city
+    }
+    
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(areaObj),
+    })
+      .then(response => response.json())
+      .then(data => {     
+        setAreaNumber(data)
+      
+      }
+      )
+      .catch(error => {
+        console.error(error);
+        console.log('Error');
+      });
+  }
   const newSOS = {
     details: details,
     // event_date: new Date().toISOString().slice(0, 10),
     // event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
     picture: picture,
-    travelerId: id,
+    traveler_id: id,
     country_number: countryNumber,
     area_number: areaNumber,
     serialTypeNumber: serialTypeNumber,
@@ -62,7 +136,7 @@ else{
     })
       .then(response => response.json())
       .then(data => {
-
+console.log(data)
         // Handle the response data as needed
         console.log({ newSOS })
         alert('Publish')
@@ -73,13 +147,17 @@ else{
       });
     }
   }
-
+  const OpenCameraSOS = () => {
+    navigation.navigate('CameraSOS', {idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`} );
+    const date=`${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/SOS_${date}.jpg`)
+  }
 
   return (
     < GradientBackground>
       <ScrollView>
         <View style={styles.container}>
-          {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
+          <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -106,11 +184,11 @@ else{
             placeholder={"Select type of event"}
             value={selectedSerialType}
             onChange={item => {
-              setSerialTypeNumber(item)
+              setSerialTypeNumber(item.value)
               setSelectedSerialType(item) // Update the selected item state variable
 
             }} />
-          <TouchableOpacity style={styles.photo} >
+          <TouchableOpacity style={styles.photo} onPress={OpenCameraSOS} >
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
             <Text style={styles.btnText}>
               Add Photo
@@ -130,7 +208,7 @@ else{
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -142,7 +220,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20
+    marginBottom: 10
 
   },
   text: {
