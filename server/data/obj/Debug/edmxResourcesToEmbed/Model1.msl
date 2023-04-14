@@ -35,7 +35,6 @@
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
           <ScalarProperty Name="area_name" ColumnName="area_name" />
-          <ScalarProperty Name="city" ColumnName="city" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

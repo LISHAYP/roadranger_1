@@ -24,7 +24,6 @@ namespace data
         public int country_number { get; set; }
         public int area_number { get; set; }
         public string area_name { get; set; }
-        public string city { get; set; }
     
         public virtual tblCountries tblCountries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

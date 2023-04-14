@@ -190,9 +190,10 @@ namespace WebApplication1.Controllers
 
             return Ok(events);
         }
+
         [HttpPost]
         [Route("api/post/searchByParameters")]
-        public IHttpActionResult SearchByParameters([FromBody] List<EventParam> searchParams)
+        public IHttpActionResult SearchByParameters([FromBody] List<EventParam> searchParams, int? countryNumber = null)
         {
             if (searchParams == null)
             {
@@ -202,13 +203,20 @@ namespace WebApplication1.Controllers
 
             var events = db.tblEvents.AsQueryable();
 
+            if (countryNumber != null)
+            {
+                // Filter areas based on selected country
+                events = events.Where(x => x.country_number == countryNumber);
+            }
+
             foreach (var param in searchParams)
             {
                 switch (param.Name.ToLower())
                 {
                     case "countrynumber":
-                        if (int.TryParse(param.Value, out var countryNumber))
+                        if (int.TryParse(param.Value, out var cn))
                         {
+                            countryNumber = cn;
                             events = events.Where(x => x.country_number == countryNumber);
                         }
                         break;

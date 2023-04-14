@@ -34,7 +34,6 @@
     <Property Name="country_number" Type="int" Nullable="false" />
     <Property Name="area_number" Type="int" Nullable="false" />
     <Property Name="area_name" Type="varchar" MaxLength="50" />
-    <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="tblAskForHelp">
     <Key>
