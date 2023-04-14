@@ -66,7 +66,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log(comments);
+      console.log("commmetssssssss",comments);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -166,7 +166,7 @@ export default function EventDetails(props) {
                   <View key={index} style={styles.commentContainer}>
                     <View style={styles.event}>
                       <View style={styles.row}>
-                        <Image style={styles.img} source={{ uri: user.Picture }} resizeMode="contain" />
+                        <Image style={styles.img} source={{ uri: comment.Picture }} resizeMode="contain" />
                         <Text style={styles.text}>{comment.TravelerName} </Text>
                       </View>
                       <View>
