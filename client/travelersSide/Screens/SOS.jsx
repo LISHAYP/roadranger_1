@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
@@ -111,7 +112,7 @@ export default function SOS(props) {
     // event_date: new Date().toISOString().slice(0, 10),
     // event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
     picture: picture,
-    travelerId: id,
+    traveler_id: id,
     country_number: countryNumber,
     area_number: areaNumber,
     serialTypeNumber: serialTypeNumber,
@@ -156,7 +157,7 @@ console.log(data)
     < GradientBackground>
       <ScrollView>
         <View style={styles.container}>
-          {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
+          <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -207,7 +208,7 @@ console.log(data)
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20
+    marginBottom: 10
 
   },
   text: {
