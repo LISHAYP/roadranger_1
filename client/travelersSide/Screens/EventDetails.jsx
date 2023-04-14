@@ -135,7 +135,6 @@ export default function EventDetails(props) {
   return (
     <GradientBackground>
       <View style={styles.container}>
-        <KeyboardAwareScrollView >
           <View style={styles.eventContainer}>
             <View >
               <View style={styles.event}>
@@ -202,7 +201,6 @@ export default function EventDetails(props) {
               </TextInput>
             </View>
           </View>
-        </KeyboardAwareScrollView>
       </View>
     </GradientBackground >
   )
