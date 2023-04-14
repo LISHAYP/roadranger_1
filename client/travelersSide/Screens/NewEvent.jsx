@@ -14,7 +14,7 @@ export default function NewEvent(props) {
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
-  const [region,setRegion]=useState('');
+  const [city,setCity]=useState('');
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
@@ -52,19 +52,16 @@ export default function NewEvent(props) {
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
-        const regionComponent = addressComponents.find(component => component.types.includes('administrative_area_level_1'));
-
+        const cityComponent = addressComponents.find(component => component.types.includes('locality'));
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
-        setRegion(regionComponent.long_name);
+        setCity(cityComponent.long_name);
         addContry();
         
       })
       .catch(error => console.warn(error))
   }, []);
 
-  console.log('1 contry:', { country })
-  console.log('2 region:', {region })
 
   const newEvent = {
     Details: details,
@@ -80,11 +77,10 @@ export default function NewEvent(props) {
     country_number: countryNumber,
     area_number: areaNumber,
   };
-
-  console.log('3  new', newEvent);
+console.log("--------",{newEvent})
 
    addContry = () => {
-    console.log('4  *****',{country})
+
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
@@ -95,23 +91,23 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('5  ********', { data })
+      
         setCountryNumber(data)
-        addRegion();
+        addCity();
       }
       )
       .catch(error => {
         console.error(error);
-        console.log('6 Error');
+       
       });
   }
 
-   addRegion = () => {
+   addCity = () => {
     const areaObj = {
       country_number: countryNumber,
-      area_name: region
+      area_name: city
     }
-    console.log('7  *****',{areaObj})
+    
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
@@ -121,9 +117,9 @@ export default function NewEvent(props) {
       body: JSON.stringify(areaObj),
     })
       .then(response => response.json())
-      .then(data => {
-        console.log('8  ********', { data })
+      .then(data => {     
         setAreaNumber(data)
+      
       }
       )
       .catch(error => {
@@ -144,11 +140,12 @@ export default function NewEvent(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newEvent),
+      
       })
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log("9", data);
+      console.log({data})
            alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
           //console.log({ newEvent })
