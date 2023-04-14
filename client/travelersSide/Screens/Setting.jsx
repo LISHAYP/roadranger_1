@@ -226,6 +226,7 @@ export default function Setting(props) {
 }
 const styles = StyleSheet.create({
   container: {
+    marginTop:60,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

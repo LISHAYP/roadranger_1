@@ -95,7 +95,7 @@ export default function AroundYou(props) {
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
-                <Icon name="menu" size={30} color={'white'} top={10} />
+                <Icon name="menu" size={40} color={'white'}  alignSelf={'center'}/>
                 <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
 
             </TouchableOpacity>
@@ -143,7 +143,7 @@ export default function AroundYou(props) {
                                 latitude: location.coords.latitude,
                                 longitude: location.coords.longitude,
                             }}
-                            radius={5500}
+                            radius={500}
                             strokeColor="#F00"
                             fillColor="#F007"
                         />
@@ -251,15 +251,15 @@ const styles = StyleSheet.create({
     titlename: {
         color: 'white',
         width: '100%',
-        top: 12,
         left: 70,
-        fontSize: 20
+        fontSize: 22,
+        alignSelf:"center"
     },
     hamburger: {
         flexDirection: 'row',
         position: 'absolute',
         width: '100%',
-        height: '6%',
+        height: '7%',
         top: 0,
         left: 0,
         zIndex: 1,
