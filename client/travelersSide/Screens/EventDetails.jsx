@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '35%'
+    height: '75%'
   },
   commentContainer: {
     borderColor: '#DCDCDC',
