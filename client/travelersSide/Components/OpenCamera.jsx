@@ -60,7 +60,7 @@ export default function OpenCamera(props) {
         })
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log("liel",responseJson);
+            console.log(responseJson);
             setAnimate(false);
           })
           .catch((error) => {
@@ -68,7 +68,7 @@ export default function OpenCamera(props) {
             setAnimate(false);
           });
       } catch (error) {
-        console.log("liel",error);
+        console.log(error);
       }
     }
   };

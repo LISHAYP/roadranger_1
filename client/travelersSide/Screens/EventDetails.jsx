@@ -14,7 +14,7 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   //user-the user who use the app
   const user = props.route.params.traveler;
-  console.log(event);
+  console.log("///////",event.Picture);
   //traveler-the user how post event
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
@@ -40,7 +40,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setTraveler(data);
-      console.log(data);
+      console.log("***",data);
       fetchNumberEvent();
     } catch (error) {
       console.error(error);
@@ -203,7 +203,6 @@ export default function EventDetails(props) {
             </View>
           </View>
         </KeyboardAwareScrollView>
-
       </View>
     </GradientBackground >
   )
@@ -215,7 +214,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-
 
   },
 
