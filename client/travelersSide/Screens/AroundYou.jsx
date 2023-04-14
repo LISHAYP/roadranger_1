@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 AroundYou.navigationOptions = {
     headerShown: false,
-  };
+};
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,11 +18,11 @@ export default function AroundYou(props) {
 
     useFocusEffect(
         React.useCallback(() => {
-        handleGet();
-        return () => {
-        };
+            handleGet();
+            return () => {
+            };
         }, [])
-        );
+    );
 
     const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
@@ -40,7 +40,7 @@ export default function AroundYou(props) {
             setLocation(location);
             handleGet();
             getUserLocation();
-            
+
         })();
     }, []);
 
@@ -87,10 +87,10 @@ export default function AroundYou(props) {
         8: 'brown',    // Security threats
         9: 'black',    // Animal-related incidents
         10: 'gray',    // Financial issues
-      };
-      AroundYou.navigationOptions = {
+    };
+    AroundYou.navigationOptions = {
         headerShown: false,
-      };
+    };
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
@@ -132,14 +132,23 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
-                                navigation.navigate('Event Details', { event ,traveler});
+                                navigation.navigate('Event Details', { event, traveler });
                             }}
                         />
-                       
+
                     ))}
-
+                    
+                        <Circle
+                            center={{
+                                latitude: location.coords.latitude,
+                                longitude: location.coords.longitude,
+                            }}
+                            radius={5500}
+                            strokeColor="#F00"
+                            fillColor="#F007"
+                        />
+                    
                 </MapView>
-
             )}
             {isMenuOpen && (
                 <View style={styles.menu}>
@@ -181,13 +190,13 @@ export default function AroundYou(props) {
                         <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}  onPress={() => { navigation.navigate("Search")}}>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search") }}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Search </Text>
-                        
+
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting",{ traveler })}}
+                        onPress={() => { navigation.navigate("Setting", { traveler }) }}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
@@ -204,7 +213,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop:40
+        marginTop: 40
 
     },
     name: {
@@ -241,9 +250,9 @@ const styles = StyleSheet.create({
     titlename: {
         color: 'white',
         width: '100%',
-         top:12,
-         left:70,
-         fontSize:20
+        top: 12,
+        left: 70,
+        fontSize: 20
     },
     hamburger: {
         flexDirection: 'row',
@@ -305,7 +314,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         left: 30,
-        size: 30,
+        size: 30,
 
-    }
+    }
 });
