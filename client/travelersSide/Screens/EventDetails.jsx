@@ -132,76 +132,78 @@ export default function EventDetails(props) {
         });
     }
   }
+
+ 
   return (
     <GradientBackground>
       <View style={styles.container}>
         <KeyboardAwareScrollView >
-          <View style={styles.eventContainer}>
-            <View >
-              <View style={styles.event}>
-                <View style={styles.row}>
-                  <Image style={styles.img} source={{ uri: traveler.Picture }} resizeMode="contain" />
-                  <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
-                </View>
-                <View>
-                  <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
-                </View>
-              </View>
-              <View>
-                <Text style={styles.detailsText}>{event.Details}</Text>
-              </View>
-              <View style={styles.locationContainer}>
-                <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
-                <Text style={styles.locationText}>{addressComponents}</Text>
-              </View>
-              <View style={styles.pictureContainer}>
-                <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
-              </View>
-            </View>
-            <ScrollView>
-              <View>
-                {comments !== undefined && comments.length > 0 && (
-                  comments.map((comment, index) => (
-                    <View key={index} style={styles.commentContainer}>
-                      <View style={styles.event}>
-                        <View style={styles.row}>
-                          <Image style={styles.img} source={{ uri: user.Picture }} resizeMode="contain" />
-                          <Text style={styles.text}>{comment.TravelerName} </Text>
-                        </View>
-                        <View>
-                          <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
-                        </View>
-                      </View>
-                      <View>
-                        <Text style={styles.detailsTextComment}>{comment.Details}</Text>
-                      </View>
-                    </View>
-                  )))}
-              </View>
-            </ScrollView>
-          </View>
-
-          <View style={styles.addComment}>
+        <View style={styles.eventContainer}>
+          <View >
             <View style={styles.event}>
               <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: user.Picture }} resizeMode="contain" />
-                <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
+                <Image style={styles.img} source={{ uri: traveler.Picture }} resizeMode="contain" />
+                <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
               </View>
-              <TouchableOpacity onPress={createComment}>
-                <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
-              </TouchableOpacity>
+              <View>
+                <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
+              </View>
             </View>
+            <View>
+              <Text style={styles.detailsText}>{event.Details}</Text>
+            </View>
+            <View style={styles.locationContainer}>
+              <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
+              <Text style={styles.locationText}>{addressComponents}</Text>
+            </View>
+            <View style={styles.pictureContainer}>
+              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+            </View>
+          </View>
+          <ScrollView>
+            <View>
+              {comments !== undefined && comments.length > 0 && (
+                comments.map((comment, index) => (
+                  <View key={index} style={styles.commentContainer}>
+                    <View style={styles.event}>
+                      <View style={styles.row}>
+                        <Image style={styles.img} source={{ uri: user.Picture }} resizeMode="contain" />
+                        <Text style={styles.text}>{comment.TravelerName} </Text>
+                      </View>
+                      <View>
+                        <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
+                      </View>
+                    </View>
+                    <View>
+                      <Text style={styles.detailsTextComment}>{comment.Details}</Text>
+                    </View>
+                  </View>
+                )))}
+            </View>
+          </ScrollView>
+        </View>
+
+        <View style={styles.addComment}>
+          <View style={styles.event}>
             <View style={styles.row}>
-              <TextInput style={styles.input}
+              <Image style={styles.img} source={{ uri: user.Picture }} resizeMode="contain" />
+              <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
+            </View>
+            <TouchableOpacity onPress={createComment}>
+              <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TextInput style={styles.input}
                 placeholder="Add Comment..."
                 value={details}
                 multiline={true}
                 numberOfLines={4}
                 editable={true}
                 onChangeText={(text) => setDetails(text)}>
-              </TextInput>
-            </View>
+              </TextInput>  
           </View>
+        </View>
         </KeyboardAwareScrollView>
 
       </View>
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '35%'
+    height: '75%'
   },
   commentContainer: {
     borderColor: '#DCDCDC',

@@ -171,7 +171,7 @@ export default function Setting(props) {
           <Text style={styles.text}>Date of Birth:</Text>
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-              <Text style={styles.text1}>{moment(selectedDate, 'DD/MM/YY').format('MM/DD/YY')
+              <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')
               }</Text>
 
               <Icon style={styles.icon} name="calendar-outline" />
