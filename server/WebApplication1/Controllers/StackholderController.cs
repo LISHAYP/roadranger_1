@@ -1,6 +1,7 @@
 ﻿using data;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -62,6 +63,82 @@ namespace WebApplication1.Controllers
 
             return Ok(stakeholderDTO);
         }
+
+        [HttpPost]
+        [Route("api/post/GetTravelersByInsuranceCompany")]
+        public IHttpActionResult GetTravelersByInsuranceCompany([FromBody] TravelerDto insuranceCompany)
+        {
+            var travelers = db.traveleres.Where(x => x.insurence_company == insuranceCompany.insurence_company).ToList();
+
+            if (travelers == null )
+            {
+                return NotFound();
+            }
+
+            List<TravelerDto> travelerDtos = new List<TravelerDto>();
+
+            foreach (var traveler in travelers)
+            {
+                TravelerDto travelerDto = new TravelerDto()
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat,
+                    Picture = traveler.picture
+                };
+                travelerDtos.Add(travelerDto);
+            }
+
+            return Ok(travelerDtos);
+        }
+
+        [HttpPut]
+        [Route("api/put/stakeholder/update")]
+        public IHttpActionResult PutUpdateStakeholder( [FromBody] StackholderDto value)
+        {
+            try
+            {
+                var stakeholder = db.stakeholders.Where(x => x.stakeholder_email == value.StakeholderEmail).FirstOrDefault();
+
+                if (stakeholder == null)
+                {
+                    return NotFound();
+                }
+
+                // update the stakeholder user
+                stakeholder.full_name = value.FullName;
+                stakeholder.stakeholder_email = value.StakeholderEmail;
+                stakeholder.phone = value.Phone;
+                stakeholder.notifications = value.Notifications;
+                stakeholder.chat = value.Chat;
+                stakeholder.stakeholder_name = value.StakeholderName;
+                stakeholder.approved = value.Approved;
+                stakeholder.approvel_date = value.ApprovelDate;
+                stakeholder.stakeholder_type = value.StakeholderType;
+                stakeholder.password = value.Password;
+
+                db.Entry(stakeholder).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok("Stakeholder updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
         // PUT: api/Stackholder/5
         public void Put(int id, [FromBody]string value)

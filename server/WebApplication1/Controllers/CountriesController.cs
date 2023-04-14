@@ -44,6 +44,20 @@ namespace WebApplication1.Controllers
             return Ok(result);
         }
 
+        [Route("api/getareaswithcountry")]
+        public IHttpActionResult GetAreasData()
+        {
+            var result = db.tblArea
+                            .Select(a => new
+                            {
+                                area_name = a.area_name,
+                                area_number = a.area_number,
+                                country_number = a.tblCountries.country_number
+                            })
+                            .ToList();
+
+            return Ok(result);
+        }
 
 
         // POST: api/Countries
