@@ -103,7 +103,9 @@ namespace WebApplication1.Controllers
                                                   TravelerId = c.travelerId,
                                                   StackholderId = c.stackholderId,
                                                   TravelerName = c.traveleres.first_name + c.traveleres.last_name,
-                                                  StakeholderName = c.stakeholders.stakeholder_name
+                                                  StakeholderName = c.stakeholders.stakeholder_name,
+                                                  picture = c.traveleres.picture
+                                                  
                                               }).ToList();
 
                 return Ok(comments);

@@ -16,5 +16,6 @@ namespace WebApplication1.DTO
         public int? StackholderId { get; set; }
         public string TravelerName { get; set; }
         public string StakeholderName { get; set; }
+        public string picture { get; set; }
     }
 }
