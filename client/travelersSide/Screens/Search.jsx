@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    marginTop:40
   },
   text: {
     color: '#144800',
