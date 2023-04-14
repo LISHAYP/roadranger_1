@@ -148,9 +148,6 @@ console.log("--------",{newEvent})
       console.log({data})
            alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
-          //console.log({ newEvent })
-         
-
         })
         .catch(error => {
           console.error(error);

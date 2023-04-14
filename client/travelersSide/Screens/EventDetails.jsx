@@ -132,6 +132,8 @@ export default function EventDetails(props) {
         });
     }
   }
+
+ 
   return (
     <GradientBackground>
       <View style={styles.container}>
@@ -179,6 +181,7 @@ export default function EventDetails(props) {
             </View>
           </ScrollView>
         </View>
+
 
         <View style={styles.addComment}>
           <View style={styles.event}>
