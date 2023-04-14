@@ -19,10 +19,13 @@ import OpenCameraE from './Components/OpenCameraE';
 import OpenCameraSOS from './Components/OpenCameraSOS';
 const Stack = createNativeStackNavigator()
 export default function App() {
+  App.navigationOptions = {
+    headerShown: false,
+  };
   return (
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Sign In">
+      <Stack.Navigator initialRouteName="Sign In"  screenOptions={{headerShown: false}}>
         <Stack.Screen name="Sign In" component={SignIn} />
         <Stack.Screen name="Sign Up" component={SignUp} />
         <Stack.Screen name="Around You" component={AroundYou} />

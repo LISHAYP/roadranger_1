@@ -5,7 +5,9 @@ import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-
+AroundYou.navigationOptions = {
+    headerShown: false,
+  };
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -85,6 +87,9 @@ export default function AroundYou(props) {
         8: 'brown',    // Security threats
         9: 'black',    // Animal-related incidents
         10: 'gray',    // Financial issues
+      };
+      AroundYou.navigationOptions = {
+        headerShown: false,
       };
     return (
         <View style={styles.container}>
@@ -199,6 +204,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop:40
+
     },
     name: {
         position: "absolute",

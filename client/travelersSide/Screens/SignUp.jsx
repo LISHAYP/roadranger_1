@@ -18,6 +18,7 @@ export default function SignUp() {
     setupdatednewProfilePic(`http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/U_${email}.jpg`);
     
   }, [email]);
+
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
