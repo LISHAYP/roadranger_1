@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Security.Policy;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Services.Description;
 using data;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -15,6 +18,8 @@ using MimeKit;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using WebApplication1.DTO;
+using System.Security.Cryptography.X509Certificates;
+
 
 
 namespace WebApplication1.Controllers
@@ -212,6 +217,21 @@ namespace WebApplication1.Controllers
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
 
+
+            // Send an email to the user with the new password
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(user.travler_email));
+            message.Subject = "New Password";
+            message.Body = "Your new password is: " + newPassword;
+
+            //var client = new SendGridClient("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");
+            //var from = new EmailAddress("roadranger178@gmail.com", "Road Ranger admin ");
+            //var to = new EmailAddress(user.travler_email, user.first_name);
+            //var subject = "New Password";
+            //var plainTextContent = "Your new password is: " + newPassword;
+            //var htmlContent = "<strong>This is a test email</strong>";
+            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            //var response = await client.SendEmailAsync(msg);
 
             var sendGridClient = new SendGridClient("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");
             var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
