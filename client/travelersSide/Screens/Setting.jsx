@@ -13,9 +13,10 @@ export default function Setting(props) {
  
   const traveler =  props.route.params.traveler;
   console.log(traveler);
+
   useEffect(() => {
-    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/U_${email}.jpg`);
-    
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
+
   }, [userPic]);
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState(traveler.first_name);
@@ -82,7 +83,7 @@ export default function Setting(props) {
       .then((data) => {
         console.log(data); // Traveler updated successfully.
         alert('Traveler updated successfully')
-
+        navigation.goBack(); // Navigate back to the "Around You" screen
       })
       .catch((error) => {
         console.error(error);
@@ -162,7 +163,7 @@ export default function Setting(props) {
             labelField="label"
             valueField="value"
             placeholder={traveler.insurence_company}
-            value={selectedInsurance}
+             value={traveler.insurance_company}
             onChange={item => {
               setSelectedInsurance(item.value)
             }}
