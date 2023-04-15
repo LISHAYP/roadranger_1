@@ -7,6 +7,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { auth } from '../firebase';
 
 
 export default function SignUp() {
@@ -80,6 +82,7 @@ export default function SignUp() {
     Picture: updatednewProfilePic
   };
   const handleSignUp = async () => {
+    createUserWithEmailAndPassword(auth,newTraveler.travler_email, newTraveler.password)
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
       method: 'POST',
       headers: {
@@ -92,7 +95,7 @@ export default function SignUp() {
         // Handle the response data as needed
         console.log(newTraveler)
         console.log(data);
-        navigation.navigate("Forgot password")
+        navigation.goBack();
       })
       .catch(error => {
         console.error(error);

@@ -163,7 +163,7 @@ export default function Setting(props) {
             labelField="label"
             valueField="value"
             placeholder={traveler.insurence_company}
-            // value={traveler.insurance_company}
+             value={traveler.insurance_company}
             onChange={item => {
               setSelectedInsurance(item.value)
             }}

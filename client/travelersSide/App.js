@@ -17,11 +17,22 @@ import EventDetails from './Screens/EventDetails';
 import OpenCamera from './Components/OpenCamera';
 import OpenCameraE from './Components/OpenCameraE';
 import OpenCameraSOS from './Components/OpenCameraSOS';
+import Chat from './Screens/Chat';
+import HomeChat from './Screens/HomeChat';
+import {onAuthStateChanged} from 'firebase/auth'
+import { createContext } from 'react';
 const Stack = createNativeStackNavigator()
+
+// const AuthenticatedUserContext = createContext({});
+// const AuthenticatedUserProvider = ({children}) => {
+//   const [user, setUser] = useState(null);
+//   return(
+//     <AuthenticatedUserContext.Provider value={{user, setUser}}>
+//       {children}
+//     </AuthenticatedUserContext.Provider>
+//   )
+// }
 export default function App() {
-  App.navigationOptions = {
-    headerShown: false,
-  };
   return (
 
     <NavigationContainer>
@@ -40,6 +51,8 @@ export default function App() {
         <Stack.Screen name="CameraSOS" component={OpenCameraSOS} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="Event Details" component={EventDetails} />
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="Home chat" component={HomeChat} />
 
       </Stack.Navigator>
     </NavigationContainer>
