@@ -8,6 +8,7 @@ import ContactUs from './Screens/ContactUs';
 import NewEvent from './Screens/NewEvent';
 import SOS from './Screens/SOS';
 import Search from './Screens/Search'
+import Events from './Screens/Events';
 // import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
@@ -40,6 +41,7 @@ export default function App() {
         <Stack.Screen name="CameraSOS" component={OpenCameraSOS} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="Event Details" component={EventDetails} />
+        <Stack.Screen name="Events" component={Events} />
 
       </Stack.Navigator>
     </NavigationContainer>

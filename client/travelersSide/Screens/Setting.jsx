@@ -145,7 +145,7 @@ export default function Setting(props) {
             data={gender}
             maxHeight={300}
             labelField="label"
-            // valueField="value"
+            valueField="value"
             placeholder={traveler.gender}
             value={selectedGender}
             onChange={item => {
@@ -162,7 +162,7 @@ export default function Setting(props) {
             labelField="label"
             valueField="value"
             placeholder={traveler.insurence_company}
-            // value={traveler.insurance_company}
+            value={selectedInsurance}
             onChange={item => {
               setSelectedInsurance(item.value)
             }}

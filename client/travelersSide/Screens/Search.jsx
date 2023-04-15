@@ -10,6 +10,8 @@ import GradientBackground from '../Components/GradientBackground';
 
 
 export default function Search() {
+  const navigation = useNavigation();
+
   useEffect(() => {
     loadData();
   }, []);
@@ -72,20 +74,23 @@ export default function Search() {
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log( data )
           setEvents(data)
+        console.log(data);
+          navigation.navigate("Events",  {data} );
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          alert('No events in this coutry ', error);
         });
     }
+  
   }
+  
 
 
 
   //GET the countries and cities from data
-  loadData = () => {
+ const loadData = () => {
     //GET the countries into array
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getcountries', {
       method: 'GET',
@@ -206,6 +211,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    marginTop:40,
+    
   },
   text: {
     color: '#144800',
