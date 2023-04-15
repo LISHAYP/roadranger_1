@@ -7,6 +7,7 @@ import Setting from './Screens/Setting'
 import ContactUs from './Screens/ContactUs';
 import NewEvent from './Screens/NewEvent';
 import SOS from './Screens/SOS';
+import Search from './Screens/Search';
 // import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,6 +23,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Sign In">
         <Stack.Screen name="Sign In" component={SignIn} />
         <Stack.Screen name="Sign Up" component={SignUp} />
+        <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="Around You" component={AroundYou} />
         <Stack.Screen name="Contact Us" component={ContactUs} />
         <Stack.Screen name="Forgot password" component={ForgotPassword} />

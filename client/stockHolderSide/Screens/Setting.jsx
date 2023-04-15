@@ -10,195 +10,145 @@ import GradientBackground from '../Components/GradientBackground';
 
 
 export default function Setting({ route }) {
-  const [tempTraveler, setTempTraveler] = useState(route.params.travelerParams.traveler);
-  const traveler = tempTraveler;
-  console.log(traveler);
+  const stakeholder = route.params.stakeholderParams.stakeholder;
+  console.log(stakeholder);
 
   const navigation = useNavigation();
-  const [firstName, setFirstName] = useState(traveler.first_name);
-  const [lastName, setLastName] = useState(traveler.last_name);
-  const [email, setEmail] = useState(traveler.travler_email);
-  const [password, setPassword] = useState(traveler.password);
-  const [phone, setPhone] = useState(traveler.phone);
-  const gender = [
-    { label: 'Male', value: 'M' },
-    { label: 'Female', value: 'F' },
-    { label: 'Other', value: 'O' },]
-
-  const insurance = [
-    { label: 'PassportCard', value: 'PassportCard' },
-    { label: 'Harel', value: 'Harel' },
+  const [full_name, setFullName] = useState(stakeholder.FullName);
+  const [satkeholder_name, setStakeholderName] = useState(stakeholder.StakeholderName);
+  const [stakeholder_email, setEmail] = useState(stakeholder.StakeholderEmail);
+  const [password, setPassword] = useState(stakeholder.Password);
+  const [phone, setPhone] = useState(stakeholder.Phone);
+  const stakeholderType = [
+    { label: 'Insurance Company', value: 'Insurance Company' },
+    { label: 'Embassy', value: 'Embassy' },
+    { label: 'Rescue company', value: 'Rescue company' },
     { label: 'Other', value: 'Other' },
   ]
   const [value, setValue] = useState(null);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(traveler.dateOfBirth);
-  const [isEnabledLocation, setIsEnabledLocation] = useState(traveler.location);
-  const [isEnabledChatMode, setIsEnabledChatMode] = useState(traveler.chat);
-  const [isEnabledNotification, setIsEnabledNotification] = useState(traveler.notifications);
-  const [selectedGender, setSelectedGender] = useState(traveler.gender);
-  const [selectedInsurance, setSelectedInsurance] = useState(traveler.insurence_company);
-  const [userPic, setUserPic] = useState(traveler.picture)
+ 
+  const [isEnabledChatMode, setIsEnabledChatMode] = useState(stakeholder.Chat);
+  const [isEnabledNotification, setIsEnabledNotification] = useState(stakeholder.Notifications);
+  const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.stakeholderType);
+  //const [userPic, setUserPic] = useState(stakeholder.picture);
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
 
-  const handleDateSelect = (date) => {
-    console.log(date);
-    const formattedDate = moment.utc(date).format('DD/MM/YY');
-    setSelectedDate(formattedDate);
-    setIsCalendarOpen(false);
-  }
-  const changeTraveler = {
-    first_name: firstName,
-    last_name: lastName,
-    travler_email: email,
-    phone: phone,
-    notifications: isEnabledNotification,
-    insurence_company: selectedInsurance,
-    location: isEnabledLocation,
-    save_location: isEnabledLocation,
-    dateOfBirth: selectedDate,
-    gender: selectedGender,
+ 
+  const changeStakeholder = {
+    FullName: full_name,
+    StakeholderName: satkeholder_name,
+    StakeholderEmail: stakeholder_email,
+    Phone: phone,
+    Notifications: isEnabledNotification,
+    stakeholderType: selectedStakeholderType,
     password: password,
     chat: isEnabledChatMode,
-    picture: traveler.Picture
+    //picture: stakeholder.Picture
   };
-  console.log('*******', changeTraveler)
+  
+  console.log("*****",changeStakeholder);
+  console.log('*******', changeStakeholder)
   const saveChanges = async () => {
-    console.log("IM IN saveChanges");
-    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/update?email=${traveler.travler_email}`, {
+    console.log("IM IN saveChanges", changeStakeholder);
+    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/stakeholder/update?email=${stakeholder.StakeholderEmail}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(changeTraveler),
+      body: JSON.stringify(changeStakeholder),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // Traveler updated successfully.
-        alert('Traveler updated successfully')
-
+        console.log(data); // stakeholder updated successfully.
+        alert('Stakeholder updated successfully')
+        navigation.goBack(); // Navigate back to the "Around You" screen
+        //console.log({ newEvent })
       })
       .catch((error) => {
         console.error(error);
       });
   }
-  const id = traveler.traveler_id;
+  const id = stakeholder.stakeholder_id;
   // const openCamera = () => {
   //   navigation.navigate('Camera',{id});
   // }
   // const handleSavePhoto = (photo) => {
   //   setUserPic(photo);
   // }
+ 
   return (
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
-          {/* <TouchableOpacity onPress={openCamera}> */}
+        <Image source={{ uri:  "http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png" }} style={styles.user} />
+          {/* <TouchableOpacity onPress={openCamera}>
           {userPic ? (
-            <Image source={{ uri: traveler.Picture }} style={styles.user} />
+            <Image source={{ uri: stakeholder.Picture }} style={styles.user} />
           ) : (
-            <Image source={{ uri: traveler.Picture }} style={styles.user} />
-          )}
-          {/* </TouchableOpacity > */}
-          <Text style={styles.text}>First Name:</Text>
+            <Image source={{ uri: stakeholder.Picture }} style={styles.user} />
+          )} */}
+            {/* </TouchableOpacity > */}
+          <Text style={styles.text}>Stakeholder Type:</Text>
+          <Dropdown
+           style={styles.dropdown}
+           placeholderStyle={styles.placeholderStyle}
+           selectedTextStyle={styles.selectedTextStyle}
+           data={stakeholderType}       
+           maxHeight={300}
+           labelField="label"
+           valueField="value"
+           placeholder={stakeholder.selectedStakeholderType}
+           value={selectedStakeholderType}
+           onChange={item => {
+             setSelectedStakeholderType(item.label)
+            }} />
+           <Text style={styles.text}>stakeholder Name:</Text>
           <TextInput style={styles.input}
-            // value={firstName}
-            onChangeText={(text) => setFirstName(text)}
-            placeholder={traveler.first_name}>
+            //value={StakeholderName}
+            onChangeText={(text) => setStakeholderName(text)}
+            placeholder={stakeholder.StakeholderName}>
           </TextInput>
-          <Text style={styles.text}>Last Name:</Text>
+
+          <Text style={styles.text}>Company Full Name:</Text>
           <TextInput style={styles.input}
-            //value={lastName}
-            onChangeText={(text) => setLastName(text)}
-            placeholder={traveler.last_name}>
+            // value={FullName}
+            onChangeText={(text) => setFullName(text)}
+            placeholder={stakeholder.FullName}>
           </TextInput>
-          <Text style={styles.text}>Email:</Text>
+         
+         
+             <Text style={styles.text}>Email:</Text>
           <TextInput style={styles.input}
             // value={email}
             onChangeText={(text) => setEmail(text)}
-            placeholder={traveler.travler_email}>
-          </TextInput>
-          <Text style={styles.text}>Password:</Text>
-          <TextInput style={styles.input}
-            placeholder={traveler.password}
-            // value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={true}>
+            placeholder={stakeholder.StakeholderEmail}>
           </TextInput>
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
-            placeholder={'0' + traveler.phone.toString()}
+            placeholder={'0' + stakeholder.Phone.toString()}
             value={phone}
             keyboardType='numeric'
             onChangeText={(text) => setPhone(text)}
           >
           </TextInput>
-          <Text style={styles.text}>Gender:</Text>
-
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={gender}
-            maxHeight={300}
-            labelField="label"
-            // valueField="value"
-            placeholder={traveler.gender}
-            value={selectedGender}
-            onChange={item => {
-              setSelectedGender(item.value)
-            }} />
-          <Text style={styles.text}>Insurance Company:</Text>
-
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={insurance}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={traveler.insurence_company}
-            // value={traveler.insurance_company}
-            onChange={item => {
-              setSelectedInsurance(item.value)
-            }}
-
-          />
-          <Text style={styles.text}>Date of Birth:</Text>
-          <View>
-            <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-              <Text style={styles.text1}>{moment(selectedDate, 'DD/MM/YY').format('MM/DD/YY')
-              }</Text>
-
-              <Icon style={styles.icon} name="calendar-outline" />
-            </TouchableOpacity>
-            {isCalendarOpen && (
-              <View>
-                <CalendarPicker onDateChange={handleDateSelect} />
-              </View>
-            )}
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Location Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.location ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchLocation}
-              value={isEnabledLocation}
-            />
-          </View>
+         
+          <Text style={styles.text}>Password:</Text>
+          <TextInput style={styles.input}
+            placeholder={stakeholder.Password}
+            // value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={true}>
+          </TextInput>
+         
           <View style={styles.row}>
             <Text style={styles.text2}>Notification</Text>
             <Switch
               style={styles.switch}
               trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.notifications ? "#f4f3f4" : "#f4f3f4"}
+              thumbColor={stakeholder.notifications ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleNotification}
               value={isEnabledNotification}
@@ -209,12 +159,13 @@ export default function Setting({ route }) {
             <Switch
               style={styles.switch}
               trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.chat ? "#f4f3f4" : "#f4f3f4"}
+              thumbColor={stakeholder.chat ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitchChatMode}
               value={isEnabledChatMode}
             />
           </View>
+          
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>
               Save Changes

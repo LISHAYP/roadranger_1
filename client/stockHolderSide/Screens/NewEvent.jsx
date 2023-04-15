@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 
 export default function NewEvent(props) {
-  const traveler = props.route.params.traveler;
+  const stakeholder = props.route.params.stakeholder;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
@@ -34,11 +34,12 @@ export default function NewEvent(props) {
     country_name: country,
   };
 
-  const id = traveler.traveler_id;
+  const id = stakeholder.stackholderId;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
-  const [stackholderId, setStackholderId] = useState('null');
+  const [stackholderId, setStackholderId] = useState('');
+  const [TravelerId, setTravelerId] = useState(null);
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
@@ -74,8 +75,8 @@ export default function NewEvent(props) {
     Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
-    TravelerId: id,
-    StackholderId: stackholderId,
+    TravelerId: TravelerId,
+    stackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
