@@ -32,6 +32,8 @@ export default function OpenCamera(props) {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
+  const email = props.route.params.email;
+  console.log(email)
   const takePicture = async () => {
     if (camera) {
       try {
@@ -40,15 +42,15 @@ export default function OpenCamera(props) {
           base64: true,
         });
         setImage(photo);
-
         const pic64base = photo.base64;
-        const picName64base = `user_${new Date().getTime()}.jpg `;
+        const picName64base = `U_${email}.jpg `;
         const picUri = `data:image/gif;base64,${photo.base64}`;
         const formData = new FormData();
         formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
+
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
-        urlAPI='http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
+        urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
         fetch(urlAPI, {
           method: 'POST',
           headers: {
@@ -71,67 +73,96 @@ export default function OpenCamera(props) {
     }
   };
 
-
+ 
   const openGallery = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      quality: 0.1,
+      base64: true,
+    });
     console.log({ pickerResult }); // Log the pickerResult object
-    if (pickerResult.canceled || pickerResult.cancelled) {
+    if (pickerResult.cancelled) {
       console.log('Image selection cancelled'); // Handle cancel event
     } else {
-      const selectedAsset = pickerResult.assets[0];
-      const image = { uri: selectedAsset.uri, width: selectedAsset.width, height: selectedAsset.height };
-      console.log({ image });
+      const image = { uri: pickerResult.uri };
       setImage(image);
+      const pic64base = pickerResult.base64;
+      const picName64base = `U_${email}.jpg`;
+      console.log(picName64base);
+      const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
+      const formData = new FormData();
+      formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
+  
+      // Add the following lines to call the uploadBase64ToASMX function
+      setAnimate(true);
+      const urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
+      fetch(urlAPI, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          setAnimate(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setAnimate(false);
+        });
     }
-  };
-  const savePhoto = () => {
-    console.log('img',);
-
-    navigation.goBack();
-  };
-  const closeCamera = () => {
-    navigation.goBack(); // navigate to the previous screen
   }
+  
 
-  return (
-    <View style={styles.container}>
-      {image ? (
-        <View style={styles.preview}>
-          <Image style={styles.previewImage} source={{ uri: image.uri }} />
-          <TouchableOpacity style={styles.previewButton} onPress={() => setImage(null)}>
-            <Icon name="close-outline" size={35} color='white' />
+const savePhoto = () => {
+  console.log('img', true);
+alert("your picture has uploaded :)")
+  navigation.goBack();
+};
+const closeCamera = () => {
+  navigation.goBack(); // navigate to the previous screen
+}
+
+return (
+  <View style={styles.container}>
+    {image ? (
+      <View style={styles.preview}>
+        <Image style={styles.previewImage} source={{ uri: image.uri }} />
+        <TouchableOpacity style={styles.previewButton} onPress={() => setImage(null)}>
+          <Icon name="close-outline" size={35} color='white' />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.save} onPress={savePhoto} >
+          <Icon name="download-outline" size={35} />
+          <Text style={styles.textSave}>Save</Text>
+        </TouchableOpacity>
+      </View>
+    ) : (
+      <Camera style={styles.camera} type={type} ref={(ref) => { setCamera(ref) }}>
+        <TouchableOpacity style={styles.buttonClose} onPress={closeCamera}>
+          <Icon name="close-outline" size={35} color='white' />
+        </TouchableOpacity>
+        <View style={styles.buttonContainer} >
+          <TouchableOpacity style={styles.button} onPress={openGallery}>
+            <Icon name="images-outline" size={45} color='white' style={styles.iconLeft} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.save} onPress={savePhoto} >
-            <Icon name="download-outline" size={35} />
-            <Text style={styles.textSave}>Save</Text>
+          <TouchableOpacity style={styles.button} onPress={takePicture}>
+            <Icon name="radio-button-on-outline" size={100} color='white' style={styles.iconCenter} />
+
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+            <Icon name="sync-circle-outline" size={45} color='white' style={styles.iconRight} />
           </TouchableOpacity>
         </View>
-      ) : (
-        <Camera style={styles.camera} type={type} ref={(ref) => { setCamera(ref) }}>
-          <TouchableOpacity style={styles.buttonClose} onPress={closeCamera}>
-            <Icon name="close-outline" size={35} color='white' />
-          </TouchableOpacity>
-          <View style={styles.buttonContainer} >
-            <TouchableOpacity style={styles.button} onPress={openGallery}>
-              <Icon name="images-outline" size={45} color='white' style={styles.iconLeft} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={takePicture}>
-              <Icon name="radio-button-on-outline" size={100} color='white' style={styles.iconCenter} />
-
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-              <Icon name="sync-circle-outline" size={45} color='white' style={styles.iconRight} />
-            </TouchableOpacity>
-          </View>
-        </Camera>
-      )}
-    </View>
-  );
+      </Camera>
+    )}
+  </View>
+);
 }
 
 const styles = StyleSheet.create({

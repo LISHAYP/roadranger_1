@@ -5,11 +5,15 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import { auth } from '../firebase';
+
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
+    const navigation = useNavigation();
 
 
     const handleLogin = () => {
@@ -29,6 +33,7 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
+                    signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                     navigation.navigate("Around You", { data });
                 } else {
                     setLoginFailed(true);
@@ -41,13 +46,12 @@ export default function SignIn() {
             });
     };
 
-    const navigation = useNavigation();
+    
     state = {
         showPassword: false
     };
     return (
         < GradientBackground>
-
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
                 <Text style={styles.text}>Email:</Text>
@@ -114,6 +118,7 @@ export default function SignIn() {
 
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         padding: 10,
@@ -121,6 +126,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         padding: 20,
         width: "100%",
+        marginTop:100
 
     },
 
@@ -175,7 +181,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize:15,
 
-    }
+}
 });

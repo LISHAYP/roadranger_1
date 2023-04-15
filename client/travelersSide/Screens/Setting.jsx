@@ -9,11 +9,15 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 
 
-export default function Setting({ route }) {
-  const [tempTraveler, setTempTraveler] = useState(route.params.travelerParams.traveler);
-  const traveler = tempTraveler;
+export default function Setting(props) {
+ 
+  const traveler =  props.route.params.traveler;
   console.log(traveler);
 
+  useEffect(() => {
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
+
+  }, [userPic]);
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState(traveler.first_name);
   const [lastName, setLastName] = useState(traveler.last_name);
@@ -62,7 +66,7 @@ export default function Setting({ route }) {
     gender: selectedGender,
     password: password,
     chat: isEnabledChatMode,
-    picture: traveler.Picture
+    picture: userPic
   };
   console.log('*******', changeTraveler)
   const saveChanges = async () => {
@@ -79,30 +83,27 @@ export default function Setting({ route }) {
       .then((data) => {
         console.log(data); // Traveler updated successfully.
         alert('Traveler updated successfully')
-
+        navigation.goBack(); // Navigate back to the "Around You" screen
       })
       .catch((error) => {
         console.error(error);
       });
   }
-  const id = traveler.traveler_id;
-  // const openCamera = () => {
-  //   navigation.navigate('Camera',{id});
-  // }
-  // const handleSavePhoto = (photo) => {
-  //   setUserPic(photo);
-  // }
+  console.log(email)
+  const openCamera = () => {
+    navigation.navigate('Camera', { email });
+    handleSavePhoto( );
+  }
+  const handleSavePhoto = () => {
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
+  }
   return (
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
-          {/* <TouchableOpacity onPress={openCamera}> */}
-          {userPic ? (
+          <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
-          ) : (
-            <Image source={{ uri: traveler.Picture }} style={styles.user} />
-          )}
-          {/* </TouchableOpacity > */}
+          </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
             // value={firstName}
@@ -162,7 +163,7 @@ export default function Setting({ route }) {
             labelField="label"
             valueField="value"
             placeholder={traveler.insurence_company}
-            // value={traveler.insurance_company}
+             value={traveler.insurance_company}
             onChange={item => {
               setSelectedInsurance(item.value)
             }}
@@ -171,9 +172,8 @@ export default function Setting({ route }) {
           <Text style={styles.text}>Date of Birth:</Text>
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-              <Text style={styles.text1}>{moment(selectedDate, 'DD/MM/YY').format('MM/DD/YY')
-              }</Text>
 
+            <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
               <Icon style={styles.icon} name="calendar-outline" />
             </TouchableOpacity>
             {isCalendarOpen && (
@@ -227,6 +227,7 @@ export default function Setting({ route }) {
 }
 const styles = StyleSheet.create({
   container: {
+    marginTop:60,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
