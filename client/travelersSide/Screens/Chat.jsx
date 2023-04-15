@@ -14,7 +14,7 @@ export default function Chat(props) {
     const [message, setMessage] = useState([]);
 
 const traveler = props.route.params;
-console.log(traveler)
+console.log(traveler.Picture)
     const onSignOut = () => {
         signOut(auth).catch(error => console.log(error));
     };
@@ -61,6 +61,7 @@ console.log(traveler)
         <View style={styles.container}>
             <GradientBackground>
             <GiftedChat 
+            showAvatarForEveryMessage={true}
             messages={message}
             onSend={message => onSend(message)}
             user={{
@@ -72,11 +73,8 @@ console.log(traveler)
             // }}
             />
             </GradientBackground>
-
         </View>
-
     )
-
 }
 const styles = StyleSheet.create({
     container: {
@@ -84,7 +82,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: 40,
         marginBottom: 30
-
-
     }
 })
