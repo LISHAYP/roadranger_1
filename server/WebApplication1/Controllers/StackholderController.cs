@@ -122,8 +122,6 @@ namespace WebApplication1.Controllers
                 stakeholder.notifications = value.Notifications;
                 stakeholder.chat = value.Chat;
                 stakeholder.stakeholder_name = value.StakeholderName;
-                stakeholder.approved = value.Approved;
-                stakeholder.approvel_date = value.ApprovelDate;
                 stakeholder.stakeholder_type = value.StakeholderType;
                 stakeholder.password = value.Password;
 

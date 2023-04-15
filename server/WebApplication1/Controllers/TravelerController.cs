@@ -224,16 +224,7 @@ namespace WebApplication1.Controllers
             message.Subject = "New Password";
             message.Body = "Your new password is: " + newPassword;
 
-            //var client = new SendGridClient("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");
-            //var from = new EmailAddress("roadranger178@gmail.com", "Road Ranger admin ");
-            //var to = new EmailAddress(user.travler_email, user.first_name);
-            //var subject = "New Password";
-            //var plainTextContent = "Your new password is: " + newPassword;
-            //var htmlContent = "<strong>This is a test email</strong>";
-            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            //var response = await client.SendEmailAsync(msg);
-
-            var sendGridClient = new SendGridClient("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");
+            var sendGridClient = new SendGridClient("");
             var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
             var subject = "New Password";
             var to = new EmailAddress(user.travler_email, user.first_name);
