@@ -20,6 +20,7 @@ import OpenCameraE from './Components/OpenCameraE';
 import OpenCameraSOS from './Components/OpenCameraSOS';
 import Chat from './Screens/Chat';
 import HomeChat from './Screens/HomeChat';
+import BackButton from './Components/BackButtom';
 import {onAuthStateChanged} from 'firebase/auth'
 import { createContext } from 'react';
 const Stack = createNativeStackNavigator()
@@ -55,6 +56,7 @@ export default function App() {
         <Stack.Screen name="Events" component={Events} />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Home chat" component={HomeChat} />
+        <Stack.Screen name="BackButton" component={BackButton} />
 
       </Stack.Navigator>
     </NavigationContainer>

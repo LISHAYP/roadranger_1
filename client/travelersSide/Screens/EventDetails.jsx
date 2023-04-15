@@ -66,7 +66,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log("commmetssssssss",comments);
+      console.log("commmetssssssss",data);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -141,7 +141,7 @@ export default function EventDetails(props) {
           <View >
             <View style={styles.event}>
               <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: traveler.Picture }} resizeMode="contain" />
+                <Image style={styles.img} source={{ uri: traveler.Picture }}  />
                 <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
               </View>
               <View>
@@ -166,7 +166,7 @@ export default function EventDetails(props) {
                   <View key={index} style={styles.commentContainer}>
                     <View style={styles.event}>
                       <View style={styles.row}>
-                        <Image style={styles.img} source={{ uri: comment.Picture }} resizeMode="contain" />
+                        <Image style={styles.img} source={{ uri: comment.picture }} />
                         <Text style={styles.text}>{comment.TravelerName} </Text>
                       </View>
                       <View>
@@ -186,7 +186,7 @@ export default function EventDetails(props) {
         <View style={styles.addComment}>
           <View style={styles.event}>
             <View style={styles.row}>
-              <Image style={styles.img} source={{ uri: user.Picture }} resizeMode="contain" />
+              <Image style={styles.img} source={{ uri: user.Picture }}  />
               <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
             </View>
             <TouchableOpacity onPress={createComment}>
