@@ -19,6 +19,7 @@ namespace WebApplication1.Controllers
         // GET: api/NewEvent
         public IEnumerable<EventDto> Get()
         {
+
             List<tblEvents> events = db.tblEvents.ToList();
             List<EventDto> eventsDto = new List<EventDto>();
 

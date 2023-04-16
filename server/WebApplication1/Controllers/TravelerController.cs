@@ -204,71 +204,89 @@ namespace WebApplication1.Controllers
         [Route("api/post/forgotpassword")]
         public async Task<IHttpActionResult> ForgotPasswordAsync([FromBody] TravelerDto value)
         {
-            // Find the user with the specified email address
-            var user = db.traveleres.SingleOrDefault(x => x.travler_email == value.travler_email);
-            if (user == null)
+            try
             {
-                return NotFound();
+
+                // Find the user with the specified email address
+                var user = db.traveleres.SingleOrDefault(x => x.travler_email == value.travler_email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                // Generate a new password and update the user's record in the database
+                var newPassword = GeneratePassword();
+                user.password = newPassword;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+                // Send an email to the user with the new password
+                //var message = new MailMessage();
+                //message.To.Add(new MailAddress(user.travler_email));
+                //message.Subject = "New Password";
+                //message.Body = "Your new password is: " + newPassword;
+
+                var sendGridClient = new SendGridClient("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");
+                var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
+                var subject = "New Password";
+                var to = new EmailAddress(user.travler_email, user.first_name);
+                var plainContent = "Dear " + user.first_name;
+                var htmlContent = $"Your new password is: {newPassword}";
+                var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
+                await sendGridClient.SendEmailAsync(mailMessage);
+
+                return Ok("new password email was sent succesfully (:");
             }
+            catch (Exception)
+            {
 
-            // Generate a new password and update the user's record in the database
-            var newPassword = GeneratePassword();
-            user.password = newPassword;
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-
-
-            // Send an email to the user with the new password
-            var message = new MailMessage();
-            message.To.Add(new MailAddress(user.travler_email));
-            message.Subject = "New Password";
-            message.Body = "Your new password is: " + newPassword;
-
-            var sendGridClient = new SendGridClient("");
-            var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
-            var subject = "New Password";
-            var to = new EmailAddress(user.travler_email, user.first_name);
-            var plainContent = "Dear " + user.first_name;
-            var htmlContent = $"Your new password is: {newPassword}";
-            var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
-            await sendGridClient.SendEmailAsync(mailMessage);
-
-            return Ok("new password email was sent succesfully (:");
+                return BadRequest();
+            }
         }
 
         [HttpPost]
         [Route("api/traveler/details")]
         public IHttpActionResult GetTravelerDetails([FromBody] TravelerDto travelerId)
         {
-            // Find the traveler in the database based on the ID
-            var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerId.traveler_id);
-
-            if (traveler == null)
+            try
             {
-                // If the traveler is not found, return a 404 Not Found response
-                return NotFound();
+
+                // Find the traveler in the database based on the ID
+                var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerId.traveler_id);
+
+                if (traveler == null)
+                {
+                    // If the traveler is not found, return a 404 Not Found response
+                    return NotFound();
+                }
+
+                // Map the traveler entity to a DTO and return it
+                var travelerDto = new TravelerDto
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat,
+                    Picture = traveler.picture
+                };
+
+                return Ok(travelerDto);
             }
-
-            // Map the traveler entity to a DTO and return it
-            var travelerDto = new TravelerDto
+            catch (Exception)
             {
-                traveler_id = traveler.traveler_id,
-                first_name = traveler.first_name,
-                last_name = traveler.last_name,
-                travler_email = traveler.travler_email,
-                phone = traveler.phone,
-                notifications = traveler.notifications,
-                insurence_company = traveler.insurence_company,
-                location = traveler.location,
-                save_location = traveler.save_location,
-                dateOfBirth = traveler.dateOfBirth,
-                gender = traveler.gender,
-                password = traveler.password,
-                chat = traveler.chat,
-                Picture = traveler.picture
-            };
 
-            return Ok(travelerDto);
+                return BadRequest();
+            }
         }
 
 

@@ -33,30 +33,48 @@ namespace WebApplication1.Controllers
         [Route("api/getcountries")]
         public IHttpActionResult GetCountryData()
         {
-            var result = db.tblCountries
-                            .Select(c => new
-                            {
-                                country_name = c.country_name,
-                                country_number = c.country_number
-                            })
-                            .ToList();
+            try
+            {
+                var result = db.tblCountries
+                                            .Select(c => new
+                                            {
+                                                country_name = c.country_name,
+                                                country_number = c.country_number
+                                            })
+                                            .ToList();
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception )
+            {
+
+                return BadRequest();
+            }
+            
         }
 
         [Route("api/getareaswithcountry")]
         public IHttpActionResult GetAreasData()
         {
-            var result = db.tblArea
-                            .Select(a => new
-                            {
-                                area_name = a.area_name,
-                                area_number = a.area_number,
-                                country_number = a.tblCountries.country_number
-                            })
-                            .ToList();
+            try
+            {
+                var result = db.tblArea
+                           .Select(a => new
+                           {
+                               area_name = a.area_name,
+                               area_number = a.area_number,
+                               country_number = a.tblCountries.country_number
+                           })
+                           .ToList();
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+           
         }
 
 
@@ -129,27 +147,36 @@ namespace WebApplication1.Controllers
         [Route("api/post/countryarea")]
         public IHttpActionResult LookupCountryOrArea([FromBody] EventDto lookup)
         {
-            if (lookup == null)
+            try
             {
-                return BadRequest();
-            }
+                if (lookup == null)
+                {
+                    return BadRequest();
+                }
 
-            var @event = db.tblEvents.FirstOrDefault(x => x.eventNumber == lookup.eventNumber);
+                var @event = db.tblEvents.FirstOrDefault(x => x.eventNumber == lookup.eventNumber);
 
-            if (@event == null)
-            {
+                if (@event == null)
+                {
+                    return NotFound();
+                }
+
+                var country = db.tblCountries.FirstOrDefault(a => a.country_number == @event.country_number);
+                var area = db.tblArea.FirstOrDefault(b => b.area_number == @event.area_number);
+
+                if (country != null && area != null)
+                {
+                    return Ok(country.country_name + " " + area.area_name);
+                }
+
                 return NotFound();
             }
-
-            var country = db.tblCountries.FirstOrDefault(a => a.country_number == @event.country_number);
-            var area = db.tblArea.FirstOrDefault(b => b.area_number == @event.area_number);
-
-            if (country != null && area != null)
+            catch (Exception)
             {
-                return Ok(country.country_name + " " + area.area_name);
-            }
 
-            return NotFound();
+                return BadRequest() ;
+            }
+       
         }
 
         // PUT: api/Countries/5

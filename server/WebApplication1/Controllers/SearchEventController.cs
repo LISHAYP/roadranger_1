@@ -33,7 +33,9 @@ namespace WebApplication1.Controllers
         [Route("api/post/searchByCountryNumber")]
         public IHttpActionResult SearchByCountryNumber([FromBody] EventDto countryNumber)
         {
-            var events = db.tblEvents.Where(x => x.country_number == countryNumber.CountryNumber)
+            try
+            {
+                var events = db.tblEvents.Where(x => x.country_number == countryNumber.CountryNumber)
                                      .Select(x => new EventDto
                                      {
                                          eventNumber = x.eventNumber,
@@ -52,12 +54,19 @@ namespace WebApplication1.Controllers
                                      })
                                      .ToList();
 
-            if (events.Count == 0)
-            {
-                return NotFound();
-            }
+                if (events.Count == 0)
+                {
+                    return NotFound();
+                }
 
-            return Ok(events);
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+            
         }
 
 
@@ -65,7 +74,9 @@ namespace WebApplication1.Controllers
         [Route("api/post/searchByAreaNumber")]
         public IHttpActionResult SearchByAreaNumber([FromBody] EventDto areaNumber)
         {
-            var events = db.tblEvents.Where(x => x.area_number == areaNumber.AreaNumber)
+            try
+            {
+                var events = db.tblEvents.Where(x => x.area_number == areaNumber.AreaNumber)
                                      .Select(x => new EventDto
                                      {
                                          eventNumber = x.eventNumber,
@@ -84,12 +95,19 @@ namespace WebApplication1.Controllers
                                      })
                                      .ToList();
 
-            if (events.Count == 0)
-            {
-                return NotFound();
-            }
+                if (events.Count == 0)
+                {
+                    return NotFound();
+                }
 
-            return Ok(events);
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+            
         }
 
 
@@ -97,31 +115,40 @@ namespace WebApplication1.Controllers
         [Route("api/post/searchBySerialTypeNumber")]
         public IHttpActionResult SearchBySerialTypeNumber([FromBody] EventDto serialTypeNumber)
         {
-            var events = db.tblEvents.Where(x => x.serialTypeNumber == serialTypeNumber.SerialTypeNumber)
-                                     .Select(x => new EventDto
-                                     {
-                                         eventNumber = x.eventNumber,
-                                         Details = x.details,
-                                         EventDate = x.event_date,
-                                         EventTime = x.event_time,
-                                         Latitude = x.latitude,
-                                         Longitude = x.longitude,
-                                         EventStatus = x.event_status,
-                                         Picture = x.picture,
-                                         TravelerId = x.travelerId,
-                                         StackholderId = x.stackholderId,
-                                         SerialTypeNumber = x.serialTypeNumber,
-                                         CountryNumber = x.country_number,
-                                         AreaNumber = x.area_number
-                                     })
-                                     .ToList();
-
-            if (events.Count == 0)
+            try
             {
-                return NotFound();
-            }
+                var events = db.tblEvents.Where(x => x.serialTypeNumber == serialTypeNumber.SerialTypeNumber)
+                                                     .Select(x => new EventDto
+                                                     {
+                                                         eventNumber = x.eventNumber,
+                                                         Details = x.details,
+                                                         EventDate = x.event_date,
+                                                         EventTime = x.event_time,
+                                                         Latitude = x.latitude,
+                                                         Longitude = x.longitude,
+                                                         EventStatus = x.event_status,
+                                                         Picture = x.picture,
+                                                         TravelerId = x.travelerId,
+                                                         StackholderId = x.stackholderId,
+                                                         SerialTypeNumber = x.serialTypeNumber,
+                                                         CountryNumber = x.country_number,
+                                                         AreaNumber = x.area_number
+                                                     })
+                                                     .ToList();
 
-            return Ok(events);
+                if (events.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+            
         }
 
 
@@ -129,31 +156,40 @@ namespace WebApplication1.Controllers
         [Route("api/post/searchByEventDate")]
         public IHttpActionResult SearchByEventDate([FromBody] EventDto eventDate)
         {
-            var events = db.tblEvents.Where(x => x.event_date == eventDate.EventDate)
-                                     .Select(x => new EventDto
-                                     {
-                                         eventNumber = x.eventNumber,
-                                         Details = x.details,
-                                         EventDate = x.event_date,
-                                         EventTime = x.event_time,
-                                         Latitude = x.latitude,
-                                         Longitude = x.longitude,
-                                         EventStatus = x.event_status,
-                                         Picture = x.picture,
-                                         TravelerId = x.travelerId,
-                                         StackholderId = x.stackholderId,
-                                         SerialTypeNumber = x.serialTypeNumber,
-                                         CountryNumber = x.country_number,
-                                         AreaNumber = x.area_number
-                                     })
-                                     .ToList();
-
-            if (events.Count == 0)
+            try
             {
-                return NotFound();
-            }
 
-            return Ok(events);
+                var events = db.tblEvents.Where(x => x.event_date == eventDate.EventDate)
+                                         .Select(x => new EventDto
+                                         {
+                                             eventNumber = x.eventNumber,
+                                             Details = x.details,
+                                             EventDate = x.event_date,
+                                             EventTime = x.event_time,
+                                             Latitude = x.latitude,
+                                             Longitude = x.longitude,
+                                             EventStatus = x.event_status,
+                                             Picture = x.picture,
+                                             TravelerId = x.travelerId,
+                                             StackholderId = x.stackholderId,
+                                             SerialTypeNumber = x.serialTypeNumber,
+                                             CountryNumber = x.country_number,
+                                             AreaNumber = x.area_number
+                                         })
+                                         .ToList();
+
+                if (events.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
 
@@ -161,113 +197,131 @@ namespace WebApplication1.Controllers
         [Route("api/post/searchByMultipleParameters")]
         public IHttpActionResult SearchByMultipleParameters([FromBody] EventDto searchParams)
         {
-            var events = db.tblEvents.Where(x => x.country_number == searchParams.CountryNumber
-                                               && x.area_number == searchParams.AreaNumber
-                                               && x.serialTypeNumber == searchParams.SerialTypeNumber
-                                               && x.event_date == searchParams.EventDate)
-                                     .Select(x => new EventDto
-                                     {
-                                         eventNumber = x.eventNumber,
-                                         Details = x.details,
-                                         EventDate = x.event_date,
-                                         EventTime = x.event_time,
-                                         Latitude = x.latitude,
-                                         Longitude = x.longitude,
-                                         EventStatus = x.event_status,
-                                         Picture = x.picture,
-                                         TravelerId = x.travelerId,
-                                         StackholderId = x.stackholderId,
-                                         SerialTypeNumber = x.serialTypeNumber,
-                                         CountryNumber = x.country_number,
-                                         AreaNumber = x.area_number
-                                     })
-                                     .ToList();
-
-            if (events.Count == 0)
+            try
             {
-                return NotFound();
-            }
 
-            return Ok(events);
+                var events = db.tblEvents.Where(x => x.country_number == searchParams.CountryNumber
+                                                   && x.area_number == searchParams.AreaNumber
+                                                   && x.serialTypeNumber == searchParams.SerialTypeNumber
+                                                   && x.event_date == searchParams.EventDate)
+                                         .Select(x => new EventDto
+                                         {
+                                             eventNumber = x.eventNumber,
+                                             Details = x.details,
+                                             EventDate = x.event_date,
+                                             EventTime = x.event_time,
+                                             Latitude = x.latitude,
+                                             Longitude = x.longitude,
+                                             EventStatus = x.event_status,
+                                             Picture = x.picture,
+                                             TravelerId = x.travelerId,
+                                             StackholderId = x.stackholderId,
+                                             SerialTypeNumber = x.serialTypeNumber,
+                                             CountryNumber = x.country_number,
+                                             AreaNumber = x.area_number
+                                         })
+                                         .ToList();
+
+                if (events.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
         [HttpPost]
         [Route("api/post/searchByParameters")]
         public IHttpActionResult SearchByParameters([FromBody] List<EventParam> searchParams, int? countryNumber = null)
         {
-            if (searchParams == null)
+            try
             {
-                // Return a BadRequest response to indicate that the caller did not provide valid search parameters
-                return BadRequest("Invalid search parameters");
-            }
 
-            var events = db.tblEvents.AsQueryable();
-
-            if (countryNumber != null)
-            {
-                // Filter areas based on selected country
-                events = events.Where(x => x.country_number == countryNumber);
-               
-            }
-
-            foreach (var param in searchParams)
-            {
-                switch (param.Name.ToLower())
+                if (searchParams == null)
                 {
-                    case "countrynumber":
-                        if (int.TryParse(param.Value, out var cn))
-                        {
-                            countryNumber = cn;
-                            events = events.Where(x => x.country_number == countryNumber);
-                        }
-                        break;
-                    case "areanumber":
-                        if (int.TryParse(param.Value, out var areaNumber))
-                        {
-                            events = events.Where(x => x.area_number == areaNumber);
-                        }
-                        break;
-                    case "serialtypenumber":
-                        if (int.TryParse(param.Value, out var serialTypeNumber))
-                        {
-                            events = events.Where(x => x.serialTypeNumber == serialTypeNumber);
-                        }
-                        break;
-                    case "eventdate":
-                        if (DateTime.TryParse(param.Value, out var eventDate))
-                        {
-                            events = events.Where(x => x.event_date == eventDate);
-                        }
-                        break;
-                    default:
-                        break;
+                    // Return a BadRequest response to indicate that the caller did not provide valid search parameters
+                    return BadRequest("Invalid search parameters");
                 }
+
+                var events = db.tblEvents.AsQueryable();
+
+                if (countryNumber != null)
+                {
+                    // Filter areas based on selected country
+                    events = events.Where(x => x.country_number == countryNumber);
+
+                }
+
+                foreach (var param in searchParams)
+                {
+                    switch (param.Name.ToLower())
+                    {
+                        case "countrynumber":
+                            if (int.TryParse(param.Value, out var cn))
+                            {
+                                countryNumber = cn;
+                                events = events.Where(x => x.country_number == countryNumber);
+                            }
+                            break;
+                        case "areanumber":
+                            if (int.TryParse(param.Value, out var areaNumber))
+                            {
+                                events = events.Where(x => x.area_number == areaNumber);
+                            }
+                            break;
+                        case "serialtypenumber":
+                            if (int.TryParse(param.Value, out var serialTypeNumber))
+                            {
+                                events = events.Where(x => x.serialTypeNumber == serialTypeNumber);
+                            }
+                            break;
+                        case "eventdate":
+                            if (DateTime.TryParse(param.Value, out var eventDate))
+                            {
+                                events = events.Where(x => x.event_date == eventDate);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                var result = events.Select(x => new EventDto
+                {
+                    eventNumber = x.eventNumber,
+                    Details = x.details,
+                    EventDate = x.event_date,
+                    EventTime = x.event_time,
+                    Latitude = x.latitude,
+                    Longitude = x.longitude,
+                    EventStatus = x.event_status,
+                    Picture = x.picture,
+                    TravelerId = x.travelerId,
+                    StackholderId = x.stackholderId,
+                    SerialTypeNumber = x.serialTypeNumber,
+                    CountryNumber = x.country_number,
+                    AreaNumber = x.area_number
+                })
+                                    .ToList();
+
+                if (result.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
             }
-
-            var result = events.Select(x => new EventDto
+            catch (Exception)
             {
-                eventNumber = x.eventNumber,
-                Details = x.details,
-                EventDate = x.event_date,
-                EventTime = x.event_time,
-                Latitude = x.latitude,
-                Longitude = x.longitude,
-                EventStatus = x.event_status,
-                Picture = x.picture,
-                TravelerId = x.travelerId,
-                StackholderId = x.stackholderId,
-                SerialTypeNumber = x.serialTypeNumber,
-                CountryNumber = x.country_number,
-                AreaNumber = x.area_number
-            })
-                                .ToList();
 
-            if (result.Count == 0)
-            {
-                return NotFound();
+                return BadRequest();
             }
-
-            return Ok(result);
         }
 
 

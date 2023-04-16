@@ -39,16 +39,25 @@ namespace WebApplication1.Controllers
         [Route("api/post/type")]
         public IHttpActionResult PostType([FromBody] TypeDto type)
         {
-            var existingType = db.tblType.FirstOrDefault(x => x.serialTypeNumber == type.serialTypeNumber);
+            try
+            {
+                var existingType = db.tblType.FirstOrDefault(x => x.serialTypeNumber == type.serialTypeNumber);
 
-            if (existingType != null)
-            {
-                return Ok(existingType.typeName);
+                if (existingType != null)
+                {
+                    return Ok(existingType.typeName);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
-            else
+            catch (Exception)
             {
-                return NotFound();
+
+                return BadRequest();
             }
+           
         }
 
 

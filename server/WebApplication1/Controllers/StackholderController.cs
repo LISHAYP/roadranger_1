@@ -37,69 +37,87 @@ namespace WebApplication1.Controllers
         [Route("api/post/stackholder")]
         public IHttpActionResult GetStakeholderDetails([FromBody] StackholderDto loginDTO)
         {
-            // Check if the email and password are valid
-            var stakeholder = db.stakeholders.SingleOrDefault(x => x.stakeholder_email == loginDTO.StakeholderEmail && x.password == loginDTO.Password);
-            if (stakeholder == null)
+            try
             {
-                return BadRequest("Invalid email or password");
+
+                // Check if the email and password are valid
+                var stakeholder = db.stakeholders.SingleOrDefault(x => x.stakeholder_email == loginDTO.StakeholderEmail && x.password == loginDTO.Password);
+                if (stakeholder == null)
+                {
+                    return BadRequest("Invalid email or password");
+                }
+
+                // Map the stakeholder to a DTO
+                var stakeholderDTO = new StackholderDto
+                {
+                    StakeholderId = stakeholder.stakeholder_id,
+                    FullName = stakeholder.full_name,
+                    StakeholderEmail = stakeholder.stakeholder_email,
+                    Phone = stakeholder.phone,
+                    Notifications = stakeholder.notifications,
+                    Chat = stakeholder.chat,
+                    StakeholderName = stakeholder.stakeholder_name,
+                    Approved = stakeholder.approved,
+                    ApprovelDate = stakeholder.approvel_date,
+                    StakeholderType = stakeholder.stakeholder_type,
+                    Password = stakeholder.password
+                    // Map related entities as well if needed
+                };
+
+                return Ok(stakeholderDTO);
             }
-
-            // Map the stakeholder to a DTO
-            var stakeholderDTO = new StackholderDto
+            catch (Exception)
             {
-                StakeholderId = stakeholder.stakeholder_id,
-                FullName = stakeholder.full_name,
-                StakeholderEmail = stakeholder.stakeholder_email,
-                Phone = stakeholder.phone,
-                Notifications = stakeholder.notifications,
-                Chat = stakeholder.chat,
-                StakeholderName = stakeholder.stakeholder_name,
-                Approved = stakeholder.approved,
-                ApprovelDate = stakeholder.approvel_date,
-                StakeholderType = stakeholder.stakeholder_type,
-                Password = stakeholder.password
-                // Map related entities as well if needed
-            };
 
-            return Ok(stakeholderDTO);
+                return BadRequest();
+            }
         }
 
         [HttpPost]
         [Route("api/post/GetTravelersByInsuranceCompany")]
         public IHttpActionResult GetTravelersByInsuranceCompany([FromBody] TravelerDto insuranceCompany)
         {
-            var travelers = db.traveleres.Where(x => x.insurence_company == insuranceCompany.insurence_company).ToList();
-
-            if (travelers == null )
+            try
             {
-                return NotFound();
-            }
 
-            List<TravelerDto> travelerDtos = new List<TravelerDto>();
+                var travelers = db.traveleres.Where(x => x.insurence_company == insuranceCompany.insurence_company).ToList();
 
-            foreach (var traveler in travelers)
-            {
-                TravelerDto travelerDto = new TravelerDto()
+                if (travelers == null)
                 {
-                    traveler_id = traveler.traveler_id,
-                    first_name = traveler.first_name,
-                    last_name = traveler.last_name,
-                    travler_email = traveler.travler_email,
-                    phone = traveler.phone,
-                    notifications = traveler.notifications,
-                    insurence_company = traveler.insurence_company,
-                    location = traveler.location,
-                    save_location = traveler.save_location,
-                    dateOfBirth = traveler.dateOfBirth,
-                    gender = traveler.gender,
-                    password = traveler.password,
-                    chat = traveler.chat,
-                    Picture = traveler.picture
-                };
-                travelerDtos.Add(travelerDto);
-            }
+                    return NotFound();
+                }
 
-            return Ok(travelerDtos);
+                List<TravelerDto> travelerDtos = new List<TravelerDto>();
+
+                foreach (var traveler in travelers)
+                {
+                    TravelerDto travelerDto = new TravelerDto()
+                    {
+                        traveler_id = traveler.traveler_id,
+                        first_name = traveler.first_name,
+                        last_name = traveler.last_name,
+                        travler_email = traveler.travler_email,
+                        phone = traveler.phone,
+                        notifications = traveler.notifications,
+                        insurence_company = traveler.insurence_company,
+                        location = traveler.location,
+                        save_location = traveler.save_location,
+                        dateOfBirth = traveler.dateOfBirth,
+                        gender = traveler.gender,
+                        password = traveler.password,
+                        chat = traveler.chat,
+                        Picture = traveler.picture
+                    };
+                    travelerDtos.Add(travelerDto);
+                }
+
+                return Ok(travelerDtos);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
         [HttpPut]
