@@ -78,7 +78,38 @@ namespace WebApplication1.Controllers
 
                 db.tblEvents.Add(newEvent);
                 db.SaveChanges();
-                return Ok("New event created successfully!");
+
+                // Retrieve the name and picture of the user who posted the event
+                string userName = "";
+                string userPicture = "";
+                if (newEvent.travelerId.HasValue)
+                {
+                    var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == newEvent.travelerId.Value);
+                    if (traveler != null)
+                    {
+                        userName = traveler.first_name + " " + traveler.last_name;
+                        userPicture = traveler.picture;
+                    }
+                }
+                else if (newEvent.stackholderId.HasValue)
+                {
+                    var stakeholder = db.stakeholders.FirstOrDefault(s => s.stakeholder_id == newEvent.stackholderId.Value);
+                    if (stakeholder != null)
+                    {
+                        userName = stakeholder.full_name;
+                        userPicture = stakeholder.picture;
+                    }
+                }
+
+                // Construct the response message
+                var responseMessage = new
+                {
+                    message = "New event created successfully!",
+                    userName = userName,
+                    userPicture = userPicture
+                };
+
+                return Ok(responseMessage);
             }
             catch (Exception ex)
             {
@@ -86,7 +117,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-      
+
         [HttpPost]
         [Route("api/events/comments")]
         public IHttpActionResult GetCommentsForEvent([FromBody]CommentDto eventId)

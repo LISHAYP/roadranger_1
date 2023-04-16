@@ -235,6 +235,7 @@
     <Compile Include="Controllers\ConversationController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
     <Compile Include="Controllers\SearchEventController.cs" />
     <Compile Include="Controllers\StackholderController.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="DTO\CountryAreaDto.cs" />
     <Compile Include="DTO\EventDto.cs" />
     <Compile Include="DTO\EventParam.cs" />
+    <Compile Include="DTO\LocationDto.cs" />
     <Compile Include="DTO\StackholderDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="DTO\TypeDto.cs" />

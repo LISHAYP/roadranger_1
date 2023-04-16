@@ -35,6 +35,7 @@ namespace data
         public System.DateTime approvel_date { get; set; }
         public string stakeholder_type { get; set; }
         public string password { get; set; }
+        public string picture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblComments> tblComments { get; set; }

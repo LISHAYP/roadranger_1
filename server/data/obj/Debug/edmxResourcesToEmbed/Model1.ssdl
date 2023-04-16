@@ -15,6 +15,7 @@
     <Property Name="approvel_date" Type="date" Nullable="false" />
     <Property Name="stakeholder_type" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="picture" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>

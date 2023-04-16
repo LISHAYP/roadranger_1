@@ -15,6 +15,7 @@
     <Property Name="approvel_date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="stakeholder_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_stackholder" FromRole="stakeholders" ToRole="tblComments" />
     <NavigationProperty Name="tblEvents" Relationship="Self.event_stackholder" FromRole="stakeholders" ToRole="tblEvents" />
     <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_stakeholders" FromRole="stakeholders" ToRole="tblAskForHelp" />
