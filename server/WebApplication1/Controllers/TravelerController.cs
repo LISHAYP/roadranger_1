@@ -227,7 +227,7 @@ namespace WebApplication1.Controllers
                 //message.Subject = "New Password";
                 //message.Body = "Your new password is: " + newPassword;
 
-                var sendGridClient = new SendGridClient("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");
+                var sendGridClient = new SendGridClient("");
                 var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
                 var subject = "New Password";
                 var to = new EmailAddress(user.travler_email, user.first_name);
