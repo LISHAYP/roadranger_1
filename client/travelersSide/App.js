@@ -20,8 +20,8 @@ import OpenCameraE from './Components/OpenCameraE';
 import OpenCameraSOS from './Components/OpenCameraSOS';
 import Chat from './Screens/Chat';
 import HomeChat from './Screens/HomeChat';
-import BackButton from './Components/BackButtom';
-import {onAuthStateChanged} from 'firebase/auth'
+import BackButton from './Components/BackButton';
+import { onAuthStateChanged } from 'firebase/auth'
 import { createContext } from 'react';
 const Stack = createNativeStackNavigator()
 
@@ -38,7 +38,7 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Sign In"  screenOptions={{headerShown: false}}>
+      <Stack.Navigator initialRouteName="Sign In" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Sign In" component={SignIn} />
         <Stack.Screen name="Sign Up" component={SignUp} />
         <Stack.Screen name="Around You" component={AroundYou} />

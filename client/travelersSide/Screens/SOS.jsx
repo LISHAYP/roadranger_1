@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
-import BackButton from '../Components/BackButtom';
+import BackButton from '../Components/BackButton';
 
 export default function SOS(props) {
   const traveler = props.route.params.traveler;

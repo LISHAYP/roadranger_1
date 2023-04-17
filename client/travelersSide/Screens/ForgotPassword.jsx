@@ -7,7 +7,7 @@ import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useRef } from 'react';
-import BackButton from '../Components/BackButtom';
+import BackButton from '../Components/BackButton';
 export default function ForgotPassword() {
 
 

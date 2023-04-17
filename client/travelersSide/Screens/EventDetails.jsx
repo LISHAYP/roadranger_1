@@ -5,7 +5,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
 import Geocoder from 'react-native-geocoding';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import BackButton from '../Components/BackButtom';
+import BackButton from '../Components/BackButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -14,7 +14,7 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   //user-the user who use the app
   const user = props.route.params.traveler;
-  console.log("///////", event.Picture);
+
   //traveler-the user how post event
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')

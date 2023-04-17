@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
-import BackButton from '../Components/BackButtom';
+import BackButton from '../Components/BackButton';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;

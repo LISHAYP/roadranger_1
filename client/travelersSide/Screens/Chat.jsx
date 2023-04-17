@@ -6,7 +6,7 @@ import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
-import BackButton from "../Components/BackButtom";
+import BackButton from "../Components/BackButton";
 
 
 

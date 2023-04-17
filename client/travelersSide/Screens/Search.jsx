@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-import BackButton from '../Components/BackButtom';
+import BackButton from '../Components/BackButton';
 
 export default function Search() {
   const navigation = useNavigation();

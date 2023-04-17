@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { auth } from '../firebase';
-import BackButton from '../Components/BackButtom';
+import BackButton from '../Components/BackButton';
 
 export default function SignUp() {
 
