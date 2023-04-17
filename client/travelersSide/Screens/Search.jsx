@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-
+import BackButton from '../Components/BackButtom';
 
 export default function Search() {
   const navigation = useNavigation();
@@ -136,6 +136,8 @@ export default function Search() {
   return (
     < GradientBackground>
       <View style={styles.container}>
+      <BackButton />
+
         <Text style={styles.text}>Country:</Text>
         <Dropdown
           style={styles.dropdown}
@@ -205,13 +207,13 @@ export default function Search() {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop:60,
+    marginTop:20,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    marginTop:40
+  
   },
   text: {
     color: '#144800',

@@ -5,7 +5,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
 import Geocoder from 'react-native-geocoding';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import BackButton from '../Components/BackButtom';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -137,6 +137,7 @@ export default function EventDetails(props) {
   return (
     <GradientBackground>
       <View style={styles.container}>
+        <BackButton/>
         <View style={styles.eventContainer}>
           <View >
             <View style={styles.event}>
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop: 80
+    marginTop: 20
   },
 
 

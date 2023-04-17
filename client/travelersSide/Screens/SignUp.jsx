@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { auth } from '../firebase';
-
+import BackButton from '../Components/BackButtom';
 
 export default function SignUp() {
 
@@ -119,6 +119,7 @@ const presentPic = () =>{
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
+          <BackButton/>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: newProfilePic  }} style={styles.user} />
