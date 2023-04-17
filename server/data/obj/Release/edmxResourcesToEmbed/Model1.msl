@@ -15,6 +15,7 @@
           <ScalarProperty Name="approvel_date" ColumnName="approvel_date" />
           <ScalarProperty Name="stakeholder_type" ColumnName="stakeholder_type" />
           <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

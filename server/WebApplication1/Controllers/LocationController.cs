@@ -50,6 +50,52 @@ namespace WebApplication1.Controllers
             return "value";
         }
 
+        [HttpPost]
+        [Route("api/traveler/location")]
+        public IHttpActionResult SaveTravelerLocation([FromBody] LocationDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Request body is null");
+            }
+
+            try
+            {
+                var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == dto.TravelerId);
+
+                if (traveler == null)
+                {
+                    return NotFound($"Traveler with ID {dto.TravelerId} not found");
+                }
+
+                var location = new tblLocations
+                {
+                    travelerId = dto.TravelerId,
+                    locationNumber = dto.LocationNumber,
+                    longitude = dto.Longitude,
+                    latitude = dto.Latitude,
+                    dateAndTime = dto.DateAndTime
+                };
+
+                db.tblLocations.Add(location);
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Log the error message
+                Console.WriteLine(ex.Message);
+                return InternalServerError();
+            }
+        }
+
+        private IHttpActionResult NotFound(string v)
+        {
+            throw new NotImplementedException();
+        }
+
+
         // POST: api/Location
         public void Post([FromBody]string value)
         {
