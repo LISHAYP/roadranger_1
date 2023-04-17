@@ -13,7 +13,7 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
-
+  
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -93,7 +93,7 @@ export default function AroundYou(props) {
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
-                <Icon name="menu" size={40} color={'white'}  alignSelf={'center'}/>
+                <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
                 <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
 
             </TouchableOpacity>
@@ -135,17 +135,17 @@ export default function AroundYou(props) {
                         />
 
                     ))}
-                    
-                        <Circle
-                            center={{
-                                latitude: location.coords.latitude,
-                                longitude: location.coords.longitude,
-                            }}
-                            radius={500}
-                            strokeColor="#F00"
-                            fillColor="#F007"
-                        />
-                    
+
+                    <Circle
+                        center={{
+                            latitude: location.coords.latitude,
+                            longitude: location.coords.longitude,
+                        }}
+                        radius={500}
+                        strokeColor="#F00"
+                        fillColor="#F007"
+                    />
+
                 </MapView>
             )}
             {isMenuOpen && (
@@ -184,14 +184,14 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>New Post</Text>
 
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.option} onPress={() => {navigation.navigate("Home chat",traveler)}}>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
                         <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.option} onPress={() => {navigation.navigate("Search")}}>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}) }}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>                        
+                        <Text style={styles.text}>Search </Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
         width: '100%',
         left: 70,
         fontSize: 22,
-        alignSelf:"center"
+        alignSelf: "center"
     },
     hamburger: {
         flexDirection: 'row',

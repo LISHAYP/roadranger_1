@@ -12,10 +12,13 @@ import BackButton from '../Components/BackButton';
 export default function Events(props) {
   // const [events, setEvents] = useState([]);
   const events = props.route.params.data;
-  console.log("eeeee1", events);
+  const traveler =  props.route.params.traveler;
+
+
 
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
+ 
 
   useEffect(() => {
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -28,6 +31,10 @@ export default function Events(props) {
     ).then((addresses) => setEventAddresses(addresses));
   }, [events]);
 
+
+
+ 
+
   return (
     <GradientBackground>
       <ScrollView>
@@ -37,7 +44,7 @@ export default function Events(props) {
             {events !== undefined && events.length > 0 ? (
               events.map((event, index) => (
                 <TouchableOpacity onPress={() => {
-                  navigation.navigate('Event Details', { event });
+                  navigation.navigate('Event Details', {event: event, traveler: traveler });
                 }} >
                   <View style={styles.event} key={event.eventNumber}>
                     <View style={styles.detailsContainer}>

@@ -27,7 +27,6 @@ export default function EventDetails(props) {
     const travelerobj = {
       traveler_Id: event.TravelerId
     };
-
     try {
       const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
         method: 'POST',
@@ -47,6 +46,7 @@ export default function EventDetails(props) {
       console.log('Error');
     }
   };
+  
   const fetchNumberEvent = async () => {
     console.log("in fetchNumberEvent")
     const eventNumberObj = {

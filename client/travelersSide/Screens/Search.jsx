@@ -9,9 +9,11 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 
-export default function Search() {
+export default function Search(props) {
   const navigation = useNavigation();
-
+ //user-the user who use the app
+ const traveler =  props.route.params.traveler;
+console.log("trrrrrrrr",traveler)
   useEffect(() => {
     loadData();
   }, []);
@@ -76,7 +78,7 @@ export default function Search() {
           // Handle the response data as needed
           setEvents(data)
         console.log(data);
-          navigation.navigate("Events",  {data} );
+          navigation.navigate("Events",{data: data, traveler: traveler} );
         })
         .catch(error => {
           console.error(error);
