@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import GradientBackground from '../Components/GradientBackground';
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import BackButton from '../Components/BackButton';
 
 const HomeChat = (props) => {
   const navigation = useNavigation();
@@ -32,6 +34,9 @@ const HomeChat = (props) => {
               <Image style={styles.img} source={{ uri: traveler1.Picture }} />
               <Text style={styles.text}>{traveler1.first_name} </Text>
             </View>
+
+            <BackButton />
+
           </TouchableOpacity>
         ))}
       </GradientBackground>

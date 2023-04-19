@@ -6,6 +6,7 @@ import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
+import BackButton from "../Components/BackButton";
 
 
 
@@ -138,15 +139,19 @@ export default function Chat(props) {
     return (
         <View style={styles.container}>
             <GradientBackground>
-                <GiftedChat
-                    showAvatarForEveryMessage={true}
-                    messages={messages}
-                    onSend={onSend}
-                    user={{
-                        _id: traveler.traveler_email,
-                        avatar: traveler.Picture
-                    }}
-                />
+                <BackButton/>
+            <GiftedChat 
+            showAvatarForEveryMessage={true}
+            messages={message}
+            onSend={message => onSend(message)}
+            user={{
+                _id: auth?.currentUser?.email,
+                avatar: traveler.Picture
+            }}
+            // messagesContainerStyle={{
+
+            // }}
+            />
             </GradientBackground>
         </View>
     )

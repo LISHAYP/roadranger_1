@@ -5,7 +5,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
 import Geocoder from 'react-native-geocoding';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import BackButton from '../Components/BackButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -14,7 +14,7 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   //user-the user who use the app
   const user = props.route.params.traveler;
-  console.log("///////", event.Picture);
+
   //traveler-the user how post event
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
@@ -27,7 +27,6 @@ export default function EventDetails(props) {
     const travelerobj = {
       traveler_Id: event.TravelerId
     };
-
     try {
       const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
         method: 'POST',
@@ -47,6 +46,7 @@ export default function EventDetails(props) {
       console.log('Error');
     }
   };
+  
   const fetchNumberEvent = async () => {
     console.log("in fetchNumberEvent")
     const eventNumberObj = {
@@ -66,7 +66,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log("commmetssssssss",comments);
+      console.log("commmetssssssss",data);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -137,6 +137,7 @@ export default function EventDetails(props) {
   return (
     <GradientBackground>
       <View style={styles.container}>
+        <BackButton/>
         <View style={styles.eventContainer}>
           <View >
             <View style={styles.event}>
@@ -166,7 +167,7 @@ export default function EventDetails(props) {
                   <View key={index} style={styles.commentContainer}>
                     <View style={styles.event}>
                       <View style={styles.row}>
-                        <Image style={styles.img} source={{ uri: comment.picture }}  />
+                        <Image style={styles.img} source={{ uri: comment.picture }} />
                         <Text style={styles.text}>{comment.TravelerName} </Text>
                       </View>
                       <View>
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop: 80
+    marginTop: 20
   },
 
 
