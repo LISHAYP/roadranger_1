@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
-
+import BackButton from '../Components/BackButton';
 
 export default function NewEvent(props) {
   const stakeholder = props.route.params.stakeholder;
@@ -168,6 +168,7 @@ export default function NewEvent(props) {
     < GradientBackground>
 
       <ScrollView>
+        <BackButton/>
         <View style={styles.container}>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
@@ -220,7 +221,7 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 30,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -323,6 +324,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+  
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',

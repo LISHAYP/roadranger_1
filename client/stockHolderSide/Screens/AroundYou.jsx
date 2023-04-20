@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { getCenter } from 'geolib';
 
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
@@ -126,7 +127,7 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
-                                navigation.navigate('Event Details', { event });
+                                navigation.navigate('Event Details', { event , stakeholder});
                             }}
                         />
                        
@@ -149,7 +150,8 @@ export default function AroundYou(props) {
                     </View>
 
                    
-                    <TouchableOpacity style={styles.option}>
+                    <TouchableOpacity style={styles.option} >
+                    
                         <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
@@ -167,16 +169,16 @@ export default function AroundYou(props) {
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                    //    onPress={() => { navigation.navigate("Your Travelers",{ stakeholderParams: {stakeholder }})}}
-                    >
+                      onPress={() => {navigation.navigate("Your Travelers",{ stakeholder: stakeholder})}}>
+                    
                         <Icon name="people-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Your Travelers</Text>
                     </TouchableOpacity>
                    
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{ stakeholderParams: {stakeholder }})}}>
-
+                    <TouchableOpacity style={styles.option} onPress={() => {navigation.navigate("Search",{stakeholder})}}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search</Text>
+                        <Text style={styles.text}>Search </Text>                        
+
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
                         onPress={() => { navigation.navigate("Setting",{ stakeholderParams: {stakeholder }})}}
@@ -204,11 +206,12 @@ const styles = StyleSheet.create({
         borderRadius: 75,
         width: 120,
        marginTop:35,
+       top:40
       },
     name: {
         position: "absolute",
         fontSize: 20,
-        top: 180,
+        top: 250,
         left: 80,
         
     },
@@ -220,7 +223,7 @@ const styles = StyleSheet.create({
         color: 'white',
         width: '100%',
          top:12,
-         left:70,
+         left:80,
          fontSize:20
     },
     hamburger: {
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '100%',
         height: '6%',
-        top: 0,
+        top: 33,
         left: 0,
         zIndex: 1,
         // borderRadius: 30,
@@ -253,7 +256,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         position: 'absolute',
-        top: 15,
+        top: 55,
         right: 20,
     },
     optionSOS: {
@@ -276,7 +279,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         right: 20,
-        top: 120,
+        top: 160,
         marginBottom: 21
     },
     text: {

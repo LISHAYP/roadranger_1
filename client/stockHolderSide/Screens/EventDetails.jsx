@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image,ScrollView } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image,ScrollView, TouchableOpacity,TextInput } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -10,10 +10,14 @@ const height = Dimensions.get('window').height;
 
 export default function EventDetails(props) {
   const event = props.route.params.event;
+  const user=props.route.params.stakeholder;
   console.log(event)
+  console.log("ssssssssssssssssssssssssss",user);
+  const travelerId="null";
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
   const [comments, setComments] = useState('')
+  const [details, setDetails] = useState('');
 
   const fetchTravelerDetails = async () => {
     const travelerobj = {
@@ -66,7 +70,45 @@ export default function EventDetails(props) {
 
 
   };
+console.log("##########",user.StakeholderId);
+  const newComment = {
+    eventNumber: event.eventNumber,
+    Details: details,
+    comment_date: new Date().toISOString().slice(0, 10),
+    comment_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+    TravelerId:travelerId,
+    StackholderId: user.StakeholderId,
 
+  };
+
+  console.log("********",newComment);
+  const createComment = async () => {
+
+    if (newComment === '') {
+      alert('Please enter details and type');
+    }
+    else {
+      // Send a POST request to your backend API with the comment data
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcomment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newComment),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data as needed
+          console.log(data);
+          alert('Publish')
+          setDetails('');
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Error', error);
+        });
+    }
+  }
   useEffect(() => {
     fetchTravelerDetails();
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -137,6 +179,27 @@ export default function EventDetails(props) {
           </View>
           </ScrollView>
         </View>
+        <View style={styles.addComment}>
+          <View style={styles.event}>
+            <View style={styles.row}>
+              <Image style={styles.img} source={{ uri: user.Picture }}  />
+              <Text style={styles.text}>{user.FullName}</Text>
+            </View>
+            <TouchableOpacity  onPress={createComment}>
+              <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TextInput style={styles.input}
+              placeholder="Add Comment..."
+              value={details}
+              multiline={true}
+              numberOfLines={4}
+              editable={true}
+              onChangeText={(text) => setDetails(text)}>
+            </TextInput>
+          </View>
+        </View>
       </View>
     </GradientBackground >
   )
@@ -156,6 +219,14 @@ const styles = StyleSheet.create({
     height: height * 0.2, // adjust this value as needed
     width: width + 30,
     bottom: 10
+  },
+  addComment: {
+    borderColor: '#DCDCDC',
+    borderWidth: 0.5,
+    borderRadius: 15,
+    backgroundColor: '#F5F5F5',
+    margin: 5,
+    padding: 10,
   },
   picture: {
     flex: 1,

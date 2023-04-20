@@ -116,6 +116,7 @@ console.log("********",stakeholder);
 }
 const styles = StyleSheet.create({
     container: {
+        top:100,
         padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,

@@ -154,48 +154,10 @@ const stakeholder=props.route.params.stakeholder;
             setSelectedCountry(item.value)
           }} />
 
-        <Text style={styles.text}>City:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={filteredCities}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select country before"}
-          value={selectedCity}
-          onChange={item => {
-            setSelectedCity(item.value)
-          }}
-
-        />
-        <Text style={styles.text}>Type:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={serialType}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select type of event"}
-          value={selectedSerialType}
-          onChange={item => {
-            setSelectedSerialType(item.value)
-          }} />
-        <Text style={styles.text}>Date:</Text>
-        <View>
-          <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
-            <Icon style={styles.icon} name="calendar-outline" />
-          </TouchableOpacity>
-          {isCalendarOpen && (
-            <View>
-              <CalendarPicker onDateChange={handleDateSelect} />
-            </View>
-          )}
-        </View>
+<Text style={styles.text}>Country:</Text>
+<Text style={styles.text}>Country:</Text>
+<Text style={styles.text}>Country:</Text>
+<Text style={styles.text}>Country:</Text>
 
         <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
           <Text style={styles.btnText}>

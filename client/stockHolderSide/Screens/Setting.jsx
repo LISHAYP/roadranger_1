@@ -6,6 +6,7 @@ import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
+import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 
 
@@ -82,6 +83,7 @@ export default function Setting({ route }) {
   return (
     <ScrollView>
       < GradientBackground>
+      <BackButton/>
         <View style={styles.container}>
         <Image source={{ uri:  "http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png" }} style={styles.user} />
           {/* <TouchableOpacity onPress={openCamera}>
