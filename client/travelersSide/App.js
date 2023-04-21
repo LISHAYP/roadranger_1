@@ -25,15 +25,6 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { createContext } from 'react';
 const Stack = createNativeStackNavigator()
 
-// const AuthenticatedUserContext = createContext({});
-// const AuthenticatedUserProvider = ({children}) => {
-//   const [user, setUser] = useState(null);
-//   return(
-//     <AuthenticatedUserContext.Provider value={{user, setUser}}>
-//       {children}
-//     </AuthenticatedUserContext.Provider>
-//   )
-// }
 export default function App() {
   return (
 

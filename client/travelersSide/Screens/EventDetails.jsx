@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TouchableOpacity, } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Geocoder from 'react-native-geocoding';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import BackButton from '../Components/BackButton';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -21,6 +22,7 @@ export default function EventDetails(props) {
   const [comments, setComments] = useState('')
   const [details, setDetails] = useState('');
   const [stackholderId, setStackholderId] = useState('null');
+  const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
 
 
   const fetchTravelerDetails = async () => {
@@ -92,7 +94,7 @@ export default function EventDetails(props) {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-  }, []);
+  }, [newCommentPublished]); // <-- use new
 
   const newComment = {
     eventNumber: event.eventNumber,
@@ -123,7 +125,9 @@ export default function EventDetails(props) {
         .then(data => {
           // Handle the response data as needed
           console.log(data);
+          setNewCommentPublished(true)
           alert('Publish')
+          setNewCommentPublished(false)
           setDetails('');
         })
         .catch(error => {
@@ -136,7 +140,10 @@ export default function EventDetails(props) {
  
   return (
     <GradientBackground>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={styles.container} 
+  >
         <BackButton/>
         <View style={styles.eventContainer}>
           <View >
@@ -205,7 +212,7 @@ export default function EventDetails(props) {
             </TextInput>
           </View>
         </View>
-      </View>
+        </KeyboardAvoidingView>
     </GradientBackground >
   )
 };
