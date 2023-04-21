@@ -46,7 +46,7 @@ export default function EventDetails(props) {
       console.log('Error');
     }
   };
-  
+
   const fetchNumberEvent = async () => {
     console.log("in fetchNumberEvent")
     const eventNumberObj = {
@@ -286,8 +286,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    // height: '10%'
-
   },
   img: {
 
