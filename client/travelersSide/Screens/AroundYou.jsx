@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image ,TouchableWithoutFeedback} from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
-  
+
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -90,6 +90,7 @@ export default function AroundYou(props) {
         headerShown: false,
     };
     return (
+        <TouchableWithoutFeedback onPress={closeMenu}>
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
@@ -153,10 +154,12 @@ export default function AroundYou(props) {
                     <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
                         <AntDesign name="close" size={24} color="black" />
                     </TouchableOpacity>
-                    <View >
-                        <Text style={styles.name}>
-                            Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
 
+                    <View style={styles.picAndText} >
+                        <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                        <Text style={styles.name}>
+                            Hello, {traveler.first_name} {traveler.last_name} !
+                        </Text>
                     </View>
 
                     <TouchableOpacity style={styles.optionSOS}
@@ -189,7 +192,7 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}) }}>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Search </Text>
 
@@ -202,7 +205,8 @@ export default function AroundYou(props) {
                     </TouchableOpacity>
                 </View>
             )}
-        </View>
+          </View>
+    </TouchableWithoutFeedback>
     );
 }
 
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
     name: {
         position: "absolute",
         fontSize: 20,
-        top: 140,
+        top: 240,
         left: 60,
     },
     map: {
@@ -281,7 +285,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         position: 'absolute',
-        top: 80,
+        top: 40,
         right: 20,
     },
     optionSOS: {
@@ -315,5 +319,17 @@ const styles = StyleSheet.create({
         left: 30,
         size: 30,
 
+    },
+    user: {
+        alignSelf: 'center',
+        resizeMode: 'cover',
+        height: 150,
+        borderRadius: 75,
+        width: 150,
+        top:50
+
+    },
+    picAndText:{
+       top:20,
     }
 });
