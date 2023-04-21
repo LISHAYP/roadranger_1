@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image ,TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -91,122 +91,127 @@ export default function AroundYou(props) {
     };
     return (
         <TouchableWithoutFeedback onPress={closeMenu}>
-        <View style={styles.container}>
-            <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
-                {/* <AntDesign name="menu" size={24} color="black" /> */}
-                <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
-                <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
+                    {/* <AntDesign name="menu" size={24} color="black" /> */}
+                    <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
+                    <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
 
-            </TouchableOpacity>
+                </TouchableOpacity>
 
-            {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
+                {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
                 <Text style={styles.sosText}>SOS</Text>
             </TouchableOpacity> */}
 
-            {location && location.coords && (
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: location.coords.latitude,
-                        longitude: location.coords.longitude,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}>
-                    <Marker
-                        coordinate={{
+                {location && location.coords && (
+                    <MapView
+                        style={styles.map}
+                        initialRegion={{
                             latitude: location.coords.latitude,
                             longitude: location.coords.longitude,
-                        }}
-                        title="My Location"
-                        description="This is my current location"
-                    />
-                    {Events.map(event => (
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                        }}>
                         <Marker
-                            key={event.EventNumber}
                             coordinate={{
-                                latitude: event.Latitude,
-                                longitude: event.Longitude,
+                                latitude: location.coords.latitude,
+                                longitude: location.coords.longitude,
                             }}
-                            title={event.Details}
-                            description={event.EventTime}
-                            pinColor={typePinColors[event.SerialTypeNumber]}
-                            onPress={() => {
-                                navigation.navigate('Event Details', { event, traveler });
+                            title="My Location"
+                            description="This is my current location"
+                        />
+                        {Events.map(event => (
+                            <Marker
+                                key={event.EventNumber}
+                                coordinate={{
+                                    latitude: event.Latitude,
+                                    longitude: event.Longitude,
+                                }}
+                                title={event.Details}
+                                description={event.EventTime}
+                                pinColor={typePinColors[event.SerialTypeNumber]}
+                                onPress={() => {
+                                    navigation.navigate('Event Details', { event, traveler });
+                                }}
+                            />
+
+                        ))}
+
+                        <Circle
+                            center={{
+                                latitude: location.coords.latitude,
+                                longitude: location.coords.longitude,
                             }}
+                            radius={500}
+                            strokeColor="#F00"
+                            fillColor="#F007"
                         />
 
-                    ))}
+                    </MapView>
+                )}
+                {isMenuOpen && (
+                    <View style={styles.menu}>
+                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                            <AntDesign name="close" size={24} color="black" />
+                        </TouchableOpacity>
 
-                    <Circle
-                        center={{
-                            latitude: location.coords.latitude,
-                            longitude: location.coords.longitude,
-                        }}
-                        radius={500}
-                        strokeColor="#F00"
-                        fillColor="#F007"
-                    />
+                        <View style={styles.picAndText} >
+                            <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                            <Text style={styles.name}>
+                                Hello, {traveler.first_name} {traveler.last_name} !
+                            </Text>
+                        </View>
 
-                </MapView>
-            )}
-            {isMenuOpen && (
-                <View style={styles.menu}>
-                    <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                        <AntDesign name="close" size={24} color="black" />
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.optionSOS}
+                            onPress={() => {
+                                navigation.navigate("SOS", {
+                                    traveler: traveler,
+                                    userLocation: userLocation
+                                });
+                            }}
+                        >
+                            <Icon name="help-buoy" size={35} style={styles.icon} />
+                            <Text style={styles.text}>SOS</Text>
 
-                    <View style={styles.picAndText} >
-                        <Image source={{ uri: traveler.Picture }} style={styles.user} />
-                        <Text style={styles.name}>
-                            Hello, {traveler.first_name} {traveler.last_name} !
-                        </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.option}
+                            onPress={() => {
+                                navigation.navigate("New event", {
+                                    traveler: traveler,
+                                    userLocation: userLocation
+                                });
+                            }}
+                        >
+                            <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                            <Text style={styles.text}>New Post</Text>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
+                            <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                            <Text style={styles.text}>Chat</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
+                            <Icon name="search-outline" size={35} style={styles.icon} />
+                            <Text style={styles.text}>Search </Text>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.option}
+                            onPress={() => { navigation.navigate("Setting", { traveler }) }}
+                        >
+                            <Icon name="settings-outline" size={35} style={styles.icon} />
+                            <Text style={styles.text}>Setting</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                            navigation.navigate("Sign In");
+                        }}>
+                            <Text style={styles.textLO} > Log out  </Text>
+                        </TouchableOpacity>
                     </View>
-
-                    <TouchableOpacity style={styles.optionSOS}
-                        onPress={() => {
-                            navigation.navigate("SOS", {
-                                traveler: traveler,
-                                userLocation: userLocation
-                            });
-                        }}
-                    >
-                        <Icon name="help-buoy" size={35} style={styles.icon} />
-                        <Text style={styles.text}>SOS</Text>
-
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => {
-                            navigation.navigate("New event", {
-                                traveler: traveler,
-                                userLocation: userLocation
-                            });
-                        }}
-                    >
-                        <Icon name="add-circle-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>New Post</Text>
-
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
-                        <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Chat</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
-                        <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>
-
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", { traveler }) }}
-                    >
-                        <Icon name="settings-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Setting</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-          </View>
-    </TouchableWithoutFeedback>
+                )}
+            </View>
+        </TouchableWithoutFeedback>
     );
 }
 
@@ -219,6 +224,16 @@ const styles = StyleSheet.create({
         marginTop: 40
 
     },
+    btnLogOut: {
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 100,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+      },
+      
     name: {
         position: "absolute",
         fontSize: 20,
@@ -315,6 +330,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
         left: 40
     },
+    textLO: {
+        color: '#144800',
+        fontSize: 20,
+        textDecorationLine: 'underline',
+
+    },   
     icon: {
         left: 30,
         size: 30,
@@ -326,10 +347,10 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 75,
         width: 150,
-        top:50
+        top: 50
 
     },
-    picAndText:{
-       top:20,
+    picAndText: {
+        top: 20,
     }
 });
