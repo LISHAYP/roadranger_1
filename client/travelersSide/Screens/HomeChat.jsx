@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import GradientBackground from '../Components/GradientBackground';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BackButton from '../Components/BackButton';
@@ -27,6 +26,7 @@ const HomeChat = (props) => {
   return (
     <View style={styles.container}>
       <GradientBackground>
+      <BackButton />
         <Text>HomeChat</Text>
         {travelers.map((traveler1) => (
           <TouchableOpacity key={traveler1.id} onPress={() => handleUserPress(traveler1,traveler)}>
@@ -35,7 +35,7 @@ const HomeChat = (props) => {
               <Text style={styles.text}>{traveler1.first_name} </Text>
             </View>
 
-            <BackButton />
+        
 
           </TouchableOpacity>
         ))}
