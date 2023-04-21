@@ -1,0 +1,2 @@
+ 2023-04-21 12:57:13.9109 INFO: new area was added to the database!
+ 2023-04-21 13:00:13.4563 INFO: new area was added to the database!

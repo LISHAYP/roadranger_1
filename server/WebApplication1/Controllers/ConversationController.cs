@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using data;
+using NLog;
 using WebApplication1;
 
 namespace WebApplication1.Controllers
@@ -12,6 +13,8 @@ namespace WebApplication1.Controllers
     public class ConversationController : ApiController
     {
         readonly igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Conversation
         public IEnumerable<string> Get()

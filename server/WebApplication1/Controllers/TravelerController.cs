@@ -227,19 +227,40 @@ namespace WebApplication1.Controllers
                 //message.Subject = "New Password";
                 //message.Body = "Your new password is: " + newPassword;
 
-                var sendGridClient = new SendGridClient("");
-                var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
-                var subject = "New Password";
-                var to = new EmailAddress(user.travler_email, user.first_name);
-                var plainContent = "Dear " + user.first_name;
-                var htmlContent = $"Your new password is: {newPassword}";
-                var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
-                await sendGridClient.SendEmailAsync(mailMessage);
+                //var sendGridClient = new SendGridClient("");
+                //var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
+                //var subject = "New Password";
+                //var to = new EmailAddress(user.travler_email, user.first_name);
+                //var plainContent = "Dear " + user.first_name;
+                //var htmlContent = $"Your new password is: {newPassword}";
+                //var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
+                //await sendGridClient.SendEmailAsync(mailMessage);
+
+
+
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Road Ranger Admin", "roadranger1@walla.com"));
+                message.To.Add(new MailboxAddress(user.first_name, user.travler_email));
+                message.Subject = "New Password";
+
+                message.Body = new TextPart("Dear " + user.first_name)
+                {
+                    Text = $"Your new password is: {newPassword}"
+                };
+
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    await client.ConnectAsync("smtp.gmail.com", 587, false);
+                    await client.AuthenticateAsync("roadranger178@gmail.com", "road_ranger1!");
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+                }
 
                 return Ok("new password email was sent succesfully (:");
             }
             catch (Exception)
             {
+
 
                 return BadRequest();
             }

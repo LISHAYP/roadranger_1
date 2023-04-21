@@ -1,4 +1,5 @@
 ﻿using data;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,6 +18,8 @@ namespace WebApplication1.Controllers
     public class CountriesController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Countries
         public IEnumerable<string> Get()
@@ -103,6 +106,8 @@ namespace WebApplication1.Controllers
                 try
                 {
                     db.SaveChanges();
+                    logger.Info("new country was added to the database!");
+
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -111,6 +116,7 @@ namespace WebApplication1.Controllers
                         foreach (var validationError in error.ValidationErrors)
                         {
                             Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                            logger.Error(validationError.ErrorMessage);
                         }
                     }
                 }
@@ -151,6 +157,7 @@ namespace WebApplication1.Controllers
             {
                 if (lookup == null)
                 {
+                    logger.Error("events not found!");
                     return BadRequest();
                 }
 
@@ -158,6 +165,7 @@ namespace WebApplication1.Controllers
 
                 if (@event == null)
                 {
+                    logger.Error($"event number: {lookup.eventNumber} was not found!");
                     return NotFound();
                 }
 
@@ -171,9 +179,9 @@ namespace WebApplication1.Controllers
 
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest() ;
             }
        

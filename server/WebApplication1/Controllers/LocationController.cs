@@ -6,12 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebApplication1.DTO;
+using NLog;
 
 namespace WebApplication1.Controllers
 {
     public class LocationController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Location
         public IEnumerable<string> Get()
@@ -56,22 +59,25 @@ namespace WebApplication1.Controllers
         {
             if (dto == null)
             {
+                logger.Error("the location of the traveler is null");
                 return BadRequest("Request body is null");
             }
 
+
             try
             {
+
                 var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == dto.TravelerId);
 
                 if (traveler == null)
                 {
+                    logger.Error("the traveler is not found!");
                     return NotFound($"Traveler with ID {dto.TravelerId} not found");
                 }
 
                 var location = new tblLocations
                 {
                     travelerId = dto.TravelerId,
-                    locationNumber = dto.LocationNumber,
                     longitude = dto.Longitude,
                     latitude = dto.Latitude,
                     dateAndTime = dto.DateAndTime
@@ -79,13 +85,13 @@ namespace WebApplication1.Controllers
 
                 db.tblLocations.Add(location);
                 db.SaveChanges();
-
+                logger.Info("the location of the traveler was added to the database!");
                 return Ok();
             }
             catch (Exception ex)
             {
                 // Log the error message
-                Console.WriteLine(ex.Message);
+                logger.Error(ex.Message);
                 return InternalServerError();
             }
         }
@@ -97,12 +103,12 @@ namespace WebApplication1.Controllers
 
 
         // POST: api/Location
-        public void Post([FromBody]string value)
+        public void Post([FromBody] string value)
         {
         }
 
         // PUT: api/Location/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

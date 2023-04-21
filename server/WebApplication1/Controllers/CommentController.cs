@@ -5,12 +5,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using data;
+using NLog;
 
 namespace WebApplication1.Controllers
 {
     public class CommentController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Comment
         public IEnumerable<string> Get()
@@ -75,10 +78,12 @@ namespace WebApplication1.Controllers
                     commenterPicture = picture
                 };
 
+                logger.Info($"new comment was added to event number: {newComment.eventNumber}");
                 return Ok(response);
             }
             catch (Exception ex)
             {
+                logger.Error(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

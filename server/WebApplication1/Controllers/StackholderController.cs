@@ -1,4 +1,5 @@
 ﻿using data;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,6 +14,8 @@ namespace WebApplication1.Controllers
     public class StackholderController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Stackholder
         public IEnumerable<string> Get()
@@ -63,12 +66,13 @@ namespace WebApplication1.Controllers
                     Password = stakeholder.password
                     // Map related entities as well if needed
                 };
-
+                logger.Info("stackholder was founs succesfully");
                 return Ok(stakeholderDTO);
+                
             }
-            catch (Exception)
-            {
-
+            catch (Exception ex)
+            { 
+                logger.Error(ex.Message);
                 return BadRequest();
             }
         }
@@ -84,6 +88,7 @@ namespace WebApplication1.Controllers
 
                 if (travelers == null)
                 {
+                    logger.Info($"travelers were not found in the insurence {insuranceCompany.insurence_company}");
                     return NotFound();
                 }
 
@@ -113,9 +118,9 @@ namespace WebApplication1.Controllers
 
                 return Ok(travelerDtos);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
         }
@@ -130,6 +135,7 @@ namespace WebApplication1.Controllers
 
                 if (stakeholder == null)
                 {
+                    logger.Info("there is not such a stackholder");
                     return NotFound();
                 }
 
@@ -145,11 +151,12 @@ namespace WebApplication1.Controllers
 
                 db.Entry(stakeholder).State = EntityState.Modified;
                 db.SaveChanges();
-
+                logger.Info($"the stackholder {value.FullName} was updated succesfully");
                 return Ok("Stakeholder updated successfully.");
             }
             catch (Exception ex)
             {
+                logger.Error(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

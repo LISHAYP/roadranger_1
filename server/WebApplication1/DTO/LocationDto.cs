@@ -11,6 +11,5 @@ namespace WebApplication1.DTO
         public DateTime DateAndTime { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
-        public int LocationNumber {get; set;}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace WebApplication1.Controllers
 {
     public class UploadEventPicController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: api/UploadEventPic
         public IEnumerable<string> Get()
         {

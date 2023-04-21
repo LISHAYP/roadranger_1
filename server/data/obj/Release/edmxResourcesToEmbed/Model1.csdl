@@ -141,7 +141,7 @@
       <PropertyRef Name="locationNumber" />
       <PropertyRef Name="travelerId" />
     </Key>
-    <Property Name="locationNumber" Type="Int32" Nullable="false" />
+    <Property Name="locationNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="travelerId" Type="Int32" Nullable="false" />
     <Property Name="dateAndTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />

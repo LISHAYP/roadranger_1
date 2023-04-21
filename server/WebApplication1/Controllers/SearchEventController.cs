@@ -1,4 +1,5 @@
 ﻿using data;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace WebApplication1.Controllers
     public class SearchEventController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: api/SearchEvent
         public IEnumerable<string> Get()
         {
@@ -25,7 +28,7 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/SearchEvent
-        public void Post([FromBody]string value)
+        public void Post([FromBody] string value)
         {
         }
 
@@ -56,17 +59,18 @@ namespace WebApplication1.Controllers
 
                 if (events.Count == 0)
                 {
+                    logger.Error($"event not found in this country {countryNumber.CountryNumber}");
                     return NotFound();
                 }
 
                 return Ok(events);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
-            
+
         }
 
 
@@ -97,17 +101,18 @@ namespace WebApplication1.Controllers
 
                 if (events.Count == 0)
                 {
+                    logger.Error($"event not found in this area {areaNumber.AreaNumber}");
                     return NotFound();
                 }
 
                 return Ok(events);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
-            
+
         }
 
 
@@ -138,17 +143,19 @@ namespace WebApplication1.Controllers
 
                 if (events.Count == 0)
                 {
+                    logger.Error($"event not found of this serial type number {serialTypeNumber.SerialTypeNumber}");
+
                     return NotFound();
                 }
 
                 return Ok(events);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
-            
+
         }
 
 
@@ -180,14 +187,16 @@ namespace WebApplication1.Controllers
 
                 if (events.Count == 0)
                 {
+                    logger.Error($"event not found in this date {eventDate.EventDate} ");
+
                     return NotFound();
                 }
 
                 return Ok(events);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
         }
@@ -224,14 +233,14 @@ namespace WebApplication1.Controllers
 
                 if (events.Count == 0)
                 {
+                    logger.Info($"events with these parameters were not found: country number: {searchParams.CountryNumber}, area number: {searchParams.AreaNumber}, serial type number: {searchParams.SerialTypeNumber}, event date: {searchParams.EventDate} ");
                     return NotFound();
                 }
 
                 return Ok(events);
             }
-            catch (Exception)
-            {
-
+            catch (Exception ex) {
+                logger.Error(ex.Message);
                 return BadRequest();
             }
         }
@@ -312,21 +321,22 @@ namespace WebApplication1.Controllers
 
                 if (result.Count == 0)
                 {
+                    logger.Error($"event was not found");
                     return NotFound();
                 }
 
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
         }
 
 
         // PUT: api/SearchEvent/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace WebApplication1.Controllers
 {
     public class UploadUserPictureController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: api/UploadUserPicture
         public IEnumerable<string> Get()
         {
@@ -95,12 +98,14 @@ namespace WebApplication1.Controllers
                     }
                     catch (Exception ex)
                     {
+                        logger.Error(ex.Message);
                         outputForNir += " ---excption=" + ex.Message;
                         string message = ex.Message;
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.Created, "nirchen " + savedFilePath[0] + "!" + provider.FileData.Count + "!" + outputForNir + ":)");
             });
+            logger.Info("new user picture was uploaded!");
             return task;
         }
 

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using data;
+using NLog;
 using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
@@ -12,6 +13,8 @@ namespace WebApplication1.Controllers
     public class AreaController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: api/Area
         public IEnumerable<string> Get()
         {
@@ -59,12 +62,13 @@ namespace WebApplication1.Controllers
                     db.SaveChanges();
 
                     // Return the new area_number
+                    logger.Info("new area was added to the database!");
                     return Ok(newArea.area_number);
                 }
             }
             catch (Exception ex)
             {
-
+                logger.Error(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

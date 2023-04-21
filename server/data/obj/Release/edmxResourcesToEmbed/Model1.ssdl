@@ -122,7 +122,7 @@
       <PropertyRef Name="locationNumber" />
       <PropertyRef Name="travelerId" />
     </Key>
-    <Property Name="locationNumber" Type="int" Nullable="false" />
+    <Property Name="locationNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="travelerId" Type="int" Nullable="false" />
     <Property Name="dateAndTime" Type="datetime" Nullable="false" />
     <Property Name="latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />

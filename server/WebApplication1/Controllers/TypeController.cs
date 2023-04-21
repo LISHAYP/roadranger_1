@@ -1,4 +1,5 @@
 ﻿using data;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace WebApplication1.Controllers
     public class TypeController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/Type
         public IEnumerable<string> Get()
@@ -49,12 +52,13 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
+                    logger.Error($"serial type number: {type.serialTypeNumber} was not found");
                     return NotFound();
                 }
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
-
+                logger.Error(ex.Message);
                 return BadRequest();
             }
            
