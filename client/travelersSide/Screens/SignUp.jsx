@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -10,6 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { auth } from '../firebase';
 import BackButton from '../Components/BackButton';
+
 
 export default function SignUp() {
 
@@ -82,6 +83,13 @@ export default function SignUp() {
     Picture: updatednewProfilePic
   };
   const handleSignUp = async () => {
+    if (password.length < 6) {
+    // Password is too short
+    alert('Password must be at least 6 characters long.');
+    setPassword('')
+    return;
+    }
+    else {
     createUserWithEmailAndPassword(auth,newTraveler.travler_email, newTraveler.password)
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
       method: 'POST',
@@ -96,17 +104,18 @@ export default function SignUp() {
         console.log(newTraveler)
         console.log(data);
         navigation.goBack();
-      })
+      })                                                                    
       .catch(error => {
         console.error(error);
-        alert('Error', 'Failed to sign in. Please try again later.');
+        Alert.alert('Error', 'Failed to sign in. Please try again later.');
       });
+    }
   };
 
 
   const openCamera = () => {
     if (email.trim() === '') {
-      alert('Please enter your email before taking a photo.');
+      Alert.alert('Please enter your email before taking a photo.');
     } else {
       navigation.navigate('Camera', { email });
       presentPic();

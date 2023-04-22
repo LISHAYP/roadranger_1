@@ -194,9 +194,9 @@ export default function AroundYou(props) {
                             <Text style={styles.text}>Chat</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
-                            <Icon name="search-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Search </Text>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}) }}>
+                        <Icon name="search-outline" size={35} style={styles.icon} />
+                        <Text style={styles.text}>Search </Text>
 
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.option}
