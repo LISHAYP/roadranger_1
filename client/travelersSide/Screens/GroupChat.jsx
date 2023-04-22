@@ -6,6 +6,7 @@ import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
+import BackButton from "../Components/BackButton";
 
 
 
@@ -60,6 +61,7 @@ console.log(traveler.Picture)
     return (
         <View style={styles.container}>
             <GradientBackground>
+            <BackButton />
             <GiftedChat 
             showAvatarForEveryMessage={true}
             messages={message}
