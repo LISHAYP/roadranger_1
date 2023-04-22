@@ -42,8 +42,25 @@ export default function Chat(props) {
         const chatRoomQuery = query(collection(database, 'chat_rooms'), where('users', '==', sortedUsers));
         const chatRoomQuerySnapshot = await getDocs(chatRoomQuery);
         if (chatRoomQuerySnapshot.size !== 0) {
+            const existingChatRoomRef = chatRoomQuerySnapshot.docs[0].ref;
             setChatRoomDocRef(chatRoomQuerySnapshot.docs[0].ref);
             console.log('Chat room exists');
+            const messagesRef = collection(database, 'chat_rooms', existingChatRoomRef.id, 'messages');
+            const q = query(messagesRef,orderBy('createdAt', 'desc'));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              const messages = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                  _id: uuidv4(),
+                  createdAt: data.createdAt.toDate(),
+                  text: data.text,
+                  user: data.user
+                };
+              });
+             // console.log('Fetched messages:', messages); // add this line
+             setMessages(messages);
+             setShouldRender(false); // update state variable to trigger re-render
+            });
             return false; // indicate that chat room already exists
         } else {
             const newChatRoomDocRef = await addDoc(collection(database, 'chat_rooms'), {
