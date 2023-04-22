@@ -34,17 +34,23 @@ const HomeChat = (props) => {
     };
     getActiveChats();
   });
-
+  //AsyncStorage.clear();
   const handleUserPress = async (user, loggeduser) => {
-    const updatedActiveChats = [...activeChats, user];
-    setActiveChats(updatedActiveChats);
-    try {
-      await AsyncStorage.setItem('activeChats', JSON.stringify(updatedActiveChats));
-    } catch (e) {
-      console.error(e);
+    // Check if the traveler is already in activeChats
+    const existingIndex = activeChats.findIndex((traveler) => traveler.traveler_id === user.traveler_id);
+    if (existingIndex === -1) {
+      const updatedActiveChats = [...activeChats, user];
+      setActiveChats(updatedActiveChats);
+      try {
+      
+        await AsyncStorage.setItem('activeChats', JSON.stringify(updatedActiveChats));
+      } catch (e) {
+        console.error(e);
+      }
     }
     navigation.navigate('Chat', { user, loggeduser });
   };
+  
 
   return (
     <View style={styles.container}>
@@ -140,8 +146,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '30%',
-    width: '50%',
+    height: '25%',
+    width: '80%',
     alignSelf: 'center',
   },
 });
