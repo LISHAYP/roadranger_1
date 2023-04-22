@@ -1,21 +1,33 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
-import React from 'react'
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GradientBackground from '../Components/GradientBackground';
-import {signInWithEmailAndPassword} from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
-
+import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
     const navigation = useNavigation();
+    const [location, setLocation] = useState('');
+    const [travelerId, setTravlerId] = useState('')
 
-
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                console.log('Permission to access location was denied');
+                return;
+            }
+            let currentLocation = await Location.getCurrentPositionAsync({});
+            setLocation(currentLocation);
+        })();
+    }, []);
     const handleLogin = () => {
         const traveler = {
             travler_email: email,
@@ -33,20 +45,72 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
+                    setTravlerId(data.traveler_id)
                     signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                     navigation.navigate("Around You", { data });
+
                 } else {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');
                 }
+
+
             })
+
+
             .catch(error => {
                 console.error(error);
                 console.log('Error', 'Failed to sign in. Please try again later.');
             });
+        saveLocation();
     };
 
-    
+    const saveLocation = () => {
+        try {
+            if (!location) {
+                console.log('Location data is not available');
+                return;
+            }
+            AsyncStorage.setItem('latitude', location.coords.latitude.toString());
+            AsyncStorage.setItem('longitude', location.coords.longitude.toString());
+            console.log('Location saved successfully!');
+            console.log(location.coords.latitude)
+            console.log(location.coords.longitude)
+            saveUserLocation()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    const saveUserLocation = () => {
+        const now = new Date();
+        const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
+        const userLoction = {
+
+            DateAndTime: DateAndTimeFormat,
+            Latitude: location.coords.latitude,
+            Longitude: location.coords.longitude,
+            TravelerId: travelerId
+        }
+        //Send a POST request to your backend API with the 
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/location', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userLoction),
+        })
+            .then(response => response.json())
+            .catch(error => {
+                console.error(error);
+               
+            });
+
+
+    }
+
     state = {
         showPassword: false
     };
@@ -126,7 +190,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         padding: 20,
         width: "100%",
-        marginTop:100
+        marginTop: 100
 
     },
 
@@ -181,7 +245,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontWeight: 'bold',
-        fontSize:15,
+        fontSize: 15,
 
-}
+    }
 });

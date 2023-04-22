@@ -6,6 +6,8 @@ import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
+
+
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
