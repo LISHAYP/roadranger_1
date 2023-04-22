@@ -28,6 +28,11 @@ const HomeChat = (props) => {
       <GradientBackground>
       <BackButton />
         <Text>HomeChat</Text>
+        <TouchableOpacity style={styles.btnSave}  onPress={() => {navigation.navigate("Group chat",traveler)}}>
+            <Text style={styles.btnText}>
+              group chat
+            </Text>
+          </TouchableOpacity>
         {travelers.map((traveler1) => (
           <TouchableOpacity key={traveler1.id} onPress={() => handleUserPress(traveler1,traveler)}>
             <View style={styles.row}>
