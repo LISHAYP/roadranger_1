@@ -10,8 +10,6 @@ import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
 
 
-
-
 export default function Chat(props) {
     const navigation = useNavigation();
     const [messages, setMessages] = useState([]);

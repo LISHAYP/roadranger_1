@@ -21,8 +21,7 @@ export default function Setting(props) {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState(traveler.first_name);
   const [lastName, setLastName] = useState(traveler.last_name);
-  const [email, setEmail] = useState(traveler.travler_email);
-  const [password, setPassword] = useState(traveler.password);
+ 
   const [phone, setPhone] = useState(traveler.phone);
   const gender = [
     { label: 'Male', value: 'M' },
@@ -55,8 +54,7 @@ export default function Setting(props) {
   }
   const changeTraveler = {
     first_name: firstName,
-    last_name: lastName,
-    travler_email: email,
+    last_name: lastName, 
     phone: phone,
     notifications: isEnabledNotification,
     insurence_company: selectedInsurance,
@@ -64,13 +62,26 @@ export default function Setting(props) {
     save_location: isEnabledLocation,
     dateOfBirth: selectedDate,
     gender: selectedGender,
-    password: password,
     chat: isEnabledChatMode,
     picture: userPic
   };
   console.log('*******', changeTraveler)
   const saveChanges = async () => {
     console.log("IM IN saveChanges");
+    if (!firstName || !lastName  || !phone || !selectedInsurance || !selectedGender || !selectedDate) {
+      // Some fields are missing
+      Alert.alert('Please fill in all fields.');
+      return;
+    }
+   
+    if (phone.length != 10) {
+      // Phone is too short
+      Alert.alert('Phone must be 10 numbers.');
+      setPassword('')
+      return;
+    }
+ 
+    else {
     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/update?email=${traveler.travler_email}`, {
       method: 'PUT',
       headers: {
@@ -88,6 +99,7 @@ export default function Setting(props) {
       .catch((error) => {
         console.error(error);
       });
+    }
   }
   console.log(email)
   const openCamera = () => {
@@ -117,19 +129,19 @@ export default function Setting(props) {
             onChangeText={(text) => setLastName(text)}
             placeholder={traveler.last_name}>
           </TextInput>
-          <Text style={styles.text}>Email:</Text>
+          {/* <Text style={styles.text}>Email:</Text>
           <TextInput style={styles.input}
             // value={email}
             onChangeText={(text) => setEmail(text)}
             placeholder={traveler.travler_email}>
-          </TextInput>
-          <Text style={styles.text}>Password:</Text>
+          </TextInput> */}
+          {/* <Text style={styles.text}>Password:</Text>
           <TextInput style={styles.input}
             placeholder={traveler.password}
             // value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}>
-          </TextInput>
+          </TextInput> */}
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
             placeholder={'0' + traveler.phone.toString()}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert, KeyboardAvoidingView } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
 import BackButton from '../Components/BackButton';
 
@@ -19,7 +19,7 @@ export default function SignUp() {
 
   useEffect(() => {
     setupdatednewProfilePic(`http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/U_${email}.jpg`);
-    
+
   }, [email]);
 
   const navigation = useNavigation();
@@ -51,13 +51,13 @@ export default function SignUp() {
   const [updatednewProfilePic, setupdatednewProfilePic] = useState(
     `http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`
   );
-  
+
   useEffect(() => {
     setupdatednewProfilePic(
       `http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`
     );
   }, [email]);
-  
+
   const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
@@ -83,32 +83,50 @@ export default function SignUp() {
     Picture: updatednewProfilePic
   };
   const handleSignUp = async () => {
+    if (!firstName || !lastName | !email || !password || !phone || !selectedInsurance || !selectedGender || !selectedDate) {
+      // Some fields are missing
+      Alert.alert('Please fill in all fields.');
+      return;
+    }
+    // Email validation
+    const emailPattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (!emailPattern.test(email)) {
+      // Email format is invalid
+      alert('Please enter a valid email address.');
+      return;
+    }
+    if (phone.length != 10) {
+      // Phone is too short
+      Alert.alert('Phone must be 10 numbers.');
+      setPassword('')
+      return;
+    }
     if (password.length < 6) {
-    // Password is too short
-    alert('Password must be at least 6 characters long.');
-    setPassword('')
-    return;
+      // Password is too short
+      Alert.alert('Password must be at least 6 characters long.');
+      setPassword('')
+      return;
     }
     else {
-    createUserWithEmailAndPassword(auth,newTraveler.travler_email, newTraveler.password)
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTraveler),
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response data as needed
-        console.log(newTraveler)
-        console.log(data);
-        navigation.goBack();
-      })                                                                    
-      .catch(error => {
-        console.error(error);
-        Alert.alert('Error', 'Failed to sign in. Please try again later.');
-      });
+      createUserWithEmailAndPassword(auth, newTraveler.travler_email, newTraveler.password)
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTraveler),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data as needed
+          console.log(newTraveler)
+          console.log(data);
+          navigation.goBack();
+        })
+        .catch(error => {
+          console.error(error);
+          Alert.alert('Error', 'Failed to sign in. Please try again later.');
+        });
     }
   };
 
@@ -121,137 +139,147 @@ export default function SignUp() {
       presentPic();
     }
   };
-const presentPic = () =>{
-  console.log(updatednewProfilePic)
-}
+  const presentPic = () => {
+    console.log(updatednewProfilePic)
+  }
   return (
-    <ScrollView>
-      < GradientBackground>
-        <View style={styles.container}>
-          <BackButton/>
-          <Image source={RoadRanger} style={styles.RoadRanger} />
-          <TouchableOpacity onPress={openCamera}>
-            <Image source={{ uri: newProfilePic  }} style={styles.user} />
-          </TouchableOpacity>
-          <Text style={styles.text}>First Name:</Text>
-          <TextInput style={styles.input}
-            value={firstName}
-            onChangeText={(text) => setFirstName(text)}
-            placeholder="First Name">
-          </TextInput>
-          <Text style={styles.text}>Last Name:</Text>
-          <TextInput style={styles.input}
-            value={lastName}
-            onChangeText={(text) => setLastName(text)}
-            placeholder="Last Name">
-          </TextInput>
-          <Text style={styles.text}>Email:</Text>
-          <TextInput style={styles.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder="User Email">
-          </TextInput>
-          <Text style={styles.text}>Password:</Text>
-          <TextInput style={styles.input}
-            placeholder="*******"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={true}>
-          </TextInput>
-          <Text style={styles.text}>Phone:</Text>
-          <TextInput style={styles.input}
-            placeholder="Phone"
-            value={phone}
-            keyboardType='numeric'
-            onChangeText={(text) => setPhone(text)}
-          >
-          </TextInput>
-          <Text style={styles.text}>Gender:</Text>
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={gender}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={"Select a gender"}
-            value={genderSelection}
-            onChange={item => {
-              setSelectedGender(item.label)
-              setGenderSelection(item)
-            }} />
-          <Text style={styles.text}>Insurance Company:</Text>
 
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={insurance}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={"select an Insurance Company"}
-            value={insuranceSelection}
-            onChange={item => {
-              setSelectedInsurance(item.value)
-              setInsuranceSelection(item)
-            }}
+    < GradientBackground>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <ScrollView>
 
-          />
-          <Text style={styles.text}>Date of Birth:</Text>
-          <View>
-            <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-              <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
-              <Icon style={styles.icon} name="calendar-outline" />
+          <View style={styles.container}>
+            <BackButton />
+            <Image source={RoadRanger} style={styles.RoadRanger} />
+            <TouchableOpacity onPress={openCamera}>
+              <Image source={{ uri: newProfilePic }} style={styles.user} />
             </TouchableOpacity>
-            {isCalendarOpen && (
-              <View>
-                <CalendarPicker onDateChange={handleDateSelect} />
-              </View>
-            )}
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Location Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={isEnabledLocation ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchLocation}
-              value={isEnabledLocation}
+            <Text style={styles.text}>First Name:</Text>
+            <TextInput style={styles.input}
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+              placeholder="First Name">
+            </TextInput>
+            <Text style={styles.text}>Last Name:</Text>
+            <TextInput style={styles.input}
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
+              placeholder="Last Name">
+            </TextInput>
+            <Text style={styles.text}>Email:</Text>
+            <TextInput style={styles.input}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              placeholder="User Email">
+            </TextInput>
+            <Text style={styles.text}>Password:</Text>
+            <TextInput style={styles.input}
+              placeholder="*******"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={true}>
+            </TextInput>
+            <Text style={styles.text}>Phone:</Text>
+            <TextInput style={styles.input}
+              placeholder="Phone"
+              value={phone}
+              keyboardType='numeric'
+              onChangeText={(text) => setPhone(text)}
+            >
+            </TextInput>
+            <Text style={styles.text}>Gender:</Text>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              data={gender}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={"Select a gender"}
+              value={genderSelection}
+              onChange={item => {
+                setSelectedGender(item.label)
+                setGenderSelection(item)
+              }} />
+            <Text style={styles.text}>Insurance Company:</Text>
+
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              data={insurance}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={"select an Insurance Company"}
+              value={insuranceSelection}
+              onChange={item => {
+                setSelectedInsurance(item.value)
+                setInsuranceSelection(item)
+              }}
+
             />
+            <Text style={styles.text}>Date of Birth:</Text>
+            <View>
+              <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
+                <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
+                <Icon style={styles.icon} name="calendar-outline" />
+              </TouchableOpacity>
+              {isCalendarOpen && (
+                <View>
+                  <CalendarPicker onDateChange={handleDateSelect} />
+                </View>
+              )}
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.text2}>Location Mode</Text>
+              <Switch
+                style={styles.switch}
+                trackColor={{ false: "#767577", true: "#8FBC8F" }}
+                thumbColor={isEnabledLocation ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchLocation}
+                value={isEnabledLocation}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.text2}>Notification</Text>
+              <Switch
+                style={styles.switch}
+                trackColor={{ false: "#767577", true: "#8FBC8F" }}
+                thumbColor={isEnabledNotification ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleNotification}
+                value={isEnabledNotification}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.text2}>Chat Mode</Text>
+              <Switch
+                style={styles.switch}
+                trackColor={{ false: "#767577", true: "#8FBC8F" }}
+                thumbColor={isEnabledChatMode ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchChatMode}
+                value={isEnabledChatMode}
+              />
+            </View>
+            <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
+              <Text style={styles.btnText}>
+                Save
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Notification</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={isEnabledNotification ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotification}
-              value={isEnabledNotification}
-            />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Chat Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={isEnabledChatMode ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchChatMode}
-              value={isEnabledChatMode}
-            />
-          </View>
-          <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
-            <Text style={styles.btnText}>
-              Save
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </GradientBackground>
-    </ScrollView >
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+    </GradientBackground>
+
+
   )
 }
 const styles = StyleSheet.create({
