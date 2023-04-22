@@ -7,6 +7,8 @@ import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from "../Components/BackButton";
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
@@ -15,7 +17,7 @@ export default function Chat(props) {
     const [messages, setMessages] = useState([]);
     const traveler1 = props.route.params.user;
     const traveler = props.route.params.loggeduser;
-
+    const [chatRoomDocRef, setChatRoomDocRef] = useState('')
     console.log('im the logged user', traveler.Picture);
     console.log('im the chosen one!', traveler1.Picture);
 
@@ -34,124 +36,100 @@ export default function Chat(props) {
     }, [navigation]);
 
     const createChatRoom = async () => {
-        const chatRoomQuery = query(collection(database, 'chat_rooms'), where('users', '==', [traveler.travler_email, traveler1.travler_email]));
+        const sortedUsers = [traveler.traveler_id, traveler1.traveler_id].sort();
+        const chatRoomQuery = query(collection(database, 'chat_rooms'), where('users', '==', sortedUsers));
         const chatRoomQuerySnapshot = await getDocs(chatRoomQuery);
-        let chatRoomDocRef;
-        alert(chatRoomDocRef)
-        if (!chatRoomQuerySnapshot.empty) {
-            chatRoomDocRef = chatRoomQuerySnapshot.docs[0].ref;
+        if (chatRoomQuerySnapshot.size !== 0) {
+            setChatRoomDocRef(chatRoomQuerySnapshot.docs[0].ref);
             console.log('Chat room exists');
+            return false; // indicate that chat room already exists
         } else {
-            // Create a new chat room with the two users if one does not exist
             const newChatRoomDocRef = await addDoc(collection(database, 'chat_rooms'), {
-                users: [traveler.travler_email, traveler1.travler_email],
+                users: sortedUsers,
                 messages: []
             });
-            alert(chatRoomDocRef)
-            chatRoomDocRef = newChatRoomDocRef;
+            setChatRoomDocRef(newChatRoomDocRef);
             console.log('Chat room created');
-        }
-
-        // check if both users are in the chat room
-        if (chatRoomDocRef.data().users.includes(traveler.travler_email) && chatRoomDocRef.data().users.includes(traveler1.travler_email)) {
-            return { ...chatRoomDocRef.data(), id: chatRoomDocRef.id }; // return the chat room document with messages array property and document id
-        } else {
-            // return null if the chat room doesn't have both users
-            return null;
+            return true; // indicate that new chat room was created
         }
     };
-
-    useEffect(() => {
+    
+    useLayoutEffect(() => {
         const getMessages = async () => {
-            const chatRoomDocRef = await createChatRoom();
-
-            if (!chatRoomDocRef) {
-                // chat room doesn't exist or doesn't have both users
-                alert(chatRoomDocRef)
-                return;
-            }
-            alert(chatRoomDocRef)
-            const messagesRef = collection(chatRoomDocRef.id, 'messages');
-            const unsubscribe = onSnapshot(messagesRef, (querySnapshot) => {
-                const newMessages = querySnapshot.docChanges().filter(change => change.type === 'added').map(change => {
-                    const data = change.doc.data();
-                    return {
-                        _id: change.doc.id,
-                        createdAt: data.createdAt.toDate(),
-                        text: data.text,
-                        user: data.user
-                    };
-                });
-                setMessages(prevMessages => GiftedChat.append(prevMessages, newMessages));
+          // Call createChatRoom() to make sure chat room exists
+          const isNewChatRoom = await createChatRoom();
+          if (!isNewChatRoom) {
+            // If a new chat room was created, do any necessary setup here
+            const messagesRef = collection(database, 'chat_rooms', chatRoomDocRef.id, 'messages');
+            const q = query(messagesRef,orderBy('createdAt', 'desc'));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              const messages = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                  _id: uuidv4(),
+                  createdAt: data.createdAt.toDate(),
+                  text: data.text,
+                  user: data.user
+                };
+              });
+             // console.log('Fetched messages:', messages); // add this line
+             setMessages(messages);
             });
-
+      
             return () => {
-                unsubscribe();
+              unsubscribe();
             };
+          }
         };
-
+      
         getMessages();
-    }, []);
+      }, []);
+      
 
     const onSend = useCallback(async (newMessages = []) => {
-        const chatRoomDocRef = await createChatRoom();
-        const messagesRef = collection(chatRoomDocRef, 'messages');
-        console.log(chatRoomDocRef)
-        const promises = newMessages.map((message) => {
+        const messagesRef = chatRoomDocRef ? collection(database, `chat_rooms/${chatRoomDocRef.id}/messages`) : null;
+        if (messagesRef) {
+          const promises = newMessages.map((message) => {
             const messageId = Math.random().toString(36).substring(7); // generate a random ID for each message
             const createdAt = new Date();
             const messageData = {
-                _id: messageId, // add the generated ID to the message object
-                text: message.text,
-                createdAt: createdAt,
-                user: {
-                    _id: traveler.traveler_id,
-                    name: traveler.firstName,
-                    avatar: traveler.Picture
-                }
+              _id: uuidv4(), // add the generated ID to the message object
+              text: message.text,
+              createdAt: createdAt,
+              user: {
+                _id: traveler.traveler_id,
+                avatar: traveler.Picture
+              }
             };
+            setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
             return addDoc(messagesRef, messageData);
-        });
-
-        Promise.all(promises)
+          });
+      
+          Promise.all(promises)
             .then(() => {
-                console.log('Messages sent');
+              console.log('Messages sent');
             })
             .catch((error) => {
-                console.error(error);
+              console.error(error);
             });
-        console.log(chatRoomDocRef)
-        // Add the new messages to the messages array in the chat room
-        const newMessagesData = newMessages.map((message) => ({
-
-            text: message.text,
-            user: {
-                _id: traveler.traveler_id,
-                name: traveler.first_name,
-                avatar: traveler.Picture
-            },
-            createdAt: new Date(),
-        }));
-        console.log(chatRoomDocRef)
-        setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessagesData));
-    }, [createChatRoom, traveler]);
+        }
+      }, [traveler, chatRoomDocRef]);
 
     return (
         <View style={styles.container}>
             <GradientBackground>
-                <BackButton/>
-            <GiftedChat 
-            showAvatarForEveryMessage={true}
-            messages={message}
-            onSend={message => onSend(message)}
-            user={{
-                _id: auth?.currentUser?.email,
-                avatar: traveler.Picture
-            }}
-            // messagesContainerStyle={{
-
-            // }}
-            />
+                <BackButton />
+                {messages && (
+                    <GiftedChat
+                        showAvatarForEveryMessage={true}
+                        messages={messages}
+                        onSend={messages => onSend(messages)}
+                        user={{
+                            _id: traveler.traveler_id,
+                            avatar: traveler.Picture
+                        }}
+                    />
+                )}
             </GradientBackground>
         </View>
     )
