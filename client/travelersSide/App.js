@@ -23,7 +23,7 @@ import HomeChat from './Screens/HomeChat';
 import BackButton from './Components/BackButton';
 import { onAuthStateChanged } from 'firebase/auth'
 import { createContext } from 'react';
-import { useEffect } from 'react';
+import GroupChat from './Screens/GroupChat'
 
 const Stack = createNativeStackNavigator()
 
@@ -108,11 +108,11 @@ export default function App() {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Home chat" component={HomeChat} />
         <Stack.Screen name="BackButton" component={BackButton} />
-
+        <Stack.Screen name="Group chat" component={GroupChat} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+  }
 
 const styles = StyleSheet.create({
   container: {

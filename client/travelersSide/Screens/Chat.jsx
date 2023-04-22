@@ -18,6 +18,8 @@ export default function Chat(props) {
     const traveler1 = props.route.params.user;
     const traveler = props.route.params.loggeduser;
     const [chatRoomDocRef, setChatRoomDocRef] = useState('')
+    const [shouldRender, setShouldRender] = useState(false); // add state variable
+
     console.log('im the logged user', traveler.Picture);
     console.log('im the chosen one!', traveler1.Picture);
 
@@ -74,6 +76,7 @@ export default function Chat(props) {
               });
              // console.log('Fetched messages:', messages); // add this line
              setMessages(messages);
+             setShouldRender(false); // update state variable to trigger re-render
             });
       
             return () => {
@@ -83,10 +86,10 @@ export default function Chat(props) {
         };
       
         getMessages();
-      }, []);
+      }, [traveler, traveler1]);
       
 
-    const onSend = useCallback(async (newMessages = []) => {
+      const onSend = useCallback(async (newMessages = []) => {
         const messagesRef = chatRoomDocRef ? collection(database, `chat_rooms/${chatRoomDocRef.id}/messages`) : null;
         if (messagesRef) {
           const promises = newMessages.map((message) => {
@@ -113,7 +116,8 @@ export default function Chat(props) {
               console.error(error);
             });
         }
-      }, [traveler, chatRoomDocRef]);
+      }, [traveler,traveler1, chatRoomDocRef]);
+    
 
     return (
         <View style={styles.container}>
