@@ -68,7 +68,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log("commmetssssssss",data);
+      console.log("commmetssssssss", data);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -137,19 +137,19 @@ export default function EventDetails(props) {
     }
   }
 
- 
+
   return (
     <GradientBackground>
       <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    style={styles.container} 
-  >
-        <BackButton/>
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <BackButton />
         <View style={styles.eventContainer}>
-          <View >
+          <View>
             <View style={styles.event}>
               <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: traveler.Picture }}  />
+                <Image style={styles.img} source={{ uri: traveler.Picture }} />
                 <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
               </View>
               <View>
@@ -168,33 +168,30 @@ export default function EventDetails(props) {
             </View>
           </View>
           <ScrollView>
-            <View>
-              {comments !== undefined && comments.length > 0 && (
-                comments.map((comment, index) => (
-                  <View key={index} style={styles.commentContainer}>
-                    <View style={styles.event}>
-                      <View style={styles.row}>
-                        <Image style={styles.img} source={{ uri: comment.picture }} />
-                        <Text style={styles.text}>{comment.TravelerName} </Text>
-                      </View>
-                      <View>
-                        <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
-                      </View>
+            {comments && comments.length > 0 && (
+              comments.map((comment, index) => (
+                <View key={index} style={styles.commentContainer}>
+                  <View style={styles.event}>
+                    <View style={styles.row}>
+                      <Image style={styles.img} source={{ uri: comment.picture }} />
+                      <Text style={styles.text}>{comment.TravelerName} </Text>
                     </View>
                     <View>
-                      <Text style={styles.detailsTextComment}>{comment.Details}</Text>
+                      <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
                     </View>
                   </View>
-                )))}
-            </View>
+                  <View>
+                    <Text style={styles.detailsTextComment}>{comment.Details}</Text>
+                  </View>
+                </View>
+              ))
+            )}
           </ScrollView>
         </View>
-
-
         <View style={styles.addComment}>
           <View style={styles.event}>
             <View style={styles.row}>
-              <Image style={styles.img} source={{ uri: user.Picture }}  />
+              <Image style={styles.img} source={{ uri: user.Picture }} />
               <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
             </View>
             <TouchableOpacity onPress={createComment}>
@@ -202,20 +199,20 @@ export default function EventDetails(props) {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TextInput style={styles.input}
+            <TextInput
+              style={styles.input}
               placeholder="Add Comment..."
               value={details}
-              multiline={true}
+              multiline
               numberOfLines={4}
-              editable={true}
-              onChangeText={(text) => setDetails(text)}>
-            </TextInput>
+              onChangeText={(text) => setDetails(text)}
+            />
           </View>
         </View>
-        </KeyboardAvoidingView>
-    </GradientBackground >
-  )
-};
+      </KeyboardAvoidingView>
+    </GradientBackground>
+  );
+}
 
 
 const styles = StyleSheet.create({
@@ -257,7 +254,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '75%'
+    height: '64%'
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -266,7 +263,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-
   },
 
   locationText: {
@@ -283,7 +279,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-
 
   },
   addComment: {

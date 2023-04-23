@@ -15,7 +15,7 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
-
+   
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     btnLogOut: {
         flexDirection: 'row',
         position: 'absolute',
-        bottom: 100,
+        bottom: 30,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
