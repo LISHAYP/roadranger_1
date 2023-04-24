@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useEffect, useCallback, useState, useRef } from "react";
 import { GiftedChat } from 'react-native-gifted-chat'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { collection, doc, addDoc, query, where, getDocs, orderBy, onSnapshot, push, ref } from 'firebase/firestore';
 import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
@@ -11,8 +11,6 @@ import { v4 as uuidv4 } from 'uuid';
 import * as Notifications from 'expo-notifications';
 
 export default function Chat(props) {
-
-
 
   const navigation = useNavigation();
   const [messages, setMessages] = useState([]);
@@ -138,18 +136,24 @@ export default function Chat(props) {
           console.error(error);
         });
     }
-   
+
 
   }, [traveler, traveler1, chatRoomDocRef]);
 
   return (
     <GradientBackground>
       <View style={styles.container}>
-
-        <View style={styles.back}>
-          <BackButton />
+        <View style={styles.row}>
+          <View style={styles.back}>
+            <BackButton />
+          </View >
+          <View  style={styles.user}>
+            <Image style={styles.img} source={{ uri: traveler1.Picture }} />
+          </View>
+          <View style={styles.user}>
+          <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
+          </View>
         </View>
-
         {messages && (
           <GiftedChat
             showAvatarForEveryMessage={true}
@@ -179,4 +183,33 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginLeft: 20
   },
+  img: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  text: {
+    fontSize: 16,
+    top: 0,
+    fontWeight: 'bold',
+    fontSize:25
+
+  },
+  row: {
+
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    width: '100%',
+    // margin: 5
+  },
+  user:{
+    left:20,
+    top:20,
+   
+
+  }
 })
