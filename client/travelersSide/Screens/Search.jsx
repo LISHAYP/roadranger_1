@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -60,7 +60,7 @@ console.log("trrrrrrrr",traveler)
   const searchEvents = async () => {
     console.log(selectedCity, selectedCountry, selectedDate, selectedSerialType)
     if (selectedCountry === '' && selectedDate === '' && selectedSerialType == '') {
-      alert('Please enter for search');
+      Alert.alert('Please enter for search');
     }
     else {
 
@@ -82,7 +82,7 @@ console.log("trrrrrrrr",traveler)
         })
         .catch(error => {
           console.error(error);
-          alert('No events in this coutry ', error);
+          Alert.alert('No events in this coutry ', error);
         });
     }
   

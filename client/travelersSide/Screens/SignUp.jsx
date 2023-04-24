@@ -11,7 +11,6 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
 import BackButton from '../Components/BackButton';
 
-
 export default function SignUp() {
 
   const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
@@ -98,17 +97,17 @@ export default function SignUp() {
     if (phone.length != 10) {
       // Phone is too short
       Alert.alert('Phone must be 10 numbers.');
-      setPassword('')
+     
       return;
     }
     if (password.length < 6) {
       // Password is too short
       Alert.alert('Password must be at least 6 characters long.');
-      setPassword('')
+      
       return;
     }
     else {
-      createUserWithEmailAndPassword(auth, newTraveler.travler_email, newTraveler.password)
+        createUserWithEmailAndPassword(auth, newTraveler.travler_email, newTraveler.password)
       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
         method: 'POST',
         headers: {

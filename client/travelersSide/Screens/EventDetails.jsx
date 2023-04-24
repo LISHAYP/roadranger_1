@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert} from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -110,7 +110,7 @@ export default function EventDetails(props) {
   const createComment = async () => {
 
     if (newComment === '') {
-      alert('Please enter details and type');
+      Alert.alert('Please enter details and type');
     }
     else {
       // Send a POST request to your backend API with the comment data
@@ -126,13 +126,13 @@ export default function EventDetails(props) {
           // Handle the response data as needed
           console.log(data);
           setNewCommentPublished(true)
-          alert('Publish')
+          Alert.alert('Publish')
           setNewCommentPublished(false)
           setDetails('');
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          Alert.alert('Error', error);
         });
     }
   }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -124,7 +124,7 @@ export default function SOS(props) {
 
   const createSOS = async () => {
    if (newSOS.details === '' || newSOS.serialTypeNumber === '') {
-      alert('Please enter details and type');    
+    Alert.alert('Please enter details and type');    
     }
 else{
     // Send a POST request to your backend API with the event data
@@ -140,11 +140,11 @@ else{
 console.log(data)
         // Handle the response data as needed
         console.log({ newSOS })
-        alert('Publish')
+        Alert.alert('Publish')
       })
       .catch(error => {
         console.error(error);
-        alert('Error', 'Failed to sign in. Please try again later.');
+        Alert.alert('Error', 'Failed to sign in. Please try again later.');
       });
     }
   }
