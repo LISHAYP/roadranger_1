@@ -8,7 +8,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRef } from 'react';
+import { useRef } from 'react';
 import { Button, Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
@@ -19,6 +19,7 @@ export default function SignIn() {
     const navigation = useNavigation();
     const [location, setLocation] = useState('');
     const [travelerId, setTravlerId] = useState('')
+    const [devaiceToken, setDevaiceToken] = useState('');
 
     useEffect(() => {
         (async () => {
@@ -36,7 +37,10 @@ export default function SignIn() {
             travler_email: email,
             password: password
         };
-
+        const changeToken = {
+            travler_email: email,
+            token:devaiceToken
+          };
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
             method: 'POST',
             headers: {
@@ -49,6 +53,27 @@ export default function SignIn() {
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
                     setTravlerId(data.traveler_id)
+                    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/updatetoken?email=${traveler.travler_email}`, {
+                        method: 'PUT',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(changeToken),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data); // Traveler updated successfully.
+                            Alert.alert('Traveler updated successfully')
+                            navigation.goBack(); // Navigate back to the "Around You" screen
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+
+
+
+
                     signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                     navigation.navigate("Around You", { data });
 
@@ -108,7 +133,7 @@ export default function SignIn() {
             .then(response => response.json())
             .catch(error => {
                 console.error(error);
-               
+
             });
 
 
@@ -121,63 +146,64 @@ export default function SignIn() {
     async function registerForPushNotificationsAsync() {
         let token;
         if (Device.isDevice) {
-          const { status: existingStatus } = await Notifications.getPermissionsAsync();
-          let finalStatus = existingStatus;
-          if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-          }
-          if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            return;
-          }
-          token = (await Notifications.getExpoPushTokenAsync()).data;
-          console.log(token);
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            setDevaiceToken(token);
+            console.log(token);
         } else {
-          alert('Must use physical device for Push Notifications');
+            alert('Must use physical device for Push Notifications');
         }
-      
+
         if (Platform.OS === 'android') {
-          Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-          });
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
         }
-      
+
         return token;
-      }
+    }
     Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      }),
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+        }),
     });
-    
+
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
-    
+
     useEffect(() => {
-      registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-    
-      notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-        setNotification(notification);
-      });
-    
-      responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        console.log(response);
-      });
-    
-      return () => {
-        Notifications.removeNotificationSubscription(notificationListener.current);
-        Notifications.removeNotificationSubscription(responseListener.current);
-      };
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log(response);
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
     }, []);
-    
+
     return (
         < GradientBackground>
             <View style={styles.container}>
@@ -227,7 +253,7 @@ export default function SignIn() {
                 <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
                     navigation.navigate("Contact Us");
                 }}>
-                    
+
                     <Icon name="mail-open-outline" size={30} />
                     <Text style={styles.contact}>
                         Contact us

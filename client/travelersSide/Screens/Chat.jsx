@@ -123,8 +123,8 @@ export default function Chat(props) {
               }
             };
             setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-            handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
-            console.log(traveler1.token)
+            handlePushNotification(messageData, traveler.token); // send push notification to the recipient
+            console.log("*********", traveler)
             return addDoc(messagesRef, messageData);
           });
       
