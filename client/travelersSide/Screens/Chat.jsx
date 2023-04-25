@@ -111,35 +111,50 @@ export default function Chat(props) {
     const onSend = useCallback(async (newMessages = []) => {
         const messagesRef = chatRoomDocRef ? collection(database, `chat_rooms/${chatRoomDocRef.id}/messages`) : null;
         if (messagesRef) {
-            const promises = newMessages.map((message) => {
-                const messageId = Math.random().toString(36).substring(7); // generate a random ID for each message
-                const createdAt = new Date();
-                const messageData = {
-                    _id: uuidv4(), // add the generated ID to the message object
-                    text: message.text,
-                    createdAt: createdAt,
-                    user: {
-                        _id: traveler.traveler_id,
-                        avatar: traveler.Picture
-                    }
-                };
-                setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-                return addDoc(messagesRef, messageData);
+          const promises = newMessages.map((message) => {
+            const createdAt = new Date();
+            const messageData = {
+              _id: uuidv4(), // add the generated ID to the message object
+              text: message.text,
+              createdAt: createdAt,
+              user: {
+                _id: traveler.traveler_id,
+                avatar: traveler.Picture
+              }
+            };
+            setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
+            handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
+            console.log(traveler1.token)
+            return addDoc(messagesRef, messageData);
+          });
+      
+          Promise.all(promises)
+            .then(() => {
+              console.log('Messages sent');
+            })
+            .catch((error) => {
+              console.error(error);
             });
-
-            Promise.all(promises)
-                .then(() => {
-                    console.log('Messages sent');
-
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
         }
-
-
-    }, [traveler, traveler1, chatRoomDocRef]);
-
+      }, [traveler, traveler1, chatRoomDocRef]);
+      
+    const handlePushNotification = async (message, recipientToken) => {
+        // Construct the message payload
+        const notification = {
+          title: `${traveler.first_name} ${traveler.last_name} `,
+          body: message.text,
+          data: { chatRoomDocRefId: chatRoomDocRef.id },
+          sound: 'default',
+        };
+      
+        // Send the notification to the recipient
+        await Notifications.scheduleNotificationAsync({
+          content: notification,
+          to: recipientToken,
+          trigger: null,
+        });
+      };
+      
     return (
         <GradientBackground>
             <View style={styles.container}>
