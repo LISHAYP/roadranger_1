@@ -71,10 +71,6 @@ export default function SignIn() {
                         .catch((error) => {
                             console.error(error);
                         });
-
-
-
-
                     
                 } else {
                     setLoginFailed(true);
@@ -83,8 +79,6 @@ export default function SignIn() {
 
 
             })
-
-
             .catch(error => {
                 console.error(error);
                 console.log('Error', 'Failed to sign in. Please try again later.');
