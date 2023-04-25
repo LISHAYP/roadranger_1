@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -62,10 +62,11 @@ export default function SignIn() {
                         body: JSON.stringify(changeToken),
                     })
                         .then((response) => response.json())
-                        .then((data) => {
-                            console.log(data); // Traveler updated successfully.
-                            Alert.alert('Traveler updated successfully')
-                            navigation.goBack(); // Navigate back to the "Around You" screen
+                        .then((data1) => {
+                            console.log(data1); // Traveler updated successfully.
+                            Alert.alert('Token updated successfully')
+                            signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
+                            navigation.navigate("Around You", { data }); 
                         })
                         .catch((error) => {
                             console.error(error);
@@ -74,9 +75,7 @@ export default function SignIn() {
 
 
 
-                    signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
-                    navigation.navigate("Around You", { data });
-
+                    
                 } else {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');

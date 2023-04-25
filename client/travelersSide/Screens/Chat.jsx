@@ -190,7 +190,6 @@ export default function Chat(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
         // backgroundColor: '#fff',
         // marginTop: 40,
         marginBottom: 30
