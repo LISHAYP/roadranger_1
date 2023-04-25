@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "RoadRanger",
+    "slug": "RoadRanger",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/RoadRanger1.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/RoadRanger1.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/RoadRanger1.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/RoadRanger1.png"
+    }
+   
+  }
+}
