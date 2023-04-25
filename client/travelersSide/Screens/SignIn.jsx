@@ -159,7 +159,7 @@ export default function SignIn() {
                     navigation.navigate("Forgot password")
                 }}>
                     <Text >
-                        Forgot you're password?
+                        Forgot your password?
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnSignUp} onPress={() => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback,Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -194,9 +194,9 @@ export default function AroundYou(props) {
                             <Text style={styles.text}>Chat</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
-                            <Icon name="search-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Search </Text>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}) }}>
+                        <Icon name="search-outline" size={35} style={styles.icon} />
+                        <Text style={styles.text}>Search </Text>
 
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.option}
@@ -205,6 +205,7 @@ export default function AroundYou(props) {
                             <Icon name="settings-outline" size={35} style={styles.icon} />
                             <Text style={styles.text}>Setting</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity style={styles.btnLogOut} onPress={() => {
                             navigation.navigate("Sign In");
                         }}>

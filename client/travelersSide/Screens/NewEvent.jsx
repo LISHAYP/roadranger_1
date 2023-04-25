@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert} from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -8,6 +8,9 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
+import * as Notifications from 'expo-notifications';
+import { auth } from '../firebase';
+
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
@@ -128,7 +131,7 @@ export default function NewEvent(props) {
   const createEvent = async () => {
 
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
-      alert('Please enter details and type');
+      Alert.alert('Please enter details and type');
     }
     else {
       // Send a POST request to your backend API with the event data
@@ -144,12 +147,12 @@ export default function NewEvent(props) {
         .then(data => {
           // Handle the response data as needed
           console.log({ data })
-          alert('Publish')
+          Alert.alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          Alert.alert('Error', error);
         });
     }
   }

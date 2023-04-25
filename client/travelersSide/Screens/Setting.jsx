@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -8,10 +8,12 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
+import { auth } from '../firebase';
+import 'firebase/database';
 
 export default function Setting(props) {
- 
-  const traveler =  props.route.params.traveler;
+
+  const traveler = props.route.params.traveler;
   console.log(traveler);
 
   useEffect(() => {
@@ -21,9 +23,8 @@ export default function Setting(props) {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState(traveler.first_name);
   const [lastName, setLastName] = useState(traveler.last_name);
-  const [email, setEmail] = useState(traveler.travler_email);
-  const [password, setPassword] = useState(traveler.password);
-  const [phone, setPhone] = useState(traveler.phone);
+
+  const [phone, setPhone] = useState('0' + traveler.phone);
   const gender = [
     { label: 'Male', value: 'M' },
     { label: 'Female', value: 'F' },
@@ -35,6 +36,8 @@ export default function Setting(props) {
     { label: 'Other', value: 'Other' },
   ]
   const [value, setValue] = useState(null);
+  const email = traveler.travler_email;
+  const password = traveler.password;
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(traveler.dateOfBirth);
   const [isEnabledLocation, setIsEnabledLocation] = useState(traveler.location);
@@ -54,9 +57,10 @@ export default function Setting(props) {
     setIsCalendarOpen(false);
   }
   const changeTraveler = {
+    travler_email: email,
+    password: password,
     first_name: firstName,
     last_name: lastName,
-    travler_email: email,
     phone: phone,
     notifications: isEnabledNotification,
     insurence_company: selectedInsurance,
@@ -64,13 +68,18 @@ export default function Setting(props) {
     save_location: isEnabledLocation,
     dateOfBirth: selectedDate,
     gender: selectedGender,
-    password: password,
     chat: isEnabledChatMode,
     picture: userPic
   };
   console.log('*******', changeTraveler)
   const saveChanges = async () => {
     console.log("IM IN saveChanges");
+
+    if (phone.length != 10) {
+      // Phone is too short
+      Alert.alert('Phone must be 10 numbers.');
+      return;
+    }
     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/update?email=${traveler.travler_email}`, {
       method: 'PUT',
       headers: {
@@ -82,26 +91,28 @@ export default function Setting(props) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Traveler updated successfully.
-        alert('Traveler updated successfully')
+        Alert.alert('Traveler updated successfully')
         navigation.goBack(); // Navigate back to the "Around You" screen
       })
       .catch((error) => {
         console.error(error);
       });
+
   }
   console.log(email)
   const openCamera = () => {
     navigation.navigate('Camera', { email });
-    handleSavePhoto( );
+    handleSavePhoto();
   }
   const handleSavePhoto = () => {
     setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
   }
+
   return (
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
-        <BackButton/>
+          <BackButton />
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
           </TouchableOpacity >
@@ -117,19 +128,7 @@ export default function Setting(props) {
             onChangeText={(text) => setLastName(text)}
             placeholder={traveler.last_name}>
           </TextInput>
-          <Text style={styles.text}>Email:</Text>
-          <TextInput style={styles.input}
-            // value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder={traveler.travler_email}>
-          </TextInput>
-          <Text style={styles.text}>Password:</Text>
-          <TextInput style={styles.input}
-            placeholder={traveler.password}
-            // value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={true}>
-          </TextInput>
+
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
             placeholder={'0' + traveler.phone.toString()}
@@ -164,7 +163,7 @@ export default function Setting(props) {
             labelField="label"
             valueField="value"
             placeholder={traveler.insurence_company}
-             value={traveler.insurance_company}
+            value={traveler.insurance_company}
             onChange={item => {
               setSelectedInsurance(item.value)
             }}
@@ -174,7 +173,7 @@ export default function Setting(props) {
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
 
-            <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
+              <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
               <Icon style={styles.icon} name="calendar-outline" />
             </TouchableOpacity>
             {isCalendarOpen && (
@@ -224,11 +223,12 @@ export default function Setting(props) {
         </View>
       </GradientBackground>
     </ScrollView >
+
   )
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop:30,
+    marginTop: 30,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

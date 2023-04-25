@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { Settings, StyleSheet, Text, View ,Button} from 'react-native';
 import SignIn from './Screens/SignIn';
 import SignUp from './Screens/SignUp';
 import AroundYou from './Screens/AroundYou';
@@ -22,9 +21,16 @@ import Chat from './Screens/Chat';
 import HomeChat from './Screens/HomeChat';
 import BackButton from './Components/BackButton';
 import GroupChat from './Screens/GroupChat'
+import {  StyleSheet } from 'react-native';
+
+
 const Stack = createNativeStackNavigator()
 
+
+
 export default function App() {
+
+
   return (
 
     <NavigationContainer>
@@ -48,10 +54,13 @@ export default function App() {
         <Stack.Screen name="Home chat" component={HomeChat} />
         <Stack.Screen name="BackButton" component={BackButton} />
         <Stack.Screen name="Group chat" component={GroupChat} />
+    
       </Stack.Navigator>
+     
     </NavigationContainer>
+
   );
-  }
+}
 
 const styles = StyleSheet.create({
   container: {
