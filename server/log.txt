@@ -48,3 +48,4 @@
  2023-04-25 14:37:56.9700 INFO: new password was saved in the database to traveler id number: 0
  2023-04-25 14:54:03.0193 INFO: token was updated in the database for traveler with email : lieldu178@gmail.com
  2023-04-25 15:05:04.7866 INFO: token was updated in the database for traveler with email : Lishai78@gmail.com
+ 2023-04-25 17:31:59.7095 INFO: new password was saved in the database to traveler id number: 0

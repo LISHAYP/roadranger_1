@@ -259,6 +259,7 @@ namespace WebApplication1.Controllers
                     return NotFound();
                 }
 
+
                 // Generate a new password and update the user's record in the database
                 var newPassword = GeneratePassword();
                 user.password = newPassword;
@@ -266,15 +267,8 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 logger.Info($"new password was saved in the database to traveler id number: {value.traveler_id}");
 
-                // Send an email to the user with the new password
-                //var message = new MailMessage();
-                //message.To.Add(new MailAddress(user.travler_email));
-                //message.Subject = "New Password";
-                //message.Body = "Your new password is: " + newPassword;
-
-               
-
-                var sendGridClient = new SendGridClient("");
+                var mailapi = db.tblApi.Select(x => x.api).SingleOrDefault();
+                var sendGridClient = new SendGridClient(mailapi);
                 var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
                 var subject = "New Password";
                 var to = new EmailAddress(user.travler_email, user.first_name);
@@ -283,25 +277,6 @@ namespace WebApplication1.Controllers
                 var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
                 await sendGridClient.SendEmailAsync(mailMessage);
 
-
-
-                //var message = new MimeMessage();
-                //message.From.Add(new MailboxAddress("Road Ranger Admin", "roadranger1@walla.com"));
-                //message.To.Add(new MailboxAddress(user.first_name, user.travler_email));
-                //message.Subject = "New Password";
-
-                //message.Body = new TextPart("Dear " + user.first_name)
-                //{
-                //    Text = $"Your new password is: {newPassword}"
-                //};
-
-                //using (var client = new MailKit.Net.Smtp.SmtpClient())
-                //{
-                //    await client.ConnectAsync("smtp.gmail.com", 587, false);
-                //    await client.AuthenticateAsync("roadranger178@gmail.com", "road_ranger1!");
-                //    await client.SendAsync(message);
-                //    await client.DisconnectAsync(true);
-                //}
 
                 return Ok("new password email was sent succesfully (:");
             }
