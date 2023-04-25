@@ -7,7 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-
+import BackButton from '../Components/BackButton';
 
 export default function Setting(props) {
  
@@ -101,6 +101,7 @@ export default function Setting(props) {
     <ScrollView>
       < GradientBackground>
         <View style={styles.container}>
+        <BackButton/>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
           </TouchableOpacity >
@@ -146,7 +147,7 @@ export default function Setting(props) {
             data={gender}
             maxHeight={300}
             labelField="label"
-            // valueField="value"
+            valueField="value"
             placeholder={traveler.gender}
             value={selectedGender}
             onChange={item => {
@@ -227,7 +228,7 @@ export default function Setting(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop:60,
+    marginTop:30,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

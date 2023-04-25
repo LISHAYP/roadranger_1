@@ -7,9 +7,13 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
+import BackButton from '../Components/BackButton';
 
-
-export default function Search() {
+export default function Search(props) {
+  const navigation = useNavigation();
+ //user-the user who use the app
+ const traveler =  props.route.params.traveler;
+console.log("trrrrrrrr",traveler)
   useEffect(() => {
     loadData();
   }, []);
@@ -72,20 +76,23 @@ export default function Search() {
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log( data )
           setEvents(data)
+        console.log(data);
+          navigation.navigate("Events",{data: data, traveler: traveler} );
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          alert('No events in this coutry ', error);
         });
     }
+  
   }
+  
 
 
 
   //GET the countries and cities from data
-  loadData = () => {
+ const loadData = () => {
     //GET the countries into array
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getcountries', {
       method: 'GET',
@@ -131,6 +138,8 @@ export default function Search() {
   return (
     < GradientBackground>
       <View style={styles.container}>
+      <BackButton />
+
         <Text style={styles.text}>Country:</Text>
         <Dropdown
           style={styles.dropdown}
@@ -200,13 +209,13 @@ export default function Search() {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop:60,
+    marginTop:20,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    marginTop:40
+  
   },
   text: {
     color: '#144800',

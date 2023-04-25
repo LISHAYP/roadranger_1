@@ -7,7 +7,7 @@ import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useRef } from 'react';
-
+import BackButton from '../Components/BackButton';
 export default function ForgotPassword() {
 
 
@@ -35,6 +35,7 @@ export default function ForgotPassword() {
     return (
         < GradientBackground>
             <View style={styles.container}>
+            <BackButton />
                 <Text style={styles.title}>Forgot Your Password?</Text>
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
 
     },
     title: {
+        paddingTop:50,
         fontSize: 40,
         marginBottom: 50
     },

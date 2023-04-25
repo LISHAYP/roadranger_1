@@ -7,14 +7,14 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
-
+import BackButton from '../Components/BackButton';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
-  const [city,setCity]=useState('');
+  const [city, setCity] = useState('');
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
@@ -29,8 +29,6 @@ export default function NewEvent(props) {
     { label: 'Animal-related incidents', value: '10' },
     { label: 'Financial issues', value: '11' }
   ]
-
-
 
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
@@ -55,7 +53,7 @@ export default function NewEvent(props) {
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
         addContry();
-        
+
       })
       .catch(error => console.warn(error))
   }, []);
@@ -75,11 +73,11 @@ export default function NewEvent(props) {
     country_number: countryNumber,
     area_number: areaNumber,
   };
-console.log("--------",{newEvent})
+  console.log("--------", { newEvent })
   const countryObj = {
     country_name: country,
   };
-   addContry = () => {
+  addContry = () => {
 
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
@@ -91,23 +89,23 @@ console.log("--------",{newEvent})
     })
       .then(response => response.json())
       .then(data => {
-      
+
         setCountryNumber(data)
         addCity();
       }
       )
       .catch(error => {
         console.error(error);
-       
+
       });
   }
 
-   addCity = () => {
+  addCity = () => {
     const areaObj = {
       country_number: countryNumber,
       area_name: city
     }
-    
+
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
@@ -117,9 +115,9 @@ console.log("--------",{newEvent})
       body: JSON.stringify(areaObj),
     })
       .then(response => response.json())
-      .then(data => {     
+      .then(data => {
         setAreaNumber(data)
-      
+
       }
       )
       .catch(error => {
@@ -140,13 +138,13 @@ console.log("--------",{newEvent})
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newEvent),
-      
+
       })
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-      console.log({data})
-           alert('Publish')
+          console.log({ data })
+          alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
         })
         .catch(error => {
@@ -157,16 +155,16 @@ console.log("--------",{newEvent})
   }
 
   const OpenCameraE = () => {
-      navigation.navigate('CameraE', {idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`} );
-      const date=`${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-      setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
-    }
-  
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
+    const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+  }
+
   return (
     < GradientBackground>
-
       <ScrollView>
         <View style={styles.container}>
+        <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -218,7 +216,7 @@ console.log("--------",{newEvent})
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -329,7 +327,8 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 2,
     borderRadius: 25,
-    backgroundColor: '#144800'},
+    backgroundColor: '#144800'
+  },
 });
 
 

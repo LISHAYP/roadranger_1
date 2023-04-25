@@ -6,7 +6,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
-
+import BackButton from '../Components/BackButton';
 
 export default function ContactUs() {
     const Subject = [
@@ -22,7 +22,9 @@ export default function ContactUs() {
     };
     return (
         < GradientBackground>
+         
             <View style={styles.container}>
+            <BackButton />
                 <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
