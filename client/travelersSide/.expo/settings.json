@@ -5,6 +5,6 @@
   "devClient": false,
   "dev": true,
   "minify": false,
-  "urlRandomness": "j3-2ju",
+  "urlRandomness": null,
   "https": false
 }

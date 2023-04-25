@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="api">
+    <Key>
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="api1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="stakeholders">
     <Key>
       <PropertyRef Name="stakeholder_id" />
@@ -15,6 +22,8 @@
     <Property Name="approvel_date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="stakeholder_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_stackholder" FromRole="stakeholders" ToRole="tblComments" />
     <NavigationProperty Name="tblEvents" Relationship="Self.event_stackholder" FromRole="stakeholders" ToRole="tblEvents" />
     <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_stakeholders" FromRole="stakeholders" ToRole="tblAskForHelp" />
@@ -140,7 +149,7 @@
       <PropertyRef Name="locationNumber" />
       <PropertyRef Name="travelerId" />
     </Key>
-    <Property Name="locationNumber" Type="Int32" Nullable="false" />
+    <Property Name="locationNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="travelerId" Type="Int32" Nullable="false" />
     <Property Name="dateAndTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
@@ -170,9 +179,11 @@
     <Property Name="location" Type="Boolean" />
     <Property Name="save_location" Type="Boolean" />
     <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="chat" Type="Boolean" />
+    <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
     <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
@@ -407,6 +418,7 @@
     <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
   </Association>
   <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="api" EntityType="Self.api" />
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" />

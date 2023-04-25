@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
+    <EntitySetMapping Name="api">
+      <EntityTypeMapping TypeName="igroup190_test1Model.api">
+        <MappingFragment StoreEntitySet="api">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="api1" ColumnName="api" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="stakeholders">
       <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
         <MappingFragment StoreEntitySet="stakeholders">
@@ -15,6 +23,8 @@
           <ScalarProperty Name="approvel_date" ColumnName="approvel_date" />
           <ScalarProperty Name="stakeholder_type" ColumnName="stakeholder_type" />
           <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="token" ColumnName="token" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -149,9 +159,11 @@
           <ScalarProperty Name="location" ColumnName="location" />
           <ScalarProperty Name="save_location" ColumnName="save_location" />
           <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
-          <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="chat" ColumnName="chat" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="token" ColumnName="token" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

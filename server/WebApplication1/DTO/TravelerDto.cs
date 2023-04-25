@@ -20,6 +20,9 @@ namespace WebApplication1.DTO
         public string gender { get; set; }
         public string password { get; set; }
         public Nullable<bool> chat { get; set; }
+        public string Picture { get; set; }
+        public string token { get; set; }
+
     }
 
 }

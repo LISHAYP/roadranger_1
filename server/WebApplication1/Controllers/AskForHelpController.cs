@@ -5,13 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using data;
+using NLog;
 using WebApplication1.DTO;
+using WebGrease.Activities;
 
 namespace WebApplication1.Controllers
 {
     public class AskForHelpController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         // GET: api/AskForHelp
         public IEnumerable<string> Get()
         {
@@ -48,10 +52,41 @@ namespace WebApplication1.Controllers
                 db.tblAskForHelp.Add(askForHelp);
                 db.SaveChanges();
 
+                logger.Info("new ask for help request was added!");
                 return Ok("New ask for help was created");
             }
             catch (Exception ex)
             {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+       [HttpPost]
+        [Route("api/post/showAskforhelp")]
+        public IHttpActionResult ShowAskForHelp([FromBody] AskForHelpDto requastNumber)
+        {
+            try
+            {
+                var askForHelp = db.tblAskForHelp.Where(a => a.requastNumber == requastNumber.RequastNumber).Select(
+                    x => new ShowAskForHelpDto { 
+                     Details = x.details,
+                    Latitude = x.latitude,
+                    Longitude = x.longitude,
+                    Picture = x.picture
+                    }).ToList();
+
+
+                // If no matching record was found, return a not found response
+                if (askForHelp == null)
+                {
+                    return NotFound();
+                }
+                
+                return Ok(askForHelp);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

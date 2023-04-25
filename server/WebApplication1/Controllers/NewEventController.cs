@@ -1,40 +1,53 @@
-﻿using data;
+using data;
+using Microsoft.AspNetCore.Mvc;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
 {
+
     public class NewEventController : ApiController
     {
         igroup190_test1Entities db = new igroup190_test1Entities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         // GET: api/NewEvent
         public IEnumerable<EventDto> Get()
         {
+
             List<tblEvents> events = db.tblEvents.ToList();
-            List<EventDto> eventsDto= new List<EventDto>();
+            List<EventDto> eventsDto = new List<EventDto>();
 
             foreach (var newevent in events)
             {
                 EventDto eventDto = new EventDto
                 {
-                    Details= newevent.details,
+                    eventNumber = newevent.eventNumber,
+                    Details = newevent.details,
                     EventDate = newevent.event_date,
                     EventTime = newevent.event_time,
                     Latitude = newevent.latitude,
                     Longitude = newevent.longitude,
-                    EventStatus= newevent.event_status,
-                    Picture= newevent.picture,
+                    EventStatus = newevent.event_status,
+                    Picture = newevent.picture,
                     TravelerId = newevent.travelerId,
                     StackholderId = newevent.stackholderId,
                     SerialTypeNumber = newevent.serialTypeNumber,
                     CountryNumber = newevent.country_number,
-                    AreaNumber= newevent.area_number
+                    AreaNumber = newevent.area_number
                 };
                 eventsDto.Add(eventDto);
             }
@@ -56,6 +69,7 @@ namespace WebApplication1.Controllers
             {
                 tblEvents newEvent = new tblEvents
                 {
+                    eventNumber = value.eventNumber,
                     details = value.details,
                     event_date = value.event_date,
                     event_time = value.event_time,
@@ -68,26 +82,384 @@ namespace WebApplication1.Controllers
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
                     area_number = value.area_number
+
                 };
 
                 db.tblEvents.Add(newEvent);
                 db.SaveChanges();
-                return Ok("New event created successfully!");
+                logger.Info("new event was added to the database!");
+
+                // Retrieve the name and picture of the user who posted the event
+                string userName = "";
+                string userPicture = "";
+                if (newEvent.travelerId.HasValue)
+                {
+                    var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == newEvent.travelerId.Value);
+                    if (traveler != null)
+                    {
+                        userName = traveler.first_name + " " + traveler.last_name;
+                        userPicture = traveler.picture;
+                    }
+                }
+                else if (newEvent.stackholderId.HasValue)
+                {
+                    var stakeholder = db.stakeholders.FirstOrDefault(s => s.stakeholder_id == newEvent.stackholderId.Value);
+                    if (stakeholder != null)
+                    {
+                        userName = stakeholder.full_name;
+                        userPicture = stakeholder.picture;
+                    }
+                }
+
+                // Construct the response message
+                var responseMessage = new
+                {
+                    message = "New event created successfully!",
+                    userName = userName,
+                    userPicture = userPicture
+                };
+
+                return Ok(responseMessage);
             }
             catch (Exception ex)
             {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+        //[HttpPost]
+        //[Route("api/post/neweventdistance")]
+        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents value)
+        //{
+        //    try
+        //    {
+        //        // Get all events from the database
+        //        var allEvents = db.tblEvents.ToList();
+
+        //        // Filter events based on distance and serialTypeNumber
+        //        var similarEvent = allEvents
+        //            .FirstOrDefault(e => e.serialTypeNumber == value.serialTypeNumber && CalculateDistance((double)e.latitude, (double)e.longitude, (double)value.latitude, (double)value.longitude) <= 3);
+
+        //        if (similarEvent != null)
+        //        {
+        //            //// Check if the similar event already has any related events
+        //            //if (similarEvent.tblEvents1 != null)
+        //            //{
+        //            //    logger.Info("A similar event already has a related event.");
+        //            //}
+        //            //else
+        //            //{
+        //                // Associate the new event with the similar event found
+        //                value.tblEvents1 = similarEvent;
+        //                db.Entry(similarEvent).State = EntityState.Unchanged;
+        //                // Add the new event to the database
+        //                db.tblEvents.Add(value);
+        //                db.SaveChanges();
+        //            //}
+        //        }
+        //        else
+        //        {
+        //            db.tblEvents.Add(value);
+        //            db.SaveChanges();
+        //        }
+
+
+
+        //        // Check if the new event is related to an old event
+        //        if (similarEvent != null)
+        //        {
+        //            // The new event is related to an old event
+        //            logger.Info($"new event number {value.eventNumber} is related to event number {similarEvent.eventNumber} and it was added to the database!");
+        //        }
+        //        else
+        //        {
+        //            // The new event is not related to any old event
+        //            logger.Info("the events are not related");
+        //        }
+
+        //        // Retrieve the name and picture of the user who posted the event
+        //        string userName = "";
+        //        string userPicture = "";
+        //        if (value.travelerId.HasValue)
+        //        {
+        //            var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == value.travelerId.Value);
+        //            if (traveler != null)
+        //            {
+        //                userName = traveler.first_name + " " + traveler.last_name;
+        //                userPicture = traveler.picture;
+        //            }
+        //        }
+        //        else if (value.stackholderId.HasValue)
+        //        {
+        //            var stakeholder = db.stakeholders.FirstOrDefault(s => s.stakeholder_id == value.stackholderId.Value);
+        //            if (stakeholder != null)
+        //            {
+        //                userName = stakeholder.full_name;
+        //                userPicture = stakeholder.picture;
+        //            }
+        //        }
+
+        //        // Construct the response message
+        //        var responseMessage = new
+        //        {
+        //            message = "New event created successfully!",
+        //            userName = userName,
+        //            userPicture = userPicture
+        //        };
+
+        //        return Ok(responseMessage);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
+        [HttpPost]
+        [Route("api/post/neweventdistance")]
+        public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
+        {
+            try
+            {
+
+                // Check if there are any existing events within 3 km with the same serialTypeNumber
+                var existingEvents = db.tblEvents
+                    .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
+                                && e.event_status == true) // only consider events with status "true"
+                    .ToList()
+                    .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
+                    .ToList();
+
+                // Detach deleted entities from the context
+                var deletedEntities = existingEvents.Where(e => db.Entry(e).State == EntityState.Deleted).ToList();
+                if (deletedEntities.Any())
+                {
+                    foreach (var deletedEntity in deletedEntities)
+                    {
+                        db.Entry(deletedEntity).State = EntityState.Detached;
+                    }
+                }
+
+                if (existingEvents.Any())
+                {
+                    // Create a relation between the new event and any existing events within 3 km
+                    foreach (var existingEvent in existingEvents)
+                    {
+                        // Detach the existingEvent entity from the context
+                        db.Entry(existingEvent).State = EntityState.Detached;
+
+                        // Create the relationship between the newEvent and the existingEvent
+                        newEvent.tblEvents1 = existingEvent;
+                        existingEvent.tblEvents2 = newEvent;
+                    }
+                }
+
+                // Generate a new event number that doesn't conflict with any existing event numbers
+                int maxEventNumber = db.tblEvents.Max(e => e.eventNumber);
+                newEvent.eventNumber = maxEventNumber + 1;
+
+                // Add the new event to the database
+                db.tblEvents.Add(newEvent);
+
+                // Save changes to the database
+                db.SaveChanges();
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            // Implementation of the Haversine formula
+            const double R = 6371; // Earth radius in kilometers
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a =
+                Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var distance = R * c;
+            return distance;
+        }
+
+
+
+        [HttpPost]
+        [Route("api/events/comments")]
+        public IHttpActionResult GetCommentsForEvent([FromBody] CommentDto eventId)
+        {
+            try
+            {
+                var comments = db.tblComments.Where(c => c.eventNumber == eventId.EventNumber)
+                                              .Select(c => new CommentDto
+                                              {
+                                                  CommentNumber = c.commentNumber,
+                                                  EventNumber = c.eventNumber,
+                                                  Details = c.details,
+                                                  CommentDate = c.comment_date,
+                                                  CommentTime = c.comment_time,
+                                                  TravelerId = c.travelerId,
+                                                  StackholderId = c.stackholderId,
+                                                  TravelerName = c.traveleres.first_name + c.traveleres.last_name,
+                                                  StakeholderName = c.stakeholders.stakeholder_name,
+                                                  picture = c.traveleres.picture
+
+                                              }).ToList();
+
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+        // POST api/post/updateevent
+        [HttpPost]
+        [Route("api/post/updateevent")]
+        public IHttpActionResult PostUpdateEvent([FromBody] tblEvents updatedEvent)
+        {
+            try
+            {
+                // Retrieve the existing event from the database
+                tblEvents existingEvent = db.tblEvents.FirstOrDefault(x => x.eventNumber == updatedEvent.eventNumber);
+
+                // If the existing event does not exist, return a bad request
+                if (existingEvent == null)
+                {
+                    return BadRequest("Event not found.");
+                }
+
+                // Update the existing event with the new values
+                existingEvent.details = updatedEvent.details;
+                existingEvent.event_date = updatedEvent.event_date;
+                existingEvent.event_time = updatedEvent.event_time;
+                existingEvent.latitude = updatedEvent.latitude;
+                existingEvent.longitude = updatedEvent.longitude;
+                existingEvent.event_status = updatedEvent.event_status;
+                existingEvent.picture = updatedEvent.picture;
+                existingEvent.travelerId = updatedEvent.travelerId;
+                existingEvent.stackholderId = updatedEvent.stackholderId;
+                existingEvent.serialTypeNumber = updatedEvent.serialTypeNumber;
+                existingEvent.country_number = updatedEvent.country_number;
+                existingEvent.area_number = updatedEvent.area_number;
+
+                // Save the changes to the database
+                db.SaveChanges();
+                logger.Info($"event number {updatedEvent.eventNumber} was updated and saved to the databsae!");
+
+                return Ok("Event updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
                 return BadRequest(ex.InnerException.Message);
             }
         }
 
         // PUT: api/NewEvent/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
+
         }
 
         // DELETE: api/NewEvent/5
         public void Delete(int id)
         {
+
+
         }
+
+        [HttpDelete]
+        [Route("api/deleteevent")]
+        public IHttpActionResult DeleteEvent([FromBody] tblEvents value)
+        {
+            try
+            {
+                // Find the event to delete by traveler ID and event ID
+                var eventToDelete = db.tblEvents.SingleOrDefault(x => x.travelerId == value.travelerId && x.eventNumber == value.eventNumber);
+
+                // If no event was found with the given traveler ID and event ID, return a not found response
+                if (eventToDelete == null)
+                {
+                    return NotFound();
+                }
+
+                var commentsToDelete = db.tblComments.Where(x => x.eventNumber == value.eventNumber).ToList();
+                db.tblComments.RemoveRange(commentsToDelete);
+
+                // Delete the event from the database
+                db.tblEvents.Remove(eventToDelete);
+                db.SaveChanges();
+
+                // Return a success message
+                logger.Info($"event number {eventToDelete.eventNumber} deleted succesfully! ");
+                return Ok("Event deleted successfully!");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+
+        //[Route("sendpushnotification")]
+        //public string Post([FromBody] PushNotData pnd)
+        //{
+        //    // Create a request using a URL that can receive a post.
+        //    WebRequest request = WebRequest.Create("https://exp.host/--/api/v2/push/send");
+        //    // Set the Method property of the request to POST.
+        //    request.Method = "POST";
+        //    // Create POST data and convert it to a byte array.
+        //    var objectToSend = new
+        //    {
+        //        to = pnd.to,
+        //        title = pnd.title,
+        //        body = pnd.body,
+        //        badge = pnd.badge,
+        //        data = pnd.data//new { name = "nir", grade = 100 }
+        //    };
+        //    string postData = new JavaScriptSerializer().Serialize(objectToSend);
+        //    byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+        //    // Set the ContentType property of the WebRequest.
+        //    request.ContentType = "application/json";
+        //    // Set the ContentLength property of the WebRequest.
+        //    request.ContentLength = byteArray.Length;
+        //    // Get the request stream.
+        //    Stream dataStream = request.GetRequestStream();
+        //    // Write the data to the request stream.
+        //    dataStream.Write(byteArray, 0, byteArray.Length);
+        //    // Close the Stream object.
+        //    dataStream.Close();
+        //    // Get the response.
+        //    WebResponse response = request.GetResponse();
+        //    // Display the status.
+        //    string returnStatus = ((HttpWebResponse)response).StatusDescription;
+        //    //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+        //    // Get the stream containing content returned by the server.
+        //    dataStream = response.GetResponseStream();
+        //    // Open the stream using a StreamReader for easy access.
+        //    StreamReader reader = new StreamReader(dataStream);
+        //    // Read the content.
+        //    string responseFromServer = reader.ReadToEnd();
+        //    // Display the content.
+        //    //Console.WriteLine(responseFromServer);
+        //    // Clean up the streams.
+        //    reader.Close();
+        //    dataStream.Close();
+        //    response.Close();
+        //    return "success:) --- " + responseFromServer + ", " + returnStatus;
+        //}
+
     }
+
 }
+
