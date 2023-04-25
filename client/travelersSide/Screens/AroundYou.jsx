@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 40
+        // marginTop: 40
 
     },
     btnLogOut: {
@@ -279,14 +279,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         position: 'absolute',
         width: '100%',
-        height: '7%',
+        height: '12%',
         top: 0,
         left: 0,
         zIndex: 1,
         // borderRadius: 30,
         // paddingVertical: 10,
         // paddingHorizontal: 25,
-        backgroundColor: '#8FBC8F'
+        backgroundColor: '#8FBC8F',
+        paddingTop:55
+
 
     },
     menu: {
