@@ -3,7 +3,7 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { collection, doc, addDoc, query, where, getDocs, orderBy, onSnapshot, push, ref } from 'firebase/firestore';
 import { signOut } from 'firebase/auth'
-import { auth, database } from '../firebase'
+import { auth, database  } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from "../Components/BackButton";
@@ -26,7 +26,7 @@ export default function Chat(props) {
     const onSignOut = () => {
         signOut(auth).catch(error => console.log(error));
     };
-
+   
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (

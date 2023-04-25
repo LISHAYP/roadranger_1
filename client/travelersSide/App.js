@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Settings, StyleSheet, Text, View } from 'react-native';
+import { Settings, StyleSheet, Text, View ,Button} from 'react-native';
 import SignIn from './Screens/SignIn';
 import SignUp from './Screens/SignUp';
 import AroundYou from './Screens/AroundYou';
@@ -21,8 +21,6 @@ import OpenCameraSOS from './Components/OpenCameraSOS';
 import Chat from './Screens/Chat';
 import HomeChat from './Screens/HomeChat';
 import BackButton from './Components/BackButton';
-import { onAuthStateChanged } from 'firebase/auth'
-import { createContext } from 'react';
 import GroupChat from './Screens/GroupChat'
 const Stack = createNativeStackNavigator()
 

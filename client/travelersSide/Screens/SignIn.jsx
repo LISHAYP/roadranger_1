@@ -172,11 +172,13 @@ export default function SignIn() {
                 <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
                     navigation.navigate("Contact Us");
                 }}>
+                    
                     <Icon name="mail-open-outline" size={30} />
                     <Text style={styles.contact}>
                         Contact us
                     </Text>
                 </TouchableOpacity>
+
             </View >
         </ GradientBackground>
 
