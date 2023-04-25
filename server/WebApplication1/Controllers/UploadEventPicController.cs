@@ -98,13 +98,17 @@ namespace WebApplication1.Controllers
                     }
                     catch (Exception ex)
                     {
+                        logger.Error(ex.Message);
                         outputForNir += " ---excption=" + ex.Message;
                         string message = ex.Message;
+                        
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.Created, "nirchen " + savedFilePath[0] + "!" + provider.FileData.Count + "!" + outputForNir + ":)");
             });
+            logger.Info("new event picture was uploaded");
             return task;
+            
         }
 
 

@@ -4,7 +4,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <History>True|2023-04-14T09:01:29.9881250Z;True|2023-04-13T22:29:03.2133185+03:00;True|2023-04-13T14:36:06.1539082+03:00;True|2023-04-08T20:00:11.2853621+03:00;True|2023-04-07T13:09:03.3158967+03:00;True|2023-04-07T09:52:41.2896303+03:00;True|2023-04-06T12:05:59.4824058+03:00;True|2023-04-06T12:03:07.4098145+03:00;False|2023-04-06T11:58:23.9224931+03:00;False|2023-04-06T11:57:54.8379414+03:00;</History>
+    <History>True|2023-04-25T12:52:54.7257620Z;True|2023-04-25T15:15:33.0512010+03:00;True|2023-04-14T12:01:29.9881250+03:00;True|2023-04-13T22:29:03.2133185+03:00;True|2023-04-13T14:36:06.1539082+03:00;True|2023-04-08T20:00:11.2853621+03:00;True|2023-04-07T13:09:03.3158967+03:00;True|2023-04-07T09:52:41.2896303+03:00;True|2023-04-06T12:05:59.4824058+03:00;True|2023-04-06T12:03:07.4098145+03:00;False|2023-04-06T11:58:23.9224931+03:00;False|2023-04-06T11:57:54.8379414+03:00;</History>
     <LastFailureDetails />
     <_PublishTargetUrl>C:\Users\USER\OneDrive\שולחן העבודה\project</_PublishTargetUrl>
   </PropertyGroup>
@@ -82,19 +82,34 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/06/2023 11:43:11</publishTime>
     </File>
     <File Include="bin/data.dll">
-      <publishTime>04/17/2023 16:25:12</publishTime>
+      <publishTime>04/25/2023 15:15:27</publishTime>
     </File>
     <File Include="bin/data.dll.config">
-      <publishTime>04/17/2023 16:18:44</publishTime>
+      <publishTime>04/25/2023 12:55:17</publishTime>
     </File>
     <File Include="bin/data.pdb">
-      <publishTime>04/17/2023 16:25:12</publishTime>
+      <publishTime>04/25/2023 15:15:27</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/06/2023 11:43:09</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>04/06/2023 11:43:09</publishTime>
+    </File>
+    <File Include="bin/FirebaseAdmin.dll">
+      <publishTime>03/24/2022 21:12:42</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.dll">
+      <publishTime>09/24/2020 15:17:24</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.pdb">
+      <publishTime>09/24/2020 15:17:24</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.Rest.dll">
+      <publishTime>09/24/2020 15:17:26</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.Rest.pdb">
+      <publishTime>09/24/2020 15:17:26</publishTime>
     </File>
     <File Include="bin/Google.Apis.Auth.dll">
       <publishTime>02/20/2023 13:31:00</publishTime>
@@ -162,8 +177,29 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/MailKit.pdb">
       <publishTime>04/06/2023 11:43:09</publishTime>
     </File>
+    <File Include="bin/Microsoft.AspNetCore.Http.Abstractions.dll">
+      <publishTime>11/12/2018 19:29:00</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNetCore.Http.Features.dll">
+      <publishTime>11/12/2018 19:28:58</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNetCore.Mvc.Abstractions.dll">
+      <publishTime>11/12/2018 19:40:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNetCore.Routing.Abstractions.dll">
+      <publishTime>11/12/2018 19:38:16</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>09/13/2019 05:28:52</publishTime>
+    </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>04/06/2023 11:43:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Primitives.dll">
+      <publishTime>11/11/2018 02:26:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Net.Http.Headers.dll">
+      <publishTime>11/12/2018 19:28:58</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>04/06/2023 11:43:10</publishTime>
@@ -176,6 +212,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>11/24/2022 04:10:26</publishTime>
+    </File>
+    <File Include="bin/NLog.config">
+      <publishTime>04/21/2023 13:14:14</publishTime>
+    </File>
+    <File Include="bin/NLog.dll">
+      <publishTime>03/26/2022 17:42:40</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>04/06/2023 11:43:10</publishTime>
@@ -336,6 +378,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/System.Buffers.dll">
       <publishTime>04/06/2023 11:43:11</publishTime>
     </File>
+    <File Include="bin/System.Collections.Immutable.dll">
+      <publishTime>04/15/2020 01:39:26</publishTime>
+    </File>
     <File Include="bin/System.Memory.dll">
       <publishTime>04/06/2023 11:43:11</publishTime>
     </File>
@@ -347,6 +392,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
       <publishTime>04/06/2023 11:43:11</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encodings.Web.dll">
+      <publishTime>05/15/2018 16:29:52</publishTime>
     </File>
     <File Include="bin/System.Threading.Tasks.Extensions.dll">
       <publishTime>04/06/2023 11:43:11</publishTime>
@@ -385,10 +433,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/06/2023 11:43:10</publishTime>
     </File>
     <File Include="bin/WebApplication1.dll">
-      <publishTime>04/17/2023 16:25:13</publishTime>
+      <publishTime>04/25/2023 15:52:50</publishTime>
     </File>
     <File Include="bin/WebApplication1.pdb">
-      <publishTime>04/17/2023 16:25:13</publishTime>
+      <publishTime>04/25/2023 15:52:50</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>04/06/2023 11:43:11</publishTime>
@@ -453,6 +501,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="libgrpc_csharp_ext.x64.so">
       <publishTime>01/10/2023 00:20:24</publishTime>
     </File>
+    <File Include="NLog.config">
+      <publishTime>04/21/2023 13:14:14</publishTime>
+    </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>04/06/2023 11:43:07</publishTime>
     </File>
@@ -496,7 +547,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/06/2023 11:43:07</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/17/2023 16:25:17</publishTime>
+      <publishTime>04/25/2023 15:15:31</publishTime>
     </File>
   </ItemGroup>
 </Project>

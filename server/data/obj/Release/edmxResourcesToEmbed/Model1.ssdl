@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="api">
+    <Key>
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="api" Type="varchar" MaxLength="255" />
+  </EntityType>
   <EntityType Name="stakeholders">
     <Key>
       <PropertyRef Name="stakeholder_id" />
@@ -16,6 +23,7 @@
     <Property Name="stakeholder_type" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="password" Type="nvarchar" MaxLength="50" />
     <Property Name="picture" Type="nvarchar" MaxLength="500" />
+    <Property Name="token" Type="varchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -153,6 +161,7 @@
     <Property Name="chat" Type="bit" />
     <Property Name="gender" Type="varchar" MaxLength="50" />
     <Property Name="picture" Type="varchar" MaxLength="500" />
+    <Property Name="token" Type="varchar" MaxLength="250" />
   </EntityType>
   <Association Name="comment_event">
     <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
@@ -399,6 +408,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="igroup190_test1ModelStoreContainer">
+    <EntitySet Name="api" EntityType="Self.api" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" Schema="dbo" store:Type="Tables" />

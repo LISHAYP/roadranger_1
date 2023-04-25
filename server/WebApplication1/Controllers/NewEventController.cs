@@ -1,7 +1,9 @@
 using data;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -80,6 +82,7 @@ namespace WebApplication1.Controllers
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
                     area_number = value.area_number
+
                 };
 
                 db.tblEvents.Add(newEvent);
@@ -125,10 +128,172 @@ namespace WebApplication1.Controllers
             }
         }
 
+        //[HttpPost]
+        //[Route("api/post/neweventdistance")]
+        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents value)
+        //{
+        //    try
+        //    {
+        //        // Get all events from the database
+        //        var allEvents = db.tblEvents.ToList();
+
+        //        // Filter events based on distance and serialTypeNumber
+        //        var similarEvent = allEvents
+        //            .FirstOrDefault(e => e.serialTypeNumber == value.serialTypeNumber && CalculateDistance((double)e.latitude, (double)e.longitude, (double)value.latitude, (double)value.longitude) <= 3);
+
+        //        if (similarEvent != null)
+        //        {
+        //            //// Check if the similar event already has any related events
+        //            //if (similarEvent.tblEvents1 != null)
+        //            //{
+        //            //    logger.Info("A similar event already has a related event.");
+        //            //}
+        //            //else
+        //            //{
+        //                // Associate the new event with the similar event found
+        //                value.tblEvents1 = similarEvent;
+        //                db.Entry(similarEvent).State = EntityState.Unchanged;
+        //                // Add the new event to the database
+        //                db.tblEvents.Add(value);
+        //                db.SaveChanges();
+        //            //}
+        //        }
+        //        else
+        //        {
+        //            db.tblEvents.Add(value);
+        //            db.SaveChanges();
+        //        }
+
+
+
+        //        // Check if the new event is related to an old event
+        //        if (similarEvent != null)
+        //        {
+        //            // The new event is related to an old event
+        //            logger.Info($"new event number {value.eventNumber} is related to event number {similarEvent.eventNumber} and it was added to the database!");
+        //        }
+        //        else
+        //        {
+        //            // The new event is not related to any old event
+        //            logger.Info("the events are not related");
+        //        }
+
+        //        // Retrieve the name and picture of the user who posted the event
+        //        string userName = "";
+        //        string userPicture = "";
+        //        if (value.travelerId.HasValue)
+        //        {
+        //            var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == value.travelerId.Value);
+        //            if (traveler != null)
+        //            {
+        //                userName = traveler.first_name + " " + traveler.last_name;
+        //                userPicture = traveler.picture;
+        //            }
+        //        }
+        //        else if (value.stackholderId.HasValue)
+        //        {
+        //            var stakeholder = db.stakeholders.FirstOrDefault(s => s.stakeholder_id == value.stackholderId.Value);
+        //            if (stakeholder != null)
+        //            {
+        //                userName = stakeholder.full_name;
+        //                userPicture = stakeholder.picture;
+        //            }
+        //        }
+
+        //        // Construct the response message
+        //        var responseMessage = new
+        //        {
+        //            message = "New event created successfully!",
+        //            userName = userName,
+        //            userPicture = userPicture
+        //        };
+
+        //        return Ok(responseMessage);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
+        [HttpPost]
+        [Route("api/post/neweventdistance")]
+        public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
+        {
+            try
+            {
+
+                // Check if there are any existing events within 3 km with the same serialTypeNumber
+                var existingEvents = db.tblEvents
+                    .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
+                                && e.event_status == true) // only consider events with status "true"
+                    .ToList()
+                    .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
+                    .ToList();
+
+                // Detach deleted entities from the context
+                var deletedEntities = existingEvents.Where(e => db.Entry(e).State == EntityState.Deleted).ToList();
+                if (deletedEntities.Any())
+                {
+                    foreach (var deletedEntity in deletedEntities)
+                    {
+                        db.Entry(deletedEntity).State = EntityState.Detached;
+                    }
+                }
+
+                if (existingEvents.Any())
+                {
+                    // Create a relation between the new event and any existing events within 3 km
+                    foreach (var existingEvent in existingEvents)
+                    {
+                        // Detach the existingEvent entity from the context
+                        db.Entry(existingEvent).State = EntityState.Detached;
+
+                        // Create the relationship between the newEvent and the existingEvent
+                        newEvent.tblEvents1 = existingEvent;
+                        existingEvent.tblEvents2 = newEvent;
+                    }
+                }
+
+                // Generate a new event number that doesn't conflict with any existing event numbers
+                int maxEventNumber = db.tblEvents.Max(e => e.eventNumber);
+                newEvent.eventNumber = maxEventNumber + 1;
+
+                // Add the new event to the database
+                db.tblEvents.Add(newEvent);
+
+                // Save changes to the database
+                db.SaveChanges();
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            // Implementation of the Haversine formula
+            const double R = 6371; // Earth radius in kilometers
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a =
+                Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var distance = R * c;
+            return distance;
+        }
+
+
 
         [HttpPost]
         [Route("api/events/comments")]
-        public IHttpActionResult GetCommentsForEvent([FromBody]CommentDto eventId)
+        public IHttpActionResult GetCommentsForEvent([FromBody] CommentDto eventId)
         {
             try
             {
@@ -145,7 +310,7 @@ namespace WebApplication1.Controllers
                                                   TravelerName = c.traveleres.first_name + c.traveleres.last_name,
                                                   StakeholderName = c.stakeholders.stakeholder_name,
                                                   picture = c.traveleres.picture
-                                                  
+
                                               }).ToList();
 
                 return Ok(comments);
@@ -208,7 +373,7 @@ namespace WebApplication1.Controllers
         // DELETE: api/NewEvent/5
         public void Delete(int id)
         {
-            
+
 
         }
 

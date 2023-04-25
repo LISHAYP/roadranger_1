@@ -21,6 +21,7 @@ namespace WebApplication1.DTO
         public string password { get; set; }
         public Nullable<bool> chat { get; set; }
         public string Picture { get; set; }
+        public string token { get; set; }
 
     }
 

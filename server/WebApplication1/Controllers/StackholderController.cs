@@ -30,8 +30,8 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/Stackholder
-        
-        public void Post([FromBody]string value)
+
+        public void Post([FromBody] string value)
         {
 
         }
@@ -63,15 +63,16 @@ namespace WebApplication1.Controllers
                     Approved = stakeholder.approved,
                     ApprovelDate = stakeholder.approvel_date,
                     StakeholderType = stakeholder.stakeholder_type,
-                    Password = stakeholder.password
+                    Password = stakeholder.password,
+                    token = stakeholder.token
                     // Map related entities as well if needed
                 };
                 logger.Info("stackholder was founs succesfully");
                 return Ok(stakeholderDTO);
-                
+
             }
             catch (Exception ex)
-            { 
+            {
                 logger.Error(ex.Message);
                 return BadRequest();
             }
@@ -127,7 +128,7 @@ namespace WebApplication1.Controllers
 
         [HttpPut]
         [Route("api/put/stakeholder/update")]
-        public IHttpActionResult PutUpdateStakeholder( [FromBody] StackholderDto value)
+        public IHttpActionResult PutUpdateStakeholder([FromBody] StackholderDto value)
         {
             try
             {
@@ -161,10 +162,38 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("api/stackholder/updatetoken")]
+        public IHttpActionResult UpdateToken(string email, [FromBody] StackholderDto value)
+        {
+            try
+            {
+                var stackholder = db.stakeholders.SingleOrDefault(x => x.stakeholder_email == value.StakeholderEmail);
+                if (stackholder == null)
+                {
+                    logger.Error($"stackholder with email : {value.StakeholderEmail} was not found");
+                    return NotFound();
+                }
 
+                // Update the token field
+                stackholder.token = value.token;
+
+                // Save the changes to the database
+                db.Entry(stackholder).State = EntityState.Modified;
+                db.SaveChanges();
+
+                logger.Info($"token was updated in the database for stackholder with email : {value.StakeholderEmail}");
+                return Ok($"token was updated in the database for stackholder with email : {value.StakeholderEmail}");
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex.Message);
+                return InternalServerError();
+            }
+        }
 
         // PUT: api/Stackholder/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

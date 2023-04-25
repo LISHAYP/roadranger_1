@@ -52,7 +52,7 @@ namespace WebApplication1.Controllers
                 db.tblAskForHelp.Add(askForHelp);
                 db.SaveChanges();
 
-                logger.Info("new ask for help request was edded!");
+                logger.Info("new ask for help request was added!");
                 return Ok("New ask for help was created");
             }
             catch (Exception ex)

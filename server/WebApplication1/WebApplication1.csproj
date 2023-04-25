@@ -285,6 +285,7 @@
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\UploadEventPicController.cs" />
     <Compile Include="Controllers\UploadUserPictureController.cs" />
+    <Compile Include="DTO\API.cs" />
     <Compile Include="DTO\AreaDto.cs" />
     <Compile Include="DTO\AskForHelpDto.cs" />
     <Compile Include="DTO\CommentDto.cs" />
