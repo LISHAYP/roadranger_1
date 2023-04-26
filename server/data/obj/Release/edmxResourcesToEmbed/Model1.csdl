@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="api">
-    <Key>
-      <PropertyRef Name="name" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="api1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="stakeholders">
     <Key>
       <PropertyRef Name="stakeholder_id" />
@@ -39,6 +32,13 @@
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblApi">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="api" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tblArea">
     <Key>
@@ -418,9 +418,9 @@
     <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
   </Association>
   <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="api" EntityType="Self.api" />
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="tblApi" EntityType="Self.tblApi" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" />
     <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" />
     <EntitySet Name="tblComments" EntityType="Self.tblComments" />

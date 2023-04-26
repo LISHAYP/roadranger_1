@@ -113,6 +113,12 @@ namespace WebApplication1.Controllers
         [Route("api/post/login")]
         public IHttpActionResult Post([FromBody] TravelerDto value)
         {
+            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email == value.travler_email);
+            if (existingUser == null)
+            {
+                logger.Info("login faild! email does not exist in the system");
+                return BadRequest("login faild! email does not exist in the system, please register first!");
+            }
             var users = db.traveleres.Where(x => x.travler_email == value.travler_email && x.password == value.password).Select(x => new TravelerDto
             {
                 traveler_id = x.traveler_id,

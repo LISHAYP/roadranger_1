@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
-    <EntitySetMapping Name="api">
-      <EntityTypeMapping TypeName="igroup190_test1Model.api">
-        <MappingFragment StoreEntitySet="api">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="api1" ColumnName="api" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="stakeholders">
       <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
         <MappingFragment StoreEntitySet="stakeholders">
@@ -36,6 +28,14 @@
           <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblApi">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblApi">
+        <MappingFragment StoreEntitySet="tblApi">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="api" ColumnName="api" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

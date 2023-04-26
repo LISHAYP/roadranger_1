@@ -64,7 +64,8 @@ namespace WebApplication1.Controllers
                     ApprovelDate = stakeholder.approvel_date,
                     StakeholderType = stakeholder.stakeholder_type,
                     Password = stakeholder.password,
-                    token = stakeholder.token
+                    token = stakeholder.token,
+                    picture = stakeholder.picture
                     // Map related entities as well if needed
                 };
                 logger.Info("stackholder was founs succesfully");
@@ -149,6 +150,7 @@ namespace WebApplication1.Controllers
                 stakeholder.stakeholder_name = value.StakeholderName;
                 stakeholder.stakeholder_type = value.StakeholderType;
                 stakeholder.password = value.Password;
+                stakeholder.picture = value.picture;
 
                 db.Entry(stakeholder).State = EntityState.Modified;
                 db.SaveChanges();
