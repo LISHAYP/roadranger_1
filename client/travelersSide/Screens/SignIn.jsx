@@ -20,6 +20,7 @@ export default function SignIn() {
     const [location, setLocation] = useState('');
     const [travelerId, setTravlerId] = useState('')
     const [devaiceToken, setDevaiceToken] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -39,8 +40,8 @@ export default function SignIn() {
         };
         const changeToken = {
             travler_email: email,
-            token:devaiceToken
-          };
+            token: devaiceToken
+        };
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
             method: 'POST',
             headers: {
@@ -66,12 +67,12 @@ export default function SignIn() {
                             console.log(data1); // Traveler updated successfully.
                             Alert.alert('Token updated successfully')
                             signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
-                            navigation.navigate("Around You", { data }); 
+                            navigation.navigate("Around You", { data });
                         })
                         .catch((error) => {
                             console.error(error);
                         });
-                    
+
                 } else {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');
@@ -132,9 +133,7 @@ export default function SignIn() {
 
     }
 
-    state = {
-        showPassword: false
-    };
+
 
     async function registerForPushNotificationsAsync() {
         let token;
@@ -207,17 +206,29 @@ export default function SignIn() {
                     onChangeText={text => setEmail(text)}
                     placeholder="User Email">
                 </TextInput>
-                {console.log({ email })}
+
+
                 <Text style={styles.text}>Password:</Text>
-                <TextInput
-                    style={styles.input}
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    placeholder="*******"
-                    secureTextEntry={!this.state.showPassword}
-                >
-                </TextInput>
-                {console.log({ password })}
+                <View  style={styles.input}>
+                    <TextInput
+                       
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        placeholder="*********"
+                        secureTextEntry={!showPassword}
+                    >
+                    </TextInput>
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                        style={styles.iconContainer}
+                    >
+                        <Icon size={25}
+                            name={showPassword ? 'eye-off' : 'eye'}
+                            type='feather'
+                            color='black'
+                        />
+                    </TouchableOpacity>
+                </View>
                 {loginFailed && (
                     <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
                 )}
@@ -269,7 +280,9 @@ const styles = StyleSheet.create({
         marginTop: 100
 
     },
-
+    iconContainer: {
+        size: 35
+    },
     RoadRanger: {
         alignSelf: 'center',
         resizeMode: 'contain',
@@ -290,9 +303,11 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 25,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center'
 
     },
+
     btnLogIn: {
         marginVertical: 20,
         width: "50%",

@@ -12,7 +12,6 @@ export default function ForgotPassword() {
 
 
     const navigation = useNavigation();
-    const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState('');
 
     const handleSendPress = () => {
@@ -31,13 +30,12 @@ export default function ForgotPassword() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("dddd",data);
-                console.log("suuu")
                 Alert.alert("New password send to your email")
+                navigation.goBack();
             })
             .catch(error => {
                 console.log(error);
-                Alert.alert("Error");
+                Alert.alert("Email does not exist");
             });
 
     };
@@ -54,12 +52,7 @@ export default function ForgotPassword() {
                     onChangeText={(text) => setEmail(text)}>
                 </TextInput>
 
-                {/* {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
-                {passwordResetStatus === 'success' ? (
-                    <Text style={styles.success}>
-                        Password reset successful!
-                    </Text>
-                ) : null} */}
+              
                 <TouchableOpacity style={styles.btnLogIn} onPress={handleSendPress}>
 
                     <Text style={styles.btnText}>
@@ -100,7 +93,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     input: {
-        flexDirection: 'row',
         marginVertical: 10,
         width: "90%",
         fontSize: 20,
