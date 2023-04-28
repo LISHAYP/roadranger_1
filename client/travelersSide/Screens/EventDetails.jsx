@@ -174,7 +174,7 @@ export default function EventDetails(props) {
                   <View style={styles.event}>
                     <View style={styles.row}>
                       <Image style={styles.img} source={{ uri: comment.picture }} />
-                      <Text style={styles.text}>{comment.TravelerName} </Text>
+                      <Text style={styles.text}>  {comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
                     </View>
                     <View>
                       <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
