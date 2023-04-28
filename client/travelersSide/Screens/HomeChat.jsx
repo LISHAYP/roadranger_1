@@ -23,10 +23,12 @@ const HomeChat = (props) => {
       .then((response) => response.json())
       .then((data) => {
         setTravelers(data);
+        console.log(data)
       })
       .catch((error) => console.error(error));
 
   }, []);
+  //AsyncStorage.clear();
 
   useFocusEffect(() => {
 
@@ -44,7 +46,6 @@ const HomeChat = (props) => {
   });
   //AsyncStorage.clear();
   const handleUserPress = async (user, loggeduser) => {
-
     const isUserPresent = activeChats.find((chatUser) => chatUser.traveler_id === user.traveler_id);
     if (!isUserPresent) {
       const updatedActiveChats = [user,...activeChats];
@@ -55,6 +56,7 @@ const HomeChat = (props) => {
         console.error(e);
       }
     }
+    console.log(user, loggeduser)
     navigation.navigate('Chat', { user, loggeduser });
   };
   
@@ -141,10 +143,6 @@ const HomeChat = (props) => {
               ))}
             </ScrollView>
           </View>
-
-
-
-
         </ScrollView>
       </GradientBackground>
 
