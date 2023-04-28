@@ -1,0 +1,50 @@
+ 2023-04-21 13:15:09.0762 INFO: new area was added to the database!
+ 2023-04-21 13:18:14.4252 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-04-22 08:53:54.1224 INFO: new event was added to the database!
+ 2023-04-22 09:00:20.0237 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:14:23.8975 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:26:54.5105 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:40:45.0932 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:45:42.8651 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:47:45.3574 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:47:52.5316 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:47:54.5417 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:48:44.8524 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 09:54:32.7522 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 10:26:39.4725 INFO: A similar event already has a related event.
+ 2023-04-22 10:26:48.9558 INFO: new event was added to the database!
+ 2023-04-22 10:29:54.7217 INFO: A similar event already has a related event.
+ 2023-04-22 10:31:34.0248 INFO: new event was added to the database!
+ 2023-04-22 10:37:27.9111 INFO: A similar event already has a related event.
+ 2023-04-22 10:37:36.2597 INFO: new event 294 is related to 100 and it was added to the database!
+ 2023-04-22 11:20:56.9988 INFO: A similar event already has a related event.
+ 2023-04-22 11:20:57.8837 INFO: the events are not related
+ 2023-04-22 11:36:05.2156 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 11:39:50.7812 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 11:41:04.1815 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 11:42:26.8131 INFO: A similar event already has a related event.
+ 2023-04-22 11:42:33.6033 INFO: new event number 296 is related to event number 100 and it was added to the database!
+ 2023-04-22 11:44:07.8517 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-04-22 12:14:03.2351 INFO: A similar event already has a related event.
+ 2023-04-22 12:16:04.5173 INFO: A similar event already has a related event.
+ 2023-04-22 12:16:09.6025 INFO: new event number 298 is related to event number 100 and it was added to the database!
+ 2023-04-22 12:51:15.1810 INFO: A similar event already has a related event.
+ 2023-04-22 12:51:21.1103 INFO: the events are not related
+ 2023-04-22 12:55:27.1037 INFO: A similar event already has a related event.
+ 2023-04-22 12:55:45.0177 INFO: the events are not related
+ 2023-04-22 12:57:36.4625 INFO: A similar event already has a related event.
+ 2023-04-22 12:57:36.5727 INFO: the events are not related
+ 2023-04-22 13:46:25.5948 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-22 17:51:19.8883 ERROR: The underlying provider failed on Open.
+ 2023-04-22 17:52:15.8578 ERROR: The underlying provider failed on Open.
+ 2023-04-22 18:00:29.0573 INFO: A similar event already has a related event.
+ 2023-04-22 18:00:35.8638 INFO: new event number 0 is related to event number 300 and it was added to the database!
+ 2023-04-22 18:10:54.2687 ERROR: The underlying provider failed on Open.
+ 2023-04-22 18:16:25.3035 INFO: the events are not related
+ 2023-04-22 18:18:16.1626 INFO: A similar event already has a related event.
+ 2023-04-22 18:18:33.0504 INFO: new event number 0 is related to event number 100 and it was added to the database!
+ 2023-04-22 18:20:41.0083 INFO: A similar event already has a related event.
+ 2023-04-22 18:23:15.7072 ERROR: Adding a relationship with an entity which is in the Deleted state is not allowed.
+ 2023-04-25 14:37:56.9700 INFO: new password was saved in the database to traveler id number: 0
+ 2023-04-25 14:54:03.0193 INFO: token was updated in the database for traveler with email : lieldu178@gmail.com
+ 2023-04-25 15:05:04.7866 INFO: token was updated in the database for traveler with email : Lishai78@gmail.com

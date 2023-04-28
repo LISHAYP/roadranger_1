@@ -9,6 +9,7 @@ import GradientBackground from '../Components/GradientBackground';
 import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
 import * as Notifications from 'expo-notifications';
+import { async } from "@firebase/util";
 
 export default function Chat(props) {
 
@@ -20,8 +21,8 @@ export default function Chat(props) {
     const [shouldRender, setShouldRender] = useState(false); // add state variable
 
 
-    console.log('im the logged user', traveler.Picture);
-    console.log('im the chosen one!', traveler1.Picture);
+    console.log('im the logged user', traveler);
+    console.log('im the chosen one!', traveler1);
 
     const onSignOut = () => {
         signOut(auth).catch(error => console.log(error));
@@ -124,8 +125,7 @@ export default function Chat(props) {
             };
             setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
             handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
-           console.log("--------------token",traveler1);
-            console.log("*********", traveler)
+            console.log("*********", traveler1)
             return addDoc(messagesRef, messageData);
           });
       
@@ -138,8 +138,9 @@ export default function Chat(props) {
             });
         }
       }, [traveler, traveler1, chatRoomDocRef]);
+    
       
-    const handlePushNotification = async (message, recipientToken) => {
+      const handlePushNotification = async (message, recipientToken) => {
         // Construct the message payload
         const notification = {
           title: `${traveler.first_name} ${traveler.last_name} `,
@@ -147,14 +148,20 @@ export default function Chat(props) {
           data: { chatRoomDocRefId: chatRoomDocRef.id },
           sound: 'default',
         };
+        
+        // Send the notification to the recipient         
+        console.log("Recipient token:", recipientToken);
       
-        // Send the notification to the recipient
         await Notifications.scheduleNotificationAsync({
           content: notification,
-          to: recipientToken,
+          data: {
+            to: recipientToken
+          },
           trigger: null,
         });
       };
+      
+      
       
     return (
         <GradientBackground>

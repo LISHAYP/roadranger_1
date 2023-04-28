@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="api">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="api" Type="varchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -20,6 +27,8 @@
           <Property Name="approvel_date" Type="date" Nullable="false" />
           <Property Name="stakeholder_type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="picture" Type="nvarchar" MaxLength="500" />
+          <Property Name="token" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -126,7 +135,7 @@
             <PropertyRef Name="locationNumber" />
             <PropertyRef Name="travelerId" />
           </Key>
-          <Property Name="locationNumber" Type="int" Nullable="false" />
+          <Property Name="locationNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="travelerId" Type="int" Nullable="false" />
           <Property Name="dateAndTime" Type="datetime" Nullable="false" />
           <Property Name="latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
@@ -153,9 +162,11 @@
           <Property Name="location" Type="bit" />
           <Property Name="save_location" Type="bit" />
           <Property Name="dateOfBirth" Type="date" Nullable="false" />
-          <Property Name="gender" Type="char" MaxLength="1" />
           <Property Name="password" Type="nvarchar" MaxLength="50" />
           <Property Name="chat" Type="bit" />
+          <Property Name="gender" Type="varchar" MaxLength="50" />
+          <Property Name="picture" Type="varchar" MaxLength="500" />
+          <Property Name="token" Type="varchar" MaxLength="250" />
         </EntityType>
         <Association Name="comment_event">
           <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
@@ -402,6 +413,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="igroup190_test1ModelStoreContainer">
+          <EntitySet Name="api" EntityType="Self.api" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" Schema="dbo" store:Type="Tables" />
@@ -496,10 +508,18 @@
             <End Role="tblEvents" EntitySet="tblEvents" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="api">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="api1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -515,6 +535,8 @@
           <Property Name="approvel_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="stakeholder_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_stackholder" FromRole="stakeholders" ToRole="tblComments" />
           <NavigationProperty Name="tblEvents" Relationship="Self.event_stackholder" FromRole="stakeholders" ToRole="tblEvents" />
           <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_stakeholders" FromRole="stakeholders" ToRole="tblAskForHelp" />
@@ -640,7 +662,7 @@
             <PropertyRef Name="locationNumber" />
             <PropertyRef Name="travelerId" />
           </Key>
-          <Property Name="locationNumber" Type="Int32" Nullable="false" />
+          <Property Name="locationNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="travelerId" Type="Int32" Nullable="false" />
           <Property Name="dateAndTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
@@ -670,9 +692,11 @@
           <Property Name="location" Type="Boolean" />
           <Property Name="save_location" Type="Boolean" />
           <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="chat" Type="Boolean" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
           <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
@@ -907,6 +931,7 @@
           <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
         </Association>
         <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="api" EntityType="Self.api" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" />
@@ -1002,6 +1027,14 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
+          <EntitySetMapping Name="api">
+            <EntityTypeMapping TypeName="igroup190_test1Model.api">
+              <MappingFragment StoreEntitySet="api">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="api1" ColumnName="api" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="stakeholders">
             <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
               <MappingFragment StoreEntitySet="stakeholders">
@@ -1016,6 +1049,8 @@
                 <ScalarProperty Name="approvel_date" ColumnName="approvel_date" />
                 <ScalarProperty Name="stakeholder_type" ColumnName="stakeholder_type" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="token" ColumnName="token" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1150,9 +1185,11 @@
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="save_location" ColumnName="save_location" />
                 <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="chat" ColumnName="chat" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="token" ColumnName="token" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

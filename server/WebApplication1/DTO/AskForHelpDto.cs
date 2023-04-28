@@ -7,6 +7,7 @@ namespace WebApplication1.DTO
 {
     public class AskForHelpDto
     {
+        public int RequastNumber { get; set; }
         public string Details { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
@@ -17,5 +18,14 @@ namespace WebApplication1.DTO
         public int CountryNumber { get; set; }
         public int AreaNumber { get; set; }
       
+    }
+    public class ShowAskForHelpDto
+    {
+        public string Details { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string Picture { get; set; }
+       
+
     }
 }
