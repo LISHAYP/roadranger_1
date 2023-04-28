@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19000,
+  "expoServerPort": 19002,
+  "packagerPort": 19002,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://j3-2ju.lishaypl.travelersside.exp.direct",
-  "packagerNgrokUrl": "https://packager.j3-2ju.lishaypl.travelersside.exp.direct",
-  "ngrokPid": 3460,
+  "expoServerNgrokUrl": "https://j3-2ju.anonymous.travelersside.exp.direct",
+  "packagerNgrokUrl": "https://j3-2ju.anonymous.travelersside.exp.direct",
+  "ngrokPid": 17976,
   "webpackServerPort": null
 }
