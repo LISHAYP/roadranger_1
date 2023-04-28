@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import React from 'react'
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
@@ -13,63 +13,57 @@ export default function ForgotPassword() {
 
     const navigation = useNavigation();
     const [errorMessage, setErrorMessage] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
-    const newPasswordRef = useRef(null);
-    const confirmNewPasswordRef = useRef(null);
-    const [passwordResetStatus, setPasswordResetStatus] = useState('');
-
+    const [email, setEmail] = useState('');
 
     const handleSendPress = () => {
-        if (newPassword === confirmNewPassword) {
-            setPasswordResetStatus('success');
-            setErrorMessage('');
-        } else {
-            setErrorMessage('Passwords do not match. Please try again.');
-            setNewPassword('');
-            setConfirmNewPassword('');
-            newPasswordRef.current.clear();
-            confirmNewPasswordRef.current.clear();
-        }
+       travelerEmail={
+        "travler_email":email
+       }
+       console.log(travelerEmail);
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/forgotpassword', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(travelerEmail),
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("dddd",data);
+                console.log("suuu")
+                Alert.alert("New password send to your email")
+            })
+            .catch(error => {
+                console.log(error);
+                Alert.alert("Error");
+            });
+
     };
     return (
         < GradientBackground>
             <View style={styles.container}>
-            <BackButton />
+                <BackButton />
                 <Text style={styles.title}>Forgot Your Password?</Text>
+
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input}
-                    placeholder="User Email">
-                </TextInput>
-                <Text style={styles.text}>Write A New Password:</Text>
-                <TextInput
-                    style={styles.input}
-                    ref={newPasswordRef}
-                    onChangeText={setNewPassword}
-                    secureTextEntry={true}
-                    placeholder="New Password" >
+                    placeholder="User Email"
+                    onChangeText={(text) => setEmail(text)}>
                 </TextInput>
 
-
-                <Text style={styles.text}>Write again the New Password:</Text>
-                <TextInput style={styles.input}
-                    ref={confirmNewPasswordRef}
-
-                    onChangeText={setConfirmNewPassword}
-                    secureTextEntry={true}
-                    placeholder="New Password">
-                </TextInput>
-                {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+                {/* {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
                 {passwordResetStatus === 'success' ? (
                     <Text style={styles.success}>
                         Password reset successful!
                     </Text>
-                ) : null}
+                ) : null} */}
                 <TouchableOpacity style={styles.btnLogIn} onPress={handleSendPress}>
 
                     <Text style={styles.btnText}>
-                        Save
+                        Reset Password
                     </Text>
                 </TouchableOpacity>
 
@@ -89,7 +83,7 @@ const styles = StyleSheet.create({
 
     },
     title: {
-        paddingTop:50,
+        paddingTop: 50,
         fontSize: 40,
         marginBottom: 50
     },
