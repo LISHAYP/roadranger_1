@@ -7,6 +7,7 @@ import Geocoder from 'react-native-geocoding';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import {  useNavigation } from "@react-navigation/native";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -106,6 +107,8 @@ export default function EventDetails(props) {
 
   };
   console.log("---------", (newComment))
+  const navigation = useNavigation();
+
 
   const createComment = async () => {
 
@@ -165,6 +168,7 @@ export default function EventDetails(props) {
       .then(response => response.json())
       .then(data => {
         Alert.alert(data);
+        navigation.goBack(); // Navigate back to the "Around You" screen
       })
       .catch(error => {
         console.error(error);
