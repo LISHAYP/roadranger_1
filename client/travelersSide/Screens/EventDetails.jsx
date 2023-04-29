@@ -136,23 +136,46 @@ export default function EventDetails(props) {
         });
     }
   }
+  
+
   const renderDeleteLogo = () => {
-    if (comments.length === 0) {
+    if (comments.length === 0 && event.TravelerId==user.traveler_id) {
       return (
-        <View style={styles.deleteLogoContainer}>
-          <Icon name="trash-outline" size={25} style={styles.icon} />
-        </View>
-      );
+        <TouchableOpacity onPress={handleDeleteEvent}>
+          <Icon name="trash-outline" size={25} style={styles.icon}/>
+          </TouchableOpacity>    
+            );
     }
   }
+  const handleDeleteEvent = () => {
+    const eventObj={
+        eventNumber:event.eventNumber,
+        travelerId:user.traveler_id
+    };
+    console.log(eventObj)
 
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deleteevent', {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventObj)
+      })
+      .then(response => response.json())
+      .then(data => {
+        Alert.alert(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
   return (
     <GradientBackground>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        {renderDeleteLogo()}
         <BackButton />
         <View style={styles.eventContainer}>
           <View>
@@ -163,6 +186,7 @@ export default function EventDetails(props) {
               </View>
               <View>
                 <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
+                {renderDeleteLogo()}
               </View>
             </View>
             <View>
