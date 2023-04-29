@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert} from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -136,7 +136,15 @@ export default function EventDetails(props) {
         });
     }
   }
-
+  const renderDeleteLogo = () => {
+    if (comments.length === 0) {
+      return (
+        <View style={styles.deleteLogoContainer}>
+          <Icon name="trash-outline" size={25} style={styles.icon} />
+        </View>
+      );
+    }
+  }
 
   return (
     <GradientBackground>
@@ -144,6 +152,7 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
+        {renderDeleteLogo()}
         <BackButton />
         <View style={styles.eventContainer}>
           <View>

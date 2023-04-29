@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text,Image, View, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { getCenter } from 'geolib';
 
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
@@ -12,7 +13,8 @@ export default function AroundYou(props) {
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
 
-    const traveler = props.route.params.data;
+    const stakeholder = props.route.params.data;
+    console.log(stakeholder);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -45,7 +47,7 @@ export default function AroundYou(props) {
 
     const handleGet = () => {
 
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent', {
 
             method: 'GET',
             headers: new Headers({
@@ -91,13 +93,11 @@ export default function AroundYou(props) {
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
                 <Icon name="menu" size={30} color={'white'} top={10} />
-                <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
+                <Text style={styles.titlename}>  Hello, {stakeholder.FullName} ! </Text>
 
             </TouchableOpacity>
 
-            {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
-                <Text style={styles.sosText}>SOS</Text>
-            </TouchableOpacity> */}
+           
 
             {location && location.coords && (
                 <MapView
@@ -127,7 +127,7 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
-                                navigation.navigate('Event Details', { event });
+                                navigation.navigate('Event Details', { event , stakeholder});
                             }}
                         />
                        
@@ -138,32 +138,28 @@ export default function AroundYou(props) {
             )}
             {isMenuOpen && (
                 <View style={styles.menu}>
+                     <View >
                     <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
                         <AntDesign name="close" size={24} color="black" />
                     </TouchableOpacity>
-                    <View >
+                   
+                        <Image source={{ uri:  "http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png" }} style={styles.user} />
                         <Text style={styles.name}>
-                            Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
+                            Hello, {stakeholder.StakeholderName} !  </Text>
 
                     </View>
 
-                    <TouchableOpacity style={styles.optionSOS}
-                        onPress={() => {
-                            navigation.navigate("SOS", {
-                                traveler: traveler,
-                                userLocation: userLocation
-                            });
-                        }}
-                    >
-                        <Icon name="help-buoy" size={35} style={styles.icon} />
-                        <Text style={styles.text}>SOS</Text>
-
+                   
+                    <TouchableOpacity style={styles.option} >
+                    
+                        <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                        <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.option}
                         onPress={() => {
                             navigation.navigate("New event", {
-                                traveler: traveler,
+                                stakeholder: stakeholder,
                                 userLocation: userLocation
                             });
                         }}
@@ -172,16 +168,20 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>New Post</Text>
 
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}>
-                        <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Chat</Text>
+                    <TouchableOpacity style={styles.option}
+                      onPress={() => {navigation.navigate("Your Travelers",{ stakeholder: stakeholder})}}>
+                    
+                        <Icon name="people-outline" size={35} style={styles.icon} />
+                        <Text style={styles.text}>Your Travelers</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}>
+                   
+                    <TouchableOpacity style={styles.option} onPress={() => {navigation.navigate("Search",{stakeholder})}}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search</Text>
+                        <Text style={styles.text}>Search </Text>                        
+
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting",{ travelerParams: {traveler }})}}
+                        onPress={() => { navigation.navigate("Setting",{ stakeholderParams: {stakeholder }})}}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
@@ -199,42 +199,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    user: {
+        alignSelf: 'center',
+        resizeMode: 'cover',
+        height: 120,
+        borderRadius: 75,
+        width: 120,
+       marginTop:35,
+       top:40
+      },
     name: {
         position: "absolute",
         fontSize: 20,
-        top: 140,
-        left: 60,
+        top: 250,
+        left: 80,
+        
     },
     map: {
         width: '100%',
         height: '100%',
     },
-    sosText: {
-        color: 'white',
-        fontSize: 20, fontWeight: 'bold',
-        alignSelf: 'center',
-        top: 15
-    },
-    sos: {
-        position: 'absolute',
-        // bottom: 90,
-        top: 0,
-        right: 30,
-        zIndex: 1,
-        width: '15%',
-        height: '6%',
-        right: 0,
-        // borderRadius: 30,
-        // paddingVertical: 15,
-        // paddingHorizontal: 20,
-        backgroundColor: '#FF0000'
-
-    },
     titlename: {
         color: 'white',
         width: '100%',
          top:12,
-         left:70,
+         left:80,
          fontSize:20
     },
     hamburger: {
@@ -242,7 +231,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '100%',
         height: '6%',
-        top: 0,
+        top: 33,
         left: 0,
         zIndex: 1,
         // borderRadius: 30,
@@ -258,6 +247,8 @@ const styles = StyleSheet.create({
         width: '80%',
         height: '100%',
         backgroundColor: '#F0F8FF',
+        
+
 
         // alignItems: 'center',
         // justifyContent: 'center',
@@ -265,7 +256,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         position: 'absolute',
-        top: 80,
+        top: 55,
         right: 20,
     },
     optionSOS: {
@@ -288,12 +279,14 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         right: 20,
-        top: 200,
+        top: 160,
         marginBottom: 21
     },
     text: {
         fontSize: 30,
         left: 40
+        
+        
     },
     icon: {
         left: 30,

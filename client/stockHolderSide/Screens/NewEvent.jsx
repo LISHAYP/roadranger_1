@@ -7,10 +7,10 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
-
+import BackButton from '../Components/BackButton';
 
 export default function NewEvent(props) {
-  const traveler = props.route.params.traveler;
+  const stakeholder = props.route.params.stakeholder;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
@@ -34,11 +34,12 @@ export default function NewEvent(props) {
     country_name: country,
   };
 
-  const id = traveler.traveler_id;
+  const id = stakeholder.stackholderId;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
-  const [stackholderId, setStackholderId] = useState('null');
+  const [stackholderId, setStackholderId] = useState('');
+  const [TravelerId, setTravelerId] = useState(null);
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
@@ -74,8 +75,8 @@ export default function NewEvent(props) {
     Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
-    TravelerId: id,
-    StackholderId: stackholderId,
+    TravelerId: TravelerId,
+    stackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
@@ -167,6 +168,7 @@ export default function NewEvent(props) {
     < GradientBackground>
 
       <ScrollView>
+        <BackButton/>
         <View style={styles.container}>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
@@ -219,7 +221,7 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 30,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -322,6 +324,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+  
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',

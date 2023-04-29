@@ -13,22 +13,22 @@ export default function SignIn() {
 
 
     const handleLogin = () => {
-        const traveler = {
-            travler_email: email,
-            password: password
+        const stakeholder = {
+            StakeholderEmail: email,
+            Password: password
         };
-
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
+console.log("********",stakeholder);
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/stackholder', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(traveler),
+            body: JSON.stringify(stakeholder),
         })
             .then(response => response.json())
             .then(data => {
-                if (data.travler_email === email && data.password === password) {
+                if (data.StakeholderEmail === email && data.Password === password) {
                     navigation.navigate("Around You", { data });
                 } else {
                     setLoginFailed(true);
@@ -91,7 +91,7 @@ export default function SignIn() {
                     navigation.navigate("Forgot password")
                 }}>
                     <Text >
-                        Forgot you're password?
+                        Forgot your password?
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnSignUp} onPress={() => {
@@ -116,6 +116,7 @@ export default function SignIn() {
 }
 const styles = StyleSheet.create({
     container: {
+        top:100,
         padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,
