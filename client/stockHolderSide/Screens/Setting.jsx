@@ -10,9 +10,9 @@ import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 
 
-export default function Setting({ route }) {
-  const stakeholder = route.params.stakeholderParams.stakeholder;
-  console.log(stakeholder);
+export default function Setting(props) {
+  const stakeholder = props.route.params.stakeholderParams.stakeholder;
+  console.log("********",stakeholder);
 
   const navigation = useNavigation();
   const [full_name, setFullName] = useState(stakeholder.FullName);
@@ -20,6 +20,8 @@ export default function Setting({ route }) {
   const [stakeholder_email, setEmail] = useState(stakeholder.StakeholderEmail);
   const [password, setPassword] = useState(stakeholder.Password);
   const [phone, setPhone] = useState(stakeholder.Phone);
+  const [userPic, setUserPic] = useState(stakeholder.picture)
+  const[token,setToken]=useState(null);
   const stakeholderType = [
     { label: 'Insurance Company', value: 'Insurance Company' },
     { label: 'Embassy', value: 'Embassy' },
@@ -27,16 +29,17 @@ export default function Setting({ route }) {
     { label: 'Other', value: 'Other' },
   ]
   const [value, setValue] = useState(null);
- 
+
   const [isEnabledChatMode, setIsEnabledChatMode] = useState(stakeholder.Chat);
   const [isEnabledNotification, setIsEnabledNotification] = useState(stakeholder.Notifications);
   const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.stakeholderType);
-  //const [userPic, setUserPic] = useState(stakeholder.picture);
-  const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
+  console.log("************",stakeholder_email,selectedStakeholderType);
+  useEffect(() => {
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${stakeholder_email}.jpg`);
 
- 
+  }, [userPic]);
   const changeStakeholder = {
     FullName: full_name,
     StakeholderName: satkeholder_name,
@@ -46,13 +49,13 @@ export default function Setting({ route }) {
     stakeholderType: selectedStakeholderType,
     password: password,
     chat: isEnabledChatMode,
-    //picture: stakeholder.Picture
+    picture: userPic,
+ token: token
   };
   
   console.log("*****",changeStakeholder);
-  console.log('*******', changeStakeholder)
   const saveChanges = async () => {
-    console.log("IM IN saveChanges", changeStakeholder);
+    console.log("IM IN saveChanges", changeStakeholder, stakeholder.StakeholderEmail);
     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/stakeholder/update?email=${stakeholder.StakeholderEmail}`, {
       method: 'PUT',
       headers: {
@@ -73,26 +76,23 @@ export default function Setting({ route }) {
       });
   }
   const id = stakeholder.stakeholder_id;
-  // const openCamera = () => {
-  //   navigation.navigate('Camera',{id});
-  // }
-  // const handleSavePhoto = (photo) => {
-  //   setUserPic(photo);
-  // }
- 
+  
+  const openCamera = () => {
+    console.log("ereeeee", stakeholder_email);
+    navigation.navigate('Camera', stakeholder_email );
+    handleSavePhoto( );
+  }
+  const handleSavePhoto = () => {
+    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${stakeholder.StakeholderEmail}.jpg`);
+  }
   return (
     <ScrollView>
       < GradientBackground>
       <BackButton/>
         <View style={styles.container}>
-        <Image source={{ uri:  "http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png" }} style={styles.user} />
-          {/* <TouchableOpacity onPress={openCamera}>
-          {userPic ? (
-            <Image source={{ uri: stakeholder.Picture }} style={styles.user} />
-          ) : (
-            <Image source={{ uri: stakeholder.Picture }} style={styles.user} />
-          )} */}
-            {/* </TouchableOpacity > */}
+        <TouchableOpacity onPress={openCamera}>
+            <Image source={{ uri: stakeholder.picture }} style={styles.user} />
+          </TouchableOpacity >
           <Text style={styles.text}>Stakeholder Type:</Text>
           <Dropdown
            style={styles.dropdown}

@@ -10,13 +10,14 @@ import SOS from './Screens/YourTravelers';
 import Events from './Screens/Events';
 import Search from './Screens/Search';
 import BackButton from './Components/BackButton';
+import OpenCamera from './Components/OpenCamera';
+import OpenCameraE from './Components/OpenCameraE';
 // import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import ForgotPassword from './Screens/ForgotPassword';
 import EventDetails from './Screens/EventDetails';
-import OpenCamera from './Components/OpenCamera';
 import YourTravelers from './Screens/YourTravelers';
 // import Chat from './Screens/Chat';
 const Stack = createNativeStackNavigator()
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name="SOS" component={SOS} />
         {/* <Stack.Screen name="TimeLine" component={Timeline} /> */}
         <Stack.Screen name="Camera" component={OpenCamera} />
+        <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="BackButton" component={BackButton} />
 
 <Stack.Screen name="Event Details" component={EventDetails} />
