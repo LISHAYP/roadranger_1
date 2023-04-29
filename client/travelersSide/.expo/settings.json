@@ -3,8 +3,7 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "j3-2ju",
+  "urlRandomness": "a4-yfa",
   "https": false,
-  "scheme": "exp+roadranger",
-  "devClient": false
+  "scheme": "exp+roadranger"
 }
