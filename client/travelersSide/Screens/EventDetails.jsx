@@ -110,7 +110,7 @@ export default function EventDetails(props) {
   const createComment = async () => {
 
     if (newComment === '') {
-      Alert.alert('Please enter details and type');
+      Alert.alert('Please enter details ');
     }
     else {
       // Send a POST request to your backend API with the comment data
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '64%'
+    height: '74%'
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -291,12 +291,16 @@ const styles = StyleSheet.create({
 
   },
   addComment: {
+   
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
     borderRadius: 15,
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
+   
+  
+   
   },
   img: {
 

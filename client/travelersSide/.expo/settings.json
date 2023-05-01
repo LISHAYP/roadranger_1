@@ -5,5 +5,6 @@
   "minify": false,
   "urlRandomness": "a4-yfa",
   "https": false,
-  "scheme": "exp+roadranger"
+  "scheme": "exp+roadranger",
+  "devClient": false
 }

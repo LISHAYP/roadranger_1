@@ -1,7 +1,7 @@
 {
-  "expoServerPort": 19002,
-  "packagerPort": 19002,
-  "expoServerNgrokUrl": "https://a4-yfa.anonymous.travelersside.exp.direct",
-  "packagerNgrokUrl": "https://a4-yfa.anonymous.travelersside.exp.direct",
-  "ngrokPid": 18940
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://a4-yfa.orian1996.travelersside.exp.direct",
+  "packagerNgrokUrl": "https://a4-yfa.orian1996.travelersside.exp.direct",
+  "ngrokPid": 7632
 }
