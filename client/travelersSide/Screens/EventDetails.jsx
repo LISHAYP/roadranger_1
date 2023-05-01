@@ -205,7 +205,7 @@ export default function EventDetails(props) {
         style={styles.container}
       >
         <BackButton />
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '75%' : '40%' }]}>
+        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
           <View>
             <View style={styles.event}>
               <View style={styles.row}>
@@ -326,7 +326,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '70%'
+    height: '70%',
+   
   },
   commentContainer: {
     borderColor: '#DCDCDC',
