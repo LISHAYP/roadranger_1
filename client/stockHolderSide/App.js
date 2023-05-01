@@ -11,8 +11,9 @@ import Events from './Screens/Events';
 import Search from './Screens/Search';
 import BackButton from './Components/BackButton';
 import OpenCamera from './Components/OpenCamera';
-// import OpenCameraE from './Components/OpenCameraE';
+import OpenCameraE from './Components/OpenCameraE';
 // import TimeLine from './Screens/TimeLine'
+import followTraveler from './Screens/FollowTraveler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -41,6 +42,7 @@ export default function App() {
         <Stack.Screen name="Camera" component={OpenCamera} />
         <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="BackButton" component={BackButton} />
+        <Stack.Screen name="Follow" component={followTraveler} />
 
 <Stack.Screen name="Event Details" component={EventDetails} />
 
