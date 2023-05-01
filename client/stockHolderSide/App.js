@@ -11,7 +11,7 @@ import Events from './Screens/Events';
 import Search from './Screens/Search';
 import BackButton from './Components/BackButton';
 import OpenCamera from './Components/OpenCamera';
-import OpenCameraE from './Components/OpenCameraE';
+// import OpenCameraE from './Components/OpenCameraE';
 // import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
