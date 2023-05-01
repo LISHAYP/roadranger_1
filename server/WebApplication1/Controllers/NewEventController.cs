@@ -374,7 +374,7 @@ namespace WebApplication1.Controllers
             // Set the Method property of the request to POST.  
             request.Method = "POST";
             // Create POST data and convert it to a byte array.  
-            var objectToSend = new            {                to = pnd.to,                title = pnd.title,                body = pnd.body,                badge = pnd.badge,            };            string postData = new JavaScriptSerializer().Serialize(objectToSend);            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            var objectToSend = new            {                to = pnd.to,                title = pnd.title,                body = pnd.body,            };            string postData = new JavaScriptSerializer().Serialize(objectToSend);            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             // Set the ContentType property of the WebRequest.  
             request.ContentType = "application/json";
             // Set the ContentLength property of the WebRequest.  
