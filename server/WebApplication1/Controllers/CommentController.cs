@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using data;
 using NLog;
+using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
 {
@@ -88,6 +89,31 @@ namespace WebApplication1.Controllers
             }
         }
 
+        // DELETE: api/Comment
+        [HttpDelete]
+        [Route("api/deletecomment")]
+        public IHttpActionResult DeleteComment([FromBody] CommentDto dcomment)
+        {
+            try
+            {
+                var comment = db.tblComments.Find(dcomment.CommentNumber);
+                if (comment == null)
+                {
+                    return NotFound();
+                }
+
+                db.tblComments.Remove(comment);
+                db.SaveChanges();
+
+                logger.Info($"comment {dcomment.CommentNumber} was deleted");
+                return Ok($"comment number {dcomment.CommentNumber} was deleted");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        } 
         // PUT: api/Comment/5
         public void Put(int id, [FromBody] string value)
         {

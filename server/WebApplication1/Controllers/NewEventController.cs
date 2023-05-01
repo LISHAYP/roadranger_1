@@ -53,12 +53,61 @@ namespace WebApplication1.Controllers
             }
             return eventsDto;
         }
-
-        // GET: api/NewEvent/5
-        public string Get(int id)
+        // GET: api/NewEvent?travelerId={travelerId}
+        public IEnumerable<EventDto> Get(int travelerId)
         {
-            return "value";
+            try
+            {
+                // Retrieve the last known location of the traveler
+                var lastLocation = db.tblLocations
+                    .Where(l => l.travelerId == travelerId)
+                    .OrderByDescending(l => l.dateAndTime)
+                    .Select(l => new { l.latitude, l.longitude })
+                    .FirstOrDefault();
+
+                if (lastLocation == null)
+                {
+                    // No location data found for the given traveler
+                    return Enumerable.Empty<EventDto>();
+                }
+
+                // Fetch events and calculate distance to the last known location of the traveler
+                var events = db.tblEvents.ToList();
+                var nearbyEvents = events
+                    .Where(e => e.event_status == true)
+                    .Select(e => new { Event = e, Distance = CalculateDistance((double)lastLocation.latitude, (double)lastLocation.longitude, (double)e.latitude, (double)e.longitude) })
+                    .Where(e => e.Distance <= 0.1)
+                    .Select(e => new EventDto
+                    {
+                        eventNumber = e.Event.eventNumber,
+                        Details = e.Event.details,
+                        EventDate = e.Event.event_date,
+                        EventTime = e.Event.event_time,
+                        Latitude = e.Event.latitude,
+                        Longitude = e.Event.longitude,
+                        EventStatus = e.Event.event_status,
+                        Picture = e.Event.picture,
+                        TravelerId = e.Event.travelerId,
+                        StackholderId = e.Event.stackholderId,
+                        SerialTypeNumber = e.Event.serialTypeNumber,
+                        CountryNumber = e.Event.country_number,
+                        AreaNumber = e.Event.area_number
+                    })
+                    .ToList();
+
+                logger.Info($"events within 100 meters from the traveler number: {travelerId}");
+                return nearbyEvents;
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return (IEnumerable<EventDto>)BadRequest(ex.InnerException.Message);
+            }
         }
+
+
+
 
         // POST: api/NewEvent
         [HttpPost]
@@ -363,6 +412,40 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+
+        //// POST: api/GetEventsNearLastLocation
+        //[HttpPost]
+        //[Route("api/post/geteventsnearlastlocation")]
+        //public IHttpActionResult GetEventsNearLastLocation([FromBody] TravelerDto travelerId)
+        //{
+        //    try
+        //    {
+        //        // Retrieve the last known location of the traveler
+        //        var lastLocation = db.tblLocations
+        //            .Where(l => l.travelerId == travelerId.traveler_id)
+        //            .OrderByDescending(l => l.dateAndTime)
+        //            .Select(l => new { l.latitude, l.longitude })
+        //            .FirstOrDefault();
+
+        //        if (lastLocation == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        // Calculate the distance between the event locations and the traveler's last known location in memory
+        //        var eventsWithin100Meters = db.tblEvents
+        //            .AsEnumerable() // switch to LINQ to Objects for the rest of the query
+        //            .Where(e => CalculateDistance((double)lastLocation.latitude, (double)lastLocation.longitude, (double)e.latitude, (double)e.longitude) <= 0.1)
+        //            .ToList();
+
+        //        return Ok(eventsWithin100Meters);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
 
         // PUT: api/NewEvent/5
         public void Put(int id, [FromBody] string value)
