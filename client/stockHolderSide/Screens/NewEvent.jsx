@@ -14,7 +14,7 @@ export default function NewEvent(props) {
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
-  const [region,setRegion]=useState('');
+  const [city, setCity] = useState('');
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
@@ -30,16 +30,11 @@ export default function NewEvent(props) {
     { label: 'Financial issues', value: '11' }
   ]
 
-  const countryObj = {
-    country_name: country,
-  };
-
   const id = stakeholder.stackholderId;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
   const [picture, setPicture] = useState('#');
-  const [stackholderId, setStackholderId] = useState('');
-  const [TravelerId, setTravelerId] = useState(null);
+  const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
@@ -53,19 +48,16 @@ export default function NewEvent(props) {
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
-        const regionComponent = addressComponents.find(component => component.types.includes('administrative_area_level_1'));
-
+        const cityComponent = addressComponents.find(component => component.types.includes('locality'));
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
-        setRegion(regionComponent.long_name);
+        setCity(cityComponent.long_name);
         addContry();
-        
+
       })
       .catch(error => console.warn(error))
   }, []);
 
-  console.log('1 contry:', { country })
-  console.log('2 region:', {region })
 
   const newEvent = {
     Details: details,
@@ -75,17 +67,18 @@ export default function NewEvent(props) {
     Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
-    TravelerId: TravelerId,
-    stackholderId: stackholderId,
+    TravelerId: id,
+    StackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
   };
+  console.log("--------", { newEvent })
+  const countryObj = {
+    country_name: country,
+  };
+  addContry = () => {
 
-  console.log('3  new', newEvent);
-
-   addContry = () => {
-    console.log('4  *****',{country})
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
@@ -96,23 +89,23 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('5  ********', { data })
+
         setCountryNumber(data)
-        addRegion();
+        addCity();
       }
       )
       .catch(error => {
         console.error(error);
-        console.log('6 Error');
+
       });
   }
 
-   addRegion = () => {
+  addCity = () => {
     const areaObj = {
       country_number: countryNumber,
-      area_name: region
+      area_name: city
     }
-    console.log('7  *****',{areaObj})
+
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
@@ -123,8 +116,8 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('8  ********', { data })
         setAreaNumber(data)
+
       }
       )
       .catch(error => {
@@ -145,16 +138,14 @@ export default function NewEvent(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newEvent),
+
       })
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log("9", data);
-           alert('Publish')
+          console.log({ data })
+          alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
-          //console.log({ newEvent })
-         
-
         })
         .catch(error => {
           console.error(error);
@@ -163,13 +154,17 @@ export default function NewEvent(props) {
     }
   }
 
+  const OpenCameraE = () => {
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
+    const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+  }
 
   return (
     < GradientBackground>
-
       <ScrollView>
-        <BackButton/>
         <View style={styles.container}>
+        <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -201,7 +196,7 @@ export default function NewEvent(props) {
 
             }} />
 
-          <TouchableOpacity style={styles.photo} >
+          <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
             <Text style={styles.btnText}>
               Add Photo
@@ -221,7 +216,7 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 20,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -324,7 +319,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
-  
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
@@ -333,7 +327,8 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 2,
     borderRadius: 25,
-    backgroundColor: '#144800'},
+    backgroundColor: '#144800'
+  },
 });
 
 
