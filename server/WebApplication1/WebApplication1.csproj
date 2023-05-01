@@ -296,6 +296,7 @@
     <Compile Include="DTO\EventParam.cs" />
     <Compile Include="DTO\FcmService.cs" />
     <Compile Include="DTO\LocationDto.cs" />
+    <Compile Include="DTO\PushNotData.cs" />
     <Compile Include="DTO\StackholderDto.cs" />
     <Compile Include="DTO\TravelerDto.cs" />
     <Compile Include="DTO\TypeDto.cs" />

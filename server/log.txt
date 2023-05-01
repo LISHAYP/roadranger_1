@@ -60,3 +60,4 @@
  2023-04-30 16:20:33.1408 INFO: events within 100 meters from the traveler number: 8
  2023-04-30 16:24:34.1366 INFO: events within 100 meters from the traveler number: 8
  2023-04-30 16:29:00.4105 INFO: events within 100 meters from the traveler number: 10
+ 2023-05-01 14:55:51.7953 INFO: all the locations from tbl locations
