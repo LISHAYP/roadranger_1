@@ -143,7 +143,7 @@ export default function AroundYou(props) {
                         <AntDesign name="close" size={24} color="black" />
                     </TouchableOpacity>
                    
-                        <Image source={{ uri:  "http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png" }} style={styles.user} />
+                        <Image source={{ uri: stakeholder.picture  }} style={styles.user} />
                         <Text style={styles.name}>
                             Hello, {stakeholder.StakeholderName} !  </Text>
 
