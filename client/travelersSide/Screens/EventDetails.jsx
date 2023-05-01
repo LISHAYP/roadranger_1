@@ -275,7 +275,7 @@ export default function EventDetails(props) {
               style={styles.input}
               placeholder="Add Comment..."
               value={details}
-              multiline
+              multiline={true}
               numberOfLines={4}
               onChangeText={(text) => setDetails(text)}
             />
@@ -362,8 +362,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    // width:'95%',
-    
+    // width:'95%'
   },
   img: {
     height: 40,
