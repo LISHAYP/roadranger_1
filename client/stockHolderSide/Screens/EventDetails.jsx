@@ -136,8 +136,9 @@ console.log("##########",user.StakeholderId);
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <BackButton />
+       
         <View style={styles.eventContainer}>
+        <BackButton />
           <View >
             <View style={styles.event}>
               <View style={styles.row}>
