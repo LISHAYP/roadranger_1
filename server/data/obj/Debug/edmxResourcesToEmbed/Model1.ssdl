@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="api">
-    <Key>
-      <PropertyRef Name="name" />
-    </Key>
-    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="api" Type="varchar" MaxLength="255" />
-  </EntityType>
   <EntityType Name="stakeholders">
     <Key>
       <PropertyRef Name="stakeholder_id" />
@@ -34,6 +27,13 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tblApi">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="api" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="tblArea">
     <Key>
@@ -408,9 +408,9 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="igroup190_test1ModelStoreContainer">
-    <EntitySet Name="api" EntityType="Self.api" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblApi" EntityType="Self.tblApi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblArea" EntityType="Self.tblArea" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />

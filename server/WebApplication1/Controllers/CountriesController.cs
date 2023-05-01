@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
 using WebApplication1.DTO;
+using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 using RouteAttribute = System.Web.Http.RouteAttribute;
 
@@ -27,11 +28,15 @@ namespace WebApplication1.Controllers
             return new string[] { "value1", "value2" };
         }
 
+       
+
+
         // GET: api/Countries/5
         public string Get(int id)
         {
             return "value";
         }
+
 
         [Route("api/getcountries")]
         public IHttpActionResult GetCountryData()
@@ -79,7 +84,7 @@ namespace WebApplication1.Controllers
             }
            
         }
-
+  
 
         // POST: api/Countries
         [HttpPost]

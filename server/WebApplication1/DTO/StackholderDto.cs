@@ -20,5 +20,7 @@ namespace WebApplication1.DTO
         public string StakeholderType { get; set; }
         public string Password { get; set; }
         public string token { get; set; }
+        public string picture { get; set; }
+
     }
 }

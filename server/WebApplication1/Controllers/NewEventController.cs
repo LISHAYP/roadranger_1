@@ -54,10 +54,57 @@ namespace WebApplication1.Controllers
             return eventsDto;
         }
 
-        // GET: api/NewEvent/5
-        public string Get(int id)
+        // GET: api/NewEvent?travelerId={travelerId}
+        public IEnumerable<EventDto> Get(int travelerId)
         {
-            return "value";
+            try
+            {
+                // Retrieve the last known location of the traveler
+                var lastLocation = db.tblLocations
+                    .Where(l => l.travelerId == travelerId)
+                    .OrderByDescending(l => l.dateAndTime)
+                    .Select(l => new { l.latitude, l.longitude })
+                    .FirstOrDefault();
+
+                if (lastLocation == null)
+                {
+                    // No location data found for the given traveler
+                    return Enumerable.Empty<EventDto>();
+                }
+
+                // Fetch events and calculate distance to the last known location of the traveler
+                var events = db.tblEvents.ToList();
+                var nearbyEvents = events
+                    .Where(e => e.event_status == true)
+                    .Select(e => new { Event = e, Distance = CalculateDistance((double)lastLocation.latitude, (double)lastLocation.longitude, (double)e.latitude, (double)e.longitude) })
+                    .Where(e => e.Distance <= 0.1)
+                    .Select(e => new EventDto
+                    {
+                        eventNumber = e.Event.eventNumber,
+                        Details = e.Event.details,
+                        EventDate = e.Event.event_date,
+                        EventTime = e.Event.event_time,
+                        Latitude = e.Event.latitude,
+                        Longitude = e.Event.longitude,
+                        EventStatus = e.Event.event_status,
+                        Picture = e.Event.picture,
+                        TravelerId = e.Event.travelerId,
+                        StackholderId = e.Event.stackholderId,
+                        SerialTypeNumber = e.Event.serialTypeNumber,
+                        CountryNumber = e.Event.country_number,
+                        AreaNumber = e.Event.area_number
+                    })
+                    .ToList();
+
+                logger.Info($"events within 100 meters from the traveler number: {travelerId}");
+                return nearbyEvents;
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return (IEnumerable<EventDto>)BadRequest(ex.InnerException.Message);
+            }
         }
 
         // POST: api/NewEvent
@@ -128,94 +175,6 @@ namespace WebApplication1.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Route("api/post/neweventdistance")]
-        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents value)
-        //{
-        //    try
-        //    {
-        //        // Get all events from the database
-        //        var allEvents = db.tblEvents.ToList();
-
-        //        // Filter events based on distance and serialTypeNumber
-        //        var similarEvent = allEvents
-        //            .FirstOrDefault(e => e.serialTypeNumber == value.serialTypeNumber && CalculateDistance((double)e.latitude, (double)e.longitude, (double)value.latitude, (double)value.longitude) <= 3);
-
-        //        if (similarEvent != null)
-        //        {
-        //            //// Check if the similar event already has any related events
-        //            //if (similarEvent.tblEvents1 != null)
-        //            //{
-        //            //    logger.Info("A similar event already has a related event.");
-        //            //}
-        //            //else
-        //            //{
-        //                // Associate the new event with the similar event found
-        //                value.tblEvents1 = similarEvent;
-        //                db.Entry(similarEvent).State = EntityState.Unchanged;
-        //                // Add the new event to the database
-        //                db.tblEvents.Add(value);
-        //                db.SaveChanges();
-        //            //}
-        //        }
-        //        else
-        //        {
-        //            db.tblEvents.Add(value);
-        //            db.SaveChanges();
-        //        }
-
-
-
-        //        // Check if the new event is related to an old event
-        //        if (similarEvent != null)
-        //        {
-        //            // The new event is related to an old event
-        //            logger.Info($"new event number {value.eventNumber} is related to event number {similarEvent.eventNumber} and it was added to the database!");
-        //        }
-        //        else
-        //        {
-        //            // The new event is not related to any old event
-        //            logger.Info("the events are not related");
-        //        }
-
-        //        // Retrieve the name and picture of the user who posted the event
-        //        string userName = "";
-        //        string userPicture = "";
-        //        if (value.travelerId.HasValue)
-        //        {
-        //            var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == value.travelerId.Value);
-        //            if (traveler != null)
-        //            {
-        //                userName = traveler.first_name + " " + traveler.last_name;
-        //                userPicture = traveler.picture;
-        //            }
-        //        }
-        //        else if (value.stackholderId.HasValue)
-        //        {
-        //            var stakeholder = db.stakeholders.FirstOrDefault(s => s.stakeholder_id == value.stackholderId.Value);
-        //            if (stakeholder != null)
-        //            {
-        //                userName = stakeholder.full_name;
-        //                userPicture = stakeholder.picture;
-        //            }
-        //        }
-
-        //        // Construct the response message
-        //        var responseMessage = new
-        //        {
-        //            message = "New event created successfully!",
-        //            userName = userName,
-        //            userPicture = userPicture
-        //        };
-
-        //        return Ok(responseMessage);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.Error(ex.Message);
-        //        return BadRequest(ex.InnerException.Message);
-        //    }
-        //}
         [HttpPost]
         [Route("api/post/neweventdistance")]
         public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
@@ -289,8 +248,6 @@ namespace WebApplication1.Controllers
             return distance;
         }
 
-
-
         [HttpPost]
         [Route("api/events/comments")]
         public IHttpActionResult GetCommentsForEvent([FromBody] CommentDto eventId)
@@ -321,6 +278,7 @@ namespace WebApplication1.Controllers
                 return InternalServerError(ex);
             }
         }
+
         // POST api/post/updateevent
         [HttpPost]
         [Route("api/post/updateevent")]
@@ -374,7 +332,6 @@ namespace WebApplication1.Controllers
         public void Delete(int id)
         {
 
-
         }
 
         [HttpDelete]
@@ -410,54 +367,39 @@ namespace WebApplication1.Controllers
             }
         }
 
-
-        //[Route("sendpushnotification")]
-        //public string Post([FromBody] PushNotData pnd)
-        //{
-        //    // Create a request using a URL that can receive a post.
-        //    WebRequest request = WebRequest.Create("https://exp.host/--/api/v2/push/send");
-        //    // Set the Method property of the request to POST.
-        //    request.Method = "POST";
-        //    // Create POST data and convert it to a byte array.
-        //    var objectToSend = new
-        //    {
-        //        to = pnd.to,
-        //        title = pnd.title,
-        //        body = pnd.body,
-        //        badge = pnd.badge,
-        //        data = pnd.data//new { name = "nir", grade = 100 }
-        //    };
-        //    string postData = new JavaScriptSerializer().Serialize(objectToSend);
-        //    byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-        //    // Set the ContentType property of the WebRequest.
-        //    request.ContentType = "application/json";
-        //    // Set the ContentLength property of the WebRequest.
-        //    request.ContentLength = byteArray.Length;
-        //    // Get the request stream.
-        //    Stream dataStream = request.GetRequestStream();
-        //    // Write the data to the request stream.
-        //    dataStream.Write(byteArray, 0, byteArray.Length);
-        //    // Close the Stream object.
-        //    dataStream.Close();
-        //    // Get the response.
-        //    WebResponse response = request.GetResponse();
-        //    // Display the status.
-        //    string returnStatus = ((HttpWebResponse)response).StatusDescription;
-        //    //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-        //    // Get the stream containing content returned by the server.
-        //    dataStream = response.GetResponseStream();
-        //    // Open the stream using a StreamReader for easy access.
-        //    StreamReader reader = new StreamReader(dataStream);
-        //    // Read the content.
-        //    string responseFromServer = reader.ReadToEnd();
-        //    // Display the content.
-        //    //Console.WriteLine(responseFromServer);
-        //    // Clean up the streams.
-        //    reader.Close();
-        //    dataStream.Close();
-        //    response.Close();
-        //    return "success:) --- " + responseFromServer + ", " + returnStatus;
-        //}
+        [HttpPost]
+        [Route("sendpushnotification")]        public string PostPN([FromBody] PushNotData pnd)        {
+            // Create a request using a URL that can receive a post.   
+            WebRequest request = WebRequest.Create("https://exp.host/--/api/v2/push/send");
+            // Set the Method property of the request to POST.  
+            request.Method = "POST";
+            // Create POST data and convert it to a byte array.  
+            var objectToSend = new            {                to = pnd.to,                title = pnd.title,                body = pnd.body,            };            string postData = new JavaScriptSerializer().Serialize(objectToSend);            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            // Set the ContentType property of the WebRequest.  
+            request.ContentType = "application/json";
+            // Set the ContentLength property of the WebRequest.  
+            request.ContentLength = byteArray.Length;
+            // Get the request stream.  
+            Stream dataStream = request.GetRequestStream();
+            // Write the data to the request stream.  
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.  
+            dataStream.Close();
+            // Get the response.  
+            WebResponse response = request.GetResponse();
+            // Display the status.  
+            string returnStatus = ((HttpWebResponse)response).StatusDescription;
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.  
+            dataStream = response.GetResponseStream();
+            // Open the stream using a StreamReader for easy access.  
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.  
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.  
+            //Console.WriteLine(responseFromServer);
+            // Clean up the streams.  
+            reader.Close();            dataStream.Close();            response.Close();            return "success:) --- " + responseFromServer + ", " + returnStatus;        }
 
     }
 

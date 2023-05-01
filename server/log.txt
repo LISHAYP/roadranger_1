@@ -48,3 +48,16 @@
  2023-04-25 14:37:56.9700 INFO: new password was saved in the database to traveler id number: 0
  2023-04-25 14:54:03.0193 INFO: token was updated in the database for traveler with email : lieldu178@gmail.com
  2023-04-25 15:05:04.7866 INFO: token was updated in the database for traveler with email : Lishai78@gmail.com
+ 2023-04-25 17:31:59.7095 INFO: new password was saved in the database to traveler id number: 0
+ 2023-04-25 17:44:34.5449 INFO: new password was saved in the database to traveler id number: 0
+ 2023-04-26 21:14:15.4427 INFO: login faild- email does not exist
+ 2023-04-29 07:31:51.4473 INFO: comment 95 was deleted
+ 2023-04-29 19:16:03.2776 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-29 19:17:15.0069 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-29 19:19:48.7646 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-29 19:29:42.1925 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-29 19:36:03.8374 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-30 16:20:33.1408 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-30 16:24:34.1366 INFO: events within 100 meters from the traveler number: 8
+ 2023-04-30 16:29:00.4105 INFO: events within 100 meters from the traveler number: 10
+ 2023-05-01 14:55:51.7953 INFO: all the locations from tbl locations

@@ -96,6 +96,29 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/getlocations")]
+        public IHttpActionResult GetLocationData()
+        {
+            try
+            {
+                var result = db.tblLocations
+                    .Select(l => new
+                    {
+                        Latitude = l.latitude,
+                        Longitude = l.longitude
+                    })
+                    .ToList();
+
+                logger.Info("all the locations from tbl locations");
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
         private IHttpActionResult NotFound(string v)
         {
             throw new NotImplementedException();

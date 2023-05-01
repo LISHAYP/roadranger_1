@@ -12,9 +12,9 @@ namespace data
     using System;
     using System.Collections.Generic;
     
-    public partial class api
+    public partial class tblApi
     {
-        public string name { get; set; }
-        public string api1 { get; set; }
+        public int id { get; set; }
+        public string api { get; set; }
     }
 }
