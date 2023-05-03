@@ -16,7 +16,7 @@ function BackButton() {
 const styles = StyleSheet.create({
     button: {
 paddingTop:30,
-paddingBottom:20
+paddingBottom:5
     },
   
 });

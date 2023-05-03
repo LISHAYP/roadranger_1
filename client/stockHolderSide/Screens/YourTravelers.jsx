@@ -36,61 +36,58 @@ export default function YourTravelers(props) {
         },
         body: JSON.stringify(objInsuranceCompany),
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('********', { data })
-          setMyTravelers(data)
-        }
-        )
-        .catch(error => {
-          console.error(error);
-          console.log('Error');
+      .then(response => response.json())
+      .then(data => {
+        // Map over the data and get the address for each traveler
+        Promise.all(data.map(traveler => {
+          const lat = traveler.last_location.Latitude;
+          const lng = traveler.last_location.Longitude;
+          return Geocoder.from(lat, lng).then(json => {
+            const location = json.results[0].address_components;
+            const number = location[0].long_name;
+            const street = location[1].long_name;
+            const city = location[2].long_name;
+            const address = `${street} ${number}, ${city}`;
+            return { ...traveler, address };
+          });
+        })).then(travelersWithAddress => {
+          setMyTravelers(travelersWithAddress);
         });
-    }
-
+      });
   }
+ }
+console.log(myTravelers)
+return (
+  < GradientBackground>
+    <BackButton />
+    <View style={styles.container}>
+      <Text>My ravelers</Text>
+      <ScrollView>
+        {myTravelers.length > 0 && (
+          myTravelers.map((traveler, index) => (
+            <View key={index} style={styles.commentContainer}>
+              <TouchableOpacity onPress={() => { navigation.navigate("Follow", { traveler }) }}>
+                <View style={styles.event}>
+                  <View style={styles.row}>
+                    <Image style={styles.img} source={{ uri: traveler.Picture }} />
+                    <Text style={styles.text}> {traveler.first_name} {traveler.last_name} </Text>
 
-
-  return (
-    < GradientBackground>
-      <BackButton />
-      <View style={styles.container}>
-        <Text>My ravelers</Text>
-        <ScrollView>
-          {myTravelers.length > 0 && (
-            myTravelers.map((traveler, index) => (
-              <View key={index} style={styles.commentContainer}>
-                <TouchableOpacity onPress={() => { navigation.navigate("Follow", { traveler }) }}>
-                  <View style={styles.event}>
-                    <View style={styles.row}>
-                      <Image style={styles.img} source={{ uri: traveler.Picture }} />
-                      <Text style={styles.text}> {traveler.first_name} {traveler.last_name} </Text>
-                      {traveler.last_location.Latitude && traveler.last_location.Longitude && (
-                        <Geocoder
-                          position={{ lat: traveler.last_location.Latitude, lng: traveler.last_location.Longitude }}
-                          onError={console.warn}
-                        >
-                          {({ results }) => (
-                            <Text style={styles.address}>{results[0].formatted_address}</Text>
-                          )}
-                        </Geocoder>
-                      )}
-                    </View>
                   </View>
+                </View>
 
 
-                  {/* <Text>{traveler.last_location.Latitude}</Text>
-                  <Text>{traveler.last_location.Longitude}</Text>
-                  <Text>{traveler.last_location.DateAndTime}</Text> */}
-                </TouchableOpacity>
-              </View>
-            ))
-          )}
-        </ScrollView>
+                 <Text>{traveler.address}</Text>
+                
+                  <Text>{formatDate(traveler.last_location.DateAndTime)}</Text> 
+              </TouchableOpacity>
+            </View>
+          ))
+        )}
+      </ScrollView>
 
-      </View>
-    </GradientBackground>
-  )
+    </View>
+  </GradientBackground>
+)
 }
 const styles = StyleSheet.create({
   container: {
