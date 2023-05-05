@@ -20,7 +20,9 @@ import { Picker } from '@react-native-picker/picker';
 import ForgotPassword from './Screens/ForgotPassword';
 import EventDetails from './Screens/EventDetails';
 import YourTravelers from './Screens/YourTravelers';
-// import Chat from './Screens/Chat';
+//import Chat from './Screens/Chat';
+import HomeChat from './Screens/HomeChat';
+//import GroupChat from './Screens/GroupChat'
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
@@ -43,7 +45,9 @@ export default function App() {
         <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="BackButton" component={BackButton} />
         <Stack.Screen name="Follow" component={followTraveler} />
-
+        {/* <Stack.Screen name="Group chat" component={GroupChat} />
+        <Stack.Screen name="Chat" component={Chat} /> */}
+        <Stack.Screen name="Home chat" component={HomeChat} />
 <Stack.Screen name="Event Details" component={EventDetails} />
 
       </Stack.Navigator>

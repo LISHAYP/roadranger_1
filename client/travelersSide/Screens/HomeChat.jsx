@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Modal,TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Modal, TextInput } from 'react-native';
 import GradientBackground from '../Components/GradientBackground';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BackButton from '../Components/BackButton';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { Dropdown } from 'react-native-element-dropdown';
+import { Swipeable , GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 const HomeChat = (props) => {
@@ -28,7 +29,6 @@ const HomeChat = (props) => {
       .catch((error) => console.error(error));
 
   }, []);
-  //AsyncStorage.clear();
 
   useFocusEffect(() => {
 
@@ -44,11 +44,10 @@ const HomeChat = (props) => {
     };
     getActiveChats();
   });
-  //AsyncStorage.clear();
   const handleUserPress = async (user, loggeduser) => {
     const isUserPresent = activeChats.find((chatUser) => chatUser.traveler_id === user.traveler_id);
     if (!isUserPresent) {
-      const updatedActiveChats = [user,...activeChats];
+      const updatedActiveChats = [user, ...activeChats];
       setActiveChats(updatedActiveChats);
       try {
         await AsyncStorage.setItem('activeChats', JSON.stringify(updatedActiveChats));
@@ -59,26 +58,40 @@ const HomeChat = (props) => {
     console.log(user, loggeduser)
     navigation.navigate('Chat', { user, loggeduser });
   };
+
+
+  const handleClearActiveChats = async () => {
+    try {
+      await AsyncStorage.removeItem('activeChats');
+      setActiveChats([]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const renderRightActions = (user) => (
+    <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteChat(user)}>
+      <Icon name="trash-outline" size={35} />
+    </TouchableOpacity>
+  );
+
+  const handleDelete = async (user) => {
+    const updatedActiveChats = activeChats.filter((chatUser) => chatUser.traveler_id !== user.traveler_id);
+    setActiveChats(updatedActiveChats);
+    try {
+      await AsyncStorage.setItem('activeChats', JSON.stringify(updatedActiveChats));
+    } catch (e) {
+      console.error(e);
+    }
+  };
   
-
-  // const handleClearActiveChats = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem('activeChats');
-  //     setActiveChats([]);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <View style={styles.container}>
       <GradientBackground>
         <ScrollView>
           <View style={styles.back}>
             <BackButton />
           </View>
-          {/* <Button title="Clear active chats" onPress={handleClearActiveChats} /> */}
-
           <View>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
             <Text style={styles.name}>
@@ -90,6 +103,10 @@ const HomeChat = (props) => {
             style={styles.chatContainer}
           >
             <ScrollView>
+              <TouchableOpacity style={styles.row} onPress={handleClearActiveChats}>
+                <Icon name="trash-outline" size={35} style={styles.icon} />
+                <Text style={styles.text}>Clear all chat</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.row} onPress={() => setShowModal(true)}>
                 <Icon name="search-outline" size={35} style={styles.icon} />
                 <Text style={styles.text}>Search </Text>
@@ -130,23 +147,31 @@ const HomeChat = (props) => {
               <TouchableOpacity style={styles.row} onPress={() => { navigation.navigate("Group chat", traveler) }}>
                 <Image style={styles.img} source={{ uri: 'https://img.fruugo.com/product/1/86/14364861_max.jpg' }} />
                 <Text style={styles.text}>
-                  group chat
+                 Group chat
                 </Text>
               </TouchableOpacity>
               {activeChats.map((traveler2) => (
-                <TouchableOpacity key={traveler2.id} onPress={() => handleUserPress(traveler2, traveler)}>
+                <Swipeable
+                renderRightActions={() => renderRightActions(traveler2)}
+                onSwipeableRightOpen={() => handleDelete(traveler2)}
+              >
+                <TouchableOpacity onPress={() => handleUserPress(traveler2, traveler)}>
                   <View style={styles.row}>
                     <Image style={styles.img} source={{ uri: traveler2.Picture }} />
-                    <Text style={styles.text}>{traveler2.first_name} </Text>
+                    <Text style={styles.text}>{traveler2.first_name}</Text>
                   </View>
                 </TouchableOpacity>
+              </Swipeable>
+              
               ))}
             </ScrollView>
+
           </View>
         </ScrollView>
       </GradientBackground>
 
     </View>
+    </GestureHandlerRootView>
 
 
   );
@@ -159,9 +184,9 @@ const styles = StyleSheet.create({
     flex: 1,
 
   },
-  searchInput:{
-    padding:20,
-    fontSize:20
+  searchInput: {
+    padding: 20,
+    fontSize: 20
   },
   dropdown: {
     height: 40,
@@ -279,5 +304,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  clear: {
+    position: 'absolute',
+    right: 20
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: '100%',
+    position: 'absolute',
+    right: 0,
   },
 });

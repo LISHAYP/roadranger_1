@@ -153,19 +153,19 @@ export default function Chat(props) {
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(notification),
-          })
+        })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
+                console.log(data);
             })
             .catch(error => {
-              console.error(error);
-              Alert.alert('Error', error);
+                console.error(error);
+                Alert.alert('Error', error);
             });
-        
+
 
     };
 
@@ -183,6 +183,7 @@ export default function Chat(props) {
                         <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
                     </View>
                 </View>
+              
                 {messages && (
                     <GiftedChat
                         isTyping={true}
