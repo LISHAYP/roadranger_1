@@ -17,29 +17,21 @@ export default function NewEvent(props) {
   const [region,setRegion]=useState('');
   const serialType = [
     //creating type of different eventtypes
-    { label: 'Weather', value: '1' },
-    { label: 'Car Accidents', value: '2' },
-    { label: 'Road closures', value: '3' },
-    { label: 'Natural disasters', value: '4' },
-    { label: 'Health emergencies', value: '5' },
-    { label: 'Accommodation issues', value: '6' },
-    { label: 'Protests', value: '7' },
-    { label: 'Strikes', value: '8' },
-    { label: 'Security threats', value: '9' },
-    { label: 'Animal-related incidents', value: '10' },
-    { label: 'Financial issues', value: '11' }
+    { label: 'Missing traveler', value: '1003' },
+    { label: 'Travel warning', value: '1004' },
+   
   ]
 
   const countryObj = {
     country_name: country,
   };
 
-  const id = stakeholder.stackholderId;
+ 
   const [details, setDetails] = useState('');
-  const [eventStatus, setEventStatus] = useState('true');
+  const eventStatus = 'true';
   const [picture, setPicture] = useState('#');
-  const [stackholderId, setStackholderId] = useState('');
-  const [TravelerId, setTravelerId] = useState(null);
+  const stackholderId=stakeholder.stackholderId
+  const TravelerId= null;
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
@@ -163,7 +155,11 @@ export default function NewEvent(props) {
     }
   }
 
-
+  const OpenCameraE = () => {
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
+    const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+  }
   return (
     < GradientBackground>
 
@@ -201,7 +197,7 @@ export default function NewEvent(props) {
 
             }} />
 
-          <TouchableOpacity style={styles.photo} >
+          <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
             <Text style={styles.btnText}>
               Add Photo

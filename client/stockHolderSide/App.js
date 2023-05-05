@@ -12,6 +12,7 @@ import Search from './Screens/Search';
 import BackButton from './Components/BackButton';
 import OpenCamera from './Components/OpenCamera';
 import OpenCameraE from './Components/OpenCameraE';
+import Warning from './Screens/Warning';
 // import TimeLine from './Screens/TimeLine'
 import followTraveler from './Screens/FollowTraveler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -43,6 +44,7 @@ export default function App() {
         <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="BackButton" component={BackButton} />
         <Stack.Screen name="Follow" component={followTraveler} />
+        <Stack.Screen name="Warning" component={Warning} />
 
 <Stack.Screen name="Event Details" component={EventDetails} />
 
