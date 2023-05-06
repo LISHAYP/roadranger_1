@@ -188,7 +188,7 @@ export default function AroundYou(props) {
                         onPress={() => { navigation.navigate("Warning",{ stakeholder }) }}
                     >
                         <Icon name="warning-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Warning </Text>
+                        <Text style={styles.text}>Warnings </Text>
                     </TouchableOpacity>
                 </View>
             )}

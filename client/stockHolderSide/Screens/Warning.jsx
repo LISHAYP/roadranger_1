@@ -15,7 +15,7 @@ export default function Warning(props) {
 
     const [events, setEvents] = useState([]);
     const stakeholder = props.route.params.stakeholder;
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
     useEffect(() => {
         getEvents()
@@ -25,63 +25,47 @@ export default function Warning(props) {
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent', {
             method: 'GET',
             headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
-          
-          })
-          .then(response => response.json())
-          .then ( data => {
-            // Map over the data and get the address for each traveler
-            Promise.all(data.map(event => {
-              const lat = event.Latitude;
-              const lng = event.Longitude;
-              return Geocoder.from(lat, lng).then(json => {
-                const location = json.results[0].address_components;
-                const number = location[0].long_name;
-                const street = location[1].long_name;
-                const city = location[2].long_name;
-                const address = `${street} ${number}, ${city}`;
-                return { ...event, address };
-              });
-            })).then(eventsWithAddress => {
-              setEvents(eventsWithAddress);
-              console.log(eventsWithAddress);
+        })
+            .then(response => response.json())
+            .then(data => {
+                setEvents(data)
             });
-          });
-      }
-     console.log("Eeeeeeeee",events)
+    }
+    console.log("Eeeeeeeee", events)
 
-return (
-    <GradientBackground>
-        <BackButton />
-        <ScrollView>
-            <View style={styles.container}>
-                <View>
-                    {events !== undefined && events.length > 0 ? (
-                        events.filter(event => event.SerialTypeNumber == 1004 || event.SerialTypeNumber == 1003).map((event, index) => (
-                            <TouchableOpacity onPress={() => {
-                                navigation.navigate('Event Details', { event: event, stakeholder: stakeholder });
-                            }} >
-                                <View style={styles.event} key={event.eventNumber}>
-                                    <View style={styles.detailsContainer}>
-                                        <Text style={styles.details}>{event.Details}</Text>
-                                        <Text >{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
-                                        <Text >{event.EventTime.slice(0, 5)}</Text>
+    return (
+        <GradientBackground>
+            <BackButton />
+            <ScrollView>
+                <View style={styles.container}>
+                    <View>
+                        {events !== undefined && events.length > 0 ? (
+                            events.filter(event => event.SerialTypeNumber == 1004 || event.SerialTypeNumber == 1003).map((event, index) => (
+                                <TouchableOpacity onPress={() => {
+                                    navigation.navigate('Event Details', { event: event, stakeholder: stakeholder });
+                                }} >
+                                    <View style={styles.event} key={event.eventNumber}>
+                                        <View style={styles.detailsContainer}>
+                                            <Text style={styles.details}>{event.Details}</Text>
+                                            <Text >{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
+                                            <Text >{event.EventTime.slice(0, 5)}</Text>
+                                        </View>
+                                        <Image source={{ uri: event.Picture }} style={styles.img} />
                                     </View>
-                                    <Image source={{ uri: event.Picture }} style={styles.img} />
-                                </View>
-                            </TouchableOpacity>
-                        ))
-                    ) : (
-                        <Text>No events found.</Text>
-                    )}
+                                </TouchableOpacity>
+                            ))
+                        ) : (
+                            <Text>No events found.</Text>
+                        )}
+                    </View>
                 </View>
-            </View>
 
-        </ScrollView>
-    </GradientBackground>
-);
+            </ScrollView>
+        </GradientBackground>
+    );
 }
 const styles = StyleSheet.create({
     container: {
