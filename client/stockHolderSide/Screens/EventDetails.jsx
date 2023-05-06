@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image,ScrollView, TouchableOpacity,TextInput } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image,ScrollView, TouchableOpacity,TextInput, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -86,7 +86,7 @@ console.log("##########",stakeholder.StakeholderId);
   const createComment = async () => {
 
     if (newComment === '') {
-      alert('Please enter details and type');
+      Alert.alert('Please enter details and type');
     }
     else {
       // Send a POST request to your backend API with the comment data
@@ -101,12 +101,12 @@ console.log("##########",stakeholder.StakeholderId);
         .then(data => {
           // Handle the response data as needed
           console.log(data);
-          alert('Publish')
+          Alert.alert('Publish')
           setDetails('');
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          Alert.alert('Error', error);
         });
     }
   }
@@ -132,13 +132,14 @@ console.log("##########",stakeholder.StakeholderId);
 
   return (
     <GradientBackground>
+              <BackButton />
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
        
         <View style={styles.eventContainer}>
-        <BackButton />
           <View >
             <View style={styles.event}>
               <View style={styles.row}>

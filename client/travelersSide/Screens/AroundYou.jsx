@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -153,6 +154,13 @@ export default function AroundYou(props) {
                 )}
                 {isMenuOpen && (
                     <View style={styles.menu}>
+                        <ScrollView>
+                            
+                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                            navigation.navigate("Sign In");
+                        }}>
+                            <Text style={styles.textLO} > Log out  </Text>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
                             <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
@@ -204,6 +212,12 @@ export default function AroundYou(props) {
                         <Icon name="documents-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>My Posts </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity style={styles.option}
+                        onPress={() => { navigation.navigate("Warning",{ traveler: traveler})  }}
+                    >
+                        <Icon name="warning-outline" size={35} style={styles.icon} />
+                        <Text style={styles.text}>Warnings </Text>
+                    </TouchableOpacity>
 
                         <TouchableOpacity style={styles.option}
                             onPress={() => { navigation.navigate("Setting", { traveler }) }}
@@ -212,11 +226,7 @@ export default function AroundYou(props) {
                             <Text style={styles.text}>Setting</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                            navigation.navigate("Sign In");
-                        }}>
-                            <Text style={styles.textLO} > Log out  </Text>
-                        </TouchableOpacity>
+                        </ScrollView>
                     </View>
                 )}
             </View>
@@ -234,12 +244,13 @@ const styles = StyleSheet.create({
 
     },
     btnLogOut: {
+        top:40,
         flexDirection: 'row',
         position: 'absolute',
-        bottom: 30,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
+        // bottom: 30,
+        // alignSelf: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
 
       },
       
@@ -322,7 +333,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         right: 20,
-        top: 200,
+        top: 150,
         marginBottom: 21,
         backgroundColor: '#FF0000'
     },
@@ -334,7 +345,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         right: 20,
-        top: 200,
+        top: 150,
         marginBottom: 21
     },
     text: {

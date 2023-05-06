@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -66,7 +66,7 @@ export default function Setting(props) {
       .then((response) => response.json())
       .then((data) => {
         console.log("ddddddddd",data); // stakeholder updated successfully.
-        alert('Stakeholder updated successfully')
+        Alert.alert('Stakeholder updated successfully')
         navigation.goBack(); // Navigate back to the "Around You" screen
         //console.log({ newEvent })
       })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -27,7 +27,7 @@ export default function NewEvent(props) {
   const [picture, setPicture] = useState('#');
   const stackholderId = stakeholder.stackholderId
   const TravelerId = null;
-  const [serialTypeNumber, setSerialTypeNumber] = useState('');
+  const serialTypeNumber = 1004;
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
@@ -119,8 +119,8 @@ export default function NewEvent(props) {
   }
   const createEvent = async () => {
 
-    if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
-      alert('Please enter details and type');
+    if (newEvent.Details === '') {
+      Alert.alert('Please enter details and type');
     }
     else {
       // Send a POST request to your backend API with the event data
@@ -136,12 +136,12 @@ export default function NewEvent(props) {
         .then(data => {
           // Handle the response data as needed
           console.log({ data })
-          alert('Publish')
+          Alert.alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          Alert.alert('Error', error);
         });
     }
   }
@@ -169,7 +169,7 @@ export default function NewEvent(props) {
               TextInput.State.blur(TextInput.State.currentlyFocusedInput())
             }}>
           </TextInput>
-          <Text style={styles.text}>Type:</Text>
+          {/* <Text style={styles.text}>Type:</Text> */}
 
           {/* <Dropdown
             style={styles.dropdown}

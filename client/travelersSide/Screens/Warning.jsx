@@ -10,44 +10,68 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
 
-export default function MyPost(props) {
-    // const [events, setEvents] = useState([]);
-    const events = props.route.params.events;
-    const traveler = props.route.params.traveler;
-    console.log("iiiiiii", traveler)
-    console.log("iiiiiii", events)
+export default function Warning(props) {
     const navigation = useNavigation();
+    const [searchKeyword, setSearchKeyword] = useState('');
+
+    const [events, setEvents] = useState([]);
+    const traveler = props.route.params.traveler;
+    
+
+    // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+
+    useEffect(() => {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                setEvents(data)
+            });
+
+    }, [events]);
 
     const [eventAddresses, setEventAddresses] = useState([]);
 
     useEffect(() => {
         Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
         Promise.all(
-            events.map((event) =>
+            events.filter(event => event.SerialTypeNumber == 1004).map((event) =>
                 Geocoder.from(event.Latitude, event.Longitude)
                     .then((json) => json.results[0].formatted_address)
                     .catch(() => 'Address not found')
             )
         ).then((addresses) => setEventAddresses(addresses));
-    }, [events]);
-
+    }, []);
+    // console.log(eventAddresses)
     return (
         <GradientBackground>
+            <BackButton />
             <ScrollView>
                 <View style={styles.container}>
-                    <BackButton />
+                   
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search..."
+                        value={searchKeyword}
+                        onChangeText={text => setSearchKeyword(text)}
+                    />
                     <View>
-                        {events !== undefined ? (
-                            events.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
+                        {events !== undefined && events.length > 0 ? (
+                            events.filter(event => event.SerialTypeNumber == 1004 && event.Details.toLowerCase().includes(searchKeyword.toLowerCase())).map((event, index) => (
                                 <TouchableOpacity onPress={() => {
-                                    navigation.navigate('Event Details', { event: event, traveler: traveler });
+                                    navigation.navigate('Event Details', { event: event, traveler:traveler });
                                 }} >
                                     <View style={styles.event} key={event.eventNumber}>
                                         <View style={styles.detailsContainer}>
                                             <Text style={styles.details}>{event.Details}</Text>
-                                            <Text>{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
-                                            <Text>{event.EventTime.slice(0, 5)}</Text>
-                                            <Text>{eventAddresses[index]}</Text>
+                                            <Text >{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
+                                            <Text >{event.EventTime.slice(0, 5)}</Text>
+                                            <Text >{eventAddresses[index]}</Text>
 
                                         </View>
                                         <Image source={{ uri: event.Picture }} style={styles.img} />
@@ -99,6 +123,28 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
+    },
+    btnSave: {
+        marginVertical: 20,
+        width: "50%",
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#144800',
+        borderWidth: 2,
+        borderRadius: 25,
+        backgroundColor: '#144800'
+    },
+
+    btnText: {
+        color: '#F8F8FF',
+        alignSelf: 'center',
+        fontSize: 20,
+
+    },
+    searchInput:{
+        fontSize:35,
+        marginBottom:20
     }
 
 
