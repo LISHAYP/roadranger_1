@@ -58,8 +58,20 @@ const HomeChat = (props) => {
     console.log(user, loggeduser)
     navigation.navigate('Chat', { user, loggeduser });
   };
+ const handleUserSH= async(user, loggeduser)=>{
+  navigation.navigate('Chat withSH', { user, loggeduser });
 
-
+  }
+  
+  const SH = {Approved: true, ApprovelDate: "0001-01-01T00:00:00", Chat: true, FullName: "Menoraa", Notifications: true,
+   Password: "22222222",
+    Phone: 31115, 
+    StakeholderEmail: "menora@gmail.com", 
+    StakeholderId: 7, 
+    StakeholderName: "Harel", 
+    StakeholderType: "Insurance Company", 
+    picture: "http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_menora@gmail.com.jpg", 
+    token: "123"}
   const handleClearActiveChats = async () => {
     try {
       await AsyncStorage.removeItem('activeChats');
@@ -167,6 +179,12 @@ const HomeChat = (props) => {
             </ScrollView>
 
           </View>
+          <TouchableOpacity onPress={() => handleUserSH(SH, traveler)}>
+                  <View style={styles.row}>
+                
+                    <Text style={styles.text}>hiiiii</Text>
+                  </View>
+                </TouchableOpacity>
         </ScrollView>
       </GradientBackground>
 
