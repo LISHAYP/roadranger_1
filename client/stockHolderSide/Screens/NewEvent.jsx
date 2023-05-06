@@ -15,12 +15,12 @@ export default function NewEvent(props) {
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const serialType = [
-    //creating type of different eventtypes
-    { label: 'Missing traveler', value: '1003' },
-    { label: 'Travel warning', value: '1004' },
+  // const serialType = [
+  //   //creating type of different eventtypes
+  //   { label: 'Missing traveler', value: '1003' },
+  //   { label: 'Travel warning', value: '1004' },
 
-  ]
+  // ]
 
   const [details, setDetails] = useState('');
   const eventStatus = 'true';
@@ -59,7 +59,7 @@ export default function NewEvent(props) {
     Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
-    TravelerId: id,
+    TravelerId: TravelerId,
     StackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
@@ -171,7 +171,7 @@ export default function NewEvent(props) {
           </TextInput>
           <Text style={styles.text}>Type:</Text>
 
-          <Dropdown
+          {/* <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -185,7 +185,7 @@ export default function NewEvent(props) {
               setSerialTypeNumber(item.value)
               setSelectedSerialType(item) // Update the selected item state variable
 
-            }} />
+            }} /> */}
 
           <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />

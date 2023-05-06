@@ -15,6 +15,8 @@ export default function Warning(props) {
 
     const [events, setEvents] = useState([]);
     const stakeholder = props.route.params.stakeholder;
+    const userLocation = props.route.params.userLocation
+
     // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
     useEffect(() => {
@@ -35,12 +37,24 @@ export default function Warning(props) {
             });
     }
     console.log("Eeeeeeeee", events)
-
+console.log("kkkkkkkkkkk",userLocation)
     return (
         <GradientBackground>
             <BackButton />
             <ScrollView>
                 <View style={styles.container}>
+                    <TouchableOpacity style={styles.btnSave}
+                   onPress={() => {
+                    navigation.navigate("New event", {
+                        stakeholder: stakeholder,
+                        userLocation: userLocation
+                    });
+                }}
+                    >
+                        <Text style={styles.btnText}>
+                            Add Warning
+                        </Text>
+                    </TouchableOpacity>
                     <View>
                         {events !== undefined && events.length > 0 ? (
                             events.filter(event => event.SerialTypeNumber == 1004 || event.SerialTypeNumber == 1003).map((event, index) => (
@@ -102,7 +116,25 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
-    }
+    },
+    btnSave: {
+        marginVertical: 20,
+        width: "50%",
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#144800',
+        borderWidth: 2,
+        borderRadius: 25,
+        backgroundColor: '#144800'
+    },
+
+    btnText: {
+        color: '#F8F8FF',
+        alignSelf: 'center',
+        fontSize: 20,
+
+    },
 
 
 

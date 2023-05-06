@@ -15,6 +15,7 @@ export default function AroundYou(props) {
 
     const stakeholder = props.route.params.data;
     console.log("%%%%", stakeholder);
+    console.log("%%%%", userLocation);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -187,7 +188,11 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>Setting</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Warning",{ stakeholder }) }}
+                        onPress={() => { navigation.navigate("Warning",{
+                            stakeholder: stakeholder,
+                            userLocation: userLocation
+                        })
+                     }}
                     >
                         <Icon name="warning-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Warnings </Text>
