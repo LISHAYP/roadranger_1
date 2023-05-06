@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -11,8 +11,8 @@ import GradientBackground from '../Components/GradientBackground';
 
 
 export default function Setting(props) {
-  const stakeholder = props.route.params.stakeholderParams.stakeholder;
-  console.log("********",stakeholder);
+  const stakeholder = props.route.params.stakeholder;
+  console.log("********", stakeholder);
 
   const navigation = useNavigation();
   const [full_name, setFullName] = useState(stakeholder.FullName);
@@ -21,7 +21,7 @@ export default function Setting(props) {
   const [password, setPassword] = useState(stakeholder.Password);
   const [phone, setPhone] = useState(stakeholder.Phone);
   const [userPic, setUserPic] = useState(stakeholder.picture)
-  const[token,setToken]=useState(null);
+  const [token, setToken] = useState(null);
   const stakeholderType = [
     { label: 'Insurance Company', value: 'Insurance Company' },
     { label: 'Embassy', value: 'Embassy' },
@@ -32,10 +32,9 @@ export default function Setting(props) {
 
   const [isEnabledChatMode, setIsEnabledChatMode] = useState(stakeholder.Chat);
   const [isEnabledNotification, setIsEnabledNotification] = useState(stakeholder.Notifications);
-  const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.stakeholderType);
+  const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.StakeholderType);
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
-  console.log("************",stakeholder_email,selectedStakeholderType);
   useEffect(() => {
     setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${stakeholder_email}.jpg`);
 
@@ -50,12 +49,12 @@ export default function Setting(props) {
     password: password,
     chat: isEnabledChatMode,
     picture: userPic,
- token: token
+    token: token
   };
-  
-  console.log("*****",changeStakeholder);
+
+  console.log("*****", changeStakeholder);
   const saveChanges = async () => {
-    console.log("IM IN saveChanges", changeStakeholder, stakeholder.StakeholderEmail);
+    console.log("IM IN saveChanges", changeStakeholder);
     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/stakeholder/update?email=${stakeholder.StakeholderEmail}`, {
       method: 'PUT',
       headers: {
@@ -66,8 +65,8 @@ export default function Setting(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // stakeholder updated successfully.
-        alert('Stakeholder updated successfully')
+        console.log("ddddddddd",data); // stakeholder updated successfully.
+        Alert.alert('Stakeholder updated successfully')
         navigation.goBack(); // Navigate back to the "Around You" screen
         //console.log({ newEvent })
       })
@@ -76,11 +75,11 @@ export default function Setting(props) {
       });
   }
   const id = stakeholder.stakeholder_id;
-  
+
   const openCamera = () => {
     console.log("ereeeee", stakeholder_email);
-    navigation.navigate('Camera', stakeholder_email );
-    handleSavePhoto( );
+    navigation.navigate('Camera', stakeholder_email);
+    handleSavePhoto();
   }
   const handleSavePhoto = () => {
     setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${stakeholder.StakeholderEmail}.jpg`);
@@ -88,26 +87,26 @@ export default function Setting(props) {
   return (
     <ScrollView>
       < GradientBackground>
-      <BackButton/>
+        <BackButton />
         <View style={styles.container}>
-        <TouchableOpacity onPress={openCamera}>
+          <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
           </TouchableOpacity >
           <Text style={styles.text}>Stakeholder Type:</Text>
           <Dropdown
-           style={styles.dropdown}
-           placeholderStyle={styles.placeholderStyle}
-           selectedTextStyle={styles.selectedTextStyle}
-           data={stakeholderType}       
-           maxHeight={300}
-           labelField="label"
-           valueField="value"
-           placeholder={stakeholder.selectedStakeholderType}
-           value={selectedStakeholderType}
-           onChange={item => {
-             setSelectedStakeholderType(item.label)
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={stakeholderType}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={stakeholder.StakeholderType}
+            value={selectedStakeholderType}
+            onChange={item => {
+              setSelectedStakeholderType(item.label)
             }} />
-           <Text style={styles.text}>stakeholder Name:</Text>
+          <Text style={styles.text}>stakeholder Name:</Text>
           <TextInput style={styles.input}
             //value={StakeholderName}
             onChangeText={(text) => setStakeholderName(text)}
@@ -120,9 +119,9 @@ export default function Setting(props) {
             onChangeText={(text) => setFullName(text)}
             placeholder={stakeholder.FullName}>
           </TextInput>
-         
-         
-             <Text style={styles.text}>Email:</Text>
+
+
+          <Text style={styles.text}>Email:</Text>
           <TextInput style={styles.input}
             // value={email}
             onChangeText={(text) => setEmail(text)}
@@ -136,7 +135,7 @@ export default function Setting(props) {
             onChangeText={(text) => setPhone(text)}
           >
           </TextInput>
-         
+
           <Text style={styles.text}>Password:</Text>
           <TextInput style={styles.input}
             placeholder={stakeholder.Password}
@@ -144,7 +143,7 @@ export default function Setting(props) {
             onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}>
           </TextInput>
-         
+
           <View style={styles.row}>
             <Text style={styles.text2}>Notification</Text>
             <Switch
@@ -167,7 +166,7 @@ export default function Setting(props) {
               value={isEnabledChatMode}
             />
           </View>
-          
+
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>
               Save Changes

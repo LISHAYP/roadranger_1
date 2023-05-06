@@ -32,8 +32,8 @@ export default function Events(props) {
   return (
     <GradientBackground>
       <ScrollView>
+      <BackButton />
         <View style={styles.container}>
-          <BackButton />
           <View>
             {events !== undefined && events.length > 0 ? (
               events.map((event, index) => (

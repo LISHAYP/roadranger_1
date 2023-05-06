@@ -12,10 +12,8 @@ import BackButton from '../Components/BackButton';
 
 export default function Events(props) {
   // const [events, setEvents] = useState([]);
-  const events = props.route.params.data;
+  // const events = props.route.params.data;
   const traveler =  props.route.params.traveler;
-
-
 
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();

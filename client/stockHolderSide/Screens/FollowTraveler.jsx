@@ -16,36 +16,33 @@ export default function FollowTraveler(props) {
   console.log("kkkkkkkkkkkk",traveler);
 
   useEffect(() => {
-   
+    getLocationTraveler()
   }, []);
 
-//   const stackholderType = () => {
-//     if (stakeholder.StakeholderType == 'Insurance Company') {
-//       const objInsuranceCompany = {
-//         insurence_company: stakeholder.StakeholderName
-//       }
-//       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/GetTravelersByInsuranceCompany', {
-//         method: 'POST',
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(objInsuranceCompany),
-//       })
-//         .then(response => response.json())
-//         .then(data => {
-//           console.log('********', { data })
-//           setMyTravelers(data)
-//         }
-//         )
-//         .catch(error => {
-//           console.error(error);
-//           console.log('Error');
-//         });
-//     }
-
-//   }
-
+  const getLocationTraveler = () => {
+    const objTravelerId = {
+      TravelerId: traveler.traveler_id
+    }
+    console.log("hhhhhh",objTravelerId);
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/locations', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(objTravelerId),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('********', { data })
+          
+        }
+        )
+        .catch(error => {
+          console.error(error);
+          console.log('Error');
+        });
+    }
 
   return (
     < GradientBackground>

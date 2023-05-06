@@ -12,6 +12,7 @@ import Search from './Screens/Search';
 import BackButton from './Components/BackButton';
 import OpenCamera from './Components/OpenCamera';
 import OpenCameraE from './Components/OpenCameraE';
+import Warning from './Screens/Warning';
 // import TimeLine from './Screens/TimeLine'
 import followTraveler from './Screens/FollowTraveler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -20,8 +21,8 @@ import { Picker } from '@react-native-picker/picker';
 import ForgotPassword from './Screens/ForgotPassword';
 import EventDetails from './Screens/EventDetails';
 import YourTravelers from './Screens/YourTravelers';
-import Chat from './Screens/Chat';
-import HomeChat from './Screens/HomeChat';
+// import Chat from './Screens/Chat';
+// import HomeChat from './Screens/HomeChat';
 //import GroupChat from './Screens/GroupChat'
 const Stack = createNativeStackNavigator()
 export default function App() {
@@ -45,11 +46,10 @@ export default function App() {
         <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="BackButton" component={BackButton} />
         <Stack.Screen name="Follow" component={followTraveler} />
-        {/* <Stack.Screen name="Group chat" component={GroupChat} />*/}
-        <Stack.Screen name="Chat" component={Chat} /> 
-        <Stack.Screen name="Home chat" component={HomeChat} />
-<Stack.Screen name="Event Details" component={EventDetails} />
-
+        <Stack.Screen name="Warning" component={Warning} />
+        <Stack.Screen name="Event Details" component={EventDetails} />
+        {/* <Stack.Screen name="Chat" component={Chat} /> 
+        <Stack.Screen name="Home chat" component={HomeChat} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -61,5 +61,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-},
+  },
 });

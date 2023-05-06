@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -15,27 +15,19 @@ export default function NewEvent(props) {
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const serialType = [
-    //creating type of different eventtypes
-    { label: 'Weather', value: '1' },
-    { label: 'Car Accidents', value: '2' },
-    { label: 'Road closures', value: '3' },
-    { label: 'Natural disasters', value: '4' },
-    { label: 'Health emergencies', value: '5' },
-    { label: 'Accommodation issues', value: '6' },
-    { label: 'Protests', value: '7' },
-    { label: 'Strikes', value: '8' },
-    { label: 'Security threats', value: '9' },
-    { label: 'Animal-related incidents', value: '10' },
-    { label: 'Financial issues', value: '11' }
-  ]
+  // const serialType = [
+  //   //creating type of different eventtypes
+  //   { label: 'Missing traveler', value: '1003' },
+  //   { label: 'Travel warning', value: '1004' },
 
-  const id = stakeholder.stackholderId;
+  // ]
+
   const [details, setDetails] = useState('');
-  const [eventStatus, setEventStatus] = useState('true');
+  const eventStatus = 'true';
   const [picture, setPicture] = useState('#');
-  const [stackholderId, setStackholderId] = useState('null');
-  const [serialTypeNumber, setSerialTypeNumber] = useState('');
+  const stackholderId = stakeholder.stackholderId
+  const TravelerId = null;
+  const serialTypeNumber = 1004;
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
@@ -67,7 +59,7 @@ export default function NewEvent(props) {
     Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
-    TravelerId: id,
+    TravelerId: TravelerId,
     StackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
@@ -127,8 +119,8 @@ export default function NewEvent(props) {
   }
   const createEvent = async () => {
 
-    if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
-      alert('Please enter details and type');
+    if (newEvent.Details === '') {
+      Alert.alert('Please enter details and type');
     }
     else {
       // Send a POST request to your backend API with the event data
@@ -144,12 +136,12 @@ export default function NewEvent(props) {
         .then(data => {
           // Handle the response data as needed
           console.log({ data })
-          alert('Publish')
+          Alert.alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          Alert.alert('Error', error);
         });
     }
   }
@@ -159,12 +151,11 @@ export default function NewEvent(props) {
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
     setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
   }
-
   return (
     < GradientBackground>
       <ScrollView>
         <View style={styles.container}>
-        <BackButton />
+          <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -178,9 +169,9 @@ export default function NewEvent(props) {
               TextInput.State.blur(TextInput.State.currentlyFocusedInput())
             }}>
           </TextInput>
-          <Text style={styles.text}>Type:</Text>
+          {/* <Text style={styles.text}>Type:</Text> */}
 
-          <Dropdown
+          {/* <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -194,7 +185,7 @@ export default function NewEvent(props) {
               setSerialTypeNumber(item.value)
               setSelectedSerialType(item) // Update the selected item state variable
 
-            }} />
+            }} /> */}
 
           <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />

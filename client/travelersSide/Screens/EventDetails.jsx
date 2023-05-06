@@ -224,7 +224,7 @@ export default function EventDetails(props) {
               <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
               <Text style={styles.locationText}>{addressComponents}</Text>
             </View>
-            {event.Picture!='#' && (
+            {event.Picture !='#' && (
               <View style={styles.pictureContainer}>
                 <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
               </View>

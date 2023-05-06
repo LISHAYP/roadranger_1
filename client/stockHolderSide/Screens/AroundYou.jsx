@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text,Image, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -14,15 +14,16 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const stakeholder = props.route.params.data;
-    console.log(stakeholder);
+    console.log("%%%%", stakeholder);
+    console.log("%%%%", userLocation);
 
     useFocusEffect(
         React.useCallback(() => {
-        handleGet();
-        return () => {
-        };
+            handleGet();
+            return () => {
+            };
         }, [])
-        );
+    );
 
     const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
@@ -40,7 +41,7 @@ export default function AroundYou(props) {
             setLocation(location);
             handleGet();
             getUserLocation();
-            
+
         })();
     }, []);
 
@@ -87,17 +88,17 @@ export default function AroundYou(props) {
         8: 'brown',    // Security threats
         9: 'black',    // Animal-related incidents
         10: 'gray',    // Financial issues
-      };
+    };
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
-                <Icon name="menu" size={30} color={'white'} top={10} />
+                <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
                 <Text style={styles.titlename}>  Hello, {stakeholder.FullName} ! </Text>
 
             </TouchableOpacity>
 
-           
+
 
             {location && location.coords && (
                 <MapView
@@ -116,8 +117,8 @@ export default function AroundYou(props) {
                         title="My Location"
                         description="This is my current location"
                     />
-                    {Events.map(event => (
-                        <Marker
+                    {Events.filter(event => event.event_status !== false && event.SerialTypeNumber
+                        !== 1004 && event.SerialTypeNumber !== 1003).map(event => (<Marker
                             key={event.EventNumber}
                             coordinate={{
                                 latitude: event.Latitude,
@@ -127,25 +128,23 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
-                                navigation.navigate('Event Details', { event , stakeholder});
+                                navigation.navigate('Event Details', { event, stakeholder });
                             }}
                         />
-                       
-                    ))}
+
+                        ))}
 
                 </MapView>
 
             )}
             {isMenuOpen && (
                 <View style={styles.menu}>
-                     <View >
-                    <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                        <AntDesign name="close" size={24} color="black" />
-                    </TouchableOpacity>
-                   
-                        <Image source={{ uri: stakeholder.picture  }} style={styles.user} />
-                        <Text style={styles.name}>
-                            Hello, {stakeholder.StakeholderName} !  </Text>
+                    <View >
+                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                            <AntDesign name="close" size={24} color="black" />
+                        </TouchableOpacity>
+
+                        <Image source={{ uri: stakeholder.picture }} style={styles.user} />
 
                     </View>
 
@@ -171,22 +170,32 @@ export default function AroundYou(props) {
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                      onPress={() => {navigation.navigate("Your Travelers",{ stakeholder: stakeholder})}}>
-                    
+                        onPress={() => { navigation.navigate("Your Travelers", { stakeholder }) }}>
+
                         <Icon name="people-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Your Travelers</Text>
                     </TouchableOpacity>
-                   
-                    <TouchableOpacity style={styles.option} onPress={() => {navigation.navigate("Search",{stakeholder})}}>
+
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { stakeholder }) }}>
                         <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>                        
+                        <Text style={styles.text}>Search </Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting",{ stakeholderParams: {stakeholder }})}}
+                        onPress={() => { navigation.navigate("Setting", { stakeholder }) }}
                     >
                         <Icon name="settings-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.option}
+                        onPress={() => { navigation.navigate("Warning",{
+                            stakeholder: stakeholder,
+                            userLocation: userLocation
+                        })
+                     }}
+                    >
+                        <Icon name="warning-outline" size={35} style={styles.icon} />
+                        <Text style={styles.text}>Warnings </Text>
                     </TouchableOpacity>
                 </View>
             )}
@@ -204,18 +213,18 @@ const styles = StyleSheet.create({
     user: {
         alignSelf: 'center',
         resizeMode: 'cover',
-        height: 120,
+        height: 150,
         borderRadius: 75,
-        width: 120,
-       marginTop:35,
-       top:40
-      },
+        width: 150,
+        top: 50
+
+    },
     name: {
         position: "absolute",
         fontSize: 20,
         top: 250,
         left: 80,
-        
+
     },
     map: {
         width: '100%',
@@ -224,22 +233,23 @@ const styles = StyleSheet.create({
     titlename: {
         color: 'white',
         width: '100%',
-         top:12,
-         left:80,
-         fontSize:20
+        left: 70,
+        fontSize: 22,
+        alignSelf: "center"
     },
     hamburger: {
         flexDirection: 'row',
         position: 'absolute',
         width: '100%',
-        height: '6%',
-        top: 33,
+        height: '12%',
+        top: 0,
         left: 0,
         zIndex: 1,
         // borderRadius: 30,
         // paddingVertical: 10,
         // paddingHorizontal: 25,
-        backgroundColor: '#8FBC8F'
+        backgroundColor: '#8FBC8F',
+        paddingTop:55
 
     },
     menu: {
@@ -249,7 +259,7 @@ const styles = StyleSheet.create({
         width: '80%',
         height: '100%',
         backgroundColor: '#F0F8FF',
-        
+
 
 
         // alignItems: 'center',
@@ -287,12 +297,12 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         left: 40
-        
-        
+
+
     },
     icon: {
         left: 30,
-        size: 30,
+        size: 30,
 
-    }
+    }
 });

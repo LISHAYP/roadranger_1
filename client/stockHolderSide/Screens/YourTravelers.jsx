@@ -37,7 +37,7 @@ export default function YourTravelers(props) {
         body: JSON.stringify(objInsuranceCompany),
       })
       .then(response => response.json())
-      .then(data => {
+      .then ( data => {
         // Map over the data and get the address for each traveler
         Promise.all(data.map(traveler => {
           const lat = traveler.last_location.Latitude;
@@ -78,7 +78,7 @@ return (
 
                  <Text>{traveler.address}</Text>
                 
-                  <Text>{formatDate(traveler.last_location.DateAndTime)}</Text> 
+                  <Text>{traveler.last_location.DateAndTime}</Text> 
               </TouchableOpacity>
             </View>
           ))
