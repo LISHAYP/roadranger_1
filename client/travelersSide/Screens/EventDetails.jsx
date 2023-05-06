@@ -363,8 +363,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    // width:'95%',
-    
+    // width:'95%'
   },
   img: {
     height: 40,

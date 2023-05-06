@@ -5,13 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="api">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="api" Type="varchar" MaxLength="255" />
-        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -39,6 +32,13 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblApi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="api" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblArea">
           <Key>
@@ -413,9 +413,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="igroup190_test1ModelStoreContainer">
-          <EntitySet Name="api" EntityType="Self.api" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblApi" EntityType="Self.tblApi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
@@ -513,13 +513,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="api">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="api1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -552,6 +545,13 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblApi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="api" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblArea">
           <Key>
@@ -931,9 +931,9 @@
           <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
         </Association>
         <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="api" EntityType="Self.api" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tblApi" EntityType="Self.tblApi" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" />
           <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" />
           <EntitySet Name="tblComments" EntityType="Self.tblComments" />
@@ -1027,14 +1027,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
-          <EntitySetMapping Name="api">
-            <EntityTypeMapping TypeName="igroup190_test1Model.api">
-              <MappingFragment StoreEntitySet="api">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="api1" ColumnName="api" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="stakeholders">
             <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
               <MappingFragment StoreEntitySet="stakeholders">
@@ -1062,6 +1054,14 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblApi">
+            <EntityTypeMapping TypeName="igroup190_test1Model.tblApi">
+              <MappingFragment StoreEntitySet="tblApi">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="api" ColumnName="api" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

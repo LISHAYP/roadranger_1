@@ -64,7 +64,8 @@ namespace WebApplication1.Controllers
                     ApprovelDate = stakeholder.approvel_date,
                     StakeholderType = stakeholder.stakeholder_type,
                     Password = stakeholder.password,
-                    token = stakeholder.token
+                    token = stakeholder.token,
+                    picture = stakeholder.picture
                     // Map related entities as well if needed
                 };
                 logger.Info("stackholder was founs succesfully");
@@ -78,14 +79,62 @@ namespace WebApplication1.Controllers
             }
         }
 
+        //[HttpPost]
+        //[Route("api/post/GetTravelersByInsuranceCompany")]
+        //public IHttpActionResult GetTravelersByInsuranceCompany([FromBody] TravelerDto insuranceCompany)
+        //{
+        //    try
+        //    {
+
+        //        var travelers = db.traveleres.Where(x => x.insurence_company == insuranceCompany.insurence_company).ToList();
+
+        //        if (travelers == null)
+        //        {
+        //            logger.Info($"travelers were not found in the insurence {insuranceCompany.insurence_company}");
+        //            return NotFound();
+        //        }
+
+        //        List<TravelerDto> travelerDtos = new List<TravelerDto>();
+
+        //        foreach (var traveler in travelers)
+        //        {
+        //            TravelerDto travelerDto = new TravelerDto()
+        //            {
+        //                traveler_id = traveler.traveler_id,
+        //                first_name = traveler.first_name,
+        //                last_name = traveler.last_name,
+        //                travler_email = traveler.travler_email,
+        //                phone = traveler.phone,
+        //                notifications = traveler.notifications,
+        //                insurence_company = traveler.insurence_company,
+        //                location = traveler.location,
+        //                save_location = traveler.save_location,
+        //                dateOfBirth = traveler.dateOfBirth,
+        //                gender = traveler.gender,
+        //                password = traveler.password,
+        //                chat = traveler.chat,
+        //                Picture = traveler.picture
+        //            };
+        //            travelerDtos.Add(travelerDto);
+        //        }
+
+        //        return Ok(travelerDtos);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest();
+        //    }
+        //}
         [HttpPost]
         [Route("api/post/GetTravelersByInsuranceCompany")]
         public IHttpActionResult GetTravelersByInsuranceCompany([FromBody] TravelerDto insuranceCompany)
         {
             try
             {
-
-                var travelers = db.traveleres.Where(x => x.insurence_company == insuranceCompany.insurence_company).ToList();
+                var travelers = db.traveleres
+                    .Where(x => x.insurence_company == insuranceCompany.insurence_company)
+                    .ToList();
 
                 if (travelers == null)
                 {
@@ -93,31 +142,48 @@ namespace WebApplication1.Controllers
                     return NotFound();
                 }
 
-                List<TravelerDto> travelerDtos = new List<TravelerDto>();
-
-                foreach (var traveler in travelers)
-                {
-                    TravelerDto travelerDto = new TravelerDto()
+                var travelerLocations = db.tblLocations
+                    .GroupBy(x => x.travelerId)
+                    .Select(g => new
                     {
-                        traveler_id = traveler.traveler_id,
-                        first_name = traveler.first_name,
-                        last_name = traveler.last_name,
-                        travler_email = traveler.travler_email,
-                        phone = traveler.phone,
-                        notifications = traveler.notifications,
-                        insurence_company = traveler.insurence_company,
-                        location = traveler.location,
-                        save_location = traveler.save_location,
-                        dateOfBirth = traveler.dateOfBirth,
-                        gender = traveler.gender,
-                        password = traveler.password,
-                        chat = traveler.chat,
-                        Picture = traveler.picture
-                    };
-                    travelerDtos.Add(travelerDto);
-                }
+                        TravelerId = g.Key,
+                        LastLocation = g.OrderByDescending(x => x.dateAndTime)
+                            .Select(x => new LocationDto
+                            {
+                                TravelerId = x.travelerId,
+                                DateAndTime = x.dateAndTime,
+                                Latitude = x.latitude,
+                                Longitude = x.longitude
+                            })
+                            .FirstOrDefault()
+                    })
+                    .ToList();
 
-                return Ok(travelerDtos);
+                var result = travelers
+                    .Select(t => new
+                    {
+                        traveler_id = t.traveler_id,
+                        first_name = t.first_name,
+                        last_name = t.last_name,
+                        travler_email = t.travler_email,
+                        phone = t.phone,
+                        notifications = t.notifications,
+                        insurence_company = t.insurence_company,
+                        location = t.location,
+                        save_location = t.save_location,
+                        dateOfBirth = t.dateOfBirth,
+                        gender = t.gender,
+                        password = t.password,
+                        chat = t.chat,
+                        Picture = t.picture,
+                        last_location = travelerLocations
+                            .Where(x => x.TravelerId == t.traveler_id)
+                            .Select(x => x.LastLocation)
+                            .FirstOrDefault()
+                    })
+                    .ToList();
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -125,6 +191,7 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+
 
         [HttpPut]
         [Route("api/put/stakeholder/update")]
@@ -149,6 +216,7 @@ namespace WebApplication1.Controllers
                 stakeholder.stakeholder_name = value.StakeholderName;
                 stakeholder.stakeholder_type = value.StakeholderType;
                 stakeholder.password = value.Password;
+                stakeholder.picture = value.picture;
 
                 db.Entry(stakeholder).State = EntityState.Modified;
                 db.SaveChanges();

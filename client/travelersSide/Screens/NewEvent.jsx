@@ -21,16 +21,16 @@ export default function NewEvent(props) {
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
-    { label: 'Car Accidents', value: '2' },
-    { label: 'Road closures', value: '3' },
-    { label: 'Natural disasters', value: '4' },
-    { label: 'Health emergencies', value: '5' },
-    { label: 'Accommodation issues', value: '6' },
-    { label: 'Protests', value: '7' },
-    { label: 'Strikes', value: '8' },
-    { label: 'Security threats', value: '9' },
-    { label: 'Animal-related incidents', value: '10' },
-    { label: 'Financial issues', value: '11' }
+    { label: 'Car Accidents', value: '1002' },
+    { label: 'Road closures', value: '2' },
+    { label: 'Natural disasters', value: '3' },
+    { label: 'Health emergencies', value: '4' },
+    { label: 'Accommodation issues', value: '5' },
+    { label: 'Protests', value: '6' },
+    { label: 'Strikes', value: '7' },
+    { label: 'Security threats', value: '8' },
+    { label: 'Animal-related incidents', value: '9' },
+    { label: 'Financial issues', value: '10' }
   ]
 
   const id = traveler.traveler_id;

@@ -4,7 +4,8 @@ import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
 import Geocoder from 'react-native-geocoding';
-
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import BackButton from '../Components/BackButton';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -131,8 +132,13 @@ console.log("##########",stakeholder.StakeholderId);
 
   return (
     <GradientBackground>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+       
         <View style={styles.eventContainer}>
+        <BackButton />
           <View >
             <View style={styles.event}>
               <View style={styles.row}>
@@ -157,8 +163,7 @@ console.log("##########",stakeholder.StakeholderId);
             <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
           </View>
           <ScrollView>
-          <View>
-            {comments !== undefined && comments.length > 0 && (
+            {comments && comments.length > 0 && (
               comments.map((comment, index) => (
                 <View key={index} style={styles.commentContainer}>
                   <View style={styles.event}>
@@ -167,16 +172,15 @@ console.log("##########",stakeholder.StakeholderId);
                       <Text style={styles.text}>{comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
                     </View>
                     <View>
-                      <Text style={styles.textdateTime}>{comment.CommentTime} {new Date(comment.CommentDate).toLocaleDateString('en-US')}</Text>
+                      <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
                     </View>
-
                   </View>
                   <View>
                     <Text style={styles.detailsTextComment}>{comment.Details}</Text>
                   </View>
                 </View>
-              )))}
-          </View>
+              ))
+            )}
           </ScrollView>
         </View>
         <View style={styles.addComment}>
@@ -200,7 +204,8 @@ console.log("##########",stakeholder.StakeholderId);
             </TextInput>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
+      
     </GradientBackground >
   )
 };
@@ -211,6 +216,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
+    marginTop:30
 
 
   },

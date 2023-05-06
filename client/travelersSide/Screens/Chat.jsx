@@ -112,57 +112,63 @@ export default function Chat(props) {
     const onSend = useCallback(async (newMessages = []) => {
         const messagesRef = chatRoomDocRef ? collection(database, `chat_rooms/${chatRoomDocRef.id}/messages`) : null;
         if (messagesRef) {
-          const promises = newMessages.map((message) => {
-            const createdAt = new Date();
-            const messageData = {
-              _id: uuidv4(), // add the generated ID to the message object
-              text: message.text,
-              createdAt: createdAt,
-              user: {
-                _id: traveler.traveler_id,
-                avatar: traveler.Picture
-              }
-            };
-            setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-            handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
-            console.log("*********", traveler1)
-            return addDoc(messagesRef, messageData);
-          });
-      
-          Promise.all(promises)
-            .then(() => {
-              console.log('Messages sent');
-            })
-            .catch((error) => {
-              console.error(error);
+            const promises = newMessages.map((message) => {
+                const createdAt = new Date();
+                const messageData = {
+                    _id: uuidv4(), // add the generated ID to the message object
+                    text: message.text,
+                    createdAt: createdAt,
+                    user: {
+                        _id: traveler.traveler_id,
+                        avatar: traveler.Picture
+                    }
+                };
+                setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
+                handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
+                console.log("*********", traveler1)
+                return addDoc(messagesRef, messageData);
             });
+
+            Promise.all(promises)
+                .then(() => {
+                    console.log('Messages sent');
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
-      }, [traveler, traveler1, chatRoomDocRef]);
-    
-      
-      const handlePushNotification = async (message, recipientToken) => {
+    }, [traveler, traveler1, chatRoomDocRef]);
+
+
+    const handlePushNotification = async (message, recipientToken) => {
         // Construct the message payload
         const notification = {
-          title: `${traveler.first_name} ${traveler.last_name} `,
-          body: message.text,
-          data: { chatRoomDocRefId: chatRoomDocRef.id },
-          sound: 'default',
+            to: recipientToken,
+            title: `New message from ${traveler.first_name} ${traveler.last_name} `,
+            body: message.text,
+            data: { chatRoomDocRefId: chatRoomDocRef.id },
         };
-        
+
         // Send the notification to the recipient         
-        console.log("Recipient token:", recipientToken);
-      
-        await Notifications.scheduleNotificationAsync({
-          content: notification,
-          data: {
-            to: recipientToken
-          },
-          trigger: null,
-        });
-      };
-      
-      
-      
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notification),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+                Alert.alert('Error', error);
+            });
+
+
+    };
+
     return (
         <GradientBackground>
             <View style={styles.container}>
@@ -177,6 +183,7 @@ export default function Chat(props) {
                         <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
                     </View>
                 </View>
+              
                 {messages && (
                     <GiftedChat
                         isTyping={true}
