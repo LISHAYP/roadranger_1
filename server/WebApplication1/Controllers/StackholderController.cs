@@ -126,6 +126,7 @@ namespace WebApplication1.Controllers
         //        return BadRequest();
         //    }
         //}
+
         [HttpPost]
         [Route("api/post/GetTravelersByInsuranceCompany")]
         public IHttpActionResult GetTravelersByInsuranceCompany([FromBody] TravelerDto insuranceCompany)
@@ -228,6 +229,33 @@ namespace WebApplication1.Controllers
                 logger.Error(ex.Message);
                 return BadRequest(ex.Message);
             }
+        }
+        // checks the insurence company of the tarveler and returns all the stakeholders from the same company
+        [HttpPost]
+        [Route("api/stakeholders")]
+        public IHttpActionResult GetStakeholdersByInsuranceCompany([FromBody] TravelerDto traveler)
+        {
+            var stakeholders = db.stakeholders
+                .Where(s => s.full_name == traveler.insurence_company)
+                .Select(s => new StackholderDto
+                {
+                    StakeholderId = s.stakeholder_id,
+                    FullName = s.full_name,
+                    StakeholderEmail = s.stakeholder_email,
+                    Phone = s.phone,
+                    Notifications = s.notifications,
+                    Chat = s.chat,
+                    StakeholderName = s.stakeholder_name,
+                    Approved = s.approved,
+                    ApprovelDate = s.approvel_date,
+                    StakeholderType = s.stakeholder_type,
+                    Password = s.password,
+                    token = s.token,
+                    picture = s.picture
+                })
+                .ToList();
+
+            return Ok(stakeholders);
         }
 
         [HttpPut]

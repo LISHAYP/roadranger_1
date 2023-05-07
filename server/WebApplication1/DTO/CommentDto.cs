@@ -17,5 +17,7 @@ namespace WebApplication1.DTO
         public string TravelerName { get; set; }
         public string StakeholderName { get; set; }
         public string picture { get; set; }
+
+        public string shpicture { get; set; }
     }
 }

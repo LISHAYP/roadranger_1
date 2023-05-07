@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
             return new string[] { "value1", "value2" };
         }
         // GET: api/locations
-        [HttpGet]
+        [HttpPost]
         [Route("api/locations")]
         public IHttpActionResult GetTravelerLocations([FromBody] LocationDto travelerId)
         {
@@ -45,6 +45,34 @@ namespace WebApplication1.Controllers
 
             return Ok(locationDtos);
         }
+
+        //bring back all the travelers and their last location
+        [HttpPost]
+        [Route("api/lastlocation")]
+        public IHttpActionResult GetLastTravelerLocations()
+        {
+            List<LocationDto> locationDtos = new List<LocationDto>();
+
+            var lastLocations = db.tblLocations
+                .GroupBy(l => l.travelerId)
+                .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault());
+
+            foreach (var location in lastLocations)
+            {
+                LocationDto locationDto = new LocationDto
+                {
+                    TravelerId = location.travelerId,
+                    DateAndTime = location.dateAndTime,
+                    Latitude = location.latitude,
+                    Longitude = location.longitude
+                };
+
+                locationDtos.Add(locationDto);
+            }
+
+            return Ok(locationDtos);
+        }
+
 
 
         // GET: api/Location/5
