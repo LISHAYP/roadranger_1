@@ -21,9 +21,8 @@ import { Picker } from '@react-native-picker/picker';
 import ForgotPassword from './Screens/ForgotPassword';
 import EventDetails from './Screens/EventDetails';
 import YourTravelers from './Screens/YourTravelers';
-// import Chat from './Screens/Chat';
-// import HomeChat from './Screens/HomeChat';
-//import GroupChat from './Screens/GroupChat'
+ import Chat from './Screens/Chat';
+ import HomeChat from './Screens/HomeChat';
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
@@ -48,8 +47,8 @@ export default function App() {
         <Stack.Screen name="Follow" component={followTraveler} />
         <Stack.Screen name="Warning" component={Warning} />
         <Stack.Screen name="Event Details" component={EventDetails} />
-        {/* <Stack.Screen name="Chat" component={Chat} /> 
-        <Stack.Screen name="Home chat" component={HomeChat} /> */}
+        <Stack.Screen name="Chat" component={Chat} /> 
+        <Stack.Screen name="Home chat" component={HomeChat} />
       </Stack.Navigator>
     </NavigationContainer>
   );
