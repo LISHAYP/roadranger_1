@@ -18,7 +18,6 @@ export default function YourTravelers(props) {
   const stakeholder = props.route.params.stakeholder;
   const [myTravelers, setMyTravelers] = useState([])
   console.log(stakeholder)
-  console.log("mmmmmmmmm", myTravelers)
   useEffect(() => {
     stackholderType()
   }, []);
@@ -36,33 +35,38 @@ export default function YourTravelers(props) {
         },
         body: JSON.stringify(objInsuranceCompany),
       })
-      .then(response => response.json())
-      .then ( data => {
-        // Map over the data and get the address for each traveler
-        Promise.all(data.map(traveler => {
-          const lat = traveler.last_location.Latitude;
-          const lng = traveler.last_location.Longitude;
-          return Geocoder.from(lat, lng).then(json => {
-            const location = json.results[0].address_components;
-            const number = location[0].long_name;
-            const street = location[1].long_name;
-            const city = location[2].long_name;
-            const address = `${street} ${number}, ${city}`;
-            return { ...traveler, address };
+        .then(response => response.json())
+        .then(data => {
+          // Map over the data and get the address for each traveler
+          Promise.all(data.map(traveler => {
+            const lat = traveler.last_location.Latitude;
+            const lng = traveler.last_location.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+              const location = json.results[0].address_components;
+              const number = location[0].long_name;
+              const street = location[1].long_name;
+              const city = location[2].long_name;
+              const address = `${street} ${number}, ${city}`;
+              return { ...traveler, address };
+            });
+          })).then(travelersWithAddress => {
+            setMyTravelers(travelersWithAddress);
           });
-        })).then(travelersWithAddress => {
-          setMyTravelers(travelersWithAddress);
         });
-      });
+    }
   }
- }
-console.log(myTravelers)
-return (
-  < GradientBackground>
-    <BackButton />
-    <View style={styles.container}>
-      <Text>My ravelers</Text>
-      <ScrollView>
+  function formatDateTime(isoDateTime) {
+    const date = new Date(isoDateTime);
+    const formattedDate = date.toLocaleDateString('en-GB');
+    const formattedTime = isoDateTime.slice(11, 16);
+    return `${formattedTime} ${formattedDate}`;
+  }
+  return (
+    < GradientBackground>
+      <BackButton />
+      <View style={styles.container}>
+        <Text>My ravelers</Text>
+        <ScrollView>
         {myTravelers.length > 0 && (
           myTravelers.map((traveler, index) => (
             <View key={index} style={styles.commentContainer}>
@@ -71,24 +75,21 @@ return (
                   <View style={styles.row}>
                     <Image style={styles.img} source={{ uri: traveler.Picture }} />
                     <Text style={styles.text}> {traveler.first_name} {traveler.last_name} </Text>
-
                   </View>
                 </View>
-
-
-                 <Text>{traveler.address}</Text>
-                
-                  <Text>{traveler.last_location.DateAndTime}</Text> 
+                 <Text>{traveler.address}</Text>               
+                  <Text>{formatDateTime(traveler.last_location.DateAndTime)}</Text> 
               </TouchableOpacity>
             </View>
           ))
         )}
       </ScrollView>
 
-    </View>
-  </GradientBackground>
-)
+      </View>
+    </GradientBackground>
+  )
 }
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 90,
