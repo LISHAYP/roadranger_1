@@ -12,6 +12,7 @@ import BackButton from '../Components/BackButton';
 
 export default function Warning(props) {
     const navigation = useNavigation();
+    const [searchKeyword, setSearchKeyword] = useState('');
 
     const [events, setEvents] = useState([]);
     const stakeholder = props.route.params.stakeholder;
@@ -20,10 +21,6 @@ export default function Warning(props) {
     // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
     useEffect(() => {
-        getEvents()
-    }, []);
-
-    const getEvents = () => {
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent', {
             method: 'GET',
             headers: {
@@ -35,29 +32,48 @@ export default function Warning(props) {
             .then(data => {
                 setEvents(data)
             });
-    }
-    console.log("Eeeeeeeee", events)
-console.log("kkkkkkkkkkk",userLocation)
+
+    }, [events]);
+
+    const [eventAddresses, setEventAddresses] = useState([]);
+
+    useEffect(() => {
+        Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+        Promise.all(
+            events.filter(event => event.SerialTypeNumber == 1004).map((event) =>
+                Geocoder.from(event.Latitude, event.Longitude)
+                    .then((json) => json.results[0].formatted_address)
+                    .catch(() => 'Address not found')
+            )
+        ).then((addresses) => setEventAddresses(addresses));
+    }, []);
+    // console.log(eventAddresses)
     return (
         <GradientBackground>
             <BackButton />
             <ScrollView>
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.btnSave}
-                   onPress={() => {
-                    navigation.navigate("New event", {
-                        stakeholder: stakeholder,
-                        userLocation: userLocation
-                    });
-                }}
+                        onPress={() => {
+                            navigation.navigate("New event", {
+                                stakeholder: stakeholder,
+                                userLocation: userLocation
+                            });
+                        }}
                     >
                         <Text style={styles.btnText}>
                             Add Warning
                         </Text>
                     </TouchableOpacity>
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search..."
+                        value={searchKeyword}
+                        onChangeText={text => setSearchKeyword(text)}
+                    />
                     <View>
                         {events !== undefined && events.length > 0 ? (
-                            events.filter(event => event.SerialTypeNumber == 1004 || event.SerialTypeNumber == 1003).map((event, index) => (
+                            events.filter(event => event.SerialTypeNumber == 1004 && event.Details.toLowerCase().includes(searchKeyword.toLowerCase())).map((event, index) => (
                                 <TouchableOpacity onPress={() => {
                                     navigation.navigate('Event Details', { event: event, stakeholder: stakeholder });
                                 }} >
@@ -66,6 +82,8 @@ console.log("kkkkkkkkkkk",userLocation)
                                             <Text style={styles.details}>{event.Details}</Text>
                                             <Text >{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
                                             <Text >{event.EventTime.slice(0, 5)}</Text>
+                                            <Text >{eventAddresses[index]}</Text>
+
                                         </View>
                                         <Image source={{ uri: event.Picture }} style={styles.img} />
                                     </View>
@@ -135,6 +153,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
 
     },
+    searchInput:{
+        fontSize:35,
+        marginBottom:20
+    }
 
 
 

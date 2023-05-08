@@ -8,6 +8,7 @@ import NewEvent from './Screens/NewEvent';
 import SOS from './Screens/SOS';
 import Search from './Screens/Search'
 import Events from './Screens/Events';
+import MyPost from './Screens/MyPost';
 // import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,6 +23,8 @@ import HomeChat from './Screens/HomeChat';
 import BackButton from './Components/BackButton';
 import GroupChat from './Screens/GroupChat'
 import {  StyleSheet } from 'react-native';
+import Warning from './Screens/Warning';
+
 const Stack = createNativeStackNavigator()
 
 export default function App() {
@@ -49,7 +52,9 @@ export default function App() {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Home chat" component={HomeChat} />
         <Stack.Screen name="BackButton" component={BackButton} />
+        <Stack.Screen name="My Post" component={MyPost} />
         <Stack.Screen name="Group chat" component={GroupChat} />
+        <Stack.Screen name="Warning" component={Warning} />        
       </Stack.Navigator>
     </NavigationContainer>
 
