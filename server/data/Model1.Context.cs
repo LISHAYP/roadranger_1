@@ -31,6 +31,7 @@ namespace data
         public virtual DbSet<tblArea> tblArea { get; set; }
         public virtual DbSet<tblAskForHelp> tblAskForHelp { get; set; }
         public virtual DbSet<tblComments> tblComments { get; set; }
+        public virtual DbSet<tblContactUs> tblContactUs { get; set; }
         public virtual DbSet<tblConversationTravelers> tblConversationTravelers { get; set; }
         public virtual DbSet<tblConversationTravelerStack> tblConversationTravelerStack { get; set; }
         public virtual DbSet<tblCountries> tblCountries { get; set; }

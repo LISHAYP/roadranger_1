@@ -85,6 +85,9 @@
     <Compile Include="tblComments.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblContactUs.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblConversationTravelers.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

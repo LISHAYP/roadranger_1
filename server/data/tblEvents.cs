@@ -33,6 +33,10 @@ namespace data
         public int serialTypeNumber { get; set; }
         public int country_number { get; set; }
         public int area_number { get; set; }
+        public string is_related { get; set; }
+        public string approved { get; set; }
+        public string not_approved { get; set; }
+        public string labels { get; set; }
     
         public virtual stakeholders stakeholders { get; set; }
         public virtual tblArea tblArea { get; set; }

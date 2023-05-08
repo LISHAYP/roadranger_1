@@ -236,7 +236,7 @@ namespace WebApplication1.Controllers
         public IHttpActionResult GetStakeholdersByInsuranceCompany([FromBody] TravelerDto traveler)
         {
             var stakeholders = db.stakeholders
-                .Where(s => s.full_name == traveler.insurence_company)
+                .Where(s => s.stakeholder_name == traveler.insurence_company)
                 .Select(s => new StackholderDto
                 {
                     StakeholderId = s.stakeholder_id,
