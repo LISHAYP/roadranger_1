@@ -77,6 +77,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblContactUs">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblContactUs">
+        <MappingFragment StoreEntitySet="tblContactUs">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="request_type" ColumnName="request_type" />
+          <ScalarProperty Name="details" ColumnName="details" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tblConversationTravelers">
       <EntityTypeMapping TypeName="igroup190_test1Model.tblConversationTravelers">
         <MappingFragment StoreEntitySet="tblConversationTravelers">
@@ -124,6 +139,10 @@
           <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
+          <ScalarProperty Name="is_related" ColumnName="is_related" />
+          <ScalarProperty Name="approved" ColumnName="approved" />
+          <ScalarProperty Name="not_approved" ColumnName="not_approved" />
+          <ScalarProperty Name="labels" ColumnName="labels" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

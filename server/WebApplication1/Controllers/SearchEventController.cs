@@ -244,10 +244,9 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
-
         [HttpPost]
         [Route("api/post/searchByParameters")]
-        public IHttpActionResult SearchByParameters([FromBody] List<EventParam> searchParams, int? countryNumber = null)
+        public IHttpActionResult SearchByParameters([FromBody] List<EventParam> searchParams, int? countryNumber = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
@@ -296,9 +295,36 @@ namespace WebApplication1.Controllers
                                 events = events.Where(x => x.event_date == eventDate);
                             }
                             break;
+                        case "startdate":
+                            if (DateTime.TryParse(param.Value, out var start))
+                            {
+                                startDate = start;
+                            }
+                            break;
+                        case "enddate":
+                            if (DateTime.TryParse(param.Value, out var end))
+                            {
+                                endDate = end;
+                            }
+                            break;
                         default:
                             break;
                     }
+                }
+
+                if (startDate != null)
+                {
+                    events = events.Where(x => x.event_date >= startDate);
+                }
+
+                if (endDate != null)
+                {
+                    events = events.Where(x => x.event_date <= endDate);
+                }
+
+                if (startDate != null && endDate != null && startDate > endDate)
+                {
+                    return BadRequest("Invalid search parameters: fromDate cannot be greater than toDate.");
                 }
 
                 var result = events.Select(x => new EventDto

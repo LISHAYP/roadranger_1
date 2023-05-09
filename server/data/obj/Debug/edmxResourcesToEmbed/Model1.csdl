@@ -86,6 +86,20 @@
     <NavigationProperty Name="tblEvents" Relationship="Self.comment_event" FromRole="tblComments" ToRole="tblEvents" />
     <NavigationProperty Name="traveleres" Relationship="Self.comment_traveler" FromRole="tblComments" ToRole="traveleres" />
   </EntityType>
+  <EntityType Name="tblContactUs">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone_number" Type="Int32" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="time" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="request_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
   <EntityType Name="tblConversationTravelers">
     <Key>
       <PropertyRef Name="ChatId" />
@@ -136,6 +150,10 @@
     <Property Name="serialTypeNumber" Type="Int32" Nullable="false" />
     <Property Name="country_number" Type="Int32" Nullable="false" />
     <Property Name="area_number" Type="Int32" Nullable="false" />
+    <Property Name="is_related" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="approved" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="not_approved" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="labels" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="stakeholders" Relationship="Self.event_stackholder" FromRole="tblEvents" ToRole="stakeholders" />
     <NavigationProperty Name="tblArea" Relationship="Self.country_area_event" FromRole="tblEvents" ToRole="tblArea" />
     <NavigationProperty Name="tblComments" Relationship="Self.comment_event" FromRole="tblEvents" ToRole="tblComments" />
@@ -424,6 +442,7 @@
     <EntitySet Name="tblArea" EntityType="Self.tblArea" />
     <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" />
     <EntitySet Name="tblComments" EntityType="Self.tblComments" />
+    <EntitySet Name="tblContactUs" EntityType="Self.tblContactUs" />
     <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTravelers" />
     <EntitySet Name="tblConversationTravelerStack" EntityType="Self.tblConversationTravelerStack" />
     <EntitySet Name="tblCountries" EntityType="Self.tblCountries" />
