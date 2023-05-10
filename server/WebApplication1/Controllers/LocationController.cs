@@ -52,26 +52,35 @@ namespace WebApplication1.Controllers
         [Route("api/lastlocation")]
         public IHttpActionResult GetLastTravelerLocations()
         {
-            var lastLocations = db.tblLocations
-                .GroupBy(l => l.travelerId)
-                .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault());
-
-            var travelerDtos = lastLocations.Select(location => new
+            try
             {
-                traveler_id = location.travelerId,
-                first_name = location.traveleres.first_name,
-                last_name = location.traveleres.last_name,
-                Picture = location.traveleres.picture,
-                LastLocation = new LocationDto
-                {
-                    TravelerId = location.travelerId,
-                    DateAndTime = location.dateAndTime,
-                    Latitude = location.latitude,
-                    Longitude = location.longitude
-                }
-            }).ToList();
+                var lastLocations = db.tblLocations
+                              .GroupBy(l => l.travelerId)
+                              .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault());
 
-            return Ok(travelerDtos);
+                var travelerDtos = lastLocations.Select(location => new
+                {
+                    traveler_id = location.travelerId,
+                    first_name = location.traveleres.first_name,
+                    last_name = location.traveleres.last_name,
+                    Picture = location.traveleres.picture,
+                    LastLocation = new LocationDto
+                    {
+                        TravelerId = location.travelerId,
+                        DateAndTime = location.dateAndTime,
+                        Latitude = location.latitude,
+                        Longitude = location.longitude
+                    }
+                }).ToList();
+
+                return Ok(travelerDtos);
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return BadRequest(ex.Message);
+            }
+          
         }
 
 
