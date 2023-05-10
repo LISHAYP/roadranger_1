@@ -47,30 +47,31 @@ namespace WebApplication1.Controllers
         }
 
         //bring back all the travelers and their last location
+
         [HttpPost]
         [Route("api/lastlocation")]
         public IHttpActionResult GetLastTravelerLocations()
         {
-            List<LocationDto> locationDtos = new List<LocationDto>();
-
             var lastLocations = db.tblLocations
                 .GroupBy(l => l.travelerId)
                 .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault());
 
-            foreach (var location in lastLocations)
+            var travelerDtos = lastLocations.Select(location => new
             {
-                LocationDto locationDto = new LocationDto
+                traveler_id = location.travelerId,
+                first_name = location.traveleres.first_name,
+                last_name = location.traveleres.last_name,
+                Picture = location.traveleres.picture,
+                LastLocation = new LocationDto
                 {
                     TravelerId = location.travelerId,
                     DateAndTime = location.dateAndTime,
                     Latitude = location.latitude,
                     Longitude = location.longitude
-                };
+                }
+            }).ToList();
 
-                locationDtos.Add(locationDto);
-            }
-
-            return Ok(locationDtos);
+            return Ok(travelerDtos);
         }
 
 
