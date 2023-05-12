@@ -14,6 +14,7 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
     const [devaiceToken, setDevaiceToken] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const handleLogin = () => {
@@ -143,30 +144,34 @@ export default function SignIn() {
                     onChangeText={text => setEmail(text)}
                     placeholder="User Email">
                 </TextInput>
+
                 {console.log({ email })}
+
                 <Text style={styles.text}>Password:</Text>
-                <TextInput
-                    style={styles.input}
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    placeholder="*******"
-                    secureTextEntry={!this.state.showPassword}
-                >
-                    {/* <Icon
-                        name={this.state.showPassword ? 'eye-outline' : 'eye-outline'}
-                        size={30}
-                        onPress={() =>
-                            this.setState(prevState => ({
-                                showPassword: !prevState.showPassword
-                            }))
-                        }
-                    /> */}
-                </TextInput>
-                {console.log({ password })}
+                <View  style={styles.input}>
+                    <TextInput
+                       
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        placeholder="*********"
+                        secureTextEntry={!showPassword}
+                    >
+                    </TextInput>
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                        style={styles.iconContainer}
+                    >
+                        <Icon size={25}
+                            name={showPassword ? 'eye-off' : 'eye'}
+                            type='feather'
+                            color='black'
+                        />
+                    </TouchableOpacity>
+                </View>
+
                 {loginFailed && (
                     <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
                 )}
-
 
                 <TouchableOpacity style={styles.btnLogIn}
                     onPress={handleLogin}>
@@ -223,7 +228,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     input: {
-        marginVertical: 20,
+       marginVertical: 20,
         width: "90%",
         fontSize: 20,
         paddingVertical: 10,
@@ -232,6 +237,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 25,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center'
 
     },
@@ -265,5 +271,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15,
 
-    }
+    },
+ iconContainer: {
+    size: 35
+},
 });
