@@ -41,26 +41,39 @@ console.log("trrrrrrrr",traveler)
   const [selectedSerialType, setSelectedSerialType] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const handleDateSelect = (date) => {
-    const formattedDate = moment(date).format('DD/MM/YY');
-    setSelectedDate(formattedDate);
-    setIsCalendarOpen(false);
+  const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [selectedEndDate, setSelectedEndDate] = useState('');
+  const [isCalendarOpenStart, setIsCalendarOpenStart] = useState(false);
+  const [isCalendarOpenEnd, setIsCalendarOpenEnd] = useState(false);
+
+  const handleStartDateSelect = (date) => {
+    // const formattedDate = date.substr(0, 10);
+    setSelectedStartDate(date);
+    setIsCalendarOpenStart(false);
   }
-  
+  const handleEndDateSelect = (date) => {
+    // const formattedDate = moment(date).format('DD/MM/YY');
+    setSelectedEndDate(date);
+    setIsCalendarOpenEnd(false);
+  }
+
   const searchObj = [
-    {Name:'countrynumber', Value: selectedCountry},
-    {Name: 'AreaNumber', Value: selectedCity},
-    {Name:'eventdate', Value: selectedDate},
-    {Name:'SerialTypeNumber', Value: selectedSerialType},
+    { Name: 'countrynumber', Value: selectedCountry },
+    { Name: 'AreaNumber', Value: selectedCity },
+    { Name: 'startDate', Value: selectedStartDate },
+    { Name: 'SerialTypeNumber', Value: selectedSerialType },
+    { Name: 'endDate', Value: selectedEndDate },
+
   ]
   console.log(searchObj)
 
   const searchEvents = async () => {
-    console.log(selectedCity, selectedCountry, selectedDate, selectedSerialType)
-    if (selectedCountry === '' && selectedDate === '' && selectedSerialType == '') {
+    console.log(selectedCity, selectedCountry, selectedStartDate,selectedEndDate, selectedSerialType)
+    if (selectedCountry === '' && selectedStartDate === '' && selectedSerialType == '') {
       Alert.alert('Please enter for search');
+    }
+    if (selectedEndDate < selectedStartDate) {
+      Alert.alert("End date cannot be earlier than start date");
     }
     else {
 
@@ -137,6 +150,7 @@ console.log("trrrrrrrr",traveler)
   const filteredCities = city.filter(city => city.countryNumber === selectedCountry);
   return (
     < GradientBackground>
+    <ScrollView>
       <View style={styles.container}>
       <BackButton />
 
@@ -185,15 +199,28 @@ console.log("trrrrrrrr",traveler)
           onChange={item => {
             setSelectedSerialType(item.value)
           }} />
-        <Text style={styles.text}>Date:</Text>
+
+       <Text style={styles.text}>Start Date:</Text>
         <View>
-          <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedDate ? selectedDate.toString() : "Select you'r Date of Birth"}</Text>
+          <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
+            <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
             <Icon style={styles.icon} name="calendar-outline" />
           </TouchableOpacity>
-          {isCalendarOpen && (
+          {isCalendarOpenStart && (
             <View>
-              <CalendarPicker onDateChange={handleDateSelect} />
+              <CalendarPicker onDateChange={handleStartDateSelect} />
+            </View>
+          )}
+        </View>
+        <Text style={styles.text}>End Date:</Text>
+        <View>
+          <TouchableOpacity onPress={() => setIsCalendarOpenEnd(!isCalendarOpenEnd)} style={styles.calendar}>
+            <Text style={styles.text1}>{selectedEndDate ? selectedEndDate.toISOString().substr(0, 10): "Select End Date "}</Text>
+            <Icon style={styles.icon} name="calendar-outline" />
+          </TouchableOpacity>
+          {isCalendarOpenEnd && (
+            <View>
+              <CalendarPicker onDateChange={handleEndDateSelect} />
             </View>
           )}
         </View>
@@ -204,6 +231,7 @@ console.log("trrrrrrrr",traveler)
           </Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </GradientBackground>
   )
 }
