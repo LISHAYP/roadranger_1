@@ -32,8 +32,7 @@ const HomeChat = (props) => {
       })
       .catch((error) => console.error(error));
 
-  }
-  , []);
+  }, []);
   useEffect(() => {
 const insuranceObj={
   insurence_company: traveler.insurence_company
