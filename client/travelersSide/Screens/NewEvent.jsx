@@ -280,8 +280,6 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 25,
-
-
   },
   photo: {
     marginVertical: 20,

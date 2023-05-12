@@ -155,12 +155,6 @@ export default function AroundYou(props) {
                 {isMenuOpen && (
                     <View style={styles.menu}>
                         <ScrollView>
-                            
-                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                            navigation.navigate("Sign In");
-                        }}>
-                            <Text style={styles.textLO} > Log out  </Text>
-                        </TouchableOpacity>
                         <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
                             <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
@@ -225,7 +219,11 @@ export default function AroundYou(props) {
                             <Icon name="settings-outline" size={35} style={styles.icon} />
                             <Text style={styles.text}>Setting</Text>
                         </TouchableOpacity>
-
+                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                            navigation.navigate("Sign In");
+                        }}>
+                            <Text style={styles.textLO} > Log out  </Text>
+                        </TouchableOpacity>
                         </ScrollView>
                     </View>
                 )}
@@ -244,7 +242,7 @@ const styles = StyleSheet.create({
 
     },
     btnLogOut: {
-        top:40,
+        top:100,
         flexDirection: 'row',
         position: 'absolute',
         // bottom: 30,

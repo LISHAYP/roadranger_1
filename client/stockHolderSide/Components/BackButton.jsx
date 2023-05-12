@@ -7,19 +7,19 @@ function BackButton() {
 
     return (
         <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back-outline" size={30}  />
+            <Icon name="arrow-back-outline" size={30} />
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-paddingTop:30,
-paddingBottom:10,
-left:30,
-top:35
+        paddingTop: 30,
+        paddingBottom: 10,
+        left: 20,
+        top: 10
     },
-  
+
 });
 
 export default BackButton;
