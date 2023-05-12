@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet,ScrollView,Alert, TouchableOpacity, TextInput } from 'react-native';
 import React from 'react'
+
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -11,31 +12,84 @@ import BackButton from '../Components/BackButton';
 
 export default function ContactUs() {
     const Subject = [
-        { label: '1', value: '1' },
-        { label: '2', value: '2' },
-        { label: '3', value: '3' },
+        { label: 'General', value: '1' },
+        { label: 'Help', value: '2' },
+        { label: 'Question', value: '3' }, 
+        { label: 'Create a stakeholder', value: '4' },
+        { label: 'Faults', value: '5' },
     ]
     const [value, setValue] = useState(null);
-
+    const [firstName,setFirstName]=useState('');
+    const [lastName,setLastName]=useState('');
+    const [email,setEmail]=useState('');
+    const [phoneNumber,setPhoneNumber]=useState('');
+    const [requestType,setRequestType]=useState('');
+    const [details,setDetails]=useState('');
     const navigation = useNavigation();
     state = {
         showPassword: false
     };
+   
+      sendRequest = () => {
+        const objNewContactRequest = {
+            FirstName: firstName,
+            LastName: lastName,
+            Email:email,
+            Date: new Date().toISOString().slice(0, 10),
+            Time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+            PhoneNumber: phoneNumber,
+            RequestType: requestType,
+            Details:details
+          };
+      console.log("*****", objNewContactRequest);
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcontactus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(objNewContactRequest),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data as needed
+          console.log(data);
+          Alert.alert('Publish')
+          setDetails('');
+        })
+        .catch(error => {
+          console.error(error);
+          Alert.alert('Error', error);
+        });
+    }
     return (
         < GradientBackground>
             <BackButton />
             <View style={styles.container}>
+            <ScrollView>
                 <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input}
-                    placeholder="User Email">
-                </TextInput>
+             onChangeText={(text) => setEmail(text)}
+             placeholder="Email">
+             </TextInput>
                 <Text style={styles.text}>Name:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Full Name" >
-                </TextInput>
+                <TextInput style={styles.input}
+            onChangeText={(text) => setFirstName(text)}
+            placeholder="First Name">
+          </TextInput>
+          <TextInput style={styles.input}
+            onChangeText={(text) => setLastName(text)}
+            placeholder="Last Name">
+          </TextInput>
+                <Text style={styles.text}>Phone Number:</Text>
+                <TextInput style={styles.input}
+            placeholder={'05--------' + phoneNumber.toString()}
+            value={phoneNumber}
+            keyboardType='numeric'
+            onChangeText={(text) => setPhoneNumber(text)}
+          >
+          </TextInput>
                 <Text style={styles.text}>Subject:</Text>
                 <Dropdown
                     style={styles.dropdown}
@@ -49,7 +103,7 @@ export default function ContactUs() {
                     value={value}
 
                     onChange={item => {
-                        setValue(item.value);
+                        setRequestType(item.label);
                     }}
 
                 />
@@ -63,12 +117,13 @@ export default function ContactUs() {
                         TextInput.State.blur(TextInput.State.currentlyFocusedInput())
                     }}>
                 </TextInput>
-                <TouchableOpacity style={styles.btnLogIn}>
+                <TouchableOpacity style={styles.btnLogIn} onPress={sendRequest}>
                     <Text style={styles.btnText}>
                         Send
                     </Text>
+                    
                 </TouchableOpacity>
-
+                </ScrollView>
             </View >
         </ GradientBackground>
 
@@ -79,7 +134,8 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,
-        padding: 10,
+        padding: 20,
+        top:55,
         width: "100%",
         marginTop: 30
     },
