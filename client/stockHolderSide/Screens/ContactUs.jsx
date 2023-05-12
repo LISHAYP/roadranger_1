@@ -6,6 +6,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
+import BackButton from '../Components/BackButton';
 
 
 export default function ContactUs() {
@@ -22,6 +23,7 @@ export default function ContactUs() {
     };
     return (
         < GradientBackground>
+            <BackButton />
             <View style={styles.container}>
                 <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
@@ -57,8 +59,8 @@ export default function ContactUs() {
                     multiline
                     spellCheck="true"
                     onSubmitEditing={() => {
-                      //close the keyboard
-                      TextInput.State.blur(TextInput.State.currentlyFocusedInput())
+                        //close the keyboard
+                        TextInput.State.blur(TextInput.State.currentlyFocusedInput())
                     }}>
                 </TextInput>
                 <TouchableOpacity style={styles.btnLogIn}>
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         padding: 10,
         width: "100%",
-
+        marginTop: 30
     },
 
     RoadRanger: {
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
         borderColor: '#144800',
         borderWidth: 1,
         borderRadius: 25,
-       
+
 
     },
 });

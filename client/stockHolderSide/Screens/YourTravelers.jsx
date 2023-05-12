@@ -54,7 +54,39 @@ export default function YourTravelers(props) {
           });
         });
     }
+    if(stakeholder.StakeholderType != 'Insurance Company') {
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/lastlocation', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+       
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("%%%%%%%%%%%%%%",data)
+
+        // Map over the data and get the address for each traveler
+        Promise.all(data.map(traveler => {
+          const lat = traveler.last_location.Latitude;
+            const lng = traveler.last_location.Longitude;
+          return Geocoder.from(lat, lng).then(json => {
+            const location = json.results[0].address_components;
+            const number = location[0].long_name;
+            const street = location[1].long_name;
+            const city = location[2].long_name;
+            const address = `${street} ${number}, ${city}`;
+            return { ...traveler, address };
+          });
+        })).then(travelersWithAddress => {
+          setMyTravelers(travelersWithAddress);
+
+        });
+      });
+    }
   }
+
   function formatDateTime(isoDateTime) {
     const date = new Date(isoDateTime);
     const formattedDate = date.toLocaleDateString('en-GB');
