@@ -369,13 +369,24 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        [Route("sendpushnotification")]        public string PostPN([FromBody] PushNotData pnd)        {
+        [Route("sendpushnotification")]
+        public string PostPN([FromBody] PushNotData pnd)
+        {
             // Create a request using a URL that can receive a post.   
             WebRequest request = WebRequest.Create("https://exp.host/--/api/v2/push/send");
             // Set the Method property of the request to POST.  
             request.Method = "POST";
             // Create POST data and convert it to a byte array.  
-            var objectToSend = new            {                to = pnd.to,                title = pnd.title,                body = pnd.body,            };            string postData = new JavaScriptSerializer().Serialize(objectToSend);            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            var objectToSend = new
+            {
+                to = pnd.to,
+                title = pnd.title,
+                body = pnd.body,
+            };
+
+            string postData = new JavaScriptSerializer().Serialize(objectToSend);
+
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             // Set the ContentType property of the WebRequest.  
             request.ContentType = "application/json";
             // Set the ContentLength property of the WebRequest.  
@@ -400,7 +411,12 @@ namespace WebApplication1.Controllers
             // Display the content.  
             //Console.WriteLine(responseFromServer);
             // Clean up the streams.  
-            reader.Close();            dataStream.Close();            response.Close();            return "success:) --- " + responseFromServer + ", " + returnStatus;        }
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+
+            return "success:) --- " + responseFromServer + ", " + returnStatus;
+        }
 
     }
 

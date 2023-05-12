@@ -61,3 +61,7 @@
  2023-04-30 16:24:34.1366 INFO: events within 100 meters from the traveler number: 8
  2023-04-30 16:29:00.4105 INFO: events within 100 meters from the traveler number: 10
  2023-05-01 14:55:51.7953 INFO: all the locations from tbl locations
+ 2023-05-12 13:35:49.4496 ERROR: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+ 2023-05-12 13:36:34.4311 ERROR: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+ 2023-05-12 13:37:01.9274 ERROR: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+ 2023-05-12 13:38:49.7274 INFO: New contact us entry was added!

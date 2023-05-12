@@ -63,8 +63,18 @@ namespace WebApplication1.Controllers
                     traveler_id = location.travelerId,
                     first_name = location.traveleres.first_name,
                     last_name = location.traveleres.last_name,
+                    travler_email =location.traveleres.travler_email,
+                    phone = location.traveleres.phone,
+                    notifications = location.traveleres.notifications,
+                    insurence_company = location.traveleres.insurence_company,
+                    location = location.traveleres.location,
+                    save_location = location.traveleres.save_location,
+                    dateOfBirth = location.traveleres.dateOfBirth,
+                    gender = location.traveleres.gender,
+                    password = location.traveleres.password,
+                    chat = location.traveleres.chat,
                     Picture = location.traveleres.picture,
-                    LastLocation = new LocationDto
+                    last_location = new LocationDto
                     {
                         TravelerId = location.travelerId,
                         DateAndTime = location.dateAndTime,
