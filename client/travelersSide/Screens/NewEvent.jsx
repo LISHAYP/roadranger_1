@@ -14,7 +14,8 @@ import { auth } from '../firebase';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
-  const userLocation = props.route.params.userLocation
+  const userLocation = props.route.params.userLocation;
+  const labels = props.route.params.labels;
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
@@ -55,8 +56,7 @@ export default function NewEvent(props) {
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        addContry();
-
+        addContry();console.log(labels);
       })
       .catch(error => console.warn(error))
   }, []);
@@ -76,7 +76,7 @@ export default function NewEvent(props) {
     country_number: countryNumber,
     area_number: areaNumber,
   };
-  console.log("--------", { newEvent })
+  console.log("--------", { newEvent, labels })
   const countryObj = {
     country_name: country,
   };
@@ -158,7 +158,7 @@ export default function NewEvent(props) {
   }
 
   const OpenCameraE = () => {
-    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` ,userLocation, traveler});
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
     setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
   }

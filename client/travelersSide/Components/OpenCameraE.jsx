@@ -13,7 +13,9 @@ export default function OpenCameraE(props) {
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const [animate, setAnimate] = useState(false);
-
+  const traveler = props.route.params.traveler;
+  const userLocation = props.route.params.userLocation;
+const [labels, setLabels] = useState('');
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -50,7 +52,35 @@ export default function OpenCameraE(props) {
         const picUri = `data:image/gif;base64,${photo.base64}`;
         const formData = new FormData();
         formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
-
+      // Call the Google Cloud Vision API to get image labels
+      const visionUrl = `https://vision.googleapis.com/v1/images:annotate?key=${GoogleCloudVisionApiKey}`;
+      const requestBody = {
+        requests: [
+          {
+            image: {
+              content: pic64base
+            },
+            features: [
+              {
+                type: 'LABEL_DETECTION'
+              }
+            ]
+          }
+        ]
+      };
+      console.log("^^^^^^",requestBody)
+      const visionResponse = await fetch(visionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+      const visionData = await visionResponse.json();
+      console.log(JSON.stringify(visionData.responses));
+      const labels = visionData.responses[0].labelAnnotations.map(label => label.description);
+      console.log("labels****",labels);
+      setLabels(labels)
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
         urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
@@ -63,7 +93,7 @@ export default function OpenCameraE(props) {
         })
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
+           // console.log(responseJson);
             setAnimate(false);
           })
           .catch((error) => {
@@ -86,16 +116,14 @@ export default function OpenCameraE(props) {
       quality: 0.1,
       base64: true,
     });
-    console.log({ pickerResult }); // Log the pickerResult object
     if (pickerResult.cancelled) {
       console.log('Image selection cancelled'); // Handle cancel event
     } else {
       const image = { uri: pickerResult.uri };
       setImage(image);
       const pic64base = pickerResult.base64;
-      console.log("******",pic64base)
+      //console.log("******",pic64base)
       const picName64base = `E_${idee}.jpg`;
-      console.log(picName64base);
       const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
       const formData = new FormData();
       formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
@@ -125,8 +153,16 @@ export default function OpenCameraE(props) {
         body: JSON.stringify(requestBody)
       });
       const visionData = await visionResponse.json();
-      console.log("%%%%%%%%%%%%%%%%",visionData);
-
+      console.log(JSON.stringify(visionData.responses));
+      const labels = visionData.responses[0].labelAnnotations.map(label => {
+        return {
+          description: label.description,
+          score: label.score
+        };
+      });
+      
+      console.log(labels);
+      setLabels(labels);
       // Add the following lines to call the uploadBase64ToASMX function
       setAnimate(true);
       const urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
@@ -151,9 +187,9 @@ export default function OpenCameraE(props) {
 
 
   const savePhoto = () => {
-    console.log('img', true);
+    console.log('img', true,labels, traveler, userLocation);
     Alert.alert("your picture has uploaded :)")
-    navigation.goBack();
+    navigation.navigate("New event",{labels, traveler, userLocation});
   };
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
