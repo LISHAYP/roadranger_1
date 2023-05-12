@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image,ScrollView, TouchableOpacity,TextInput, Alert } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -11,10 +11,10 @@ const height = Dimensions.get('window').height;
 
 export default function EventDetails(props) {
   const event = props.route.params.event;
-  const stakeholder=props.route.params.stakeholder;
+  const stakeholder = props.route.params.stakeholder;
   console.log(event)
-  console.log("ssssssssssssssssssssssssss",stakeholder);
-  const travelerId="null";
+  console.log("ssssssssssssssssssssssssss", stakeholder);
+  const travelerId = "null";
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
   const [comments, setComments] = useState('')
@@ -63,7 +63,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log("llllllll",data);
+      console.log("llllllll", data);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -71,18 +71,18 @@ export default function EventDetails(props) {
 
 
   };
-console.log("##########",stakeholder.StakeholderId);
+  console.log("##########", stakeholder.StakeholderId);
   const newComment = {
     eventNumber: event.eventNumber,
     Details: details,
     comment_date: new Date().toISOString().slice(0, 10),
     comment_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    TravelerId:travelerId,
+    TravelerId: travelerId,
     StackholderId: stakeholder.StakeholderId,
 
   };
 
-  console.log("********",newComment);
+  console.log("********", newComment);
   const createComment = async () => {
 
     if (newComment === '') {
@@ -132,14 +132,14 @@ console.log("##########",stakeholder.StakeholderId);
 
   return (
     <GradientBackground>
-              <BackButton />
+      <BackButton />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-       
-        <View style={styles.eventContainer}>
+
+        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
           <View >
             <View style={styles.event}>
               <View style={styles.row}>
@@ -160,16 +160,22 @@ console.log("##########",stakeholder.StakeholderId);
             <Text style={styles.locationText}>{addressComponents}</Text>
           </View>
 
-          <View style={styles.pictureContainer}>
-            <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
-          </View>
+          {event.Picture != '#' && (
+            <View style={styles.pictureContainer}>
+              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+            </View>
+          )}
           <ScrollView>
             {comments && comments.length > 0 && (
               comments.map((comment, index) => (
                 <View key={index} style={styles.commentContainer}>
                   <View style={styles.event}>
                     <View style={styles.row}>
-                      <Image style={styles.img} source={{ uri: comment.picture}} resizeMode="contain" />
+                      {comment.picture ? (
+                        <Image style={styles.img} source={{ uri: comment.picture }} />
+                      ) : (
+                        <Image style={styles.img} source={{ uri: comment.shpicture }} />
+                      )}
                       <Text style={styles.text}>{comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
                     </View>
                     <View>
@@ -187,10 +193,10 @@ console.log("##########",stakeholder.StakeholderId);
         <View style={styles.addComment}>
           <View style={styles.event}>
             <View style={styles.row}>
-              <Image style={styles.img} source={{ uri: stakeholder.picture }}  />
+              <Image style={styles.img} source={{ uri: stakeholder.picture }} />
               <Text style={styles.text}>{stakeholder.FullName}</Text>
             </View>
-            <TouchableOpacity  onPress={createComment}>
+            <TouchableOpacity onPress={createComment}>
               <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
             </TouchableOpacity>
           </View>
@@ -206,7 +212,7 @@ console.log("##########",stakeholder.StakeholderId);
           </View>
         </View>
       </KeyboardAvoidingView>
-      
+
     </GradientBackground >
   )
 };
@@ -217,23 +223,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop:30
-
-
+    // marginTop: 10
   },
-  pictureContainer: {
 
+
+  pictureContainer: {
     height: height * 0.2, // adjust this value as needed
     width: width + 30,
     bottom: 10
-  },
-  addComment: {
-    borderColor: '#DCDCDC',
-    borderWidth: 0.5,
-    borderRadius: 15,
-    backgroundColor: '#F5F5F5',
-    margin: 5,
-    padding: 10,
   },
   picture: {
     flex: 1,
@@ -257,11 +254,10 @@ const styles = StyleSheet.create({
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
-    // borderColor: '#144800',
-    // borderWidth: 1,
     borderRadius: 15,
-    // backgroundColor: '#F5F5F5',
     padding: 10,
+    height: '70%',
+    marginTop: 20
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -270,6 +266,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
+    resizeMode: "contain"
   },
 
   locationText: {
@@ -281,28 +278,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 20,
     left: 10,
-    // textAlign: 'center',
     marginTop: 10
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
 
-
   },
+  addComment: {
 
+    borderColor: '#DCDCDC',
+    borderWidth: 0.5,
+    borderRadius: 15,
+    backgroundColor: '#F5F5F5',
+    margin: 5,
+    padding: 10,
+    // width:'95%'
+  },
   img: {
-
     height: 40,
     width: 40,
     borderRadius: 20,
-    // backgroundColor: 'lightgray',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
   },
   text: {
     fontSize: 16,
+    top: 0
   },
   dateTimeContainer: {
     alignItems: 'flex-end',
@@ -319,6 +322,28 @@ const styles = StyleSheet.create({
   detailsTextComment: {
     fontSize: 15,
     paddingTop: 5
+  },
+  input: {
+    left: 50,
+    paddingBottom: 10,
+    width: '75%',
+
+  },
+
+  icon: {
+    top: 20
+
+  },
+  inputContainer: {
+    flexGrow: 1,
+  },
+  keyboard: {
+    flex: 1,
+  },
+  deleteIcon: {
+
+    flexDirection: 'row-reverse'
+
   }
 
 });

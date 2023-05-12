@@ -237,7 +237,11 @@ export default function EventDetails(props) {
                 <View key={index} style={styles.commentContainer}>
                   <View style={styles.event}>
                     <View style={styles.row}>
-                      <Image style={styles.img} source={{ uri: comment.picture }} />
+                    {comment.picture ? (
+                        <Image style={styles.img} source={{ uri: comment.picture }} />
+                      ) : (
+                        <Image style={styles.img} source={{ uri: comment.shpicture }} />
+                      )}
                       <Text style={styles.text}>  {comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
                     </View>
                     <View>
