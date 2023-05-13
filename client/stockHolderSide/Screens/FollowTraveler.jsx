@@ -14,6 +14,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 export default function FollowTraveler(props) {
   const navigation = useNavigation();
+  const stakeholder = props.route.params.stakeholder;
   const traveler = props.route.params.traveler;
   const [travelerLocation, setTravelerLocation] = useState([])
   const [lastLocation, setLastLocation] = useState()
@@ -72,6 +73,7 @@ export default function FollowTraveler(props) {
     <GradientBackground>
       <BackButton />
       <View style={styles.container}>
+    
         <View >
           <View style={styles.row}>
             <Image style={styles.img} source={{ uri: traveler.Picture }} />
@@ -85,6 +87,11 @@ export default function FollowTraveler(props) {
             <Text style={styles.text}>{lastLocation.address}</Text>
           </View>
         )}
+          <TouchableOpacity style={styles.btnSave} onPress={() => { navigation.navigate('Report',{stakeholder:stakeholder,traveler: traveler,location:travelerLocation }) }}>
+            <Text style={styles.btnText}  >
+              Report as missing
+            </Text>
+          </TouchableOpacity>
         <MapView style={styles.map} region={lastLocation && {
           latitude: lastLocation.Latitude,
           longitude: lastLocation.Longitude,
@@ -138,7 +145,7 @@ const styles = StyleSheet.create({
 
   },
   map: {
-    marginTop: 10,
+    marginTop: 15,
     width: '100%',
     height: '40%',
   },
@@ -172,4 +179,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     top: 0
   },
+  btnSave: {
+    marginVertical: 20,
+    width: "28%",
+    paddingVertical:7,
+    paddingHorizontal: 0,
+    borderColor: '#144800',
+    borderWidth: 2,
+    borderRadius: 25,
+    backgroundColor: '#144800',
+    position: 'absolute',
+    right: 30,
+    height:70,
+    justifyContent: 'center',
+    
+  },
+  btnText: {
+    color: '#F8F8FF',
+    alignSelf: 'center',
+    fontSize: 20,
+
+  },
 });

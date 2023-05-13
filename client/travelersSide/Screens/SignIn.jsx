@@ -111,10 +111,11 @@ export default function SignIn() {
         const userLoction = {
 
             DateAndTime: DateAndTimeFormat,
+            TravelerId: travelerId,
             Latitude: location.coords.latitude,
-            Longitude: location.coords.longitude,
-            TravelerId: travelerId
+            Longitude: location.coords.longitude
         }
+        console.log("^^^^^^^^^",userLoction)
         //Send a POST request to your backend API with the 
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/location', {
             method: 'POST',

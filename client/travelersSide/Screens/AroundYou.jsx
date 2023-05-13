@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback,Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -16,7 +16,7 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
-   
+
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -86,8 +86,9 @@ export default function AroundYou(props) {
         6: 'orange',   // Protests
         7: 'pink',     // Strikes
         8: 'brown',    // Security threats
-        9: 'black',    // Animal-related incidents
+        // 9: 'black',    // Animal-related incidents
         10: 'gray',    // Financial issues
+        1003: 'black'  //Missing traveler
     };
     AroundYou.navigationOptions = {
         headerShown: false,
@@ -155,77 +156,79 @@ export default function AroundYou(props) {
                 {isMenuOpen && (
                     <View style={styles.menu}>
                         <ScrollView>
-                            
-                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                            navigation.navigate("Sign In");
-                        }}>
-                            <Text style={styles.textLO} > Log out  </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                            <AntDesign name="close" size={24} color="black" />
-                        </TouchableOpacity>
+                            <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                                <AntDesign name="close" size={24} color="black" />
+                            </TouchableOpacity>
 
-                        <View style={styles.picAndText} >
-                            <Image source={{ uri: traveler.Picture }} style={styles.user} />
-                            <Text style={styles.name}>
-                                Hello, {traveler.first_name} {traveler.last_name} !
-                            </Text>
-                        </View>
+                            <View style={styles.picAndText} >
+                                <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                                <Text style={styles.name}>
+                                    Hello, {traveler.first_name} {traveler.last_name} !
+                                </Text>
+                            </View>
 
-                        <TouchableOpacity style={styles.optionSOS}
-                            onPress={() => {
-                                navigation.navigate("SOS", {
+                            <TouchableOpacity style={styles.optionSOS}
+                                onPress={() => {
+                                    navigation.navigate("SOS", {
+                                        traveler: traveler,
+                                        userLocation: userLocation
+                                    });
+                                }}
+                            >
+                                <Icon name="help-buoy" size={35} style={styles.icon} />
+                                <Text style={styles.text}>SOS</Text>
+
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => {
+                                    navigation.navigate("New event", {
+                                        traveler: traveler,
+                                        userLocation: userLocation
+                                    });
+                                }}
+                            >
+                                <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>New Post</Text>
+
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
+                                <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>Chat</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
+                                <Icon name="search-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>Search </Text>
+
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option} onPress={() => {
+                                navigation.navigate("My Post", {
                                     traveler: traveler,
-                                    userLocation: userLocation
-                                });
-                            }}
-                        >
-                            <Icon name="help-buoy" size={35} style={styles.icon} />
-                            <Text style={styles.text}>SOS</Text>
+                                    events: Events
+                                })
+                            }}>
+                                <Icon name="documents-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>My Posts </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => { navigation.navigate("Warning", { traveler: traveler }) }}
+                            >
+                                <Icon name="warning-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>Warnings </Text>
+                            </TouchableOpacity>
 
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.option}
-                            onPress={() => {
-                                navigation.navigate("New event", {
-                                    traveler: traveler,
-                                    userLocation: userLocation
-                                });
-                            }}
-                        >
-                            <Icon name="add-circle-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>New Post</Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
-                            <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Chat</Text>
-                        </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}) }}>
-                        <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("My Post",{ traveler: traveler,
-                                    events: Events}) }}>
-                        <Icon name="documents-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>My Posts </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Warning",{ traveler: traveler})  }}
-                    >
-                        <Icon name="warning-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Warnings </Text>
-                    </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.option}
-                            onPress={() => { navigation.navigate("Setting", { traveler }) }}
-                        >
-                            <Icon name="settings-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Setting</Text>
-                        </TouchableOpacity>
-
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => { navigation.navigate("Setting", { traveler }) }}
+                            >
+                                <Icon name="settings-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>Setting</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                                navigation.navigate("Sign In");
+                            }}>
+                                <Text style={styles.textLO} > Log out  </Text>
+                            </TouchableOpacity>
                         </ScrollView>
                     </View>
                 )}
@@ -244,7 +247,7 @@ const styles = StyleSheet.create({
 
     },
     btnLogOut: {
-        top:40,
+        top: 100,
         flexDirection: 'row',
         position: 'absolute',
         // bottom: 30,
@@ -252,8 +255,8 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
 
-      },
-      
+    },
+
     name: {
         position: "absolute",
         fontSize: 20,
@@ -304,7 +307,7 @@ const styles = StyleSheet.create({
         // paddingVertical: 10,
         // paddingHorizontal: 25,
         backgroundColor: '#8FBC8F',
-        paddingTop:55
+        paddingTop: 55
 
 
     },
@@ -357,7 +360,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textDecorationLine: 'underline',
 
-    },   
+    },
     icon: {
         left: 30,
         size: 30,
