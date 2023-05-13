@@ -47,7 +47,8 @@ namespace WebApplication1.Controllers
                     StackholderId = newevent.stackholderId,
                     SerialTypeNumber = newevent.serialTypeNumber,
                     CountryNumber = newevent.country_number,
-                    AreaNumber = newevent.area_number
+                    AreaNumber = newevent.area_number,
+                    labels = newevent.labels,
                 };
                 eventsDto.Add(eventDto);
             }
@@ -92,7 +93,8 @@ namespace WebApplication1.Controllers
                         StackholderId = e.Event.stackholderId,
                         SerialTypeNumber = e.Event.serialTypeNumber,
                         CountryNumber = e.Event.country_number,
-                        AreaNumber = e.Event.area_number
+                        AreaNumber = e.Event.area_number,
+                        labels = e.Event.labels,
                     })
                     .ToList();
 
@@ -128,7 +130,8 @@ namespace WebApplication1.Controllers
                     stackholderId = value.stackholderId,
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
-                    area_number = value.area_number
+                    area_number = value.area_number,
+                    labels = value.labels,
 
                 };
 
@@ -309,6 +312,7 @@ namespace WebApplication1.Controllers
                 existingEvent.serialTypeNumber = updatedEvent.serialTypeNumber;
                 existingEvent.country_number = updatedEvent.country_number;
                 existingEvent.area_number = updatedEvent.area_number;
+                existingEvent.labels = updatedEvent.labels;
 
                 // Save the changes to the database
                 db.SaveChanges();
