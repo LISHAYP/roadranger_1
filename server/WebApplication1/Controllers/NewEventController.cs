@@ -49,6 +49,7 @@ namespace WebApplication1.Controllers
                     CountryNumber = newevent.country_number,
                     AreaNumber = newevent.area_number,
                     labels = newevent.labels,
+                    is_related = newevent.is_related
                 };
                 eventsDto.Add(eventDto);
             }
@@ -95,6 +96,7 @@ namespace WebApplication1.Controllers
                         CountryNumber = e.Event.country_number,
                         AreaNumber = e.Event.area_number,
                         labels = e.Event.labels,
+                        is_related=(int)e.Event.is_related
                     })
                     .ToList();
 
@@ -132,6 +134,7 @@ namespace WebApplication1.Controllers
                     country_number = value.country_number,
                     area_number = value.area_number,
                     labels = value.labels,
+                    is_related=value.is_related,
 
                 };
 
@@ -178,6 +181,64 @@ namespace WebApplication1.Controllers
             }
         }
 
+        //[HttpPost]
+        //[Route("api/post/neweventdistance")]
+        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
+        //{
+        //    try
+        //    {
+
+        //        // Check if there are any existing events within 3 km with the same serialTypeNumber
+        //        var existingEvents = db.tblEvents
+        //            .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
+        //                        && e.event_status == true) // only consider events with status "true"
+        //            .ToList()
+        //            .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
+        //            .ToList();
+
+        //        // Detach deleted entities from the context
+        //        var deletedEntities = existingEvents.Where(e => db.Entry(e).State == EntityState.Deleted).ToList();
+        //        if (deletedEntities.Any())
+        //        {
+        //            foreach (var deletedEntity in deletedEntities)
+        //            {
+        //                db.Entry(deletedEntity).State = EntityState.Detached;
+        //            }
+        //        }
+
+        //        if (existingEvents.Any())
+        //        {
+        //            // Create a relation between the new event and any existing events within 3 km
+        //            foreach (var existingEvent in existingEvents)
+        //            {
+        //                // Detach the existingEvent entity from the context
+        //                db.Entry(existingEvent).State = EntityState.Detached;
+
+        //                // Create the relationship between the newEvent and the existingEvent
+        //                newEvent.tblEvents1 = existingEvent;
+        //                existingEvent.tblEvents2 = newEvent;
+        //            }
+        //        }
+
+        //        // Generate a new event number that doesn't conflict with any existing event numbers
+        //        int maxEventNumber = db.tblEvents.Max(e => e.eventNumber);
+        //        newEvent.eventNumber = maxEventNumber + 1;
+
+        //        // Add the new event to the database
+        //        db.tblEvents.Add(newEvent);
+
+        //        // Save changes to the database
+        //        db.SaveChanges();
+        //        return Ok();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest();
+        //    }
+        //}
+
         [HttpPost]
         [Route("api/post/neweventdistance")]
         public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
@@ -193,41 +254,7 @@ namespace WebApplication1.Controllers
                     .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
                     .ToList();
 
-                // Detach deleted entities from the context
-                var deletedEntities = existingEvents.Where(e => db.Entry(e).State == EntityState.Deleted).ToList();
-                if (deletedEntities.Any())
-                {
-                    foreach (var deletedEntity in deletedEntities)
-                    {
-                        db.Entry(deletedEntity).State = EntityState.Detached;
-                    }
-                }
-
-                if (existingEvents.Any())
-                {
-                    // Create a relation between the new event and any existing events within 3 km
-                    foreach (var existingEvent in existingEvents)
-                    {
-                        // Detach the existingEvent entity from the context
-                        db.Entry(existingEvent).State = EntityState.Detached;
-
-                        // Create the relationship between the newEvent and the existingEvent
-                        newEvent.tblEvents1 = existingEvent;
-                        existingEvent.tblEvents2 = newEvent;
-                    }
-                }
-
-                // Generate a new event number that doesn't conflict with any existing event numbers
-                int maxEventNumber = db.tblEvents.Max(e => e.eventNumber);
-                newEvent.eventNumber = maxEventNumber + 1;
-
-                // Add the new event to the database
-                db.tblEvents.Add(newEvent);
-
-                // Save changes to the database
-                db.SaveChanges();
-                return Ok();
-
+                return Ok(existingEvents);
             }
             catch (Exception ex)
             {
@@ -235,6 +262,7 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+
 
         private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
@@ -250,6 +278,7 @@ namespace WebApplication1.Controllers
             var distance = R * c;
             return distance;
         }
+
 
         [HttpPost]
         [Route("api/events/comments")]
@@ -313,6 +342,7 @@ namespace WebApplication1.Controllers
                 existingEvent.country_number = updatedEvent.country_number;
                 existingEvent.area_number = updatedEvent.area_number;
                 existingEvent.labels = updatedEvent.labels;
+                existingEvent.is_related=updatedEvent.is_related;
 
                 // Save the changes to the database
                 db.SaveChanges();

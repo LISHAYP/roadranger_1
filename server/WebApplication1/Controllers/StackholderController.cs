@@ -1,11 +1,14 @@
 ﻿using data;
 using NLog;
+using SendGrid.Helpers.Mail;
+using SendGrid;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using WebApplication1.DTO;
 
@@ -286,6 +289,64 @@ namespace WebApplication1.Controllers
                 logger.Error(ex.Message);
                 return InternalServerError();
             }
+        }
+
+
+        [HttpPost]
+        [Route("api/post/shforgotpassword")]
+        public async Task<IHttpActionResult> ForgotPasswordAsync([FromBody] StackholderDto value)
+        {
+
+            try
+            {
+
+                // Find the user with the specified email address
+                var user = db.stakeholders.SingleOrDefault(x => x.stakeholder_email == value.StakeholderEmail);
+                if (user == null)
+                {
+                    logger.Error($"stakeholder with email : {value.StakeholderEmail} was not found");
+                    return NotFound();
+                }
+
+
+                // Generate a new password and update the user's record in the database
+                var newPassword = GeneratePassword();
+                user.password = newPassword;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                logger.Info($"new password was saved in the database to stakeholder id number: {value.StakeholderId}");
+
+                var mailapi = db.tblApi.Select(x => x.api).SingleOrDefault();
+                var sendGridClient = new SendGridClient(mailapi);
+                var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
+                var subject = "New Password";
+                var to = new EmailAddress(user.stakeholder_email, user.full_name);
+                var plainContent = "Dear " + user.full_name;
+                var htmlContent = $"Dear {user.full_name}, \n Your new password is: {newPassword}";
+                var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
+                await sendGridClient.SendEmailAsync(mailMessage);
+
+
+                return Ok("new password email was sent succesfully (:");
+            }
+            catch (Exception ex)
+            {
+
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+        private string GeneratePassword()
+        {
+            const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var rand = new Random();
+            var chars = new char[8];
+            for (var i = 0; i < chars.Length; i++)
+            {
+                chars[i] = allowedChars[rand.Next(allowedChars.Length)];
+            }
+            return new string(chars);
         }
 
         // PUT: api/Stackholder/5

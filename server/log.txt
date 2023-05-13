@@ -65,3 +65,12 @@
  2023-05-12 13:36:34.4311 ERROR: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
  2023-05-12 13:37:01.9274 ERROR: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
  2023-05-12 13:38:49.7274 INFO: New contact us entry was added!
+ 2023-05-13 10:44:45.7995 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-05-13 10:46:23.8324 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-05-13 10:50:09.5594 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-05-13 10:50:22.7453 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-05-13 10:50:29.2285 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-05-13 11:49:28.1847 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-05-13 12:31:29.4942 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-05-13 22:38:34.4306 INFO: new password was saved in the database to stakeholder id number: 0
+ 2023-05-13 22:41:27.8163 INFO: new password was saved in the database to stakeholder id number: 0

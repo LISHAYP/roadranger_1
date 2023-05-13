@@ -21,6 +21,7 @@ namespace WebApplication1.DTO
         public int CountryNumber { get; set; }
         public int AreaNumber { get; set; }
         public string labels { get; set; }
+        public Nullable<int> is_related { get; set; }
 
     }
 }

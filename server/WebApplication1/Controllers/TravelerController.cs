@@ -279,7 +279,7 @@ namespace WebApplication1.Controllers
                 var subject = "New Password";
                 var to = new EmailAddress(user.travler_email, user.first_name);
                 var plainContent = "Dear " + user.first_name;
-                var htmlContent = $"Your new password is: {newPassword}";
+                var htmlContent = $"Dear {value.first_name}, \n Your new password is: {newPassword}";
                 var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
                 await sendGridClient.SendEmailAsync(mailMessage);
 

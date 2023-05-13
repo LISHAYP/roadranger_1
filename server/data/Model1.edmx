@@ -135,10 +135,10 @@
           <Property Name="serialTypeNumber" Type="int" Nullable="false" />
           <Property Name="country_number" Type="int" Nullable="false" />
           <Property Name="area_number" Type="int" Nullable="false" />
-          <Property Name="is_related" Type="varchar" MaxLength="50" />
           <Property Name="approved" Type="varchar" MaxLength="50" />
           <Property Name="not_approved" Type="varchar" MaxLength="50" />
           <Property Name="labels" Type="varchar" MaxLength="500" />
+          <Property Name="is_related" Type="int" />
         </EntityType>
         <EntityType Name="tblinsuredBy">
           <Key>
@@ -682,10 +682,10 @@
           <Property Name="serialTypeNumber" Type="Int32" Nullable="false" />
           <Property Name="country_number" Type="Int32" Nullable="false" />
           <Property Name="area_number" Type="Int32" Nullable="false" />
-          <Property Name="is_related" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="approved" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="not_approved" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="labels" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="is_related" Type="Int32" />
           <NavigationProperty Name="stakeholders" Relationship="Self.event_stackholder" FromRole="tblEvents" ToRole="stakeholders" />
           <NavigationProperty Name="tblArea" Relationship="Self.country_area_event" FromRole="tblEvents" ToRole="tblArea" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_event" FromRole="tblEvents" ToRole="tblComments" />
@@ -1203,10 +1203,10 @@
                 <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
                 <ScalarProperty Name="country_number" ColumnName="country_number" />
                 <ScalarProperty Name="area_number" ColumnName="area_number" />
-                <ScalarProperty Name="is_related" ColumnName="is_related" />
                 <ScalarProperty Name="approved" ColumnName="approved" />
                 <ScalarProperty Name="not_approved" ColumnName="not_approved" />
                 <ScalarProperty Name="labels" ColumnName="labels" />
+                <ScalarProperty Name="is_related" ColumnName="is_related" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

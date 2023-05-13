@@ -139,10 +139,10 @@
           <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
-          <ScalarProperty Name="is_related" ColumnName="is_related" />
           <ScalarProperty Name="approved" ColumnName="approved" />
           <ScalarProperty Name="not_approved" ColumnName="not_approved" />
           <ScalarProperty Name="labels" ColumnName="labels" />
+          <ScalarProperty Name="is_related" ColumnName="is_related" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
