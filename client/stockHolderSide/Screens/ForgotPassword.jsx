@@ -9,8 +9,6 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useRef } from 'react';
 
 export default function ForgotPassword() {
-
-
     const navigation = useNavigation();
     const [errorMessage, setErrorMessage] = useState('');
     const [newPassword, setNewPassword] = useState('');
