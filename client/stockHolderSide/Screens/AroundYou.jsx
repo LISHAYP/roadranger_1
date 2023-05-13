@@ -148,11 +148,11 @@ export default function AroundYou(props) {
 
                     </View>
 
-                   
+
                     <TouchableOpacity style={styles.option}
-                    onPress={() => {navigation.navigate("Home chat",{ stakeholder: stakeholder})}}
+                        onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }) }}
                     >
-                    
+
                         <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
@@ -188,14 +188,20 @@ export default function AroundYou(props) {
                         <Text style={styles.text}>Setting</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Warning",{
-                            stakeholder: stakeholder,
-                            userLocation: userLocation
-                        })
-                     }}
+                        onPress={() => {
+                            navigation.navigate("Warning", {
+                                stakeholder: stakeholder,
+                                userLocation: userLocation
+                            })
+                        }}
                     >
                         <Icon name="warning-outline" size={35} style={styles.icon} />
                         <Text style={styles.text}>Warnings </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                        navigation.navigate("Sign In");
+                    }}>
+                        <Text style={styles.textLO} > Log out  </Text>
                     </TouchableOpacity>
                 </View>
             )}
@@ -249,7 +255,7 @@ const styles = StyleSheet.create({
         // paddingVertical: 10,
         // paddingHorizontal: 25,
         backgroundColor: '#8FBC8F',
-        paddingTop:55
+        paddingTop: 55
 
     },
     menu: {
@@ -271,6 +277,22 @@ const styles = StyleSheet.create({
         top: 55,
         right: 20,
     },
+    btnLogOut: {
+        top: 100,
+        flexDirection: 'row',
+        position: 'absolute',
+        // bottom: 30,
+        // alignSelf: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
+
+    },
+    textLO: {
+        color: '#144800',
+        fontSize: 20,
+        textDecorationLine: 'underline',
+
+    }, 
     optionSOS: {
         flexDirection: 'row',
         backgroundColor: '#8FBC8F',

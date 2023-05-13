@@ -1,7 +1,7 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19000,
+  "expoServerPort": 19001,
+  "packagerPort": 19001,
   "expoServerNgrokUrl": "https://56-e9v.orian1996.stockholderside.exp.direct",
   "packagerNgrokUrl": "https://56-e9v.orian1996.stockholderside.exp.direct",
-  "ngrokPid": 5024
+  "ngrokPid": 4116
 }

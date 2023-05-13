@@ -13,15 +13,16 @@ export default function NewEvent(props) {
   const stakeholder = props.route.params.stakeholder;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
+ 
   // const serialType = [
   //   //creating type of different eventtypes
   //   { label: 'Missing traveler', value: '1003' },
   //   { label: 'Travel warning', value: '1004' },
 
   // ]
-
+  
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
   const [details, setDetails] = useState('');
   const eventStatus = 'true';
   const [picture, setPicture] = useState('#');
@@ -156,7 +157,6 @@ export default function NewEvent(props) {
       <ScrollView>
         <View style={styles.container}>
           <BackButton />
-          <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -268,8 +268,6 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 25,
-
-
   },
   photo: {
     marginVertical: 20,
