@@ -6,6 +6,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Geocoder from 'react-native-geocoding';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import BackButton from '../Components/BackButton';
+
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
