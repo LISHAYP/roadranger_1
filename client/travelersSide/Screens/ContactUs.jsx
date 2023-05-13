@@ -26,12 +26,14 @@ export default function ContactUs() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [requestType, setRequestType] = useState('');
     const [details, setDetails] = useState('');
+    const [requestTypeSelection, setRequestTypeSelection] = useState(null);
+
     const navigation = useNavigation();
     state = {
         showPassword: false
     };
 
-    sendRequest = () => {
+    const sendRequest = () => {
         const objNewContactRequest = {
             FirstName: firstName,
             LastName: lastName,
@@ -43,42 +45,50 @@ export default function ContactUs() {
             Details: details
         };
         console.log("*****", objNewContactRequest);
-        if (!firstName || !lastName | !email || !phoneNumber  || !details || !requestType) {
+        if (!firstName || !lastName | !email || !phoneNumber || !details || !requestType) {
             // Some fields are missing
             Alert.alert('Please fill in all fields.');
             return;
-          }
-          // Email validation
-          const emailPattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-          if (!emailPattern.test(email)) {
+        }
+        // Email validation
+        const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (!emailPattern.test(email)) {
             // Email format is invalid
             alert('Please enter a valid email address.');
             return;
-          }
-          if (phoneNumber.length != 10) {
+        }
+        if (phoneNumber.length != 10) {
             // Phone is too short
             Alert.alert('Phone must be 10 numbers.');
-           
+
             return;
-          }
-            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcontactus', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(objNewContactRequest),
+        }
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcontactus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(objNewContactRequest),
+
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data as needed
+                console.log("lllllllllllll", data);
+                Alert.alert('Publish')
+                setDetails('')
+                setEmail('')
+                setFirstName('')
+                setLastName('')
+                setRequestType('')
+                setPhoneNumber('')
+
             })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the response data as needed
-                    console.log(data);
-                    Alert.alert('Publish')
-                    setDetails('');
-                })
-                .catch(error => {
-                    console.error(error);
-                    Alert.alert('Error', error);
-                });
+            .catch(error => {
+                console.error(error);
+                Alert.alert('Error', error);
+            });
     }
     return (
         < GradientBackground>
@@ -94,14 +104,17 @@ export default function ContactUs() {
                         <Text style={styles.text}>Email:</Text>
                         <TextInput style={styles.input}
                             onChangeText={(text) => setEmail(text)}
+                            value={email}
                             placeholder="Email">
                         </TextInput>
                         <Text style={styles.text}>Name:</Text>
                         <TextInput style={styles.input}
                             onChangeText={(text) => setFirstName(text)}
+                            value={firstName}
                             placeholder="First Name">
                         </TextInput>
                         <TextInput style={styles.input}
+                            value={lastName}
                             onChangeText={(text) => setLastName(text)}
                             placeholder="Last Name">
                         </TextInput>
@@ -123,9 +136,10 @@ export default function ContactUs() {
                             labelField="label"
                             valueField="value"
                             placeholder={"select a subject type"}
-                            value={value}
+                            value={requestTypeSelection}
                             onChange={item => {
-                                setRequestType(item);
+                                setRequestType(item.label);
+                                setRequestTypeSelection(item)
                             }}
 
                         />
