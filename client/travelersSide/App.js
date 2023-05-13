@@ -23,6 +23,7 @@ import HomeChat from './Screens/HomeChat';
 import BackButton from './Components/BackButton';
 import GroupChat from './Screens/GroupChat'
 import {  StyleSheet } from 'react-native';
+import ChatWithSH from './Screens/ChatWithSH';
 import Warning from './Screens/Warning';
 
 const Stack = createNativeStackNavigator()
@@ -54,6 +55,7 @@ export default function App() {
         <Stack.Screen name="BackButton" component={BackButton} />
         <Stack.Screen name="My Post" component={MyPost} />
         <Stack.Screen name="Group chat" component={GroupChat} />
+        <Stack.Screen name="Chat withSH" component={ChatWithSH} />
         <Stack.Screen name="Warning" component={Warning} />        
       </Stack.Navigator>
     </NavigationContainer>

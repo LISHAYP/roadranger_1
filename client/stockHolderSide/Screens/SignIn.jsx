@@ -22,7 +22,11 @@ export default function SignIn() {
             StakeholderEmail: email,
             Password: password
         };
-console.log("********",stakeholder);
+        const changeToken = {
+            StakeholderEmail: email,
+            token: devaiceToken
+        };
+        console.log("********", stakeholder);
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/stackholder', {
             method: 'POST',
             headers: {
@@ -34,7 +38,24 @@ console.log("********",stakeholder);
             .then(response => response.json())
             .then(data => {
                 if (data.StakeholderEmail === email && data.Password === password) {
-                    navigation.navigate("Around You", { data });
+                    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/stackholder/updatetoken?email=${stakeholder.StakeholderEmail}`, {
+                        method: 'PUT',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(changeToken),
+                    })
+                        .then((response) => response.json())
+                        .then((data1) => {
+                            console.log(data1); // stakeholder updated successfully.
+                            //Alert.alert('Token updated successfully')
+                            navigation.navigate("Around You", { data });
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+
                 } else {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');
@@ -187,7 +208,7 @@ console.log("********",stakeholder);
 }
 const styles = StyleSheet.create({
     container: {
-        top:100,
+        top: 100,
         padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,
@@ -248,7 +269,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 15,
 
     },
  iconContainer: {

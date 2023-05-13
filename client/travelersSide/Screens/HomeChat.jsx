@@ -15,8 +15,12 @@ const HomeChat = (props) => {
   const traveler = props.route.params;
   const [travelers, setTravelers] = useState([]);
   const [activeChats, setActiveChats] = useState([]);
+  const [activeChatsSH, setActiveChatsSH] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showModalSH, setShowModalSH] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [stockHolders, setStockHolders] = useState([]);
+
 
 
   useEffect(() => {
@@ -29,7 +33,29 @@ const HomeChat = (props) => {
       .catch((error) => console.error(error));
 
   }, []);
+  useEffect(() => {
+const insuranceObj={
+  insurence_company: traveler.insurence_company
+}
+console.log("SSS",insuranceObj)
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/stakeholders',{
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(insuranceObj),
+  })
+    
+      .then((response) => response.json())
+      .then((data) => {
+        setStockHolders(data);
+        console.log(data)
+      })
+      .catch((error) => console.error(error));
 
+  }
+  , []);
   useFocusEffect(() => {
 
     const getActiveChats = async () => {
@@ -58,20 +84,24 @@ const HomeChat = (props) => {
     console.log(user, loggeduser)
     navigation.navigate('Chat', { user, loggeduser });
   };
+
  const handleUserSH= async(user, loggeduser)=>{
+  const isSHPresent = activeChatsSH.find((chatUser) => chatUser.StakeholderId === user.StakeholderId);
+  if (!isSHPresent) {
+    const updatedActiveChats = [user, ...activeChatsSH];
+    setActiveChatsSH(updatedActiveChats);
+    try {
+      await AsyncStorage.setItem('activeChatsSH', JSON.stringify(updatedActiveChats));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  console.log(user, loggeduser)
   navigation.navigate('Chat withSH', { user, loggeduser });
 
   }
   
-  const SH = {Approved: true, ApprovelDate: "0001-01-01T00:00:00", Chat: true, FullName: "Menoraa", Notifications: true,
-   Password: "22222222",
-    Phone: 31115, 
-    StakeholderEmail: "menora@gmail.com", 
-    StakeholderId: 7, 
-    StakeholderName: "Harel", 
-    StakeholderType: "Insurance Company", 
-    picture: "http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_menora@gmail.com.jpg", 
-    token: "123"}
+
   const handleClearActiveChats = async () => {
     try {
       await AsyncStorage.removeItem('activeChats');
@@ -121,7 +151,11 @@ const HomeChat = (props) => {
               </TouchableOpacity>
               <TouchableOpacity style={styles.row} onPress={() => setShowModal(true)}>
                 <Icon name="search-outline" size={35} style={styles.icon} />
-                <Text style={styles.text}>Search </Text>
+                <Text style={styles.text}>Search traveler </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.row} onPress={() => setShowModalSH(true)}>
+                <Icon name="search-outline" size={35} style={styles.icon} />
+                <Text style={styles.text}>Insurance company represenative </Text>
               </TouchableOpacity>
               <Modal
                 visible={showModal}
@@ -139,6 +173,7 @@ const HomeChat = (props) => {
                     onChangeText={setSearchQuery}
                     value={searchQuery}
                   />
+                  
                   <ScrollView>
                     {travelers
                       .filter(traveler1 => traveler1.first_name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -150,6 +185,40 @@ const HomeChat = (props) => {
                           <View style={styles.row}>
                             <Image style={styles.img} source={{ uri: traveler1.Picture }} />
                             <Text style={styles.text}>{traveler1.first_name} </Text>
+                          </View>
+                        </TouchableOpacity>
+                      ))}
+                  </ScrollView>
+                </View>
+              </Modal>
+              <Modal
+                visible={showModalSH}
+                animationType='slide'
+                transparent={true}
+                onRequestClose={() => setShowModalSH(false)}
+              >
+                <View style={styles.modal}>
+                  <TouchableOpacity onPress={() => setShowModalSH(false)} style={styles.btnClose}>
+                    <Icon name="close-outline" size={35} />
+                  </TouchableOpacity>
+                  <TextInput
+                    style={styles.searchInput}
+                    placeholder="Search for Insurance company represenative"
+                    onChangeText={setSearchQuery}
+                    value={searchQuery}
+                  />
+                  
+                  <ScrollView>
+                    {stockHolders
+                      .filter(stockHolders1 => stockHolders1.FullName.toLowerCase().includes(searchQuery.toLowerCase()))
+                      .map((stockHolders1) => (
+                        <TouchableOpacity key={stockHolders1.StakeholderId} onPress={() => {
+                          handleUserSH(stockHolders1, traveler);
+                          setShowModalSH(false);
+                        }}>
+                          <View style={styles.row}>
+                            <Image style={styles.img} source={{ uri: stockHolders1.picture }} />
+                            <Text style={styles.text}>{stockHolders1.FullName} </Text>
                           </View>
                         </TouchableOpacity>
                       ))}
@@ -176,15 +245,24 @@ const HomeChat = (props) => {
               </Swipeable>
               
               ))}
+               {activeChatsSH.map((Stakeholder2) => (
+                <Swipeable
+                renderRightActions={() => renderRightActions(Stakeholder2)}
+                onSwipeableRightOpen={() => handleDelete(Stakeholder2)}
+              >
+                <TouchableOpacity onPress={() => handleUserSH(Stakeholder2, traveler)}>
+                  <View style={styles.row}>
+                    <Image style={styles.img} source={{ uri: Stakeholder2.picture }} />
+                    <Text style={styles.text}>{Stakeholder2.FullName}</Text>
+                  </View>
+                </TouchableOpacity>
+              </Swipeable>
+              
+              ))}
             </ScrollView>
 
           </View>
-          <TouchableOpacity onPress={() => handleUserSH(SH, traveler)}>
-                  <View style={styles.row}>
-                
-                    <Text style={styles.text}>hiiiii</Text>
-                  </View>
-                </TouchableOpacity>
+         
         </ScrollView>
       </GradientBackground>
 
