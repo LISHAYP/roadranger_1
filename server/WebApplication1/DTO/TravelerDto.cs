@@ -22,6 +22,8 @@ namespace WebApplication1.DTO
         public Nullable<bool> chat { get; set; }
         public string Picture { get; set; }
         public string token { get; set; }
+        public bool missing { get; set; }
+
 
     }
 

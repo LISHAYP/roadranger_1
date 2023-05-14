@@ -74,3 +74,9 @@
  2023-05-13 12:31:29.4942 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
  2023-05-13 22:38:34.4306 INFO: new password was saved in the database to stakeholder id number: 0
  2023-05-13 22:41:27.8163 INFO: new password was saved in the database to stakeholder id number: 0
+ 2023-05-13 22:54:18.0890 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-05-13 22:54:37.0716 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-05-13 22:56:55.1053 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-05-13 23:09:27.3494 INFO: Event number 100 was updated and saved to the database!
+ 2023-05-14 00:32:13.0375 ERROR: No connection string named 'igroup190_test1Entities' could be found in the application config file.
+ 2023-05-14 00:33:00.8150 INFO: new traveler was added to the database!

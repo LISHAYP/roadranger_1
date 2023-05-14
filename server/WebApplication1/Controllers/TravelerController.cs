@@ -56,6 +56,7 @@ namespace WebApplication1.Controllers
                     chat = traveler.chat,
                     Picture = traveler.picture,
                     token=traveler.token,
+                    missing=traveler.missing,
                 };
 
                 travelerDtos.Add(travelerDto);
@@ -93,7 +94,8 @@ namespace WebApplication1.Controllers
                     save_location = value.save_location,
                     password = value.password,
                     chat = value.chat,
-                    picture = value.picture
+                    picture = value.picture,
+                    missing=value.missing,
                 };
 
                 db.traveleres.Add(newTraveler);

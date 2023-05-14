@@ -239,19 +239,58 @@ namespace WebApplication1.Controllers
         //    }
         //}
 
+        //[HttpPost]
+        //[Route("api/post/neweventdistance")]
+        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
+        //{
+        //    try
+        //    {
+
+        //        // Check if there are any existing events within 3 km with the same serialTypeNumber
+        //        var existingEvents = db.tblEvents
+        //            .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
+        //                        && e.event_status == true) // only consider events with status "true"
+        //            .ToList()
+        //            .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
+        //            .ToList();
+
+        //        return Ok(existingEvents);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest();
+        //    }
+        //}
         [HttpPost]
         [Route("api/post/neweventdistance")]
         public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
         {
             try
             {
-
                 // Check if there are any existing events within 3 km with the same serialTypeNumber
                 var existingEvents = db.tblEvents
-                    .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
-                                && e.event_status == true) // only consider events with status "true"
+                    .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber && e.event_status == true)
                     .ToList()
                     .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
+                    .Select(e => new EventDto
+                    {
+                        eventNumber = e.eventNumber,
+                        Details = e.details,
+                        EventDate = e.event_date,
+                        EventTime = e.event_time,
+                        Latitude = e.latitude,
+                        Longitude = e.longitude,
+                        EventStatus = e.event_status,
+                        Picture = e.picture,
+                        TravelerId = e.travelerId,
+                        StackholderId = e.stackholderId,
+                        SerialTypeNumber = e.serialTypeNumber,
+                        CountryNumber = e.country_number,
+                        AreaNumber = e.area_number,
+                        labels = e.labels,
+                        is_related = e.is_related
+                    })
                     .ToList();
 
                 return Ok(existingEvents);
@@ -362,6 +401,40 @@ namespace WebApplication1.Controllers
         {
 
         }
+
+        // PUT api/put/updateevent/{eventNumber}
+        [HttpPut]
+        [Route("api/put/updateevent/{eventNumber}")]
+        public IHttpActionResult PutUpdateEvent(int eventNumber, [FromBody] tblEvents isRelated)
+        {
+            try
+            {
+                // Retrieve the existing event from the database
+                tblEvents existingEvent = db.tblEvents.FirstOrDefault(x => x.eventNumber == eventNumber);
+
+                // If the existing event does not exist, return a bad request
+                if (existingEvent == null)
+                {
+                    return BadRequest("Event not found.");
+                }
+
+                // Update the existing event's "is_related" field with the new value
+                existingEvent.is_related = isRelated.is_related;
+
+                // Save the changes to the database
+                db.SaveChanges();
+                logger.Info($"Event number {eventNumber} was updated and saved to the database!");
+
+                return Ok("Event updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+
 
         // DELETE: api/NewEvent/5
         public void Delete(int id)

@@ -183,6 +183,7 @@
           <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="picture" ColumnName="picture" />
           <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="missing" ColumnName="missing" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -185,6 +185,7 @@
           <Property Name="gender" Type="varchar" MaxLength="50" />
           <Property Name="picture" Type="varchar" MaxLength="500" />
           <Property Name="token" Type="varchar" MaxLength="250" />
+          <Property Name="missing" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="comment_event">
           <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
@@ -734,6 +735,7 @@
           <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="missing" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
           <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
@@ -1247,6 +1249,7 @@
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="missing" ColumnName="missing" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
