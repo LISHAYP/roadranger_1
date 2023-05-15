@@ -78,7 +78,7 @@ export default function NewEvent(props) {
     area_number: areaNumber,
     labels: JSON.stringify(labels)
   };
-  console.log("--------", { newEvent, labels })
+  //console.log("--------", { newEvent, labels })
   const countryObj = {
     country_name: country,
   };
@@ -147,33 +147,44 @@ export default function NewEvent(props) {
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
-          console.log({ data })
-          Alert.alert('Publish')
-          // const eventDetailsObj = {
-          //   serialTypeNumber: serialTypeNumber,
-          //   event_status: eventStatus,
-          //   latitude: userLocation.coords.latitude,
-          //   longitude: userLocation.coords.longitude
-          // }
-          // fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //   },
-          //   body: JSON.stringify(eventDetailsObj),
+          //console.log({ data })
+          const comonventdetailsObj = {
+            serialTypeNumber: serialTypeNumber,
+            event_status: eventStatus,
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude
+          };
+          fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(comonventdetailsObj),
+          })
+            .then(response => response.json())
+            .then(data1 => {
+              console.log("related?*************", data1);
+              // Search term for the label description
+              const searchTerm = 'Product';
 
-          // })
-          //   .then(response => response.json())
-          //   .then(data => {
-          //     // Handle the response data as needed
-          //     console.log("*****************************", { data })
+              // Loop through the array of events
+              const filteredEvents = data1.filter(event => {
+                // Parse the labels string into an array of objects
+                const labels = JSON.parse(event.labels);
+
+                // Check if any of the objects in the labels array have a description that matches the search term
+                return labels.some(label => label.description.toLowerCase().includes(searchTerm.toLowerCase()));
+              })
+
+              // Log the filtered events to the console
+              console.log("filteredEvents",filteredEvents);
+              Alert.alert('Publish')
               navigation.goBack(); // Navigate back to the "Around You" screen
-            // })
-            // .catch(error => {
-            //   console.error(error);
-            //   Alert.alert('Error', error);
-            // });
+            })
+            .catch(error => {
+              console.error(error);
+              Alert.alert('Error', error);
+            });
         })
         .catch(error => {
           console.error(error);
@@ -305,6 +316,8 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 25,
+
+
   },
   photo: {
     marginVertical: 20,
