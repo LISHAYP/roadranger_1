@@ -201,12 +201,115 @@ namespace WebApplication1.Controllers
                 traveler.password = value.password;
                 traveler.chat = value.chat;
                 traveler.picture = value.Picture;
+                
 
                 db.Entry(traveler).State = EntityState.Modified;
                 db.SaveChanges();
                 logger.Info($"traveler with email: {traveler.travler_email} was updated succesfully!");
 
                 return Ok("Traveler updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/post/missingtrue")]
+        public IHttpActionResult UpdateMissingTrue([FromBody] TravelerDto travelerDto)
+        {
+            try
+            {
+                var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerDto.traveler_id);
+
+                if (traveler == null)
+                {
+                    logger.Error($"Traveler with ID: {travelerDto.traveler_id} was not found");
+                    return NotFound();
+                }
+
+                // Update the missing field to true
+                traveler.missing = true;
+
+                db.SaveChanges();
+
+                logger.Info($"Traveler with ID: {travelerDto.traveler_id} was updated successfully!");
+
+                // Return the updated traveler details
+                var updatedTravelerDto = new TravelerDto
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat,
+                    Picture = traveler.picture,
+                    token = traveler.token,
+                    missing = traveler.missing
+                };
+
+                return Ok(updatedTravelerDto);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/post/missingfalse")]
+        public IHttpActionResult UpdateMissingFalse([FromBody] TravelerDto travelerDto)
+        {
+            try
+            {
+                var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerDto.traveler_id);
+
+                if (traveler == null)
+                {
+                    logger.Error($"Traveler with ID: {travelerDto.traveler_id} was not found");
+                    return NotFound();
+                }
+
+                // Update the missing field to false
+                traveler.missing = false;
+
+                db.SaveChanges();
+
+                logger.Info($"Traveler with ID: {travelerDto.traveler_id} was updated successfully!");
+
+                // Return the updated traveler details
+                var updatedTravelerDto = new TravelerDto
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat,
+                    Picture = traveler.picture,
+                    token = traveler.token,
+                    missing = traveler.missing
+                };
+
+                return Ok(updatedTravelerDto);
             }
             catch (Exception ex)
             {

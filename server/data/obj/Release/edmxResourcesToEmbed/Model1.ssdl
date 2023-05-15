@@ -180,6 +180,7 @@
     <Property Name="gender" Type="varchar" MaxLength="50" />
     <Property Name="picture" Type="varchar" MaxLength="500" />
     <Property Name="token" Type="varchar" MaxLength="250" />
+    <Property Name="missing" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="comment_event">
     <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />

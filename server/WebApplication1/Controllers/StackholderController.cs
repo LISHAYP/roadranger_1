@@ -180,6 +180,7 @@ namespace WebApplication1.Controllers
                         password = t.password,
                         chat = t.chat,
                         Picture = t.picture,
+                        missing = t.missing,
                         last_location = travelerLocations
                             .Where(x => x.TravelerId == t.traveler_id)
                             .Select(x => x.LastLocation)
@@ -254,7 +255,8 @@ namespace WebApplication1.Controllers
                     StakeholderType = s.stakeholder_type,
                     Password = s.password,
                     token = s.token,
-                    picture = s.picture
+                    picture = s.picture,
+                    
                 })
                 .ToList();
 

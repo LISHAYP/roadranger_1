@@ -74,6 +74,7 @@ namespace WebApplication1.Controllers
                     password = location.traveleres.password,
                     chat = location.traveleres.chat,
                     Picture = location.traveleres.picture,
+                    missing = location.traveleres.missing,
                     last_location = new LocationDto
                     {
                         TravelerId = location.travelerId,

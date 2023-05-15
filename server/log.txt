@@ -80,3 +80,7 @@
  2023-05-13 23:09:27.3494 INFO: Event number 100 was updated and saved to the database!
  2023-05-14 00:32:13.0375 ERROR: No connection string named 'igroup190_test1Entities' could be found in the application config file.
  2023-05-14 00:33:00.8150 INFO: new traveler was added to the database!
+ 2023-05-15 11:20:40.7040 INFO: Traveler with ID: 10 was updated successfully!
+ 2023-05-15 11:24:12.8766 INFO: Traveler with ID: 10 was updated successfully!
+ 2023-05-15 11:24:38.0853 INFO: Traveler with ID: 10 was updated successfully!
+ 2023-05-15 11:25:21.8287 INFO: Traveler with ID: 10 was updated successfully!
