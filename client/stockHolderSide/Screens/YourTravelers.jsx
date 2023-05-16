@@ -139,11 +139,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2},
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+      elevation: 4
   },
   event: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   row: {
     flexDirection: 'row',

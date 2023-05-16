@@ -219,7 +219,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20
+    marginBottom: 20,
+    shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
 
   },
   text: {
@@ -283,6 +290,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
+    shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
 
   },
   icon: {
@@ -318,7 +332,14 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 2,
     borderRadius: 25,
-    backgroundColor: '#144800'
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
   },
 });
 

@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
         marginRight: 30,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '90%'
+        width: '90%',
+        
     },
     detailsContainer: {
         flex: 1,
@@ -144,7 +145,14 @@ const styles = StyleSheet.create({
         borderColor: '#144800',
         borderWidth: 2,
         borderRadius: 25,
-        backgroundColor: '#144800'
+        backgroundColor: '#144800',
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
 
     btnText: {
