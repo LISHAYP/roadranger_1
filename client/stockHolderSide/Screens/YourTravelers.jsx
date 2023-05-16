@@ -102,7 +102,7 @@ export default function YourTravelers(props) {
         {myTravelers.length > 0 && (
           myTravelers.map((traveler, index) => (
             <View key={index} style={styles.commentContainer}>
-              <TouchableOpacity onPress={() => { navigation.navigate("Follow", { traveler }) }}>
+              <TouchableOpacity onPress={() => { navigation.navigate("Follow", { traveler,stakeholder }) }}>
                 <View style={styles.event}>
                   <View style={styles.row}>
                     <Image style={styles.img} source={{ uri: traveler.Picture }} />

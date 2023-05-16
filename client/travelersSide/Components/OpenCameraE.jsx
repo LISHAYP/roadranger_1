@@ -15,7 +15,7 @@ export default function OpenCameraE(props) {
   const [animate, setAnimate] = useState(false);
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation;
-const [labels, setLabels] = useState('');
+  const [labels, setLabels] = useState('');
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -52,35 +52,40 @@ const [labels, setLabels] = useState('');
         const picUri = `data:image/gif;base64,${photo.base64}`;
         const formData = new FormData();
         formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
-      // Call the Google Cloud Vision API to get image labels
-      const visionUrl = `https://vision.googleapis.com/v1/images:annotate?key=${GoogleCloudVisionApiKey}`;
-      const requestBody = {
-        requests: [
-          {
-            image: {
-              content: pic64base
-            },
-            features: [
-              {
-                type: 'LABEL_DETECTION'
-              }
-            ]
-          }
-        ]
-      };
-      console.log("^^^^^^",requestBody)
-      const visionResponse = await fetch(visionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestBody)
-      });
-      const visionData = await visionResponse.json();
-      console.log(JSON.stringify(visionData.responses));
-      const labels = visionData.responses[0].labelAnnotations.map(label => label.description);
-      console.log("labels****",labels);
-      setLabels(labels)
+        // Call the Google Cloud Vision API to get image labels
+        const visionUrl = `https://vision.googleapis.com/v1/images:annotate?key=${GoogleCloudVisionApiKey}`;
+        const requestBody = {
+          requests: [
+            {
+              image: {
+                content: pic64base
+              },
+              features: [
+                {
+                  type: 'LABEL_DETECTION'
+                }
+              ]
+            }
+          ]
+        };
+        console.log("^^^^^^", requestBody)
+        const visionResponse = await fetch(visionUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        });
+        const visionData = await visionResponse.json();
+        console.log(JSON.stringify(visionData.responses));
+        const labels = visionData.responses[0].labelAnnotations.map(label => {
+          return {
+            description: label.description,
+            score: label.score
+          };
+        });
+        console.log("labels****", labels);
+        setLabels(labels)
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
         urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
@@ -93,7 +98,7 @@ const [labels, setLabels] = useState('');
         })
           .then((response) => response.json())
           .then((responseJson) => {
-           // console.log(responseJson);
+            // console.log(responseJson);
             setAnimate(false);
           })
           .catch((error) => {
@@ -144,7 +149,7 @@ const [labels, setLabels] = useState('');
           }
         ]
       };
-      console.log("^^^^^^",requestBody)
+      console.log("^^^^^^", requestBody)
       const visionResponse = await fetch(visionUrl, {
         method: 'POST',
         headers: {
@@ -160,7 +165,7 @@ const [labels, setLabels] = useState('');
           score: label.score
         };
       });
-      
+
       console.log(labels);
       setLabels(labels);
       // Add the following lines to call the uploadBase64ToASMX function
@@ -187,9 +192,9 @@ const [labels, setLabels] = useState('');
 
 
   const savePhoto = () => {
-    console.log('img', true,labels, traveler, userLocation);
+    console.log('img', true, labels, traveler, userLocation);
     Alert.alert("your picture has uploaded :)")
-    navigation.navigate("New event",{labels, traveler, userLocation});
+    navigation.navigate("New event", { labels, traveler, userLocation });
   };
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
