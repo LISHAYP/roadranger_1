@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 75,
         width: 150,
-        top: 50
+        top: 100
 
     },
     name: {
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
         right: 20,
     },
     btnLogOut: {
-        top: 100,
+        top: 50,
         flexDirection: 'row',
         position: 'absolute',
         // bottom: 30,
