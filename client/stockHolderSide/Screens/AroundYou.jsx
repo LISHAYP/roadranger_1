@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -75,6 +75,7 @@ export default function AroundYou(props) {
 
     const closeMenu = () => {
         setIsMenuOpen(false);
+        
     };
 
     const typePinColors = {
@@ -91,16 +92,16 @@ export default function AroundYou(props) {
     };
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
+            <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
                 {/* <AntDesign name="menu" size={24} color="black" /> */}
                 <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
                 <Text style={styles.titlename}>  Hello, {stakeholder.FullName} ! </Text>
 
             </TouchableOpacity>
+           
 
 
-
-            {location && location.coords && (
+             {location && location.coords && (
                 <MapView
                     style={styles.map}
                     initialRegion={{
@@ -136,8 +137,14 @@ export default function AroundYou(props) {
 
                 </MapView>
 
-            )}
-            {isMenuOpen && (
+             )}
+              <Modal
+                visible={isMenuOpen}
+                animationType='slide'
+                transparent={true}
+                onRequestClose={() => setIsMenuOpen(false)}
+              >
+             {isMenuOpen && (
                 <View style={styles.menu}>
                     <View >
                         <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
@@ -150,10 +157,10 @@ export default function AroundYou(props) {
 
 
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }) }}
+                        onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }),setIsMenuOpen(false) }}
                     >
 
-                        <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                        <Icon name="chatbubble-ellipses-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Chat</Text>
                     </TouchableOpacity>
 
@@ -162,29 +169,29 @@ export default function AroundYou(props) {
                             navigation.navigate("New event", {
                                 stakeholder: stakeholder,
                                 userLocation: userLocation
-                            });
+                            }),setIsMenuOpen(false);
                         }}
                     >
-                        <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                        <Icon name="add-circle-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>New Post</Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Your Travelers", { stakeholder }) }}>
+                        onPress={() => { navigation.navigate("Your Travelers", { stakeholder }),setIsMenuOpen(false) }}>
 
-                        <Icon name="people-outline" size={35} style={styles.icon} />
+                        <Icon name="people-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Your Travelers</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { stakeholder }) }}>
-                        <Icon name="search-outline" size={35} style={styles.icon} />
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { stakeholder }),setIsMenuOpen(false) }}>
+                        <Icon name="search-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Search </Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", { stakeholder }) }}
+                        onPress={() => { navigation.navigate("Setting", { stakeholder }),setIsMenuOpen(false) }}
                     >
-                        <Icon name="settings-outline" size={35} style={styles.icon} />
+                        <Icon name="settings-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Setting</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.option}
@@ -192,19 +199,21 @@ export default function AroundYou(props) {
                             navigation.navigate("Warning", {
                                 stakeholder: stakeholder,
                                 userLocation: userLocation
-                            })
+                            }),setIsMenuOpen(false);
                         }}
                     >
-                        <Icon name="warning-outline" size={35} style={styles.icon} />
+                        <Icon name="warning-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Warnings </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                        navigation.navigate("Sign In");
+                        navigation.navigate("Sign In"),setIsMenuOpen(false);
                     }}>
                         <Text style={styles.textLO} > Log out  </Text>
                     </TouchableOpacity>
                 </View>
-            )}
+                
+               )}
+            </Modal>
         </View>
     );
 }
@@ -260,17 +269,26 @@ const styles = StyleSheet.create({
     },
     menu: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '80%',
-        height: '100%',
+        width: '99%',
+        height: '80%',
         backgroundColor: '#F0F8FF',
-
-
-
+        zIndex: 1,
+        flex: 1,
+        marginTop: "80%",
+        marginHorizontal: 2,
+        padding: 30,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+          elevation: 5,
         // alignItems: 'center',
         // justifyContent: 'center',
-        zIndex: 1,
+        
     },
     closeButton: {
         position: 'absolute',
@@ -307,29 +325,34 @@ const styles = StyleSheet.create({
     },
     option: {
         flexDirection: 'row',
-        backgroundColor: '#8FBC8F',
+      //  backgroundColor: '#8FBC8F',
         width: '100%',
         borderRadius: 12,
-        paddingVertical: 12,
+        paddingVertical: 3,
         paddingHorizontal: 10,
         right: 20,
         top: 160,
         marginBottom: 21,
-         shadowColor: "#000",
-        shadowOffset: {
-        width: 0,
-        height: 4},
-        shadowOpacity: 0.30,
-        shadowRadius: 4.65,
-        elevation: 8,
+        borderBottomWidth :0.4,
+        borderBottomColor: '#000',
+      //   shadowColor: "#000",
+       // shadowOffset: {
+        //width: 0,
+        //height: 4},
+        //shadowOpacity: 0.30,
+        //shadowRadius: 4.65,
+        //elevation: 8,
     },
+    
     text: {
-        fontSize: 30,
+       color:'#8FBC8F',
+        fontSize: 25,
         left: 40
 
 
     },
     icon: {
+        color:'#8FBC8F',
         left: 30,
         size: 30,
 
