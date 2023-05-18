@@ -403,11 +403,13 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                int lastEventId = db.tblEvents
+                tblEvents lastEvent = db.tblEvents
                     .Where(e => e.travelerId == travelerId.travelerId)
-                    .OrderByDescending(e => e.eventNumber)
-                    .Select(e => e.eventNumber)
+                    .OrderByDescending(e => e.event_date)
+                    .ThenByDescending(e => e.event_time)
                     .FirstOrDefault();
+
+                int lastEventId = lastEvent != null ? lastEvent.eventNumber : 0;
 
                 // Construct the response message
                 var responseMessage = new
@@ -423,6 +425,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+
 
 
         // PUT: api/NewEvent/5
