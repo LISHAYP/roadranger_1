@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert} from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -56,7 +56,8 @@ export default function NewEvent(props) {
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        addContry();console.log(labels);
+        addContry();
+        console.log("////", labels);
       })
       .catch(error => console.warn(error))
   }, []);
@@ -75,8 +76,9 @@ export default function NewEvent(props) {
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
+    labels: JSON.stringify(labels)
   };
-  console.log("--------", { newEvent, labels })
+  //console.log("--------", { newEvent, labels })
   const countryObj = {
     country_name: country,
   };
@@ -145,10 +147,44 @@ export default function NewEvent(props) {
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
-          console.log({ data })
-          Alert.alert('Publish')
-          navigation.goBack(); // Navigate back to the "Around You" screen
+          //console.log({ data })
+          const comonventdetailsObj = {
+            serialTypeNumber: serialTypeNumber,
+            event_status: eventStatus,
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude
+          };
+          fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(comonventdetailsObj),
+          })
+            .then(response => response.json())
+            .then(data1 => {
+              console.log("related?*************", data1);
+              // Search term for the label description
+              const searchTerm = 'Product';
+
+              // Loop through the array of events
+              const filteredEvents = data1.filter(event => {
+                // Parse the labels string into an array of objects
+                const labels = JSON.parse(event.labels);
+
+                // Check if any of the objects in the labels array have a description that matches the search term
+                return labels.some(label => label.description.toLowerCase().includes(searchTerm.toLowerCase()));
+              })
+
+              // Log the filtered events to the console
+              console.log("filteredEvents",filteredEvents);
+              Alert.alert('Publish')
+              navigation.goBack(); // Navigate back to the "Around You" screen
+            })
+            .catch(error => {
+              console.error(error);
+              Alert.alert('Error', error);
+            });
         })
         .catch(error => {
           console.error(error);
@@ -158,7 +194,7 @@ export default function NewEvent(props) {
   }
 
   const OpenCameraE = () => {
-    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` ,userLocation, traveler});
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
     setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
   }
@@ -167,7 +203,7 @@ export default function NewEvent(props) {
     < GradientBackground>
       <ScrollView>
         <View style={styles.container}>
-        <BackButton />
+          <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -280,6 +316,8 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 25,
+
+
   },
   photo: {
     marginVertical: 20,

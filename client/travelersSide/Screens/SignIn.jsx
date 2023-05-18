@@ -66,9 +66,10 @@ export default function SignIn() {
                     })
                         .then((response) => response.json())
                         .then((data1) => {
-                            console.log(data1); // Traveler updated successfully.
+                            console.log(data1);
+                            console.log(data); // Traveler updated successfully.
                             //Alert.alert('Token updated successfully')
-                            signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
+                            //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                             navigation.navigate("Around You", { data });
                         })
                         .catch((error) => {
@@ -79,8 +80,6 @@ export default function SignIn() {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');
                 }
-
-
             })
             .catch(error => {
                 console.error(error);
@@ -105,8 +104,6 @@ export default function SignIn() {
             console.log(error);
         }
     }
-
-
     const saveUserLocation = () => {
         const now = new Date();
         const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
@@ -130,14 +127,8 @@ export default function SignIn() {
             .then(response => response.json())
             .catch(error => {
                 console.error(error);
-
             });
-
-
     }
-
-
-
     async function registerForPushNotificationsAsync() {
         let token;
         if (Device.isDevice) {

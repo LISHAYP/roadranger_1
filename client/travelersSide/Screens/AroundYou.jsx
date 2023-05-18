@@ -17,7 +17,6 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
-
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
