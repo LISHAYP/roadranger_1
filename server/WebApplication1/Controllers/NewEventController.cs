@@ -96,7 +96,7 @@ namespace WebApplication1.Controllers
                         CountryNumber = e.Event.country_number,
                         AreaNumber = e.Event.area_number,
                         labels = e.Event.labels,
-                        is_related=(int)e.Event.is_related
+                        is_related = (int)e.Event.is_related
                     })
                     .ToList();
 
@@ -134,7 +134,7 @@ namespace WebApplication1.Controllers
                     country_number = value.country_number,
                     area_number = value.area_number,
                     labels = value.labels,
-                    is_related=value.is_related,
+                    is_related = value.is_related,
 
                 };
 
@@ -381,7 +381,7 @@ namespace WebApplication1.Controllers
                 existingEvent.country_number = updatedEvent.country_number;
                 existingEvent.area_number = updatedEvent.area_number;
                 existingEvent.labels = updatedEvent.labels;
-                existingEvent.is_related=updatedEvent.is_related;
+                existingEvent.is_related = updatedEvent.is_related;
 
                 // Save the changes to the database
                 db.SaveChanges();
@@ -395,6 +395,35 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+
+        // POST: api/LastEvent
+        [HttpPost]
+        [Route("api/post/lastevent")]
+        public IHttpActionResult GetLastEventId([FromBody] tblEvents travelerId)
+        {
+            try
+            {
+                int lastEventId = db.tblEvents
+                    .Where(e => e.travelerId == travelerId.travelerId)
+                    .OrderByDescending(e => e.eventNumber)
+                    .Select(e => e.eventNumber)
+                    .FirstOrDefault();
+
+                // Construct the response message
+                var responseMessage = new
+                {
+                    lastEventId = lastEventId
+                };
+
+                return Ok(responseMessage);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
 
         // PUT: api/NewEvent/5
         public void Put(int id, [FromBody] string value)
