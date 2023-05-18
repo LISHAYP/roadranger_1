@@ -32,7 +32,7 @@ export default function SignIn() {
             let currentLocation = await Location.getCurrentPositionAsync({});
             setLocation(currentLocation);
         })();
-    }, []);
+    }, [handleLogin]);
     const handleLogin = () => {
         const traveler = {
             travler_email: email,
@@ -53,6 +53,8 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
+                    console.log("*********",data)
+                    console.log("*********",data.traveler_id)
                     setTravlerId(data.traveler_id)
                     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/updatetoken?email=${traveler.travler_email}`, {
                         method: 'PUT',
@@ -115,7 +117,7 @@ export default function SignIn() {
             Latitude: location.coords.latitude,
             Longitude: location.coords.longitude
         }
-        console.log("^^^^^^^^^",userLoction)
+        console.log("^^^^^^^^^", userLoction)
         //Send a POST request to your backend API with the 
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/location', {
             method: 'POST',
@@ -198,75 +200,77 @@ export default function SignIn() {
     }, []);
 
     return (
-        < GradientBackground>
+         < GradientBackground>
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
-                <Text style={styles.text}>Email:</Text>
-                <TextInput style={styles.input}
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    placeholder="User Email">
-                </TextInput>
 
-
-                <Text style={styles.text}>Password:</Text>
-                <View  style={styles.input}>
-                    <TextInput
-                       
-                        value={password}
-                        onChangeText={text => setPassword(text)}
-                        placeholder="*********"
-                        secureTextEntry={!showPassword}
-                    >
+                <View style={styles.frame}>
+                    <Text style={styles.text}>Email:</Text>
+                    <TextInput style={styles.input}
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        placeholder="User Email">
                     </TextInput>
-                    <TouchableOpacity
-                        onPress={() => setShowPassword(!showPassword)}
-                        style={styles.iconContainer}
-                    >
-                        <Icon size={25}
-                            name={showPassword ? 'eye-off' : 'eye'}
-                            type='feather'
-                            color='black'
-                        />
+
+
+                    <Text style={styles.text}>Password:</Text>
+                    <View style={styles.input}>
+                        <TextInput
+
+                            value={password}
+                            onChangeText={text => setPassword(text)}
+                            placeholder="*********"
+                            secureTextEntry={!showPassword}
+                        >
+                        </TextInput>
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                            style={styles.iconContainer}
+                        >
+                            <Icon size={25}
+                                name={showPassword ? 'eye-off' : 'eye'}
+                                type='feather'
+                                color={ '#144800'}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    {loginFailed && (
+                        <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
+                    )}
+
+
+                    <TouchableOpacity style={styles.btnLogIn}
+                        onPress={handleLogin}>
+                        <Text style={styles.btnText}>
+                            Log In
+                        </Text>
                     </TouchableOpacity>
-                </View>
-                {loginFailed && (
-                    <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
-                )}
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate("Forgot password")
+                    }}>
+                        <Text >
+                            Forgot your password?
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnSignUp} onPress={() => {
+                        navigation.navigate("Sign Up");
+                    }}>
+                        <Text > Don't have an Account?  </Text>
+                        <Text style={styles.text1}> Click Here </Text>
 
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 50 }} onPress={() => {
+                        navigation.navigate("Contact Us");
+                    }}>
 
-                <TouchableOpacity style={styles.btnLogIn}
-                    onPress={handleLogin}>
-                    <Text style={styles.btnText}>
-                        Log In
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate("Forgot password")
-                }}>
-                    <Text >
-                        Forgot your password?
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnSignUp} onPress={() => {
-                    navigation.navigate("Sign Up");
-                }}>
-                    <Text > Don't have an Account?  </Text>
-                    <Text style={styles.text1}> Click Here </Text>
-
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
-                    navigation.navigate("Contact Us");
-                }}>
-
-                    <Icon name="mail-open-outline" size={30} />
-                    <Text style={styles.contact}>
-                        Contact us
-                    </Text>
-                </TouchableOpacity>
-
-            </View >
-        </ GradientBackground>
+                        <Icon name="mail-open-outline" size={30} color={ '#144800'}/>
+                        <Text style={styles.contact}>
+                            Contact us
+                        </Text>
+                    </TouchableOpacity>
+                    </View>
+                </View >
+        </ GradientBackground> 
 
     )
 }
@@ -274,11 +278,21 @@ export default function SignIn() {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        marginVertical: 10,
-        marginHorizontal: 10,
+        // marginVertical: 10,
+        // marginHorizontal: 10,
         padding: 20,
         width: "100%",
-        marginTop: 100
+        marginTop: 100,
+        // backgroundColor:'#F0FFF0'
+        // backgroundColor:'#3CB371'
+
+    },
+    frame:{
+        // backgroundColor:  'rgba(0, 0, 0, 0.07)',
+        padding:20,
+        borderWidth: 0,
+        borderRadius: 25,
+        borderColor:  'rgba(0, 0, 0, 0.07)'
 
     },
     iconContainer: {
@@ -300,13 +314,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderColor: '#144800',
-        borderWidth: 2,
-        borderRadius: 25,
+        borderColor:  '#144800',
+        borderWidth: 1,
+        borderRadius: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
-
+        alignItems: 'center',
+        backgroundColor:  'white',
     },
 
     btnLogIn: {
