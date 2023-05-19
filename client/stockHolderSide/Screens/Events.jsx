@@ -9,15 +9,14 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
-
 export default function Events(props) {
   // const [events, setEvents] = useState([]);
-  // const events = props.route.params.data;
-  const traveler =  props.route.params.traveler;
+  const events = props.route.params.data;
+  const stakeholder=props.route.params.stakeholder;
+  console.log("eeeee1", events);
 
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
- 
 
   useEffect(() => {
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -30,20 +29,16 @@ export default function Events(props) {
     ).then((addresses) => setEventAddresses(addresses));
   }, [events]);
 
-
-
- 
-
   return (
     <GradientBackground>
       <ScrollView>
+      <BackButton />
         <View style={styles.container}>
-          <BackButton />
           <View>
             {events !== undefined && events.length > 0 ? (
               events.map((event, index) => (
                 <TouchableOpacity onPress={() => {
-                  navigation.navigate('Event Details', {event: event, traveler: traveler });
+                  navigation.navigate('Event Details', { event: event, stakeholder: stakeholder});
                 }} >
                   <View style={styles.event} key={event.eventNumber}>
                     <View style={styles.detailsContainer}>

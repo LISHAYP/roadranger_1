@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert} from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -7,6 +7,7 @@ import Geocoder from 'react-native-geocoding';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -23,7 +24,7 @@ export default function EventDetails(props) {
   const [details, setDetails] = useState('');
   const [stackholderId, setStackholderId] = useState('null');
   const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
-
+  const [deletedComment, setDeletedComment] = useState(false)
 
   const fetchTravelerDetails = async () => {
     const travelerobj = {
@@ -94,7 +95,7 @@ export default function EventDetails(props) {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-  }, [newCommentPublished]); // <-- use new
+  }, [newCommentPublished, deletedComment]); // <-- use new
 
   const newComment = {
     eventNumber: event.eventNumber,
@@ -106,11 +107,13 @@ export default function EventDetails(props) {
 
   };
   console.log("---------", (newComment))
+  const navigation = useNavigation();
+
 
   const createComment = async () => {
 
-    if (newComment === '') {
-      Alert.alert('Please enter details and type');
+    if (newComment.Details == "") {
+      Alert.alert('Please enter details ');
     }
     else {
       // Send a POST request to your backend API with the comment data
@@ -138,6 +141,63 @@ export default function EventDetails(props) {
   }
 
 
+  const renderDeleteLogo = () => {
+    if (comments.length === 0 && event.TravelerId == user.traveler_id) {
+      return (
+        <TouchableOpacity style={styles.deleteIcon} onPress={handleDeleteEvent}>
+          <Icon name="trash-outline" size={25} style={styles.icon} />
+        </TouchableOpacity>
+      );
+    }
+  }
+  const handleDeleteEvent = () => {
+    const eventObj = {
+      eventNumber: event.eventNumber,
+      travelerId: user.traveler_id
+    };
+    console.log(eventObj)
+
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deleteevent', {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(eventObj)
+    })
+      .then(response => response.json())
+      .then(data => {
+        Alert.alert(data);
+        navigation.goBack(); // Navigate back to the "Around You" screen
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+  const deleteComment = (CommentNumber) => {
+    const commentObj = {
+      commentNumber: CommentNumber
+    };
+    console.log(commentObj)
+
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deletecomment', {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(commentObj)
+    })
+      .then(response => response.json())
+      .then(data => {
+        setDeletedComment(true)
+        Alert.alert(data);
+        setDeletedComment(false)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
   return (
     <GradientBackground>
       <KeyboardAvoidingView
@@ -145,7 +205,7 @@ export default function EventDetails(props) {
         style={styles.container}
       >
         <BackButton />
-        <View style={styles.eventContainer}>
+        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
           <View>
             <View style={styles.event}>
               <View style={styles.row}>
@@ -158,36 +218,51 @@ export default function EventDetails(props) {
             </View>
             <View>
               <Text style={styles.detailsText}>{event.Details}</Text>
+              {renderDeleteLogo()}
             </View>
             <View style={styles.locationContainer}>
               <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
               <Text style={styles.locationText}>{addressComponents}</Text>
             </View>
-            <View style={styles.pictureContainer}>
-              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
-            </View>
+            {event.Picture !='#' && (
+              <View style={styles.pictureContainer}>
+                <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+              </View>
+            )}
+
           </View>
           <ScrollView>
-            {comments && comments.length > 0 && (
+            { comments.length > 0 && (
               comments.map((comment, index) => (
                 <View key={index} style={styles.commentContainer}>
                   <View style={styles.event}>
                     <View style={styles.row}>
-                      <Image style={styles.img} source={{ uri: comment.picture }} />
-                      <Text style={styles.text}>{comment.TravelerName} </Text>
+                    {comment.picture ? (
+                        <Image style={styles.img} source={{ uri: comment.picture }} />
+                      ) : (
+                        <Image style={styles.img} source={{ uri: comment.shpicture }} />
+                      )}
+                      <Text style={styles.text}>  {comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
                     </View>
                     <View>
-                      <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
+                      <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')} </Text>
                     </View>
                   </View>
                   <View>
-                    <Text style={styles.detailsTextComment}>{comment.Details}</Text>
+                    <Text style={styles.detailsTextComment}> {comment.Details}  </Text>
+                    {comment.TravelerId == user.traveler_id && (
+                      <TouchableOpacity style={styles.deleteIcon} onPress={() => deleteComment(comment.CommentNumber)}>
+                        <Icon name="trash-outline" size={20} color={'black'} />
+                      </TouchableOpacity>
+                    )}
                   </View>
+
                 </View>
               ))
             )}
           </ScrollView>
         </View>
+        <ScrollView>
         <View style={styles.addComment}>
           <View style={styles.event}>
             <View style={styles.row}>
@@ -198,17 +273,19 @@ export default function EventDetails(props) {
               <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
             </TouchableOpacity>
           </View>
+          
           <View style={styles.row}>
             <TextInput
               style={styles.input}
               placeholder="Add Comment..."
               value={details}
-              multiline
+              multiline={true}
               numberOfLines={4}
               onChangeText={(text) => setDetails(text)}
             />
           </View>
         </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
   );
@@ -220,12 +297,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop: 20
+    // marginTop: 10
   },
 
 
   pictureContainer: {
-
     height: height * 0.2, // adjust this value as needed
     width: width + 30,
     bottom: 10
@@ -254,7 +330,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '64%'
+    height: '70%',
+   
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -263,6 +340,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
+    resizeMode:"contain"
   },
 
   locationText: {
@@ -282,15 +360,16 @@ const styles = StyleSheet.create({
 
   },
   addComment: {
+ 
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
     borderRadius: 15,
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
+    // width:'95%'
   },
   img: {
-
     height: 40,
     width: 40,
     borderRadius: 20,
@@ -335,5 +414,10 @@ const styles = StyleSheet.create({
   keyboard: {
     flex: 1,
   },
+  deleteIcon: {
+
+    flexDirection: 'row-reverse'
+
+  }
 
 });

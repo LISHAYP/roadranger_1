@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback,Alert,Modal} from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
- 
+import { ScrollView } from 'react-native-gesture-handler';
+import GradientBackground from '../Components/GradientBackground';
+
 
 
 
@@ -14,9 +16,10 @@ export default function AroundYou(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
-
+    const [modalVisible, setModalVisible] = useState(false);
     const traveler = props.route.params.data;
-   
+    const matchedEvent = props.route.params.matchedEvents;
+    const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -24,7 +27,33 @@ export default function AroundYou(props) {
             };
         }, [])
     );
+    useEffect(() => {
+        if (matchedEvent) {
+            const travelerIdObj = {
+                travelerId: traveler.traveler_id,
+            }
+            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/lastevent', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(travelerIdObj),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setLasteventOfTraveler(data)
+                    console.log(data);
+                }
+                )
+                .catch(error => {
+                    console.error(error);
+                    console.log('Error');
+                });
+        }
+        setModalVisible(true);
 
+    }, [matchedEvent]);
     const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
@@ -47,7 +76,9 @@ export default function AroundYou(props) {
 
 
     const handleGet = () => {
-
+        if (matchedEvent) {
+            console.log("this is working!!!", matchedEvent)
+        }
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
 
             method: 'GET',
@@ -61,7 +92,6 @@ export default function AroundYou(props) {
             })
             .then(
                 (result) => {
-
                     setEvents(result)
                 },
                 (error) => {
@@ -88,140 +118,216 @@ export default function AroundYou(props) {
         8: 'brown',    // Security threats
         9: 'black',    // Animal-related incidents
         10: 'gray',    // Financial issues
+        1003: 'black'  //Missing traveler
     };
     AroundYou.navigationOptions = {
         headerShown: false,
     };
+    const relatedEvent = (eventNumber) => {
+        console.log("**************", eventNumber);
+
+        const updateEventObj = {
+            is_related: eventNumber
+        }
+        console.log("**************", updateEventObj);
+
+        fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/updateevent/${lasteventOfTraveler}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateEventObj),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data); // Traveler updated successfully.
+                // Alert.alert('Event updated successfully')
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
     return (
-        <TouchableWithoutFeedback onPress={closeMenu}>
-            <View style={styles.container}>
-                
-                <TouchableOpacity onPress={()=>setIsMenuOpen(true)} style={styles.hamburger}>
-                    {/* <AntDesign name="menu" size={24} color="black" /> */}
-                    <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
-                    <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !</Text>
-                </TouchableOpacity>
+        <GradientBackground>
+            <TouchableWithoutFeedback onPress={closeMenu}>
 
-                {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
-                <Text style={styles.sosText}>SOS</Text>
-            </TouchableOpacity> */}
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
+                        {/* <AntDesign name="menu" size={24} color="black" /> */}
+                        <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
+                        <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={styles.picAndText} >
+                        <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                        <Text style={styles.name}>
+                            Hello, {traveler.first_name} {traveler.last_name} !
+                        </Text>
+                    </View>
 
-                {location && location.coords && (
-                    <MapView
-                        style={styles.map}
-                        initialRegion={{
-                            latitude: location.coords.latitude,
-                            longitude: location.coords.longitude,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                        }}>
-                        <Marker
-                            coordinate={{
+                    {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
+                        <Text style={styles.sosText}>SOS</Text>
+                    </TouchableOpacity> */}
+
+                    {location && location.coords && (
+                        <MapView
+                            style={styles.map}
+                            initialRegion={{
                                 latitude: location.coords.latitude,
                                 longitude: location.coords.longitude,
-                            }}
-                            title="My Location"
-                            description="This is my current location"
-                        />
-                        {Events.map(event => (
+                                latitudeDelta: 0.0922,
+                                longitudeDelta: 0.0421,
+                            }}>
                             <Marker
-                                key={event.EventNumber}
                                 coordinate={{
-                                    latitude: event.Latitude,
-                                    longitude: event.Longitude,
+                                    latitude: location.coords.latitude,
+                                    longitude: location.coords.longitude,
                                 }}
-                                title={event.Details}
-                                description={event.EventTime}
-                                pinColor={typePinColors[event.SerialTypeNumber]}
-                                onPress={() => {
-                                    navigation.navigate('Event Details', { event, traveler });
+                                title="My Location"
+                                description="This is my current location"
+                            />
+                            {Events.filter(event => event.event_status !== false).map(event => (
+                                <Marker
+                                    key={event.EventNumber}
+                                    coordinate={{
+                                        latitude: event.Latitude,
+                                        longitude: event.Longitude,
+                                    }}
+                                    title={event.Details}
+                                    description={event.EventTime}
+                                    pinColor={typePinColors[event.SerialTypeNumber]}
+                                    onPress={() => {
+                                        navigation.navigate('Event Details', { event, traveler });
+                                    }}
+                                />
+
+                            ))}
+
+                            <Circle
+                                center={{
+                                    latitude: location.coords.latitude,
+                                    longitude: location.coords.longitude,
                                 }}
+                                radius={500}
+                                strokeColor="#F00"
+                                fillColor="#F007"
                             />
 
-                        ))}
+                        </MapView>
+                    )}
+                    {isMenuOpen && (
+                        <View style={styles.menu}>
+                            <ScrollView>
+                                <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                                    <AntDesign name="close" size={24} color="black" />
+                                </TouchableOpacity>
 
-                        <Circle
-                            center={{
-                                latitude: location.coords.latitude,
-                                longitude: location.coords.longitude,
-                            }}
-                            radius={500}
-                            strokeColor="#F00"
-                            fillColor="#F007"
-                        />
 
-                    </MapView>
-                )}
-                <Modal
-                visible={isMenuOpen}
-                animationType='slide'
-                transparent={true}
-                onRequestClose={() => setIsMenuOpen(false)}>
 
-                {isMenuOpen && (
-                    <View style={styles.menu}>
-                        <View>
-                        <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                                <TouchableOpacity style={styles.optionSOS}
+                                    onPress={() => {
+                                        navigation.navigate("SOS", {
+                                            traveler: traveler,
+                                            userLocation: userLocation
+                                        });
+                                    }}
+                                >
+                                    <Icon name="help-buoy" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>SOS</Text>
 
-                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                            <AntDesign name="close" size={24} color="black" />
-                        </TouchableOpacity>
+                                </TouchableOpacity>
 
+                                <TouchableOpacity style={styles.option}
+                                    onPress={() => {
+                                        navigation.navigate("New event", {
+                                            traveler: traveler,
+                                            userLocation: userLocation
+                                        });
+                                    }}
+                                >
+                                    <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>New Post</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
+                                    <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Chat</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
+                                    <Icon name="search-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Search </Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.option} onPress={() => {
+                                    navigation.navigate("My Post", {
+                                        traveler: traveler,
+                                        events: Events
+                                    })
+                                }}>
+                                    <Icon name="documents-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>My Posts </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.option}
+                                    onPress={() => { navigation.navigate("Warning", { traveler: traveler }) }}
+                                >
+                                    <Icon name="warning-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Warnings </Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.option}
+                                    onPress={() => { navigation.navigate("Setting", { traveler }) }}
+                                >
+                                    <Icon name="settings-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Setting</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                                    navigation.navigate("Sign In");
+                                }}>
+                                    <Text style={styles.textLO} > Log out  </Text>
+                                </TouchableOpacity>
+                            </ScrollView>
                         </View>
-                      
+                    )}
+                    <View>
+                        {/* Your screen content */}
+                        {matchedEvent && matchedEvent.map((matchedEvent, index) => (
+                            <Modal
+                                key={index}
+                                visible={modalVisible}
+                                onRequestClose={() => setModalVisible(false)}
+                                animationType="slide"
+                                transparent={true}
+                            >
+                                <View style={styles.modal}>
+                                   
+                                        {/* Modal content */}
+                                        <Text>Did u mean this event?</Text>
+                                         <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
+                                            <Text>Yes</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
+                                            <Text>No</Text>
+                                        </TouchableOpacity> 
+                                        <Text>{matchedEvent.Details}</Text>
+                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
 
-                        <TouchableOpacity style={styles.option}
-                            onPress={() => {
-                                navigation.navigate("New event", {
-                                    traveler: traveler,
-                                    userLocation: userLocation
-                                }),setIsMenuOpen(false);
-                            }}
-                        >
-                            <Icon name="add-circle-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>New Post</Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler),setIsMenuOpen(false) }}>
-                            <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Chat</Text>
-                        </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}),setIsMenuOpen(false) }}>
-                        <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option}
-                            onPress={() => { navigation.navigate("Setting", { traveler }),setIsMenuOpen(false) }}
-                        >
-                            <Icon name="settings-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Setting</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.optionSOS}
-                            onPress={() => {
-                                navigation.navigate("SOS", {
-                                    traveler: traveler,
-                                    userLocation: userLocation
-                                }),setIsMenuOpen(false);
-                            }}
-                        >
-                            <Icon name="help-buoy" size={35} style={styles.icon} />
-                            <Text style={styles.text}>SOS</Text>
-
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                            navigation.navigate("Sign In"),setIsMenuOpen(false);
-                        }}>
-                            <Text style={styles.textLO} > Log out  </Text>
-                        </TouchableOpacity>
+                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                     
+                                        {/* Add more Text components for other parameters */}
+                                    
+                                </View>
+                            </Modal>
+                        ))}
                     </View>
-                )}
-                </Modal>
-            </View>
-        </TouchableWithoutFeedback>
+                </View>
+
+            </TouchableWithoutFeedback>
+
+        </GradientBackground>
     );
 }
 
@@ -231,10 +337,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        // marginTop: 40
+
+    },
+    btnLogIn: {
+        marginVertical: 20,
+        width: "50%",
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#144800',
+        borderWidth: 2,
+        borderRadius: 25,
+        backgroundColor: '#144800'
     },
     btnLogOut: {
-        top: 10,
-        padding:10,
+        top: 100,
         flexDirection: 'row',
         position: 'absolute',
         // bottom: 30,
@@ -242,9 +360,35 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
 
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        marginTop: 100,
+        marginBottom: 100,
+        marginHorizontal: 20,
+        padding: 30,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.75,
+        shadowRadius: 4,
+        elevation: 5,
+    },
 
-      },
-      
+    btnClose: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
     name: {
         position: "absolute",
         fontSize: 20,
@@ -254,7 +398,7 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '100%',
+        height: '50%',
     },
     sosText: {
         color: 'white',
@@ -307,8 +451,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'absolute',
-        width: '99%',
-        height: '60%',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        height: '50%',
         backgroundColor: '#F0F8FF',
         zIndex: 1,
         flex: 1,
@@ -338,32 +484,21 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         paddingVertical: 12,
         paddingHorizontal: 10,
-        //right: 20,
-        top: 200,
+        right: 20,
+        top: 150,
         marginBottom: 21,
         backgroundColor: '#FF0000'
     },
     option: {
-        alignContent: 'center',
-        height: '20%',
-        width: '48%',
-        borderColor: '#DCDCDC',
-        borderWidth: 0.5,
-        borderRadius: 15,
-        backgroundColor: '#F5F5F5',
-        marginBottom: 10,
-        padding: 10,
-        resizeMode: 'contain',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation:10, 
-
-
+        flexDirection: 'row',
+        backgroundColor: '#8FBC8F',
+        width: '100%',
+        borderRadius: 12,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        right: 20,
+        top: 150,
+        marginBottom: 21
     },
     text: {
         color:'#8FBC8F',
@@ -377,7 +512,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textDecorationLine: 'underline',
 
-    },   
+    },
     icon: {
         alignSelf:'center',
         color:'#8FBC8F',
@@ -386,15 +521,28 @@ const styles = StyleSheet.create({
 
     },
     user: {
-        position:'absolute',
-        resizeMode: 'cover',
-        height: 75,
+        alignSelf: 'center',
+        // resizeMode: 'cover',
+        height: 150,
         borderRadius: 75,
-        width: 75,
-
+        width: 150,
+        // top: 50
 
     },
     picAndText: {
-        top: 20,
-    }
-});
+        top: 0,
+    }, 
+    modal: {
+        flex: 1,
+        backgroundColor: 'white',
+        marginTop: 100,
+        marginBottom: 100,
+        marginHorizontal: 20,
+        padding: 30,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        }
+    }});

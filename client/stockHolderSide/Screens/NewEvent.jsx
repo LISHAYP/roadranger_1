@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -7,39 +7,28 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
-
+import BackButton from '../Components/BackButton';
 
 export default function NewEvent(props) {
-  const traveler = props.route.params.traveler;
+  const stakeholder = props.route.params.stakeholder;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
+ 
+  // const serialType = [
+  //   //creating type of different eventtypes
+  //   { label: 'Missing traveler', value: '1003' },
+  //   { label: 'Travel warning', value: '1004' },
+
+  // ]
+  
   const [country, setCountry] = useState('');
-  const [region,setRegion]=useState('');
-  const serialType = [
-    //creating type of different eventtypes
-    { label: 'Weather', value: '1' },
-    { label: 'Car Accidents', value: '2' },
-    { label: 'Road closures', value: '3' },
-    { label: 'Natural disasters', value: '4' },
-    { label: 'Health emergencies', value: '5' },
-    { label: 'Accommodation issues', value: '6' },
-    { label: 'Protests', value: '7' },
-    { label: 'Strikes', value: '8' },
-    { label: 'Security threats', value: '9' },
-    { label: 'Animal-related incidents', value: '10' },
-    { label: 'Financial issues', value: '11' }
-  ]
-
-  const countryObj = {
-    country_name: country,
-  };
-
-  const id = traveler.traveler_id;
+  const [city, setCity] = useState('');
   const [details, setDetails] = useState('');
-  const [eventStatus, setEventStatus] = useState('true');
+  const eventStatus = 'true';
   const [picture, setPicture] = useState('#');
-  const [stackholderId, setStackholderId] = useState('null');
-  const [serialTypeNumber, setSerialTypeNumber] = useState('');
+  const stackholderId = stakeholder.stackholderId
+  const TravelerId = null;
+  const serialTypeNumber = 1004;
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
@@ -52,19 +41,16 @@ export default function NewEvent(props) {
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
-        const regionComponent = addressComponents.find(component => component.types.includes('administrative_area_level_1'));
-
+        const cityComponent = addressComponents.find(component => component.types.includes('locality'));
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
-        setRegion(regionComponent.long_name);
+        setCity(cityComponent.long_name);
         addContry();
-        
+
       })
       .catch(error => console.warn(error))
   }, []);
 
-  console.log('1 contry:', { country })
-  console.log('2 region:', {region })
 
   const newEvent = {
     Details: details,
@@ -74,17 +60,18 @@ export default function NewEvent(props) {
     Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
-    TravelerId: id,
+    TravelerId: TravelerId,
     StackholderId: stackholderId,
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
   };
+  console.log("--------", { newEvent })
+  const countryObj = {
+    country_name: country,
+  };
+  addContry = () => {
 
-  console.log('3  new', newEvent);
-
-   addContry = () => {
-    console.log('4  *****',{country})
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
@@ -95,23 +82,23 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('5  ********', { data })
+
         setCountryNumber(data)
-        addRegion();
+        addCity();
       }
       )
       .catch(error => {
         console.error(error);
-        console.log('6 Error');
+
       });
   }
 
-   addRegion = () => {
+  addCity = () => {
     const areaObj = {
       country_number: countryNumber,
-      area_name: region
+      area_name: city
     }
-    console.log('7  *****',{areaObj})
+
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
@@ -122,8 +109,8 @@ export default function NewEvent(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('8  ********', { data })
         setAreaNumber(data)
+
       }
       )
       .catch(error => {
@@ -133,8 +120,8 @@ export default function NewEvent(props) {
   }
   const createEvent = async () => {
 
-    if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
-      alert('Please enter details and type');
+    if (newEvent.Details === '') {
+      Alert.alert('Please enter details and type');
     }
     else {
       // Send a POST request to your backend API with the event data
@@ -144,31 +131,32 @@ export default function NewEvent(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newEvent),
+
       })
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log("9", data);
-           alert('Publish')
+          console.log({ data })
+          Alert.alert('Publish')
           navigation.goBack(); // Navigate back to the "Around You" screen
-          //console.log({ newEvent })
-         
-
         })
         .catch(error => {
           console.error(error);
-          alert('Error', error);
+          Alert.alert('Error', error);
         });
     }
   }
 
-
+  const OpenCameraE = () => {
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
+    const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+  }
   return (
     < GradientBackground>
-
       <ScrollView>
         <View style={styles.container}>
-          <Image source={RoadRanger} style={styles.RoadRanger} />
+          <BackButton />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -181,9 +169,9 @@ export default function NewEvent(props) {
               TextInput.State.blur(TextInput.State.currentlyFocusedInput())
             }}>
           </TextInput>
-          <Text style={styles.text}>Type:</Text>
+          {/* <Text style={styles.text}>Type:</Text> */}
 
-          <Dropdown
+          {/* <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -197,9 +185,9 @@ export default function NewEvent(props) {
               setSerialTypeNumber(item.value)
               setSelectedSerialType(item) // Update the selected item state variable
 
-            }} />
+            }} /> */}
 
-          <TouchableOpacity style={styles.photo} >
+          <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
             <Text style={styles.btnText}>
               Add Photo
@@ -219,7 +207,7 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
@@ -231,7 +219,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20
+    marginBottom: 20,
+    shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
 
   },
   text: {
@@ -280,8 +275,6 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 25,
-
-
   },
   photo: {
     marginVertical: 20,
@@ -295,6 +288,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
+    shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
 
   },
   icon: {
@@ -330,7 +330,15 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 2,
     borderRadius: 25,
-    backgroundColor: '#144800'},
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4},
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
+  },
 });
 
 

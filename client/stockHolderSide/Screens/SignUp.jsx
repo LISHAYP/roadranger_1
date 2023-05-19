@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -89,7 +89,7 @@ export default function SignUp({ route }) {
       })
       .catch(error => {
         console.error(error);
-        alert('Error', 'Failed to sign in. Please try again later.');
+        Alert.alert('Error', 'Failed to sign in. Please try again later.');
       });
   };
 

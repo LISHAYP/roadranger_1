@@ -12,50 +12,26 @@ import { Swipeable , GestureHandlerRootView } from 'react-native-gesture-handler
 
 const HomeChat = (props) => {
   const navigation = useNavigation();
-  const traveler = props.route.params;
+  const stakeholder=props.route.params.stakeholder;
+  console.log('aaa', stakeholder)
   const [travelers, setTravelers] = useState([]);
   const [activeChats, setActiveChats] = useState([]);
-  const [activeChatsSH, setActiveChatsSH] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showModalSH, setShowModalSH] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [stockHolders, setStockHolders] = useState([]);
-
 
 
   useEffect(() => {
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/Traveler')
       .then((response) => response.json())
       .then((data) => {
-        setTravelers(data);
-        console.log(data)
+        console.log("All travelers:", data);
+        console.log("Stakeholder name:", stakeholder.StakeholderName);
+        const filteredTravelers = data.filter((traveler) => traveler.insurence_company === stakeholder.StakeholderName);
+        setTravelers(filteredTravelers);
       })
       .catch((error) => console.error(error));
+  }, [stakeholder]);
 
-  }, []);
-  useEffect(() => {
-const insuranceObj={
-  insurence_company: traveler.insurence_company
-}
-console.log("SSS",insuranceObj)
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/stakeholders',{
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(insuranceObj),
-  })
-    
-      .then((response) => response.json())
-      .then((data) => {
-        setStockHolders(data);
-        console.log(data)
-      })
-      .catch((error) => console.error(error));
-
-  }
-  , []);
   useFocusEffect(() => {
 
     const getActiveChats = async () => {
@@ -85,22 +61,6 @@ console.log("SSS",insuranceObj)
     navigation.navigate('Chat', { user, loggeduser });
   };
 
- const handleUserSH= async(user, loggeduser)=>{
-  const isSHPresent = activeChatsSH.find((chatUser) => chatUser.StakeholderId === user.StakeholderId);
-  if (!isSHPresent) {
-    const updatedActiveChats = [user, ...activeChatsSH];
-    setActiveChatsSH(updatedActiveChats);
-    try {
-      await AsyncStorage.setItem('activeChatsSH', JSON.stringify(updatedActiveChats));
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  console.log(user, loggeduser)
-  navigation.navigate('Chat withSH', { user, loggeduser });
-
-  }
-  
 
   const handleClearActiveChats = async () => {
     try {
@@ -135,9 +95,9 @@ console.log("SSS",insuranceObj)
             <BackButton />
           </View>
           <View>
-            <Image source={{ uri: traveler.Picture }} style={styles.user} />
+            <Image source={{ uri: stakeholder.picture }} style={styles.user} />
             <Text style={styles.name}>
-              {traveler.first_name} {traveler.last_name}
+              {stakeholder.FullName} {stakeholder.StakeholderName}
             </Text>
           </View>
 
@@ -151,11 +111,7 @@ console.log("SSS",insuranceObj)
               </TouchableOpacity>
               <TouchableOpacity style={styles.row} onPress={() => setShowModal(true)}>
                 <Icon name="search-outline" size={35} style={styles.icon} />
-                <Text style={styles.text}>Search traveler </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.row} onPress={() => setShowModalSH(true)}>
-                <Icon name="search-outline" size={35} style={styles.icon} />
-                <Text style={styles.text}>Insurance company represenative </Text>
+                <Text style={styles.text}>Search </Text>
               </TouchableOpacity>
               <Modal
                 visible={showModal}
@@ -173,13 +129,12 @@ console.log("SSS",insuranceObj)
                     onChangeText={setSearchQuery}
                     value={searchQuery}
                   />
-                  
                   <ScrollView>
                     {travelers
                       .filter(traveler1 => traveler1.first_name.toLowerCase().includes(searchQuery.toLowerCase()))
                       .map((traveler1) => (
                         <TouchableOpacity key={traveler1.id} onPress={() => {
-                          handleUserPress(traveler1, traveler);
+                          handleUserPress(traveler1, stakeholder);
                           setShowModal(false);
                         }}>
                           <View style={styles.row}>
@@ -191,52 +146,13 @@ console.log("SSS",insuranceObj)
                   </ScrollView>
                 </View>
               </Modal>
-              <Modal
-                visible={showModalSH}
-                animationType='slide'
-                transparent={true}
-                onRequestClose={() => setShowModalSH(false)}
-              >
-                <View style={styles.modal}>
-                  <TouchableOpacity onPress={() => setShowModalSH(false)} style={styles.btnClose}>
-                    <Icon name="close-outline" size={35} />
-                  </TouchableOpacity>
-                  <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search for Insurance company represenative"
-                    onChangeText={setSearchQuery}
-                    value={searchQuery}
-                  />
-                  
-                  <ScrollView>
-                    {stockHolders
-                      .filter(stockHolders1 => stockHolders1.FullName.toLowerCase().includes(searchQuery.toLowerCase()))
-                      .map((stockHolders1) => (
-                        <TouchableOpacity key={stockHolders1.StakeholderId} onPress={() => {
-                          handleUserSH(stockHolders1, traveler);
-                          setShowModalSH(false);
-                        }}>
-                          <View style={styles.row}>
-                            <Image style={styles.img} source={{ uri: stockHolders1.picture }} />
-                            <Text style={styles.text}>{stockHolders1.FullName} </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ))}
-                  </ScrollView>
-                </View>
-              </Modal>
-              <TouchableOpacity style={styles.row} onPress={() => { navigation.navigate("Group chat", traveler) }}>
-                <Image style={styles.img} source={{ uri: 'https://img.fruugo.com/product/1/86/14364861_max.jpg' }} />
-                <Text style={styles.text}>
-                 Group chat
-                </Text>
-              </TouchableOpacity>
+             
               {activeChats.map((traveler2) => (
                 <Swipeable
                 renderRightActions={() => renderRightActions(traveler2)}
                 onSwipeableRightOpen={() => handleDelete(traveler2)}
               >
-                <TouchableOpacity onPress={() => handleUserPress(traveler2, traveler)}>
+                <TouchableOpacity onPress={() => handleUserPress(traveler2, stakeholder)}>
                   <View style={styles.row}>
                     <Image style={styles.img} source={{ uri: traveler2.Picture }} />
                     <Text style={styles.text}>{traveler2.first_name}</Text>
@@ -245,24 +161,9 @@ console.log("SSS",insuranceObj)
               </Swipeable>
               
               ))}
-               {activeChatsSH.map((Stakeholder2) => (
-                <Swipeable
-                renderRightActions={() => renderRightActions(Stakeholder2)}
-                onSwipeableRightOpen={() => handleDelete(Stakeholder2)}
-              >
-                <TouchableOpacity onPress={() => handleUserSH(Stakeholder2, traveler)}>
-                  <View style={styles.row}>
-                    <Image style={styles.img} source={{ uri: Stakeholder2.picture }} />
-                    <Text style={styles.text}>{Stakeholder2.FullName}</Text>
-                  </View>
-                </TouchableOpacity>
-              </Swipeable>
-              
-              ))}
             </ScrollView>
 
           </View>
-         
         </ScrollView>
       </GradientBackground>
 

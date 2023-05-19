@@ -1,35 +1,61 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
-import React from 'react'
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import { useRef } from 'react';
+import { Button, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
+    const [devaiceToken, setDevaiceToken] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const handleLogin = () => {
-        const traveler = {
-            travler_email: email,
-            password: password
+        const stakeholder = {
+            StakeholderEmail: email,
+            Password: password
         };
-
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
+        const changeToken = {
+            StakeholderEmail: email,
+            token: devaiceToken
+        };
+        console.log("********", stakeholder);
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/stackholder', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(traveler),
+            body: JSON.stringify(stakeholder),
         })
             .then(response => response.json())
             .then(data => {
-                if (data.travler_email === email && data.password === password) {
-                    navigation.navigate("Around You", { data });
+                if (data.StakeholderEmail === email && data.Password === password) {
+                    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/stackholder/updatetoken?email=${stakeholder.StakeholderEmail}`, {
+                        method: 'PUT',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(changeToken),
+                    })
+                        .then((response) => response.json())
+                        .then((data1) => {
+                            console.log(data1); // stakeholder updated successfully.
+                            //Alert.alert('Token updated successfully')
+                            navigation.navigate("Around You", { data });
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+
                 } else {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');
@@ -45,6 +71,68 @@ export default function SignIn() {
     state = {
         showPassword: false
     };
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+        if (Device.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            setDevaiceToken(token);
+            console.log(token);
+        } else {
+            alert('Must use physical device for Push Notifications');
+        }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        return token;
+    }
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+        }),
+    });
+
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log(response);
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
+
     return (
         < GradientBackground>
 
@@ -56,30 +144,34 @@ export default function SignIn() {
                     onChangeText={text => setEmail(text)}
                     placeholder="User Email">
                 </TextInput>
+
                 {console.log({ email })}
+
                 <Text style={styles.text}>Password:</Text>
-                <TextInput
-                    style={styles.input}
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    placeholder="*******"
-                    secureTextEntry={!this.state.showPassword}
-                >
-                    {/* <Icon
-                        name={this.state.showPassword ? 'eye-outline' : 'eye-outline'}
-                        size={30}
-                        onPress={() =>
-                            this.setState(prevState => ({
-                                showPassword: !prevState.showPassword
-                            }))
-                        }
-                    /> */}
-                </TextInput>
-                {console.log({ password })}
+                <View  style={styles.input}>
+                    <TextInput
+                       
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        placeholder="*********"
+                        secureTextEntry={!showPassword}
+                    >
+                    </TextInput>
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                        style={styles.iconContainer}
+                    >
+                        <Icon size={25}
+                            name={showPassword ? 'eye-off' : 'eye'}
+                            type='feather'
+                            color='black'
+                        />
+                    </TouchableOpacity>
+                </View>
+
                 {loginFailed && (
                     <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
                 )}
-
 
                 <TouchableOpacity style={styles.btnLogIn}
                     onPress={handleLogin}>
@@ -91,7 +183,7 @@ export default function SignIn() {
                     navigation.navigate("Forgot password")
                 }}>
                     <Text >
-                        Forgot you're password?
+                        Forgot your password?
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnSignUp} onPress={() => {
@@ -116,6 +208,7 @@ export default function SignIn() {
 }
 const styles = StyleSheet.create({
     container: {
+        top: 100,
         padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,
@@ -135,7 +228,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     input: {
-        marginVertical: 20,
+       marginVertical: 20,
         width: "90%",
         fontSize: 20,
         paddingVertical: 10,
@@ -144,6 +237,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 25,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center'
 
     },
@@ -156,8 +250,15 @@ const styles = StyleSheet.create({
         borderColor: '#144800',
         borderWidth: 2,
         borderRadius: 25,
-        backgroundColor: '#144800'
-    },
+        backgroundColor: '#144800',
+        shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 4},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
+},
     btnText: {
         color: '#F8F8FF',
         alignSelf: 'center',
@@ -175,7 +276,10 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 15,
 
-    }
+    },
+ iconContainer: {
+    size: 35
+},
 });
