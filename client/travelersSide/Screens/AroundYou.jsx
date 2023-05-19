@@ -54,6 +54,7 @@ export default function AroundYou(props) {
 
     }, [matchedEvent]);
     const [Events, setEvents] = useState([])
+    
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
@@ -201,7 +202,7 @@ export default function AroundYou(props) {
                                     description={event.EventTime}
                                     pinColor={typePinColors[event.SerialTypeNumber]}
                                     onPress={() => {
-                                        navigation.navigate('Event Details', { event, traveler });
+                                        navigation.navigate('TimeLine', { event, traveler });
                                     }}
                                 />
 

@@ -9,7 +9,7 @@ import SOS from './Screens/SOS';
 import Search from './Screens/Search'
 import Events from './Screens/Events';
 import MyPost from './Screens/MyPost';
-// import TimeLine from './Screens/TimeLine'
+import TimeLine from './Screens/TimeLine'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -43,7 +43,7 @@ export default function App() {
         <Stack.Screen name="Setting" component={Setting} />
         <Stack.Screen name="New event" component={NewEvent} />
         <Stack.Screen name="SOS" component={SOS} />
-        {/* <Stack.Screen name="TimeLine" component={Timeline} /> */}
+        <Stack.Screen name="TimeLine" component={TimeLine} />
         <Stack.Screen name="Camera" component={OpenCamera} />
         <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="CameraSOS" component={OpenCameraSOS} />
