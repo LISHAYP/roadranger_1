@@ -16,10 +16,9 @@ export default function AroundYou(props) {
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
-
-
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
+    const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -29,8 +28,30 @@ export default function AroundYou(props) {
     );
     useEffect(() => {
         if (matchedEvent) {
-            setModalVisible(true);
+            const travelerIdObj = {
+                travelerId: traveler.traveler_id,
+              }
+            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/lastevent', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(travelerIdObj),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setLasteventOfTraveler(data)
+                    console.log(data);
+                }
+                )
+                .catch(error => {
+                    console.error(error);
+                    console.log('Error');
+                });
         }
+        setModalVisible(true);
+
     }, [matchedEvent]);
     const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
