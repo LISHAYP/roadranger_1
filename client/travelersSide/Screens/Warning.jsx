@@ -7,8 +7,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import Geocoder from 'react-native-geocoding';
 
 export default function Warning(props) {
     const navigation = useNavigation();
