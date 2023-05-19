@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -20,6 +20,8 @@ export default function FollowTraveler(props) {
   const [lastLocation, setLastLocation] = useState()
   Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
   const mapViewRef = useRef(null);
+
+  const [missing, setMissing] = useState(traveler.missing);
 
   useEffect(() => {
     getLocationTraveler()
@@ -59,21 +61,51 @@ export default function FollowTraveler(props) {
 
       });
   }
- 
+ const reportClick=()=>{
+    setMissing(!missing);
+    const newMissing = !missing;
+    if (newMissing) {
+      navigation.navigate('Report', { stakeholder: stakeholder, traveler: traveler, location: travelerLocation }) 
+      console.log('Reported as missing');
+    } else {
+      const travelerIdObj = {
+        traveler_id: traveler.traveler_id
+    }
+   
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/missingfalse', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(travelerIdObj),
+        })
+            .then(response => response.json())
+            .then(data => {          
+             Alert.alert("Found")
+          })
+            .catch(error => {
+                console.error(error);
+                Alert.alert('Error', error);
+            });
+    
+      console.log('Reported as found');
+    }
+   
+  }
 
   function formatDateTime(isoDateTime) {
     const date = new Date(isoDateTime);
     const formattedDate = date.toLocaleDateString('en-GB');
     const formattedTime = isoDateTime.slice(11, 16);
-    return `${formattedTime} ${formattedDate}`;
+    return `${formattedTime} ${formattedDate}`
   }
 
-
+ 
   return (
     <GradientBackground>
       <BackButton />
       <View style={styles.container}>
-    
+
         <View >
           <View style={styles.row}>
             <Image style={styles.img} source={{ uri: traveler.Picture }} />
@@ -87,11 +119,11 @@ export default function FollowTraveler(props) {
             <Text style={styles.text}>{lastLocation.address}</Text>
           </View>
         )}
-          <TouchableOpacity style={styles.btnSave} onPress={() => { navigation.navigate('Report',{stakeholder:stakeholder,traveler: traveler,location:travelerLocation }) }}>
-            <Text style={styles.btnText}  >
-              Report as missing
-            </Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.btnSave}  onPress={reportClick} >
+          <Text style={styles.btnText}  >
+            {missing ? 'Report as found' : 'Report as missing'}
+          </Text>
+        </TouchableOpacity>
         <MapView style={styles.map} region={lastLocation && {
           latitude: lastLocation.Latitude,
           longitude: lastLocation.Longitude,
@@ -117,19 +149,19 @@ export default function FollowTraveler(props) {
             />
           )}
         </MapView>
-    
+
         <ScrollView>
-        {travelerLocation.length > 0 && (
-          travelerLocation.map((traveler, index) => (
-            <View key={index} style={styles.commentContainer}>
-             <TouchableOpacity onPress={() => setLastLocation(traveler)}>
-                <Text>{formatDateTime(traveler.DateAndTime)}</Text>
-                <Text>{traveler.address}</Text>
-              </TouchableOpacity>
-            </View>
-          ))
-        )}
-      </ScrollView>
+          {travelerLocation.length > 0 && (
+            travelerLocation.map((traveler, index) => (
+              <View key={index} style={styles.commentContainer}>
+                <TouchableOpacity onPress={() => setLastLocation(traveler)}>
+                  <Text>{formatDateTime(traveler.DateAndTime)}</Text>
+                  <Text>{traveler.address}</Text>
+                </TouchableOpacity>
+              </View>
+            ))
+          )}
+        </ScrollView>
       </View>
     </GradientBackground>
   )
@@ -182,7 +214,7 @@ const styles = StyleSheet.create({
   btnSave: {
     marginVertical: 20,
     width: "28%",
-    paddingVertical:7,
+    paddingVertical: 7,
     paddingHorizontal: 0,
     borderColor: '#144800',
     borderWidth: 2,
@@ -190,14 +222,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#144800',
     position: 'absolute',
     right: 30,
-    height:70,
+    height: 70,
     justifyContent: 'center',
-    
+
   },
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: 20,
 
-  },
+  },
 });
