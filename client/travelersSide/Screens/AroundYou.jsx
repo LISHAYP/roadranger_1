@@ -191,7 +191,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.event_status !== false).map(event => (
+                            {Events.filter(event => event.event_status !== false && event.is_related==null  ).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{
