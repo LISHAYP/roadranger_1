@@ -303,8 +303,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
 
   },
-
-
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',

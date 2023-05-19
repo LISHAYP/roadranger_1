@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
@@ -15,9 +15,11 @@ export default function AroundYou(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
+
 
     const traveler = props.route.params.data;
-    const  matchedEvent = props.route.params.matchedEvents;
+    const matchedEvent = props.route.params.matchedEvents;
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -25,7 +27,11 @@ export default function AroundYou(props) {
             };
         }, [])
     );
-
+    useEffect(() => {
+        if (matchedEvent) {
+            setModalVisible(true);
+        }
+    }, [matchedEvent]);
     const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
@@ -48,7 +54,7 @@ export default function AroundYou(props) {
 
 
     const handleGet = () => {
-        if(matchedEvent){
+        if (matchedEvent) {
             console.log("this is working!!!", matchedEvent)
         }
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
@@ -237,9 +243,33 @@ export default function AroundYou(props) {
                             </ScrollView>
                         </View>
                     )}
+                    <View>
+                        {/* Your screen content */}
+                        {matchedEvent && matchedEvent.map((matchedEvent, index) => (
+                            <Modal
+                                key={index}
+                                visible={modalVisible}
+                                onRequestClose={() => setModalVisible(false)}
+                                animationType="slide"
+                                transparent={true}
+                            >
+                                <View style={styles.modalContainer}>
+                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.btnClose}>
+                                        <Icon name="close-outline" size={35} />
+                                    </TouchableOpacity>
+                                    <View style={styles.modalContent}>
+                                        {/* Modal content */}
+                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                        {/* Add more Text components for other parameters */}
+                                    </View>
+                                </View>
+                            </Modal>
+                        ))}
+                    </View>
                 </View>
 
             </TouchableWithoutFeedback>
+
         </GradientBackground>
     );
 }
@@ -263,7 +293,34 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
 
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        marginTop: 100,
+        marginBottom: 100,
+        marginHorizontal: 20,
+        padding: 30,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.75,
+        shadowRadius: 4,
+        elevation: 5,
+    },
 
+    btnClose: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
     name: {
         position: "absolute",
         fontSize: 20,
