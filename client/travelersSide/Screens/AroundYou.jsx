@@ -16,6 +16,7 @@ export default function AroundYou(props) {
     const navigation = useNavigation();
 
     const traveler = props.route.params.data;
+    const  matchedEvent = props.route.params.matchedEvents;
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -46,7 +47,9 @@ export default function AroundYou(props) {
 
 
     const handleGet = () => {
-
+        if(matchedEvent){
+            console.log("this is working!!!", matchedEvent)
+        }
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
 
             method: 'GET',
