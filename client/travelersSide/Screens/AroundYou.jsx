@@ -16,10 +16,9 @@ export default function AroundYou(props) {
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
-
-
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
+    const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -29,10 +28,33 @@ export default function AroundYou(props) {
     );
     useEffect(() => {
         if (matchedEvent) {
-            setModalVisible(true);
+            const travelerIdObj = {
+                travelerId: traveler.traveler_id,
+            }
+            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/lastevent', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(travelerIdObj),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setLasteventOfTraveler(data.lastEventId);
+                    console.log("++++",data.lastEventId);
+                }
+                )
+                .catch(error => {
+                    console.error(error);
+                    console.log('Error');
+                });
         }
+        setModalVisible(true);
+
     }, [matchedEvent]);
     const [Events, setEvents] = useState([])
+    
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
@@ -101,6 +123,35 @@ export default function AroundYou(props) {
     AroundYou.navigationOptions = {
         headerShown: false,
     };
+    const relatedEvent = (eventNumber) => {
+        console.log("**************", eventNumber);
+
+        const updateEventObj = {
+            is_related: eventNumber
+        }
+        console.log("**************", updateEventObj);
+        console.log("*****-*********", lasteventOfTraveler);
+
+        fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/updateevent/${lasteventOfTraveler}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateEventObj),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data); // Traveler updated successfully.
+                setModalVisible(false);
+                setLasteventOfTraveler('');
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
     return (
         <GradientBackground>
             <TouchableWithoutFeedback onPress={closeMenu}>
@@ -140,7 +191,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.event_status !== false).map(event => (
+                            {Events.filter(event => event.event_status !== false && event.is_related==null  ).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{
@@ -151,7 +202,7 @@ export default function AroundYou(props) {
                                     description={event.EventTime}
                                     pinColor={typePinColors[event.SerialTypeNumber]}
                                     onPress={() => {
-                                        navigation.navigate('Event Details', { event, traveler });
+                                        navigation.navigate('TimeLine', { event, traveler });
                                     }}
                                 />
 
@@ -253,15 +304,23 @@ export default function AroundYou(props) {
                                 animationType="slide"
                                 transparent={true}
                             >
-                                <View style={styles.modalContainer}>
-                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.btnClose}>
-                                        <Icon name="close-outline" size={35} />
-                                    </TouchableOpacity>
-                                    <View style={styles.modalContent}>
+                                <View style={styles.modal}>
+                                   
                                         {/* Modal content */}
+                                        <Text>Did u mean this event?</Text>
+                                      
+                                        <Text>{matchedEvent.Details}</Text>
+                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
+
                                         <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
+                                            <Text>Yes</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
+                                            <Text>No</Text>
+                                        </TouchableOpacity> 
                                         {/* Add more Text components for other parameters */}
-                                    </View>
+                                    
                                 </View>
                             </Modal>
                         ))}
@@ -282,6 +341,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         // marginTop: 40
 
+    },
+    btnLogIn: {
+        marginVertical: 20,
+        width: "50%",
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#144800',
+        borderWidth: 2,
+        borderRadius: 25,
+        backgroundColor: '#144800'
     },
     btnLogOut: {
         top: 100,
@@ -441,5 +511,18 @@ const styles = StyleSheet.create({
     },
     picAndText: {
         top: 0,
-    }
-});
+    }, 
+    modal: {
+        flex: 1,
+        backgroundColor: 'white',
+        marginTop: 100,
+        marginBottom: 100,
+        marginHorizontal: 20,
+        padding: 30,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        }
+    }});
