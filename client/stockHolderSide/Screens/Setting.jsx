@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     width: 150,
     marginBottom: 25,
+    
   },
   btnText: {
     color: '#F8F8FF',
@@ -305,6 +306,13 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 2,
     borderRadius: 25,
-    backgroundColor: '#144800'
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+    shadowOffset: {
+    width: 0,
+    height: 4},
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8,
   },
 });

@@ -250,8 +250,15 @@ const styles = StyleSheet.create({
         borderColor: '#144800',
         borderWidth: 2,
         borderRadius: 25,
-        backgroundColor: '#144800'
-    },
+        backgroundColor: '#144800',
+        shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 4},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
+},
     btnText: {
         color: '#F8F8FF',
         alignSelf: 'center',
