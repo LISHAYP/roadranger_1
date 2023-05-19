@@ -301,6 +301,47 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost]
+        [Route("api/post/relatedevents")]
+        public IHttpActionResult PostRelatedEvents([FromBody] tblEvents newEvent)
+        {
+            try
+            {
+                // Retrieve the events where the event number appears in the "is_related" column
+                var relatedEvents = db.tblEvents
+                    .Where(e => e.is_related == newEvent.eventNumber || e.eventNumber == newEvent.eventNumber)
+                    .OrderBy(e => e.event_date)
+                    .ThenBy(e => e.event_time)
+                    .Select(e => new EventDto
+                    {
+                        eventNumber = e.eventNumber,
+                        Details = e.details,
+                        EventDate = e.event_date,
+                        EventTime = e.event_time,
+                        Latitude = e.latitude,
+                        Longitude = e.longitude,
+                        EventStatus = e.event_status,
+                        Picture = e.picture,
+                        TravelerId = e.travelerId,
+                        StackholderId = e.stackholderId,
+                        SerialTypeNumber = e.serialTypeNumber,
+                        CountryNumber = e.country_number,
+                        AreaNumber = e.area_number,
+                        labels = e.labels,
+                        is_related = e.is_related
+                    })
+                    .ToList();
+
+                return Ok(relatedEvents);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+
 
 
         private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
