@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput ,Alert} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -20,6 +20,7 @@ export default function SignIn() {
     const [location, setLocation] = useState('');
     const [travelerId, setTravlerId] = useState('')
     const [devaiceToken, setDevaiceToken] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -31,7 +32,7 @@ export default function SignIn() {
             let currentLocation = await Location.getCurrentPositionAsync({});
             setLocation(currentLocation);
         })();
-    }, []);
+    }, [handleLogin]);
     const handleLogin = () => {
         const traveler = {
             travler_email: email,
@@ -39,8 +40,8 @@ export default function SignIn() {
         };
         const changeToken = {
             travler_email: email,
-            token:devaiceToken
-          };
+            token: devaiceToken
+        };
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
             method: 'POST',
             headers: {
@@ -52,6 +53,8 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
+                    console.log("*********",data)
+                    console.log("*********",data.traveler_id)
                     setTravlerId(data.traveler_id)
                     fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/updatetoken?email=${traveler.travler_email}`, {
                         method: 'PUT',
@@ -63,21 +66,20 @@ export default function SignIn() {
                     })
                         .then((response) => response.json())
                         .then((data1) => {
-                            console.log(data1); // Traveler updated successfully.
-                            signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
+                            console.log(data1);
+                            console.log(data); // Traveler updated successfully.
+                            //Alert.alert('Token updated successfully')
+                            //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                             navigation.navigate("Around You", { data });
                         })
                         .catch((error) => {
                             console.error(error);
                         });
 
-
                 } else {
                     setLoginFailed(true);
                     console.log('Error', 'Invalid email or password. Please try again.');
                 }
-
-
             })
             .catch(error => {
                 console.error(error);
@@ -102,18 +104,17 @@ export default function SignIn() {
             console.log(error);
         }
     }
-
-
     const saveUserLocation = () => {
         const now = new Date();
         const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
         const userLoction = {
 
             DateAndTime: DateAndTimeFormat,
+            TravelerId: travelerId,
             Latitude: location.coords.latitude,
-            Longitude: location.coords.longitude,
-            TravelerId: travelerId
+            Longitude: location.coords.longitude
         }
+        console.log("^^^^^^^^^", userLoction)
         //Send a POST request to your backend API with the 
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/location', {
             method: 'POST',
@@ -126,16 +127,8 @@ export default function SignIn() {
             .then(response => response.json())
             .catch(error => {
                 console.error(error);
-
             });
-
-
     }
-
-    state = {
-        showPassword: false
-    };
-
     async function registerForPushNotificationsAsync() {
         let token;
         if (Device.isDevice) {
@@ -198,63 +191,77 @@ export default function SignIn() {
     }, []);
 
     return (
-        < GradientBackground>
+         < GradientBackground>
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
-                <Text style={styles.text}>Email:</Text>
-                <TextInput style={styles.input}
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    placeholder="User Email">
-                </TextInput>
-                {console.log({ email })}
-                <Text style={styles.text}>Password:</Text>
-                <TextInput
-                    style={styles.input}
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    placeholder="*******"
-                    secureTextEntry={!this.state.showPassword}
-                >
-                </TextInput>
-                {console.log({ password })}
-                {loginFailed && (
-                    <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
-                )}
+
+                <View style={styles.frame}>
+                    <Text style={styles.text}>Email:</Text>
+                    <TextInput style={styles.input}
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        placeholder="User Email">
+                    </TextInput>
 
 
-                <TouchableOpacity style={styles.btnLogIn}
-                    onPress={handleLogin}>
-                    <Text style={styles.btnText}>
-                        Log In
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate("Forgot password")
-                }}>
-                    <Text >
-                        Forgot your password?
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnSignUp} onPress={() => {
-                    navigation.navigate("Sign Up");
-                }}>
-                    <Text > Don't have an Account?  </Text>
-                    <Text style={styles.text1}> Click Here </Text>
+                    <Text style={styles.text}>Password:</Text>
+                    <View style={styles.input}>
+                        <TextInput
 
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
-                    navigation.navigate("Contact Us");
-                }}>
+                            value={password}
+                            onChangeText={text => setPassword(text)}
+                            placeholder="*********"
+                            secureTextEntry={!showPassword}
+                        >
+                        </TextInput>
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                            style={styles.iconContainer}
+                        >
+                            <Icon size={25}
+                                name={showPassword ? 'eye-off' : 'eye'}
+                                type='feather'
+                                color={ '#144800'}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    {loginFailed && (
+                        <Text style={{ color: 'red' }}>Invalid email or password. Please try again.</Text>
+                    )}
 
-                    <Icon name="mail-open-outline" size={30} />
-                    <Text style={styles.contact}>
-                        Contact us
-                    </Text>
-                </TouchableOpacity>
 
-            </View >
-        </ GradientBackground>
+                    <TouchableOpacity style={styles.btnLogIn}
+                        onPress={handleLogin}>
+                        <Text style={styles.btnText}>
+                            Log In
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate("Forgot password")
+                    }}>
+                        <Text >
+                            Forgot your password?
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnSignUp} onPress={() => {
+                        navigation.navigate("Sign Up");
+                    }}>
+                        <Text > Don't have an Account?  </Text>
+                        <Text style={styles.text1}> Click Here </Text>
+
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 50 }} onPress={() => {
+                        navigation.navigate("Contact Us");
+                    }}>
+
+                        <Icon name="mail-open-outline" size={30} color={ '#144800'}/>
+                        <Text style={styles.contact}>
+                            Contact us
+                        </Text>
+                    </TouchableOpacity>
+                    </View>
+                </View >
+        </ GradientBackground> 
 
     )
 }
@@ -262,14 +269,26 @@ export default function SignIn() {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        marginVertical: 10,
-        marginHorizontal: 10,
+        // marginVertical: 10,
+        // marginHorizontal: 10,
         padding: 20,
         width: "100%",
-        marginTop: 100
+        marginTop: 100,
+        // backgroundColor:'#F0FFF0'
+        // backgroundColor:'#3CB371'
 
     },
+    frame:{
+        // backgroundColor:  'rgba(0, 0, 0, 0.07)',
+        padding:20,
+        borderWidth: 0,
+        borderRadius: 25,
+        borderColor:  'rgba(0, 0, 0, 0.07)'
 
+    },
+    iconContainer: {
+        size: 35
+    },
     RoadRanger: {
         alignSelf: 'center',
         resizeMode: 'contain',
@@ -286,13 +305,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderColor: '#144800',
-        borderWidth: 2,
-        borderRadius: 25,
+        borderColor:  '#144800',
+        borderWidth: 1,
+        borderRadius: 15,
         flexDirection: 'row',
-        alignItems: 'center'
-
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor:  'white',
     },
+
     btnLogIn: {
         marginVertical: 20,
         width: "50%",

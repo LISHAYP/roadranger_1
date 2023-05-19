@@ -28,12 +28,14 @@ export default function Setting(props) {
   const gender = [
     { label: 'Male', value: 'M' },
     { label: 'Female', value: 'F' },
-    { label: 'Other', value: 'O' },]
+    { label: 'Other', value: 'O' },
+  ]
 
   const insurance = [
     { label: 'PassportCard', value: 'PassportCard' },
     { label: 'Harel', value: 'Harel' },
     { label: 'Other', value: 'Other' },
+    { label: 'Menura', value: 'Menura' }
   ]
   const [value, setValue] = useState(null);
   const email = traveler.travler_email;

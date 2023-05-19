@@ -8,21 +8,21 @@ import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
-import * as Notifications from 'expo-notifications';
+//import * as Notifications from 'expo-notifications';
 import { async } from "@firebase/util";
 
 export default function Chat(props) {
 
     const navigation = useNavigation();
     const [messages, setMessages] = useState([]);
-    const traveler1 = props.route.params.user;
-    const traveler = props.route.params.loggeduser;
+    const chosenUser = props.route.params.user;
+    const userLogged = props.route.params.loggeduser;
     const [chatRoomDocRef, setChatRoomDocRef] = useState('')
     const [shouldRender, setShouldRender] = useState(false); // add state variable
+const [isStackholder, setisStackhold] = useState(true);
 
-
-    console.log('im the logged user', traveler);
-    console.log('im the chosen one!', traveler1);
+    console.log('im the logged user', userLogged);
+    console.log('im the chosen one!', chosenUser);
 
     const onSignOut = () => {
         signOut(auth).catch(error => console.log(error));
@@ -41,7 +41,7 @@ export default function Chat(props) {
 
 
     const createChatRoom = async () => {
-        const sortedUsers = [traveler.traveler_id, traveler1.traveler_id].sort();
+        const sortedUsers = [`99${userLogged.StakeholderId}`, chosenUser.traveler_id].sort();
         const chatRoomQuery = query(collection(database, 'chat_rooms'), where('users', '==', sortedUsers));
         const chatRoomQuerySnapshot = await getDocs(chatRoomQuery);
         if (chatRoomQuerySnapshot.size !== 0) {
@@ -106,12 +106,14 @@ export default function Chat(props) {
         };
 
         getMessages();
-    }, [traveler, traveler1]);
+    }, [userLogged, chosenUser]);
 
 
     const onSend = useCallback(async (newMessages = []) => {
         const messagesRef = chatRoomDocRef ? collection(database, `chat_rooms/${chatRoomDocRef.id}/messages`) : null;
         if (messagesRef) {
+            const isStakeholder = !!userLogged.StakeholderId;
+            setisStackhold(isStackholder) // check if user is a stakeholder
             const promises = newMessages.map((message) => {
                 const createdAt = new Date();
                 const messageData = {
@@ -119,13 +121,13 @@ export default function Chat(props) {
                     text: message.text,
                     createdAt: createdAt,
                     user: {
-                        _id: traveler.traveler_id,
-                        avatar: traveler.Picture
+                        _id: isStackholder ? `99${userLogged.StakeholderId}` : userLogged.traveler_id,
+                        avatar: isStackholder ? userLogged.picture : userLogged.Picture
                     }
                 };
                 setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-                handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
-                console.log("*********", traveler1)
+               // handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
+                console.log("*********", chosenUser)
                 return addDoc(messagesRef, messageData);
             });
 
@@ -137,37 +139,37 @@ export default function Chat(props) {
                     console.error(error);
                 });
         }
-    }, [traveler, traveler1, chatRoomDocRef]);
+    }, [userLogged, chosenUser, chatRoomDocRef]);
 
 
-    const handlePushNotification = async (message, recipientToken) => {
-        // Construct the message payload
-        const notification = {
-            to: recipientToken,
-            title: `New message from ${traveler.first_name} ${traveler.last_name} `,
-            body: message.text,
-            data: { chatRoomDocRefId: chatRoomDocRef.id },
-        };
+    // const handlePushNotification = async (message, recipientToken) => {
+    //     // Construct the message payload
+    //     const notification = {
+    //         to: recipientToken,
+    //         title: `New message from  `,
+    //         body: message.text,
+    //         data: { chatRoomDocRefId: chatRoomDocRef.id },
+    //     };
 
-        // Send the notification to the recipient         
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(notification),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
-                Alert.alert('Error', error);
-            });
+    //     // Send the notification to the recipient         
+    //     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(notification),
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log(data);
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //             Alert.alert('Error', error);
+    //         });
 
 
-    };
+    // };
 
     return (
         <GradientBackground>
@@ -177,10 +179,10 @@ export default function Chat(props) {
                         <BackButton />
                     </View >
                     <View style={styles.user}>
-                        <Image style={styles.img} source={{ uri: traveler1.Picture }} />
+                        <Image style={styles.img} source={{ uri: chosenUser.Picture }} />
                     </View>
                     <View style={styles.user}>
-                        <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
+                        <Text style={styles.text}>{chosenUser.first_name} {chosenUser.last_name} </Text>
                     </View>
                 </View>
               
@@ -191,8 +193,8 @@ export default function Chat(props) {
                         messages={messages}
                         onSend={messages => onSend(messages)}
                         user={{
-                            _id: traveler.traveler_id,
-                            avatar: traveler.Picture
+                            _id: isStackholder ? `99${userLogged.StakeholderId}` : userLogged.traveler_id,
+                            avatar: isStackholder ? userLogged.picture : userLogged.Picture
                         }}
                     />
                 )}

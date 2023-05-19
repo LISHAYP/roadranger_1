@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -11,9 +11,7 @@ import BackButton from '../Components/BackButton';
 
 export default function Search(props) {
   const navigation = useNavigation();
- //user-the user who use the app
- const traveler =  props.route.params.traveler;
-console.log("trrrrrrrr",traveler)
+  const stakeholder = props.route.params.stakeholder;
   useEffect(() => {
     loadData();
   }, []);
@@ -37,7 +35,7 @@ console.log("trrrrrrrr",traveler)
     { label: 'Financial issues', value: '11' }
   ]
 
-  const [events,setEvents]=useState('')
+  const [events, setEvents] = useState('')
   const [selectedSerialType, setSelectedSerialType] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
@@ -65,6 +63,7 @@ console.log("trrrrrrrr",traveler)
     { Name: 'endDate', Value: selectedEndDate },
 
   ]
+  
   console.log(searchObj)
 
   const searchEvents = async () => {
@@ -76,7 +75,6 @@ console.log("trrrrrrrr",traveler)
       Alert.alert("End date cannot be earlier than start date");
     }
     else {
-
       // Send a POST request to backend API with the search data
       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/searchByParameters', {
         method: 'POST',
@@ -90,22 +88,22 @@ console.log("trrrrrrrr",traveler)
         .then(data => {
           // Handle the response data as needed
           setEvents(data)
-        console.log(data);
-          navigation.navigate("Events",{data: data, traveler: traveler} );
+          console.log(data);
+          navigation.navigate("Events", { data: data, stakeholder: stakeholder });
         })
         .catch(error => {
           console.error(error);
           Alert.alert('No events in this coutry ', error);
         });
     }
-  
+
   }
-  
+
 
 
 
   //GET the countries and cities from data
- const loadData = () => {
+  const loadData = () => {
     //GET the countries into array
     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getcountries', {
       method: 'GET',
@@ -150,9 +148,10 @@ console.log("trrrrrrrr",traveler)
   const filteredCities = city.filter(city => city.countryNumber === selectedCountry);
   return (
     < GradientBackground>
-    <ScrollView>
-      <View style={styles.container}>
       <BackButton />
+      <ScrollView>
+      <View style={styles.container}>
+
 
         <Text style={styles.text}>Country:</Text>
         <Dropdown
@@ -199,8 +198,7 @@ console.log("trrrrrrrr",traveler)
           onChange={item => {
             setSelectedSerialType(item.value)
           }} />
-
-       <Text style={styles.text}>Start Date:</Text>
+        <Text style={styles.text}>Start Date:</Text>
         <View>
           <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
             <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
@@ -237,13 +235,13 @@ console.log("trrrrrrrr",traveler)
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop:20,
+    marginTop: 90,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-  
+
   },
   text: {
     color: '#144800',
@@ -296,7 +294,6 @@ const styles = StyleSheet.create({
     color: "#A9A9A9"
 
   },
-
 
   label: {
     position: 'absolute',

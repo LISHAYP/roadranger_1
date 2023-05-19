@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback,Alert } from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { ScrollView } from 'react-native-gesture-handler';
+import GradientBackground from '../Components/GradientBackground';
 
 
 
@@ -13,9 +15,11 @@ export default function AroundYou(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
+
 
     const traveler = props.route.params.data;
-   
+    const matchedEvent = props.route.params.matchedEvents;
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -23,7 +27,11 @@ export default function AroundYou(props) {
             };
         }, [])
     );
-
+    useEffect(() => {
+        if (matchedEvent) {
+            setModalVisible(true);
+        }
+    }, [matchedEvent]);
     const [Events, setEvents] = useState([])
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
@@ -46,7 +54,9 @@ export default function AroundYou(props) {
 
 
     const handleGet = () => {
-
+        if (matchedEvent) {
+            console.log("this is working!!!", matchedEvent)
+        }
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
 
             method: 'GET',
@@ -60,7 +70,6 @@ export default function AroundYou(props) {
             })
             .then(
                 (result) => {
-
                     setEvents(result)
                 },
                 (error) => {
@@ -87,134 +96,181 @@ export default function AroundYou(props) {
         8: 'brown',    // Security threats
         9: 'black',    // Animal-related incidents
         10: 'gray',    // Financial issues
+        1003: 'black'  //Missing traveler
     };
     AroundYou.navigationOptions = {
         headerShown: false,
     };
     return (
-        <TouchableWithoutFeedback onPress={closeMenu}>
-            <View style={styles.container}>
-                <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
-                    {/* <AntDesign name="menu" size={24} color="black" /> */}
-                    <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
-                    <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !                  </Text>
+        <GradientBackground>
+            <TouchableWithoutFeedback onPress={closeMenu}>
 
-                </TouchableOpacity>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
+                        {/* <AntDesign name="menu" size={24} color="black" /> */}
+                        <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
+                        <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={styles.picAndText} >
+                        <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                        <Text style={styles.name}>
+                            Hello, {traveler.first_name} {traveler.last_name} !
+                        </Text>
+                    </View>
 
-                {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
-                <Text style={styles.sosText}>SOS</Text>
-            </TouchableOpacity> */}
+                    {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
+                        <Text style={styles.sosText}>SOS</Text>
+                    </TouchableOpacity> */}
 
-                {location && location.coords && (
-                    <MapView
-                        style={styles.map}
-                        initialRegion={{
-                            latitude: location.coords.latitude,
-                            longitude: location.coords.longitude,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                        }}>
-                        <Marker
-                            coordinate={{
+                    {location && location.coords && (
+                        <MapView
+                            style={styles.map}
+                            initialRegion={{
                                 latitude: location.coords.latitude,
                                 longitude: location.coords.longitude,
-                            }}
-                            title="My Location"
-                            description="This is my current location"
-                        />
-                        {Events.map(event => (
+                                latitudeDelta: 0.0922,
+                                longitudeDelta: 0.0421,
+                            }}>
                             <Marker
-                                key={event.EventNumber}
                                 coordinate={{
-                                    latitude: event.Latitude,
-                                    longitude: event.Longitude,
+                                    latitude: location.coords.latitude,
+                                    longitude: location.coords.longitude,
                                 }}
-                                title={event.Details}
-                                description={event.EventTime}
-                                pinColor={typePinColors[event.SerialTypeNumber]}
-                                onPress={() => {
-                                    navigation.navigate('Event Details', { event, traveler });
+                                title="My Location"
+                                description="This is my current location"
+                            />
+                            {Events.filter(event => event.event_status !== false).map(event => (
+                                <Marker
+                                    key={event.EventNumber}
+                                    coordinate={{
+                                        latitude: event.Latitude,
+                                        longitude: event.Longitude,
+                                    }}
+                                    title={event.Details}
+                                    description={event.EventTime}
+                                    pinColor={typePinColors[event.SerialTypeNumber]}
+                                    onPress={() => {
+                                        navigation.navigate('Event Details', { event, traveler });
+                                    }}
+                                />
+
+                            ))}
+
+                            <Circle
+                                center={{
+                                    latitude: location.coords.latitude,
+                                    longitude: location.coords.longitude,
                                 }}
+                                radius={500}
+                                strokeColor="#F00"
+                                fillColor="#F007"
                             />
 
-                        ))}
+                        </MapView>
+                    )}
+                    {isMenuOpen && (
+                        <View style={styles.menu}>
+                            <ScrollView>
+                                <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                                    <AntDesign name="close" size={24} color="black" />
+                                </TouchableOpacity>
 
-                        <Circle
-                            center={{
-                                latitude: location.coords.latitude,
-                                longitude: location.coords.longitude,
-                            }}
-                            radius={500}
-                            strokeColor="#F00"
-                            fillColor="#F007"
-                        />
 
-                    </MapView>
-                )}
-                {isMenuOpen && (
-                    <View style={styles.menu}>
-                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                            <AntDesign name="close" size={24} color="black" />
-                        </TouchableOpacity>
 
-                        <View style={styles.picAndText} >
-                            <Image source={{ uri: traveler.Picture }} style={styles.user} />
-                            <Text style={styles.name}>
-                                Hello, {traveler.first_name} {traveler.last_name} !
-                            </Text>
+                                <TouchableOpacity style={styles.optionSOS}
+                                    onPress={() => {
+                                        navigation.navigate("SOS", {
+                                            traveler: traveler,
+                                            userLocation: userLocation
+                                        });
+                                    }}
+                                >
+                                    <Icon name="help-buoy" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>SOS</Text>
+
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.option}
+                                    onPress={() => {
+                                        navigation.navigate("New event", {
+                                            traveler: traveler,
+                                            userLocation: userLocation
+                                        });
+                                    }}
+                                >
+                                    <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>New Post</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
+                                    <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Chat</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
+                                    <Icon name="search-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Search </Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.option} onPress={() => {
+                                    navigation.navigate("My Post", {
+                                        traveler: traveler,
+                                        events: Events
+                                    })
+                                }}>
+                                    <Icon name="documents-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>My Posts </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.option}
+                                    onPress={() => { navigation.navigate("Warning", { traveler: traveler }) }}
+                                >
+                                    <Icon name="warning-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Warnings </Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.option}
+                                    onPress={() => { navigation.navigate("Setting", { traveler }) }}
+                                >
+                                    <Icon name="settings-outline" size={35} style={styles.icon} />
+                                    <Text style={styles.text}>Setting</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                                    navigation.navigate("Sign In");
+                                }}>
+                                    <Text style={styles.textLO} > Log out  </Text>
+                                </TouchableOpacity>
+                            </ScrollView>
                         </View>
-
-                        <TouchableOpacity style={styles.optionSOS}
-                            onPress={() => {
-                                navigation.navigate("SOS", {
-                                    traveler: traveler,
-                                    userLocation: userLocation
-                                });
-                            }}
-                        >
-                            <Icon name="help-buoy" size={35} style={styles.icon} />
-                            <Text style={styles.text}>SOS</Text>
-
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.option}
-                            onPress={() => {
-                                navigation.navigate("New event", {
-                                    traveler: traveler,
-                                    userLocation: userLocation
-                                });
-                            }}
-                        >
-                            <Icon name="add-circle-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>New Post</Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
-                            <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Chat</Text>
-                        </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search",{traveler}) }}>
-                        <Icon name="search-outline" size={35} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>
-
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.option}
-                            onPress={() => { navigation.navigate("Setting", { traveler }) }}
-                        >
-                            <Icon name="settings-outline" size={35} style={styles.icon} />
-                            <Text style={styles.text}>Setting</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                            navigation.navigate("Sign In");
-                        }}>
-                            <Text style={styles.textLO} > Log out  </Text>
-                        </TouchableOpacity>
+                    )}
+                    <View>
+                        {/* Your screen content */}
+                        {matchedEvent && matchedEvent.map((matchedEvent, index) => (
+                            <Modal
+                                key={index}
+                                visible={modalVisible}
+                                onRequestClose={() => setModalVisible(false)}
+                                animationType="slide"
+                                transparent={true}
+                            >
+                                <View style={styles.modalContainer}>
+                                    <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.btnClose}>
+                                        <Icon name="close-outline" size={35} />
+                                    </TouchableOpacity>
+                                    <View style={styles.modalContent}>
+                                        {/* Modal content */}
+                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                        {/* Add more Text components for other parameters */}
+                                    </View>
+                                </View>
+                            </Modal>
+                        ))}
                     </View>
-                )}
-            </View>
-        </TouchableWithoutFeedback>
+                </View>
+
+            </TouchableWithoutFeedback>
+
+        </GradientBackground>
     );
 }
 
@@ -224,19 +280,47 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 40
+        // marginTop: 40
 
     },
     btnLogOut: {
+        top: 100,
         flexDirection: 'row',
         position: 'absolute',
-        bottom: 30,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
+        // bottom: 30,
+        // alignSelf: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
 
-      },
-      
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        marginTop: 100,
+        marginBottom: 100,
+        marginHorizontal: 20,
+        padding: 30,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.75,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+
+    btnClose: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
     name: {
         position: "absolute",
         fontSize: 20,
@@ -245,7 +329,7 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '100%',
+        height: '50%',
     },
     sosText: {
         color: 'white',
@@ -279,22 +363,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         position: 'absolute',
         width: '100%',
-        height: '7%',
+        height: '12%',
         top: 0,
         left: 0,
         zIndex: 1,
         // borderRadius: 30,
         // paddingVertical: 10,
         // paddingHorizontal: 25,
-        backgroundColor: '#8FBC8F'
+        backgroundColor: '#8FBC8F',
+        paddingTop: 55
+
 
     },
     menu: {
         position: 'absolute',
-        top: 0,
+        bottom: 0,
         left: 0,
-        width: '80%',
-        height: '100%',
+        width: '100%',
+        height: '50%',
         backgroundColor: '#F0F8FF',
 
         // alignItems: 'center',
@@ -314,7 +400,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         right: 20,
-        top: 200,
+        top: 150,
         marginBottom: 21,
         backgroundColor: '#FF0000'
     },
@@ -326,7 +412,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         right: 20,
-        top: 200,
+        top: 150,
         marginBottom: 21
     },
     text: {
@@ -338,7 +424,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textDecorationLine: 'underline',
 
-    },   
+    },
     icon: {
         left: 30,
         size: 30,
@@ -346,14 +432,14 @@ const styles = StyleSheet.create({
     },
     user: {
         alignSelf: 'center',
-        resizeMode: 'cover',
+        // resizeMode: 'cover',
         height: 150,
         borderRadius: 75,
         width: 150,
-        top: 50
+        // top: 50
 
     },
     picAndText: {
-        top: 20,
+        top: 0,
     }
 });

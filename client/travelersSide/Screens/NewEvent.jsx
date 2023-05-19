@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert} from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -14,23 +14,24 @@ import { auth } from '../firebase';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
-  const userLocation = props.route.params.userLocation
+  const userLocation = props.route.params.userLocation;
+  const labels = props.route.params.labels;
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
-    { label: 'Car Accidents', value: '2' },
-    { label: 'Road closures', value: '3' },
-    { label: 'Natural disasters', value: '4' },
-    { label: 'Health emergencies', value: '5' },
-    { label: 'Accommodation issues', value: '6' },
-    { label: 'Protests', value: '7' },
-    { label: 'Strikes', value: '8' },
-    { label: 'Security threats', value: '9' },
-    { label: 'Animal-related incidents', value: '10' },
-    { label: 'Financial issues', value: '11' }
+    { label: 'Car Accidents', value: '1002' },
+    { label: 'Road closures', value: '2' },
+    { label: 'Natural disasters', value: '3' },
+    { label: 'Health emergencies', value: '4' },
+    { label: 'Accommodation issues', value: '5' },
+    { label: 'Protests', value: '6' },
+    { label: 'Strikes', value: '7' },
+    { label: 'Security threats', value: '8' },
+    { label: 'Animal-related incidents', value: '9' },
+    { label: 'Financial issues', value: '10' }
   ]
 
   const id = traveler.traveler_id;
@@ -42,7 +43,7 @@ export default function NewEvent(props) {
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
-
+  const [relatedEvents, setRelatedEvents] = useState('');
 
   useEffect(() => {
     //insert the API Key
@@ -56,7 +57,6 @@ export default function NewEvent(props) {
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
         addContry();
-
       })
       .catch(error => console.warn(error))
   }, []);
@@ -75,8 +75,9 @@ export default function NewEvent(props) {
     serialTypeNumber: serialTypeNumber,
     country_number: countryNumber,
     area_number: areaNumber,
+    labels: JSON.stringify(labels)
   };
-  console.log("--------", { newEvent })
+  //console.log("--------", { newEvent, labels })
   const countryObj = {
     country_name: country,
   };
@@ -129,36 +130,99 @@ export default function NewEvent(props) {
       });
   }
   const createEvent = async () => {
-
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
-    }
-    else {
-      // Send a POST request to your backend API with the event data
+    } else {
+      // Send a POST request to your backend API with the event data
       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newEvent),
-
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
-          console.log({ data })
-          Alert.alert('Publish')
-          navigation.goBack(); // Navigate back to the "Around You" screen
+          const comonventdetailsObj = {
+            serialTypeNumber: serialTypeNumber,
+            event_status: eventStatus,
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude,
+          };
+          fetch(
+            'http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(comonventdetailsObj),
+            }
+          )
+            .then(response => response.json())
+            .then(data1 => {
+              const relatedEventsData = data1; // Assign the data to a constant variable
+              const matchedEvents = []; // Array to store matched events
+  
+              for (let i = 0; i < relatedEventsData.length; i++) {
+                const event = relatedEventsData[i];
+                if (compareLabels(event, newEvent)) {
+                  matchedEvents.push(event);
+                  break;
+                }
+              }
+              if (matchedEvents.length > 0) {
+                console.log('Matches found:', matchedEvents);
+              } else {
+                console.log('No matches found');
+              }
+              Alert.alert('Publish');
+              const data = traveler;
+              navigation.navigate("Around You", { data, matchedEvents});
+            })
+            .catch(error => {
+              console.error(error);
+              Alert.alert('Error', error);
+            });
         })
         .catch(error => {
           console.error(error);
           Alert.alert('Error', error);
         });
     }
-  }
+  };
+  
+  const compareLabels = (event1, event2) => {
+    if (!event1.labels || !event2.labels) {
+      // If either event is missing the labels property, return false
+      return false;
+    }
+  
+    if ( event1.Details === event2.Details) {
+      // If Details are defined and identical, return false
+      return false;
+    }
+  
+    const labels1 = JSON.parse(event1.labels).map(label => label.description);
+    const labels2 = JSON.parse(event2.labels).map(label => label.description);
+  
+    for (const label1 of labels1) {
+      for (const label2 of labels2) {
+        if (label1 === label2) {
+          return true;
+        }
+      }
+    }
+  
+    return false;
+  };
+  
+  
+  
+  
 
   const OpenCameraE = () => {
-    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
     setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
   }
@@ -167,7 +231,7 @@ export default function NewEvent(props) {
     < GradientBackground>
       <ScrollView>
         <View style={styles.container}>
-        <BackButton />
+          <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -239,8 +303,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
 
   },
-
-
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
