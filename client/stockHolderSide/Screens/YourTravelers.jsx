@@ -27,6 +27,7 @@ export default function YourTravelers(props) {
       const objInsuranceCompany = {
         insurence_company: stakeholder.StakeholderName
       }
+     
       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/GetTravelersByInsuranceCompany', {
         method: 'POST',
         headers: {
@@ -37,9 +38,49 @@ export default function YourTravelers(props) {
       })
         .then(response => response.json())
         .then(data => {
+          console.log("^^^^^", data)
           // Map over the data and get the address for each traveler
           Promise.all(data.map(traveler => {
-            const lat = traveler.last_location.Latitude;
+            if (!traveler.last_location.Latitude) {
+              return Promise.reject(new Error('Traveler does not have a location'));
+            }
+            const lat = traveler.last_location.Latitude;       
+            const lng = traveler.last_location.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+              const location = json.results[0].address_components;
+              const number = location[0].long_name;
+              const street = location[1].long_name;
+              const city = location[2].long_name;
+              const address = `${street} ${number}, ${city}`;
+              return { ...traveler, address };
+            }).catch(error => {
+              console.error(error);
+              // handle the error appropriately
+            });
+          })).then(travelersWithAddress => {
+            setMyTravelers(travelersWithAddress);
+
+          }).catch(error => {
+            console.error(error);
+            // handle the error appropriately
+          });
+        });
+    }
+    if (stakeholder.StakeholderType != 'Insurance Company') {
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/lastlocation', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log("%%%%%%%%%%%%%%", data)
+          // Map over the data and get the address for each traveler
+          Promise.all(data.map(traveler => {
+            const lat = traveler.last_location.Latitude;       
             const lng = traveler.last_location.Longitude;
             return Geocoder.from(lat, lng).then(json => {
               const location = json.results[0].address_components;
@@ -51,39 +92,9 @@ export default function YourTravelers(props) {
             });
           })).then(travelersWithAddress => {
             setMyTravelers(travelersWithAddress);
+
           });
         });
-    }
-    if(stakeholder.StakeholderType != 'Insurance Company') {
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/lastlocation', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-       
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("%%%%%%%%%%%%%%",data)
-
-        // Map over the data and get the address for each traveler
-        Promise.all(data.map(traveler => {
-          const lat = traveler.last_location.Latitude;
-            const lng = traveler.last_location.Longitude;
-          return Geocoder.from(lat, lng).then(json => {
-            const location = json.results[0].address_components;
-            const number = location[0].long_name;
-            const street = location[1].long_name;
-            const city = location[2].long_name;
-            const address = `${street} ${number}, ${city}`;
-            return { ...traveler, address };
-          });
-        })).then(travelersWithAddress => {
-          setMyTravelers(travelersWithAddress);
-
-        });
-      });
     }
   }
 
@@ -99,23 +110,23 @@ export default function YourTravelers(props) {
       <View style={styles.container}>
         <Text>My ravelers</Text>
         <ScrollView>
-        {myTravelers.length > 0 && (
-          myTravelers.map((traveler, index) => (
-            <View key={index} style={styles.commentContainer}>
-              <TouchableOpacity onPress={() => { navigation.navigate("Follow", { traveler,stakeholder }) }}>
-                <View style={styles.event}>
-                  <View style={styles.row}>
-                    <Image style={styles.img} source={{ uri: traveler.Picture }} />
-                    <Text style={styles.text}> {traveler.first_name} {traveler.last_name} </Text>
+          {myTravelers.length > 0 && (
+            myTravelers.map((traveler, index) => (
+              <View key={index} style={styles.commentContainer}>
+                <TouchableOpacity onPress={() => { navigation.navigate("Follow", { traveler, stakeholder }) }}>
+                  <View style={styles.event}>
+                    <View style={styles.row}>
+                      <Image style={styles.img} source={{ uri: traveler.Picture }} />
+                      <Text style={styles.text}> {traveler.first_name} {traveler.last_name} </Text>
+                    </View>
                   </View>
-                </View>
-                 <Text>{traveler.address}</Text>               
-                  <Text>{formatDateTime(traveler.last_location.DateAndTime)}</Text> 
-              </TouchableOpacity>
-            </View>
-          ))
-        )}
-      </ScrollView>
+                  <Text>{traveler.address}</Text>
+                  <Text>{formatDateTime(traveler.last_location.DateAndTime)}</Text>
+                </TouchableOpacity>
+              </View>
+            ))
+          )}
+        </ScrollView>
 
       </View>
     </GradientBackground>

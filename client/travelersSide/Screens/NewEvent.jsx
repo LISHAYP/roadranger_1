@@ -43,7 +43,7 @@ export default function NewEvent(props) {
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
-
+  const [relatedEvents, setRelatedEvents] = useState('');
 
   useEffect(() => {
     //insert the API Key
@@ -57,7 +57,6 @@ export default function NewEvent(props) {
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
         addContry();
-        console.log("////", labels);
       })
       .catch(error => console.warn(error))
   }, []);
@@ -131,55 +130,55 @@ export default function NewEvent(props) {
       });
   }
   const createEvent = async () => {
-
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
-    }
-    else {
-      // Send a POST request to your backend API with the event data
+    } else {
+      // Send a POST request to your backend API with the event data
       fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newEvent),
-
       })
         .then(response => response.json())
         .then(data => {
-          //console.log({ data })
           const comonventdetailsObj = {
             serialTypeNumber: serialTypeNumber,
             event_status: eventStatus,
             latitude: userLocation.coords.latitude,
-            longitude: userLocation.coords.longitude
+            longitude: userLocation.coords.longitude,
           };
-          fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(comonventdetailsObj),
-          })
+          fetch(
+            'http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(comonventdetailsObj),
+            }
+          )
             .then(response => response.json())
             .then(data1 => {
-              console.log("related?*************", data1);
-              // Search term for the label description
-              const searchTerm = 'Product';
-
-              // Loop through the array of events
-              const filteredEvents = data1.filter(event => {
-                // Parse the labels string into an array of objects
-                const labels = JSON.parse(event.labels);
-
-                // Check if any of the objects in the labels array have a description that matches the search term
-                return labels.some(label => label.description.toLowerCase().includes(searchTerm.toLowerCase()));
-              })
-
-              // Log the filtered events to the console
-              console.log("filteredEvents",filteredEvents);
-              Alert.alert('Publish')
-              navigation.goBack(); // Navigate back to the "Around You" screen
+              const relatedEventsData = data1; // Assign the data to a constant variable
+              const matchedEvents = []; // Array to store matched events
+  
+              for (let i = 0; i < relatedEventsData.length; i++) {
+                const event = relatedEventsData[i];
+                if (compareLabels(event, newEvent)) {
+                  matchedEvents.push(event);
+                  break;
+                }
+              }
+              if (matchedEvents.length > 0) {
+                console.log('Matches found:', matchedEvents);
+              } else {
+                console.log('No matches found');
+              }
+              Alert.alert('Publish');
+              const data = traveler;
+              navigation.navigate("Around You", { data, matchedEvents});
             })
             .catch(error => {
               console.error(error);
@@ -191,7 +190,36 @@ export default function NewEvent(props) {
           Alert.alert('Error', error);
         });
     }
-  }
+  };
+  
+  const compareLabels = (event1, event2) => {
+    if (!event1.labels || !event2.labels) {
+      // If either event is missing the labels property, return false
+      return false;
+    }
+  
+    if ( event1.Details === event2.Details) {
+      // If Details are defined and identical, return false
+      return false;
+    }
+  
+    const labels1 = JSON.parse(event1.labels).map(label => label.description);
+    const labels2 = JSON.parse(event2.labels).map(label => label.description);
+  
+    for (const label1 of labels1) {
+      for (const label2 of labels2) {
+        if (label1 === label2) {
+          return true;
+        }
+      }
+    }
+  
+    return false;
+  };
+  
+  
+  
+  
 
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
@@ -275,8 +303,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
 
   },
-
-
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
