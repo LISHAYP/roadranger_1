@@ -41,8 +41,8 @@ export default function AroundYou(props) {
             })
                 .then(response => response.json())
                 .then(data => {
-                    setLasteventOfTraveler(data)
-                    console.log(data);
+                    setLasteventOfTraveler(data.lastEventId);
+                    console.log("++++",data.lastEventId);
                 }
                 )
                 .catch(error => {
@@ -130,6 +130,7 @@ export default function AroundYou(props) {
             is_related: eventNumber
         }
         console.log("**************", updateEventObj);
+        console.log("*****-*********", lasteventOfTraveler);
 
         fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',
@@ -142,7 +143,8 @@ export default function AroundYou(props) {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data); // Traveler updated successfully.
-                // Alert.alert('Event updated successfully')
+                setModalVisible(false);
+                setLasteventOfTraveler('');
             })
             .catch((error) => {
                 console.error(error);
@@ -306,17 +308,17 @@ export default function AroundYou(props) {
                                    
                                         {/* Modal content */}
                                         <Text>Did u mean this event?</Text>
-                                         <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
+                                      
+                                        <Text>{matchedEvent.Details}</Text>
+                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
+
+                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
                                             <Text>Yes</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
                                             <Text>No</Text>
                                         </TouchableOpacity> 
-                                        <Text>{matchedEvent.Details}</Text>
-                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
-
-                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
-                                     
                                         {/* Add more Text components for other parameters */}
                                     
                                 </View>
