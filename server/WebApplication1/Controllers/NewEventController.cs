@@ -506,6 +506,58 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
+        [HttpPut]
+        [Route("api/put/eventapproval/{eventNumber}")]
+        public IHttpActionResult UpdateEventApproval(int eventNumber, EventDto approvalDto)
+        {
+            try
+            {
+                // Retrieve the event based on the event number
+                var eventToUpdate = db.tblEvents.FirstOrDefault(e => e.eventNumber == eventNumber);
+
+                if (eventToUpdate == null)
+                {
+                    return NotFound(); // Event not found
+                }
+
+                // Validate the input values
+                if (approvalDto.approved != 0 && approvalDto.approved != 1)
+                {
+                    return BadRequest("Invalid value for 'approved'. Only 0 or 1 are allowed.");
+                }
+
+                if (approvalDto.not_approved != 0 && approvalDto.not_approved != 1)
+                {
+                    return BadRequest("Invalid value for 'not_approved'. Only 0 or 1 are allowed.");
+                }
+
+                if ((approvalDto.approved == 0 && approvalDto.not_approved == 0) ||
+                    (approvalDto.approved == 1 && approvalDto.not_approved == 1))
+                {
+                    return BadRequest("Invalid combination of values. 'approved' and 'not_approved' cannot have the same value.");
+                }
+
+                // Update the event approval status
+                eventToUpdate.approved += approvalDto.approved;
+                eventToUpdate.not_approved += approvalDto.not_approved;
+
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+
+        public class EventApprovalDto
+        {
+            public int Approved { get; set; }
+            public int NotApproved { get; set; }
+        }
 
 
 
