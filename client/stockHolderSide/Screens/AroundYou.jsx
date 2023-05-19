@@ -155,7 +155,7 @@ export default function AroundYou(props) {
 
                     </View>
 
-
+                    <View style={styles.optionsContainer}>
                     <TouchableOpacity style={styles.option}
                         onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }),setIsMenuOpen(false) }}
                     >
@@ -205,6 +205,7 @@ export default function AroundYou(props) {
                         <Icon name="warning-outline" size={30} style={styles.icon} />
                         <Text style={styles.text}>Warnings </Text>
                     </TouchableOpacity>
+                    </View>
                     <TouchableOpacity style={styles.btnLogOut} onPress={() => {
                         navigation.navigate("Sign In"),setIsMenuOpen(false);
                     }}>
@@ -226,12 +227,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     user: {
-        alignSelf: 'center',
+        alignItems:'center',
         resizeMode: 'cover',
-        height: 150,
+        height: 75,
         borderRadius: 75,
-        width: 150,
-        top: 100
+        width: 75,
+        
 
     },
     name: {
@@ -268,35 +269,37 @@ const styles = StyleSheet.create({
 
     },
     menu: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         position: 'absolute',
         width: '99%',
-        height: '80%',
+        height: '60%',
         backgroundColor: '#F0F8FF',
         zIndex: 1,
         flex: 1,
-        marginTop: "80%",
+        margin:'90%',
         marginHorizontal: 2,
         padding: 30,
         borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 4,
-          elevation: 5,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        
-    },
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
     closeButton: {
         position: 'absolute',
-        top: 55,
-        right: 20,
+        top: 0,
+        right: 0,
     },
     btnLogOut: {
-        top: 50,
+        top: 10,
+        padding:10,
         flexDirection: 'row',
         position: 'absolute',
         // bottom: 30,
@@ -311,49 +314,47 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
 
     }, 
-    optionSOS: {
+    optionsContainer: {
         flexDirection: 'row',
-        backgroundColor: '#8FBC8F',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
         width: '100%',
-        borderRadius: 12,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        right: 20,
-        top: 200,
-        marginBottom: 21,
-        backgroundColor: '#FF0000'
+        paddingHorizontal: 2,
+        alignContent:'center',
     },
     option: {
-        flexDirection: 'row',
-      //  backgroundColor: '#8FBC8F',
-        width: '100%',
-        borderRadius: 12,
-        paddingVertical: 3,
-        paddingHorizontal: 10,
-        right: 20,
-        top: 160,
-        marginBottom: 21,
-        borderBottomWidth :0.4,
-        borderBottomColor: '#000',
-      //   shadowColor: "#000",
-       // shadowOffset: {
-        //width: 0,
-        //height: 4},
-        //shadowOpacity: 0.30,
-        //shadowRadius: 4.65,
-        //elevation: 8,
-    },
+        alignContent: 'center',
+        height: '20%',
+        width: '48%',
+        borderColor: '#DCDCDC',
+        borderWidth: 0.5,
+        borderRadius: 15,
+        backgroundColor: '#F5F5F5',
+        marginBottom: 10,
+        padding: 5,
+        resizeMode: 'contain',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
+      },
     
     text: {
        color:'#8FBC8F',
-        fontSize: 25,
-        left: 40
+        fontSize: 23,
+        alignSelf:'center',
+        paddingBottom:2,
 
 
     },
     icon: {
+        alignSelf:'center',
         color:'#8FBC8F',
-        left: 30,
+        alignItems:'center',
         size: 30,
 
     }

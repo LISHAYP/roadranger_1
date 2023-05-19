@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: '100%',
     height: '40%',
-  },
+  },  
   commentContainer: {
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
