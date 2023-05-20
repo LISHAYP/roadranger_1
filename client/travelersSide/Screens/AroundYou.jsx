@@ -169,12 +169,6 @@ export default function AroundYou(props) {
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
                     </TouchableOpacity>
 
-
-
-                    {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
-                        <Text style={styles.sosText}>SOS</Text>
-                    </TouchableOpacity> */}
-
                     {location && location.coords && (
                         <MapView
                             style={styles.map}
@@ -229,25 +223,16 @@ export default function AroundYou(props) {
                     >
                         {isMenuOpen && (
                             <View style={styles.menu}>
-                                    <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                                        <AntDesign name="close" size={24} color="black" />
-                                    </TouchableOpacity>
+                                   <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                            navigation.navigate("Sign In"), setIsMenuOpen(false);
+                        }}>
+                            <Text style={styles.textLO} > Log out  </Text>
+                        </TouchableOpacity>
 
-
+                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                            <AntDesign name="close" size={24} color="black" />
+                        </TouchableOpacity>
                                     <View style={styles.optionsContainer}>
-                                        <TouchableOpacity style={styles.optionSOS}
-                                            onPress={() => {
-                                                navigation.navigate("SOS", {
-                                                    traveler: traveler,
-                                                    userLocation: userLocation
-                                                }), setIsMenuOpen(false);
-                                            }}
-                                        >
-                                            <Icon name="help-buoy" size={35} style={styles.icon} />
-                                            <Text style={styles.text}>SOS</Text>
-
-                                        </TouchableOpacity>
-
                                         <TouchableOpacity style={styles.option}
                                             onPress={() => {
                                                 navigation.navigate("New event", {
@@ -292,10 +277,17 @@ export default function AroundYou(props) {
                                             <Icon name="settings-outline" size={35} style={styles.icon} />
                                             <Text style={styles.text}>Setting</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                                            navigation.navigate("Sign In"), setIsMenuOpen(false);
-                                        }}>
-                                            <Text style={styles.textLO} > Log out  </Text>
+                                        <TouchableOpacity style={styles.optionSOS}
+                                            onPress={() => {
+                                                navigation.navigate("SOS", {
+                                                    traveler: traveler,
+                                                    userLocation: userLocation
+                                                }), setIsMenuOpen(false);
+                                            }}
+                                        >
+                                            <Icon name="help-buoy" size={35} style={styles.iconSOS} />
+                                            <Text style={styles.textSOS}>SOS</Text>
+
                                         </TouchableOpacity>
                                     </View>
 
@@ -367,12 +359,6 @@ const styles = StyleSheet.create({
        margin:10
 
     },
-    btnLogOut: {
-        left:-80,
-        paddingTop:10,
-
-    },
-  
     modalContent: {
         backgroundColor: 'white',
         marginTop: 100,
@@ -389,7 +375,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
-
     btnClose: {
         position: 'absolute',
         top: 10,
@@ -404,27 +389,6 @@ const styles = StyleSheet.create({
     map: {
         width: '100%',
         height: '100%',
-    },
-    sosText: {
-        color: 'white',
-        fontSize: 20, fontWeight: 'bold',
-        alignSelf: 'center',
-        top: 15
-    },
-    sos: {
-        position: 'absolute',
-        // bottom: 90,
-        top: 0,
-        right: 30,
-        zIndex: 1,
-        width: '15%',
-        height: '6%',
-        right: 0,
-        // borderRadius: 30,
-        // paddingVertical: 15,
-        // paddingHorizontal: 20,
-        backgroundColor: '#FF0000'
-
     },
     titlename: {
         color: 'white',
@@ -455,8 +419,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        height: '50%',
-        backgroundColor: '#F0F8FF',
+        height: '60%',
+        backgroundColor: 'white',
         zIndex: 1,
         flex: 1,
         borderTopLeftRadius: 15,
@@ -486,20 +450,29 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     optionSOS: {
-        flexDirection: 'row',
-        backgroundColor: '#8FBC8F',
+        alignContent: 'center',
+        height: '15%',
         width: '100%',
-        borderRadius: 12,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        right: 20,
-        top: 150,
-        marginBottom: 21,
-        backgroundColor: '#FF0000'
+        borderColor: '#DCDCDC',
+        borderWidth: 0.5,
+        borderRadius: 15,
+        backgroundColor: '#B00020',
+        marginBottom: 10,
+        
+        padding: 5,
+        resizeMode: 'contain',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     option: {
         alignContent: 'center',
-        height: '20%',
+        height: '18%',
         width: '48%',
         borderColor: '#DCDCDC',
         borderWidth: 0.5,
@@ -519,14 +492,27 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     text: {
-        color: '#8FBC8F',
+        color: '#144800',
         fontSize: 23,
         alignSelf: 'center',
         paddingBottom: 2,
+    },textSOS:{
+        fontSize: 23,
+        alignSelf: 'center',
+        paddingBottom: 2,
+    },iconSOS: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        size: 30,
+
     },
     textModal: {
         fontSize: 25,
         margin:10
+    },
+    btnLogOut: {
+        left:-80,
+        paddingTop:10,
     },
     textLO: {
         color: '#144800',
@@ -535,7 +521,9 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-        left: 30,
+        alignSelf: 'center',
+        color: '#144800',
+        alignItems: 'center',
         size: 30,
 
     },
@@ -557,9 +545,6 @@ const styles = StyleSheet.create({
         width: 150,
         // top: 50
 
-    },
-    picAndText: {
-        top: 0,
     },
     rowModal: {
         flexDirection: 'row',
