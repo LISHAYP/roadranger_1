@@ -142,34 +142,34 @@ const [isStackholder, setisStackhold] = useState(true);
     }, [userLogged, chosenUser, chatRoomDocRef]);
 
 
-    // const handlePushNotification = async (message, recipientToken) => {
-    //     // Construct the message payload
-    //     const notification = {
-    //         to: recipientToken,
-    //         title: `New message from  `,
-    //         body: message.text,
-    //         data: { chatRoomDocRefId: chatRoomDocRef.id },
-    //     };
+    const handlePushNotification = async (message, recipientToken) => {
+        // Construct the message payload
+        const notification = {
+            to: recipientToken,
+            title: `You have new message`,
+            body: message.text,
+            data: { chatRoomDocRefId: chatRoomDocRef.id },
+        };
 
-    //     // Send the notification to the recipient         
-    //     fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(notification),
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log(data);
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //             Alert.alert('Error', error);
-    //         });
+        // Send the notification to the recipient         
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notification),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+                Alert.alert('Error', error);
+            });
 
 
-    // };
+    };
 
     return (
         <GradientBackground>
