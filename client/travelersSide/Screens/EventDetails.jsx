@@ -261,14 +261,59 @@ export default function EventDetails(props) {
         console.error(error);
       });
   }
+
+  const handleButtonPress = (approved) => {
+    console.log("2222", approved);
+
+    const ansObj = {
+      Approved: approved ? 1 : 0,
+      Not_approved: approved ? 0 : 1
+    };
+
+    let relatedEvent;
+
+    if (event.is_related === null) {
+      relatedEvent = event.eventNumber;
+    } else {
+      relatedEvent = event.is_related;
+    }
+
+    console.log(ansObj);
+
+    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/eventapproval/${relatedEvent}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(ansObj),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Event approval request succeeded");
+          // Handle the successful approval request
+          Alert.alert('Thank you! ');
+          setTrueOrFalse(false)
+        } else {
+          console.log("Event approval request failed");
+          // Handle the failed approval request
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error if needed
+      });
+  };
+
   return (
     <GradientBackground>
+              <BackButton />
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
           <View style={styles.buttonContainer}>
-            <Button title="Yes" />
-            <Button title="No" />
+            <Button title="Yes" onPress={() => handleButtonPress(true)} />
+            <Button title="No" onPress={() => handleButtonPress(false)} />
           </View>
         </View>
       )}
@@ -276,7 +321,7 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <BackButton />
+
         <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
           <View>
             <View style={styles.event}>
@@ -397,14 +442,14 @@ const styles = StyleSheet.create({
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    
+
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
     height: '70%',
-    
+
 
   },
   commentContainer: {
@@ -415,7 +460,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     resizeMode: "contain",
-    
+
   },
 
   locationText: {
@@ -442,14 +487,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-      shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
     // width:'95%'
   },
   img: {
@@ -503,7 +548,7 @@ const styles = StyleSheet.create({
 
   },
   headerContainer: {
-    top: 35,
+    top: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
