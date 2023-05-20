@@ -8,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import * as Location from 'expo-location';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -17,7 +18,7 @@ export default function EventDetails(props) {
   //user-the user who use the app
   const user = props.route.params.traveler;
 
-  //traveler-the user how post event
+  //traveler-the user who post event
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
   const [comments, setComments] = useState('')
@@ -25,6 +26,7 @@ export default function EventDetails(props) {
   const [stackholderId, setStackholderId] = useState('null');
   const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
   const [deletedComment, setDeletedComment] = useState(false)
+  const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
 
   const fetchTravelerDetails = async () => {
     const travelerobj = {
@@ -77,8 +79,67 @@ export default function EventDetails(props) {
 
 
   };
+  const getUserLocation = async () => {
+    try {
+      console.log("here1");
+      const { coords } = await Location.getCurrentPositionAsync();
+      setUserLocation(coords); // Save user coordinates in state
+    } catch (error) {
+      console.error(error);
+      // Handle error fetching user location
+    }
+  };
+  useEffect(() => {
+    const checkTravelersLocation = async () => {
+      console.log("here2");
+      if (!userLocation) {
+        console.log("here7");
+        // User location is not available yet
+        return;
+      }
+      console.log("", event);
+  
+      const eventIdObj = {
+        eventNumber: event.eventNumber
+      };
+  
+      const { latitude, longitude } = userLocation; // Destructure latitude and longitude
+      console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
+  
+      try {
+        const response = await fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventIdObj),
+        });
+  
+        const data = await response.json();
+        console.log("here3");
+        console.log("Is it true or false?", data);
+        console.log("Is it true or false?", latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
+        console.log("Is it true or false?", event.Latitude, event.Longitude);
+        console.log(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`);
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', error);
+      }
+    };
+  
+    const timeoutId = setTimeout(() => {
+      checkTravelersLocation();
+    }, 1000); // Adjust the delay as needed
+  
+    checkTravelersLocation(); // Call it immediately to log "here2" and "here7"
+  
+    return () => clearTimeout(timeoutId); // Cleanup timeout on component unmount
+  }, [userLocation, event]);
+  
+
 
   useEffect(() => {
+    getUserLocation();
     fetchTravelerDetails();
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
@@ -89,13 +150,15 @@ export default function EventDetails(props) {
         const street = json.results[0].address_components[1].long_name;
         const city = json.results[0].address_components[2].long_name;
         setAddressComponents(`${street} ${number}, ${city}`);
+        console.log("here5");
       }
       )
       .catch(error => {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-  }, [newCommentPublished, deletedComment]); // <-- use new
+    
+  }, [newCommentPublished, deletedComment,]); 
 
   const newComment = {
     eventNumber: event.eventNumber,
@@ -224,7 +287,7 @@ export default function EventDetails(props) {
               <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
               <Text style={styles.locationText}>{addressComponents}</Text>
             </View>
-            {event.Picture !='#' && (
+            {event.Picture != '#' && (
               <View style={styles.pictureContainer}>
                 <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
               </View>
@@ -232,12 +295,12 @@ export default function EventDetails(props) {
 
           </View>
           <ScrollView>
-            { comments.length > 0 && (
+            {comments.length > 0 && (
               comments.map((comment, index) => (
                 <View key={index} style={styles.commentContainer}>
                   <View style={styles.event}>
                     <View style={styles.row}>
-                    {comment.picture ? (
+                      {comment.picture ? (
                         <Image style={styles.img} source={{ uri: comment.picture }} />
                       ) : (
                         <Image style={styles.img} source={{ uri: comment.shpicture }} />
@@ -263,28 +326,28 @@ export default function EventDetails(props) {
           </ScrollView>
         </View>
         <ScrollView>
-        <View style={styles.addComment}>
-          <View style={styles.event}>
-            <View style={styles.row}>
-              <Image style={styles.img} source={{ uri: user.Picture }} />
-              <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
+          <View style={styles.addComment}>
+            <View style={styles.event}>
+              <View style={styles.row}>
+                <Image style={styles.img} source={{ uri: user.Picture }} />
+                <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
+              </View>
+              <TouchableOpacity onPress={createComment}>
+                <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={createComment}>
-              <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
-            </TouchableOpacity>
+
+            <View style={styles.row}>
+              <TextInput
+                style={styles.input}
+                placeholder="Add Comment..."
+                value={details}
+                multiline={true}
+                numberOfLines={4}
+                onChangeText={(text) => setDetails(text)}
+              />
+            </View>
           </View>
-          
-          <View style={styles.row}>
-            <TextInput
-              style={styles.input}
-              placeholder="Add Comment..."
-              value={details}
-              multiline={true}
-              numberOfLines={4}
-              onChangeText={(text) => setDetails(text)}
-            />
-          </View>
-        </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
@@ -331,7 +394,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     height: '70%',
-   
+
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -340,7 +403,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    resizeMode:"contain"
+    resizeMode: "contain"
   },
 
   locationText: {
@@ -360,7 +423,7 @@ const styles = StyleSheet.create({
 
   },
   addComment: {
- 
+
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
     borderRadius: 15,

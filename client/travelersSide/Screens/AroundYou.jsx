@@ -19,6 +19,8 @@ export default function AroundYou(props) {
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
+
+    
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -31,6 +33,8 @@ export default function AroundYou(props) {
             const travelerIdObj = {
                 travelerId: traveler.traveler_id,
             }
+
+
             fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/lastevent', {
                 method: 'POST',
                 headers: {
@@ -309,23 +313,22 @@ export default function AroundYou(props) {
                                 animationType="slide"
                                 transparent={true}
                             >
-                                <View style={styles.modal}>
+                                <View style={styles.modalContent}>
 
                                     {/* Modal content */}
-                                    <Text>Did u mean this event?</Text>
+                                    <Text style={styles.textModal}>Did you mean this event?</Text>
 
                                     <Text>{matchedEvent.Details}</Text>
-                                    <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
-
-                                    <Text>Event Number: {matchedEvent.eventNumber}</Text>
-                                    <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
-                                        <Text>Yes</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
-                                        <Text>No</Text>
-                                    </TouchableOpacity>
-                                    {/* Add more Text components for other parameters */}
-
+                                    <Image style={styles.img} source={{ uri: matchedEvent.Picture }} />
+                                    <View style={styles.rowModal}>
+                                        <TouchableOpacity style={styles.btnModal} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
+                                            <Text style={styles.textModal1}>Yes</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.btnModal} onPress={() => setModalVisible(false)} >
+                                            <Text style={styles.textModal1}>No</Text>
+                                        </TouchableOpacity>
+                                        {/* Add more Text components for other parameters */}
+                                    </View>
                                 </View>
                             </Modal>
                         ))}
@@ -346,28 +349,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-    btnLogIn: {
+    textModal1:{
+        fontSize:20,
+        alignSelf: 'center',
+
+    },
+    btnModal: {
         marginVertical: 20,
-        width: "50%",
+        width: "30%",
         alignSelf: 'center',
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderColor: '#144800',
+        borderColor: '#8FBC8F',
         borderWidth: 2,
-        borderRadius: 25,
-        backgroundColor: '#144800'
+        borderRadius: 15,
+        backgroundColor: '#8FBC8F',
+       margin:10
+
     },
     btnLogOut: {
         left:-80,
         paddingTop:10,
 
     },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
+  
     modalContent: {
         backgroundColor: 'white',
         marginTop: 100,
@@ -519,6 +524,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingBottom: 2,
     },
+    textModal: {
+        fontSize: 25,
+        margin:10
+    },
     textLO: {
         color: '#144800',
         fontSize: 20,
@@ -540,21 +549,24 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
 
     },
+    img: {
+        alignSelf: 'center',
+        // resizeMode: 'cover',
+        height: 200,
+        borderRadius: 20,
+        width: 150,
+        // top: 50
+
+    },
     picAndText: {
         top: 0,
     },
-    modal: {
-        flex: 1,
-        backgroundColor: 'white',
-        marginTop: 100,
-        marginBottom: 100,
-        marginHorizontal: 20,
-        padding: 30,
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        }
-    }
+    rowModal: {
+        flexDirection: 'row',
+        alignSelf: "center",
+        marginTop:20
+
+
+    },
+   
 });

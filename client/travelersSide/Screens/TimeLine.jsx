@@ -1,82 +1,135 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import Timeline from 'react-native-timeline-flatlist'
+import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import Timeline from 'react-native-timeline-flatlist';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 export default function TimeLine(props) {
     const event = props.route.params.event;
     const traveler = props.route.params.traveler;
-    const [events, setEvents] = useState([])
-    console.log("&&&&&&", event)
-
+    const [events, setEvents] = useState(null);
+    const navigation = useNavigation();
+  
     useEffect(() => {
-        const eventNumberObj = {
-            eventNumber: event.eventNumber,
-        }
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/relatedevents', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(eventNumberObj),
+      const eventNumberObj = {
+        eventNumber: event.eventNumber,
+      };
+  
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/relatedevents', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventNumberObj),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setEvents(data);
         })
-            .then(response => response.json())
-            .then(data => {
-                setEvents(data)
-                console.log(data);
-            }
-            )
-            .catch(error => {
-                console.error(error);
-                console.log('Error');
-            });
-    }, []);
-
-    console.log("********", events)
-
+        .catch((error) => {
+          console.error(error);
+          console.log('Error');
+        });
+    }, [event]);
+    
+    const handleEventPress = (rowData) => {
+      const event = rowData;
+      navigation.navigate('Event Details', { event, traveler });
+    };
+  
     return (
         <GradientBackground>
-            <BackButton />
-            <View>
-                {events.length > 0 ? (
-                    <Timeline
-                        data={events.map((event) => ({
-                            time: event.EventDate, // Set the event date as the time value
-                            title: event.Details, // Set the event details as the title
-                            // Set other properties of the item as needed
-                            // You can add more properties here to customize the timeline item
-                        }))}
-                        circleSize={20}
-                        circleColor="rgb(45,156,219)"
-                        lineColor="rgb(45,156,219)"
-                        timeContainerStyle={{ minWidth: 52 }}
-                        timeStyle={{ textAlign: 'center', backgroundColor: '#ff9797', color: 'white', padding: 5, borderRadius: 13 }}
-                        titleStyle={{ fontWeight: 'bold' }}
-                        descriptionStyle={{ color: 'gray' }}
-                        options={{
-                            style: { paddingTop: 5 },
-                        }}
-                        renderDetail={({ item }) => (
-                            <View>
-                                <Text style={styles.text}>{item.title}</Text>
-                                {/* Render other properties of the item as needed */}
-                            </View>
-                        )}
-                    />
-                ) : (
-                    <Text>NO</Text>
-                )}
-            </View>
+          <BackButton />
+          <Timeline
+            style={styles.list}
+            showTime={false}
+            circleSize={20}
+          circleColor='green'
+          lineColor={'yellowgreen'}
+          separatorStyle={{
+            backgroundColor: '#144800',
+            height: 2,
+          }}
+            data={events}
+            timeStyle={{
+              textAlign: 'center',
+              backgroundColor: 'green',
+              color: 'white',
+              padding: 8,
+              borderRadius: 13,
+            }}
+            innerCircle='dot'
+            options={{
+              style: { paddingTop: 40, paddingLeft: 25 },
+            }}
+            separator={true}
+            onEventPress={handleEventPress}
+            detailContainerStyle={{
+              marginBottom: 20,
+              paddingLeft: 5,
+              paddingRight: 5,
+              borderRadius: 10,
+            }}
+            renderDetail={(rowData) => (
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.date]}>{rowData.EventDate.substring(0, 10)}</Text>
+                  <Text style={[styles.time]}>{rowData.EventTime.substring(0, 5)}</Text>
+                  <Text style={[styles.title]}>{rowData.Details}</Text>
+                  <View style={styles.descriptionContainer}>
+                    <Image source={{ uri: rowData.Picture }} style={styles.image} />
+                  </View>
+                </View>
+              </View>
+            )}
+         
+          />
         </GradientBackground>
-    )
+      );
+      
+      
+  }
 
-}
 const styles = StyleSheet.create({
-    text: {
-        fontSize: 50
-    }
-})
+    container: {
+        flex: 1,
+        padding: 20,
+        paddingTop: 65,
+        backgroundColor: 'white',
+    },
+    time: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: 'gray',
+      },
+    list: {
+        flex: 1,
+        marginTop: 20,
+    },
+    date: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: 'gray',
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    descriptionContainer: {
+        flexDirection: 'row',
+        paddingRight: 50,
+    },
+    image: {
+        width: 50,
+        height: 50,
+      //  borderRadius: 25,
+    },
+    textDescription: {
+        marginLeft: 10,
+        color: 'gray',
+    },
+});    
