@@ -161,22 +161,13 @@ export default function AroundYou(props) {
             <TouchableWithoutFeedback onPress={closeMenu}>
 
                 <View style={styles.container}>
-                    <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
-                        {/* <AntDesign name="menu" size={24} color="black" /> */}
-                        <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
-                        <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={styles.picAndText} >
+                    <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
+                        <Icon name="menu" size={40} color="white" alignSelf="ceter" />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
+                        </View>
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
-                        <Text style={styles.name}>
-                            Hello, {traveler.first_name} {traveler.last_name} !
-                        </Text>
-                    </View>
-
-                    {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
-                        <Text style={styles.sosText}>SOS</Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
 
                     {location && location.coords && (
                         <MapView
@@ -224,80 +215,86 @@ export default function AroundYou(props) {
 
                         </MapView>
                     )}
-                    {isMenuOpen && (
-                        <View style={styles.menu}>
-                            <ScrollView>
-                                <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                                    <AntDesign name="close" size={24} color="black" />
-                                </TouchableOpacity>
+                    <Modal
+                        visible={isMenuOpen}
+                        animationType='slide'
+                        transparent={true}
+                        onRequestClose={() => setIsMenuOpen(false)}
+                    >
+                        {isMenuOpen && (
+                            <View style={styles.menu}>
+                                   <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                            navigation.navigate("Sign In"), setIsMenuOpen(false);
+                        }}>
+                            <Text style={styles.textLO} > Log out  </Text>
+                        </TouchableOpacity>
 
+                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                            <AntDesign name="close" size={24} color="black" />
+                        </TouchableOpacity>
+                                    <View style={styles.optionsContainer}>
+                                        <TouchableOpacity style={styles.option}
+                                            onPress={() => {
+                                                navigation.navigate("New event", {
+                                                    traveler: traveler,
+                                                    userLocation: userLocation
+                                                }), setIsMenuOpen(false);
+                                            }}
+                                        >
+                                            <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>New Post</Text>
 
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler), setIsMenuOpen(false) }}>
+                                            <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Chat</Text>
+                                        </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.optionSOS}
-                                    onPress={() => {
-                                        navigation.navigate("SOS", {
-                                            traveler: traveler,
-                                            userLocation: userLocation
-                                        });
-                                    }}
-                                >
-                                    <Icon name="help-buoy" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>SOS</Text>
+                                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }), setIsMenuOpen(false) }}>
+                                            <Icon name="search-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Search </Text>
 
-                                </TouchableOpacity>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option} onPress={() => {
+                                            navigation.navigate("My Post", {
+                                                traveler: traveler,
+                                                events: Events
+                                            }), setIsMenuOpen(false)
+                                        }}>
+                                            <Icon name="documents-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>My Posts </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option}
+                                            onPress={() => { navigation.navigate("Warning", { traveler: traveler }), setIsMenuOpen(false) }}
+                                        >
+                                            <Icon name="warning-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Warnings </Text>
+                                        </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.option}
-                                    onPress={() => {
-                                        navigation.navigate("New event", {
-                                            traveler: traveler,
-                                            userLocation: userLocation
-                                        });
-                                    }}
-                                >
-                                    <Icon name="add-circle-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>New Post</Text>
+                                        <TouchableOpacity style={styles.option}
+                                            onPress={() => { navigation.navigate("Setting", { traveler }), setIsMenuOpen(false) }}
+                                        >
+                                            <Icon name="settings-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Setting</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.optionSOS}
+                                            onPress={() => {
+                                                navigation.navigate("SOS", {
+                                                    traveler: traveler,
+                                                    userLocation: userLocation
+                                                }), setIsMenuOpen(false);
+                                            }}
+                                        >
+                                            <Icon name="help-buoy" size={35} style={styles.iconSOS} />
+                                            <Text style={styles.textSOS}>SOS</Text>
 
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
-                                    <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Chat</Text>
-                                </TouchableOpacity>
+                                        </TouchableOpacity>
+                                    </View>
 
-                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
-                                    <Icon name="search-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Search </Text>
+                            </View>
+                        )}
+                    </Modal>
 
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.option} onPress={() => {
-                                    navigation.navigate("My Post", {
-                                        traveler: traveler,
-                                        events: Events
-                                    })
-                                }}>
-                                    <Icon name="documents-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>My Posts </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.option}
-                                    onPress={() => { navigation.navigate("Warning", { traveler: traveler }) }}
-                                >
-                                    <Icon name="warning-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Warnings </Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity style={styles.option}
-                                    onPress={() => { navigation.navigate("Setting", { traveler }) }}
-                                >
-                                    <Icon name="settings-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Setting</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                                    navigation.navigate("Sign In");
-                                }}>
-                                    <Text style={styles.textLO} > Log out  </Text>
-                                </TouchableOpacity>
-                            </ScrollView>
-                        </View>
-                    )}
                     <View>
                         {/* Your screen content */}
                         {matchedEvent && matchedEvent.map((matchedEvent, index) => (
@@ -330,9 +327,9 @@ export default function AroundYou(props) {
                     </View>
                 </View>
 
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback >
 
-        </GradientBackground>
+        </GradientBackground >
     );
 }
 
@@ -340,9 +337,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
-        // marginTop: 40
 
     },
     textModal1:{
@@ -363,17 +359,6 @@ const styles = StyleSheet.create({
        margin:10
 
     },
-    btnLogOut: {
-        top: 100,
-        flexDirection: 'row',
-        position: 'absolute',
-        // bottom: 30,
-        // alignSelf: 'center',
-        // alignItems: 'center',
-        // justifyContent: 'center',
-
-    },
-  
     modalContent: {
         backgroundColor: 'white',
         marginTop: 100,
@@ -390,7 +375,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
-
     btnClose: {
         position: 'absolute',
         top: 10,
@@ -404,35 +388,12 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '50%',
-    },
-    sosText: {
-        color: 'white',
-        fontSize: 20, fontWeight: 'bold',
-        alignSelf: 'center',
-        top: 15
-    },
-    sos: {
-        position: 'absolute',
-        // bottom: 90,
-        top: 0,
-        right: 30,
-        zIndex: 1,
-        width: '15%',
-        height: '6%',
-        right: 0,
-        // borderRadius: 30,
-        // paddingVertical: 15,
-        // paddingHorizontal: 20,
-        backgroundColor: '#FF0000'
-
+        height: '100%',
     },
     titlename: {
         color: 'white',
-        width: '100%',
-        left: 70,
         fontSize: 22,
-        alignSelf: "center"
+        alignSelf: 'center'
     },
     hamburger: {
         flexDirection: 'row',
@@ -442,61 +403,116 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        // borderRadius: 30,
-        // paddingVertical: 10,
-        // paddingHorizontal: 25,
         backgroundColor: '#8FBC8F',
-        paddingTop: 55
-
-
+        paddingTop: 55,
+        paddingHorizontal: 20,
+    },
+    textContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     menu: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
         position: 'absolute',
         bottom: 0,
-        left: 0,
         width: '100%',
-        height: '50%',
-        backgroundColor: '#F0F8FF',
-
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        height: '60%',
+        backgroundColor: 'white',
         zIndex: 1,
+        flex: 1,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        borderbottomEndRadius: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        justifyContent: 'space-evenly',
     },
     closeButton: {
-        position: 'absolute',
-        top: 40,
-        right: 20,
+        right: -80,
+        paddingTop: 10,
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingHorizontal: 5,
+        height: '100%',
+        alignContent: 'center',
     },
     optionSOS: {
-        flexDirection: 'row',
-        backgroundColor: '#8FBC8F',
+        alignContent: 'center',
+        height: '15%',
         width: '100%',
-        borderRadius: 12,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        right: 20,
-        top: 150,
-        marginBottom: 21,
-        backgroundColor: '#FF0000'
+        borderColor: '#DCDCDC',
+        borderWidth: 0.5,
+        borderRadius: 15,
+        backgroundColor: '#B00020',
+        marginBottom: 10,
+        
+        padding: 5,
+        resizeMode: 'contain',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     option: {
-        flexDirection: 'row',
-        backgroundColor: '#8FBC8F',
-        width: '100%',
-        borderRadius: 12,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        right: 20,
-        top: 150,
-        marginBottom: 21
+        alignContent: 'center',
+        height: '18%',
+        width: '48%',
+        borderColor: '#DCDCDC',
+        borderWidth: 0.5,
+        borderRadius: 15,
+        backgroundColor: '#F5F5F5',
+        marginBottom: 10,
+        
+        padding: 5,
+        resizeMode: 'contain',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     text: {
-        fontSize: 30,
-        left: 40
+        color: '#144800',
+        fontSize: 23,
+        alignSelf: 'center',
+        paddingBottom: 2,
+    },textSOS:{
+        fontSize: 23,
+        alignSelf: 'center',
+        paddingBottom: 2,
+    },iconSOS: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        size: 30,
+
     },
     textModal: {
         fontSize: 25,
         margin:10
+    },
+    btnLogOut: {
+        left:-80,
+        paddingTop:10,
     },
     textLO: {
         color: '#144800',
@@ -505,17 +521,20 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-        left: 30,
+        alignSelf: 'center',
+        color: '#144800',
+        alignItems: 'center',
         size: 30,
 
     },
     user: {
-        alignSelf: 'center',
-        // resizeMode: 'cover',
-        height: 150,
-        borderRadius: 75,
-        width: 150,
-        // top: 50
+        width: 50,
+        height: 50,
+        borderRadius: 90 / 2,
+        resizeMode: 'cover',
+        right: -10,
+        top: -5,
+        alignSelf: 'flex-end'
 
     },
     img: {
@@ -526,9 +545,6 @@ const styles = StyleSheet.create({
         width: 150,
         // top: 50
 
-    },
-    picAndText: {
-        top: 0,
     },
     rowModal: {
         flexDirection: 'row',
