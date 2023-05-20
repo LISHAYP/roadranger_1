@@ -19,6 +19,8 @@ export default function AroundYou(props) {
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
+
+    
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
