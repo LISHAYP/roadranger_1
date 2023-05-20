@@ -42,7 +42,7 @@ export default function AroundYou(props) {
                 .then(response => response.json())
                 .then(data => {
                     setLasteventOfTraveler(data.lastEventId);
-                    console.log("++++",data.lastEventId);
+                    console.log("++++", data.lastEventId);
                 }
                 )
                 .catch(error => {
@@ -54,7 +54,7 @@ export default function AroundYou(props) {
 
     }, [matchedEvent]);
     const [Events, setEvents] = useState([])
-    
+
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
@@ -157,18 +157,15 @@ export default function AroundYou(props) {
             <TouchableWithoutFeedback onPress={closeMenu}>
 
                 <View style={styles.container}>
-                    <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
-                        {/* <AntDesign name="menu" size={24} color="black" /> */}
-                        <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
-                        <Text style={styles.titlename}>  Hello, {traveler.first_name} {traveler.last_name} !
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={styles.picAndText} >
+                    <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
+                        <Icon name="menu" size={40} color="white" alignSelf="ceter" />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
+                        </View>
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
-                        <Text style={styles.name}>
-                            Hello, {traveler.first_name} {traveler.last_name} !
-                        </Text>
-                    </View>
+                    </TouchableOpacity>
+
+
 
                     {/* <TouchableOpacity onPress={toggleMenu} style={styles.sos}>
                         <Text style={styles.sosText}>SOS</Text>
@@ -191,7 +188,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.event_status !== false && event.is_related==null  ).map(event => (
+                            {Events.filter(event => event.event_status !== false && event.is_related == null).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{
@@ -220,80 +217,88 @@ export default function AroundYou(props) {
 
                         </MapView>
                     )}
-                    {isMenuOpen && (
-                        <View style={styles.menu}>
-                            <ScrollView>
-                                <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                                    <AntDesign name="close" size={24} color="black" />
-                                </TouchableOpacity>
+                    <Modal
+                        visible={isMenuOpen}
+                        animationType='slide'
+                        transparent={true}
+                        onRequestClose={() => setIsMenuOpen(false)}
+                    >
+                        {isMenuOpen && (
+                            <View style={styles.menu}>
+                                    <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
+                                        <AntDesign name="close" size={24} color="black" />
+                                    </TouchableOpacity>
 
 
+                                    <View style={styles.optionsContainer}>
+                                        <TouchableOpacity style={styles.optionSOS}
+                                            onPress={() => {
+                                                navigation.navigate("SOS", {
+                                                    traveler: traveler,
+                                                    userLocation: userLocation
+                                                }), setIsMenuOpen(false);
+                                            }}
+                                        >
+                                            <Icon name="help-buoy" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>SOS</Text>
 
-                                <TouchableOpacity style={styles.optionSOS}
-                                    onPress={() => {
-                                        navigation.navigate("SOS", {
-                                            traveler: traveler,
-                                            userLocation: userLocation
-                                        });
-                                    }}
-                                >
-                                    <Icon name="help-buoy" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>SOS</Text>
+                                        </TouchableOpacity>
 
-                                </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option}
+                                            onPress={() => {
+                                                navigation.navigate("New event", {
+                                                    traveler: traveler,
+                                                    userLocation: userLocation
+                                                }), setIsMenuOpen(false);
+                                            }}
+                                        >
+                                            <Icon name="add-circle-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>New Post</Text>
 
-                                <TouchableOpacity style={styles.option}
-                                    onPress={() => {
-                                        navigation.navigate("New event", {
-                                            traveler: traveler,
-                                            userLocation: userLocation
-                                        });
-                                    }}
-                                >
-                                    <Icon name="add-circle-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>New Post</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler), setIsMenuOpen(false) }}>
+                                            <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Chat</Text>
+                                        </TouchableOpacity>
 
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Home chat", traveler) }}>
-                                    <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Chat</Text>
-                                </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }), setIsMenuOpen(false) }}>
+                                            <Icon name="search-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Search </Text>
 
-                                <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }) }}>
-                                    <Icon name="search-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Search </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option} onPress={() => {
+                                            navigation.navigate("My Post", {
+                                                traveler: traveler,
+                                                events: Events
+                                            }), setIsMenuOpen(false)
+                                        }}>
+                                            <Icon name="documents-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>My Posts </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option}
+                                            onPress={() => { navigation.navigate("Warning", { traveler: traveler }), setIsMenuOpen(false) }}
+                                        >
+                                            <Icon name="warning-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Warnings </Text>
+                                        </TouchableOpacity>
 
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.option} onPress={() => {
-                                    navigation.navigate("My Post", {
-                                        traveler: traveler,
-                                        events: Events
-                                    })
-                                }}>
-                                    <Icon name="documents-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>My Posts </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.option}
-                                    onPress={() => { navigation.navigate("Warning", { traveler: traveler }) }}
-                                >
-                                    <Icon name="warning-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Warnings </Text>
-                                </TouchableOpacity>
+                                        <TouchableOpacity style={styles.option}
+                                            onPress={() => { navigation.navigate("Setting", { traveler }), setIsMenuOpen(false) }}
+                                        >
+                                            <Icon name="settings-outline" size={35} style={styles.icon} />
+                                            <Text style={styles.text}>Setting</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                                            navigation.navigate("Sign In"), setIsMenuOpen(false);
+                                        }}>
+                                            <Text style={styles.textLO} > Log out  </Text>
+                                        </TouchableOpacity>
+                                    </View>
 
-                                <TouchableOpacity style={styles.option}
-                                    onPress={() => { navigation.navigate("Setting", { traveler }) }}
-                                >
-                                    <Icon name="settings-outline" size={35} style={styles.icon} />
-                                    <Text style={styles.text}>Setting</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                                    navigation.navigate("Sign In");
-                                }}>
-                                    <Text style={styles.textLO} > Log out  </Text>
-                                </TouchableOpacity>
-                            </ScrollView>
-                        </View>
-                    )}
+                            </View>
+                        )}
+                    </Modal>
+
                     <View>
                         {/* Your screen content */}
                         {matchedEvent && matchedEvent.map((matchedEvent, index) => (
@@ -305,31 +310,31 @@ export default function AroundYou(props) {
                                 transparent={true}
                             >
                                 <View style={styles.modal}>
-                                   
-                                        {/* Modal content */}
-                                        <Text>Did u mean this event?</Text>
-                                      
-                                        <Text>{matchedEvent.Details}</Text>
-                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
 
-                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
-                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
-                                            <Text>Yes</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
-                                            <Text>No</Text>
-                                        </TouchableOpacity> 
-                                        {/* Add more Text components for other parameters */}
-                                    
+                                    {/* Modal content */}
+                                    <Text>Did u mean this event?</Text>
+
+                                    <Text>{matchedEvent.Details}</Text>
+                                    <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
+
+                                    <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                    <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
+                                        <Text>Yes</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
+                                        <Text>No</Text>
+                                    </TouchableOpacity>
+                                    {/* Add more Text components for other parameters */}
+
                                 </View>
                             </Modal>
                         ))}
                     </View>
                 </View>
 
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback >
 
-        </GradientBackground>
+        </GradientBackground >
     );
 }
 
@@ -337,9 +342,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
-        // marginTop: 40
 
     },
     btnLogIn: {
@@ -354,13 +358,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#144800'
     },
     btnLogOut: {
-        top: 100,
-        flexDirection: 'row',
-        position: 'absolute',
-        // bottom: 30,
-        // alignSelf: 'center',
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        left:-80,
+        paddingTop:10,
 
     },
     modalContainer: {
@@ -399,7 +398,7 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '50%',
+        height: '100%',
     },
     sosText: {
         color: 'white',
@@ -424,10 +423,8 @@ const styles = StyleSheet.create({
     },
     titlename: {
         color: 'white',
-        width: '100%',
-        left: 70,
         fontSize: 22,
-        alignSelf: "center"
+        alignSelf: 'center'
     },
     hamburger: {
         flexDirection: 'row',
@@ -437,30 +434,51 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        // borderRadius: 30,
-        // paddingVertical: 10,
-        // paddingHorizontal: 25,
         backgroundColor: '#8FBC8F',
-        paddingTop: 55
-
-
+        paddingTop: 55,
+        paddingHorizontal: 20,
+    },
+    textContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     menu: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
         position: 'absolute',
         bottom: 0,
-        left: 0,
         width: '100%',
         height: '50%',
         backgroundColor: '#F0F8FF',
-
-        // alignItems: 'center',
-        // justifyContent: 'center',
         zIndex: 1,
+        flex: 1,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        borderbottomEndRadius: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        justifyContent: 'space-evenly',
     },
     closeButton: {
-        position: 'absolute',
-        top: 40,
-        right: 20,
+        right: -80,
+        paddingTop: 10,
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingHorizontal: 5,
+        height: '100%',
+        alignContent: 'center',
     },
     optionSOS: {
         flexDirection: 'row',
@@ -475,19 +493,31 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF0000'
     },
     option: {
-        flexDirection: 'row',
-        backgroundColor: '#8FBC8F',
-        width: '100%',
-        borderRadius: 12,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        right: 20,
-        top: 150,
-        marginBottom: 21
+        alignContent: 'center',
+        height: '20%',
+        width: '48%',
+        borderColor: '#DCDCDC',
+        borderWidth: 0.5,
+        borderRadius: 15,
+        backgroundColor: '#F5F5F5',
+        marginBottom: 10,
+        
+        padding: 5,
+        resizeMode: 'contain',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     text: {
-        fontSize: 30,
-        left: 40
+        color: '#8FBC8F',
+        fontSize: 23,
+        alignSelf: 'center',
+        paddingBottom: 2,
     },
     textLO: {
         color: '#144800',
@@ -501,17 +531,18 @@ const styles = StyleSheet.create({
 
     },
     user: {
-        alignSelf: 'center',
-        // resizeMode: 'cover',
-        height: 150,
-        borderRadius: 75,
-        width: 150,
-        // top: 50
+        width: 50,
+        height: 50,
+        borderRadius: 90 / 2,
+        resizeMode: 'cover',
+        right: -10,
+        top: -5,
+        alignSelf: 'flex-end'
 
     },
     picAndText: {
         top: 0,
-    }, 
+    },
     modal: {
         flex: 1,
         backgroundColor: 'white',
@@ -525,4 +556,5 @@ const styles = StyleSheet.create({
             width: 0,
             height: 2,
         }
-    }});
+    }
+});
