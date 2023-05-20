@@ -81,52 +81,66 @@ export default function EventDetails(props) {
   };
   const getUserLocation = async () => {
     try {
+      console.log("here1");
       const { coords } = await Location.getCurrentPositionAsync();
       setUserLocation(coords); // Save user coordinates in state
     } catch (error) {
       console.error(error);
       // Handle error fetching user location
     }
-};
-const checkTravelersLocation = () => {
-  if (!userLocation) {
-    // User location is not available yet
-    return;
-  }
-  console.log("", event);
-
-  const eventIdObj = {
-    eventNumber: event.eventNumber
   };
-
-  const { latitude, longitude } = userLocation; // Destructure latitude and longitude
-  console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9) );
-
-  fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(eventIdObj),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Is it true or false?", data);
-      console.log("Is it true or false?", latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
-      console.log("Is it true or false?", event.Latitude, event.Longitude);
-console.log(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`,)
-    })
-    .catch(error => {
-      console.error(error);
-      Alert.alert('Error', error);
-    });
-};
+  useEffect(() => {
+    const checkTravelersLocation = async () => {
+      console.log("here2");
+      if (!userLocation) {
+        console.log("here7");
+        // User location is not available yet
+        return;
+      }
+      console.log("", event);
+  
+      const eventIdObj = {
+        eventNumber: event.eventNumber
+      };
+  
+      const { latitude, longitude } = userLocation; // Destructure latitude and longitude
+      console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
+  
+      try {
+        const response = await fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventIdObj),
+        });
+  
+        const data = await response.json();
+        console.log("here3");
+        console.log("Is it true or false?", data);
+        console.log("Is it true or false?", latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
+        console.log("Is it true or false?", event.Latitude, event.Longitude);
+        console.log(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`);
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', error);
+      }
+    };
+  
+    const timeoutId = setTimeout(() => {
+      checkTravelersLocation();
+    }, 1000); // Adjust the delay as needed
+  
+    checkTravelersLocation(); // Call it immediately to log "here2" and "here7"
+  
+    return () => clearTimeout(timeoutId); // Cleanup timeout on component unmount
+  }, [userLocation, event]);
+  
 
 
   useEffect(() => {
     getUserLocation();
     fetchTravelerDetails();
-    //checkTravelersLocation();
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
       .then((json) => {
@@ -136,18 +150,15 @@ console.log(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?
         const street = json.results[0].address_components[1].long_name;
         const city = json.results[0].address_components[2].long_name;
         setAddressComponents(`${street} ${number}, ${city}`);
+        console.log("here5");
       }
       )
       .catch(error => {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-      const timeoutId = setTimeout(() => {
-        checkTravelersLocation();
-      }, 1000); // Adjust the delay as needed
     
-      return () => clearTimeout(timeoutId); // Cleanup timeout on component unmount
-  }, [newCommentPublished, deletedComment,event]); // <-- use new
+  }, [newCommentPublished, deletedComment,]); 
 
   const newComment = {
     eventNumber: event.eventNumber,
