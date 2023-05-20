@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 20,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -295,11 +295,10 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
-    borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 18,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -326,7 +325,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 20,
 
   },
   label: {
@@ -349,14 +348,23 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 },
   btnSave: {
+    alignSelf: 'center',
+    height:55,
     marginVertical: 20,
-    width: "50%",
+    width: "55%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 20,
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 5},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
   },
 });

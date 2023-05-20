@@ -387,13 +387,15 @@ const styles = StyleSheet.create({
   },
   event: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
     height: '70%',
+    
 
   },
   commentContainer: {
@@ -403,7 +405,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    
   },
 
   locationText: {
@@ -430,6 +433,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
+      shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     // width:'95%'
   },
   img: {
