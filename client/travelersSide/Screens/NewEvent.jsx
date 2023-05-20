@@ -288,6 +288,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    alignSelf:'center'
 
   },
 
@@ -295,68 +296,76 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+   width: 0,
+  height: 4},
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
 
   },
   text: {
     color: '#144800',
     fontSize: 20,
-
+    left:15,
   },
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-
+   
   },
 
   dropdown: {
+    alignSelf: 'center',
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
-    borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
     marginTop: 10,
-    width: "90%",
+    width: "95%",
 
   },
-  text1: {
-    fontSize: 18,
-    alignSelf: 'center',
-    color: "#A9A9A9"
-  },
-
   input: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
-    width: "90%",
+    width: "100%",
     fontSize: 20,
     paddingVertical: 70,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
-
+    borderRadius: 15,
 
   },
   photo: {
     marginVertical: 20,
-    width: "80%",
+    width: "70%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
+    borderRadius: 20,
     backgroundColor: '#144800',
-    marginBottom: 50,
+    marginBottom: 40,
     flexDirection: 'row',
+    shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 4},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
 
   },
   icon: {
@@ -384,15 +393,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+   height:55,
     marginVertical: 20,
-    width: "50%",
+    width: "55%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 20,
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 5},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
   },
 });
 

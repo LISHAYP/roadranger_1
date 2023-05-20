@@ -237,6 +237,7 @@ console.log("trrrrrrrr",traveler)
 }
 const styles = StyleSheet.create({
   container: {
+    alignSelf: 'center',
     marginTop:20,
     padding: 10,
     marginVertical: 10,
@@ -247,13 +248,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#144800',
-    fontSize: 20,
+    fontSize: 22,
+    left:20,
 
   },
   icon: {
     fontSize: 25
   },
   btnText: {
+    alignSelf: 'center',
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
@@ -261,6 +264,7 @@ const styles = StyleSheet.create({
   },
 
   calendar: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
     fontSize: 20,
@@ -276,6 +280,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 40,
+    alignSelf: 'center',
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
     borderRadius: 8,
@@ -291,6 +296,7 @@ const styles = StyleSheet.create({
 
   },
   text1: {
+    
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
@@ -299,6 +305,7 @@ const styles = StyleSheet.create({
 
 
   label: {
+    
     position: 'absolute',
     backgroundColor: 'white',
     left: 22,
@@ -317,14 +324,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+    alignSelf: 'center',
+    height:55,
     marginVertical: 20,
-    width: "50%",
+    width: "55%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 20,
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 5},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
   },
 });

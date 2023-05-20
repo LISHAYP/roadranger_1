@@ -456,7 +456,7 @@ const styles = StyleSheet.create({
         borderColor: '#DCDCDC',
         borderWidth: 0.5,
         borderRadius: 15,
-        backgroundColor: '#B00020',
+        backgroundColor: '#F5F5F5',
         marginBottom: 10,
         
         padding: 5,
@@ -479,7 +479,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#F5F5F5',
         marginBottom: 10,
-        
         padding: 5,
         resizeMode: 'contain',
         shadowColor: '#000',
@@ -500,10 +499,13 @@ const styles = StyleSheet.create({
         fontSize: 23,
         alignSelf: 'center',
         paddingBottom: 2,
+        color: '#B00020',
+
     },iconSOS: {
         alignSelf: 'center',
         alignItems: 'center',
         size: 30,
+        color: '#B00020',
 
     },
     textModal: {
