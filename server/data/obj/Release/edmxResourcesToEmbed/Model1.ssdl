@@ -130,10 +130,10 @@
     <Property Name="serialTypeNumber" Type="int" Nullable="false" />
     <Property Name="country_number" Type="int" Nullable="false" />
     <Property Name="area_number" Type="int" Nullable="false" />
-    <Property Name="approved" Type="varchar" MaxLength="50" />
-    <Property Name="not_approved" Type="varchar" MaxLength="50" />
     <Property Name="labels" Type="varchar" MaxLength="500" />
     <Property Name="is_related" Type="int" />
+    <Property Name="approved" Type="int" />
+    <Property Name="not_approved" Type="int" />
   </EntityType>
   <EntityType Name="tblinsuredBy">
     <Key>

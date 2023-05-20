@@ -192,7 +192,7 @@ namespace WebApplication1.Controllers
                 }
 
                 // Calculate the distance between the event and traveler coordinates
-                double distance = CalculateDistance((double)eventCoordinates.latitude, (double)eventCoordinates.longitude,longtiude,latitude);
+                double distance = CalculateDistance((double)eventCoordinates.latitude, (double)eventCoordinates.longitude, latitude, longtiude);
 
                 // Check if the distance is within 1 km
                 bool isWithinRange = distance <= 1.0;

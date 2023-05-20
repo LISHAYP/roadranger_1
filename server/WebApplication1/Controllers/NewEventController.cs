@@ -135,6 +135,8 @@ namespace WebApplication1.Controllers
                     area_number = value.area_number,
                     labels = value.labels,
                     is_related = value.is_related,
+                    approved = value.approved = 0,
+                    not_approved = value.not_approved = 0,
 
                 };
 
