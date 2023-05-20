@@ -33,6 +33,8 @@ export default function AroundYou(props) {
             const travelerIdObj = {
                 travelerId: traveler.traveler_id,
             }
+
+
             fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/lastevent', {
                 method: 'POST',
                 headers: {
