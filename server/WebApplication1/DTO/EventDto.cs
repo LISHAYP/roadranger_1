@@ -22,6 +22,8 @@ namespace WebApplication1.DTO
         public int AreaNumber { get; set; }
         public string labels { get; set; }
         public Nullable<int> is_related { get; set; }
+        public Nullable<int> approved { get; set; }
+        public Nullable<int> not_approved { get; set; }
 
     }
 }
