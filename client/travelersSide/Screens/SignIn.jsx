@@ -53,10 +53,16 @@ export default function SignIn() {
     })
       .then(response => response.json())
       .then(data => {
+        // if (data.save_location == 'true') {
+        //   console.log("*********", data.save_location)
+        //   setTravlerId(data.traveler_id)
+        // }
         if (data.travler_email === email && data.password === password) {
           console.log("*********", data)
           console.log("*********", data.traveler_id)
-          setTravlerId(data.traveler_id)
+          console.log("^^*", data.save_location)
+          // setTravlerId(data.traveler_id)
+
           fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/updatetoken?email=${traveler.travler_email}`, {
             method: 'PUT',
             headers: {
@@ -72,7 +78,7 @@ export default function SignIn() {
               //Alert.alert('Token updated successfully')
               //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
               // saveLocation();
-              navigation.navigate("Around You", { data });
+              navigation.navigate("Around You", {  data });
             })
             .catch((error) => {
               console.error(error);
@@ -87,9 +93,9 @@ export default function SignIn() {
         console.error(error);
         console.log('Error', 'Failed to sign in. Please try again later.');
       });
-    
+
   };
-  
+
   useEffect(() => {
     try {
       if (!location) {
@@ -108,7 +114,7 @@ export default function SignIn() {
   }, [travelerId]);
 
   const saveUserLocation = () => {
-    console.log("&&&&&&&&&&&&&&&&",travelerId)
+    console.log("&&&&&&&&&&&&&&&&", travelerId)
     const now = new Date();
     const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
     const userLoction = {
