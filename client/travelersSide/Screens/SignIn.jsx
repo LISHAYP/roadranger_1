@@ -318,25 +318,96 @@ export default function NewEvent(props) {
   )
 }
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    marginVertical: 10,
-    marginHorizontal: 10,
-    padding: 20,
-    width: "100%",
+    container: {
+        padding: 10,
+        // marginVertical: 10,
+        // marginHorizontal: 10,
+        padding: 20,
+        width: "100%",
+        marginTop: 100,
+        // backgroundColor:'#F0FFF0'
+        // backgroundColor:'#3CB371'
+        
+    },
+    frame:{
+        // backgroundColor:  'rgba(0, 0, 0, 0.07)',
+        padding:20,
+        borderWidth: 0,
+        borderRadius: 25,
+        borderColor:  'rgba(0, 0, 0, 0.07)'
 
-  },
+    },
+    iconContainer: {
+        size: 35
+    },
+    RoadRanger: {
+        alignSelf: 'center',
+        resizeMode: 'contain',
+        height: 100,
+        
 
-  RoadRanger: {
-    alignSelf: 'center',
-    resizeMode: 'contain',
-    height: 100,
-    marginBottom: 20
-
-  },
-  text: {
-    color: '#144800',
-    fontSize: 20,
+    },
+    text: {
+        color: '#144800',
+        fontSize: 30,
+    },
+    input: {
+        marginVertical: 20,
+        width: "100%",
+        fontSize: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor:  '#144800',
+        borderWidth: 1,
+        borderRadius: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor:  'white', 
+        shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 2},
+        shadowOpacity: 0.32,
+        shadowRadius: 3.46,
+        elevation: 9
+    },
+    btnLogIn: {
+        marginVertical: 20,
+        width: "50%",
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#144800',
+        borderWidth: 2,
+        borderRadius: 25,
+        backgroundColor: '#144800',
+        shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 4},
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
+    },
+    btnText: {
+        color: '#F8F8FF',
+        alignSelf: 'center',
+        fontSize: 20,
+    },
+    btnSignUp: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        marginTop: 20
+    },
+    contact: {
+        fontSize: 20,
+        alignSelf: 'center',
+        marginLeft: 10,
+    },
+    text1: {
+        fontWeight: 'bold',
+        fontSize: 15,
 
   },
   btnText: {

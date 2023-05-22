@@ -238,7 +238,14 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 2},
+        shadowOpacity: 0.32,
+        shadowRadius: 3.46,
+        elevation: 9
 
     },
     btnLogIn: {
