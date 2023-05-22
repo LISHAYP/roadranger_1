@@ -68,7 +68,7 @@ export default function YourTravelers(props) {
       insurence_company: stakeholder.StakeholderName
     }
     console.log("============",objInsuranceCompany)
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/GetTravelersByInsuranceCompany', {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/GetTravelersByInsuranceCompanyNLL', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
