@@ -8,8 +8,6 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientBackground from '../Components/GradientBackground';
 
-
-
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -167,6 +165,7 @@ export default function AroundYou(props) {
                         </View>
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
                     </TouchableOpacity>
+
 
                     {location && location.coords && (
                         <MapView

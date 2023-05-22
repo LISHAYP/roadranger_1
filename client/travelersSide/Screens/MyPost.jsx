@@ -10,6 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
 
+
 export default function MyPost(props) {
     // const [events, setEvents] = useState([]);
     const events = props.route.params.events;

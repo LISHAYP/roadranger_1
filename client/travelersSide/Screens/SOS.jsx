@@ -8,6 +8,7 @@ import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import { Divider } from "@react-native-material/core";
 
 export default function SOS(props) {
   const traveler = props.route.params.traveler;
@@ -160,6 +161,7 @@ console.log(data)
         <View style={styles.container}>
           <BackButton/>
           <Image source={RoadRanger} style={styles.RoadRanger} />
+          <Divider style={{ marginBottom: 50 }} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}

@@ -10,8 +10,7 @@ import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
-import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Divider } from "@react-native-material/core";
 
 
 export default function NewEvent(props) {
@@ -269,6 +268,7 @@ export default function NewEvent(props) {
         <View style={styles.container}>
           <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
+          <Divider style={{ marginBottom: 50 }} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -305,7 +305,6 @@ export default function NewEvent(props) {
               Add Photo
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
             <Text style={styles.btnText}>
               Publish
@@ -324,6 +323,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    alignSelf: 'center'
 
   },
 
@@ -331,13 +331,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
 
   },
   text: {
     color: '#144800',
     fontSize: 20,
-
+    left: 15,
   },
   btnText: {
     color: '#F8F8FF',
@@ -393,6 +401,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
 
   },
   icon: {
@@ -420,6 +436,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+    height: 55,
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
@@ -427,8 +444,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 20,
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });
 

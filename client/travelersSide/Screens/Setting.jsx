@@ -10,7 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { auth } from '../firebase';
 import 'firebase/database';
-
+import { Divider } from '@react-native-material/core';
 export default function Setting(props) {
 
   const traveler = props.route.params.traveler;
@@ -117,6 +117,7 @@ export default function Setting(props) {
           <BackButton />
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
+            <Divider style={{ marginBottom: 30 }} />
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
@@ -265,9 +266,9 @@ const styles = StyleSheet.create({
   user: {
     alignSelf: 'center',
     resizeMode: 'cover',
-    height: 150,
+    height: 140,
     borderRadius: 75,
-    width: 150,
+    width: 140,
     marginBottom: 25,
   },
   btnText: {

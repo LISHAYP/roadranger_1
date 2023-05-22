@@ -8,7 +8,7 @@ import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { Dropdown } from 'react-native-element-dropdown';
 import { Swipeable , GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { Divider } from "@react-native-material/core";
 
 const HomeChat = (props) => {
   const navigation = useNavigation();
@@ -139,6 +139,8 @@ console.log("SSS",insuranceObj)
             <Text style={styles.name}>
               {traveler.first_name} {traveler.last_name}
             </Text>
+            <Divider style={{ marginTop: 40 }} />
+            
           </View>
 
           <View
