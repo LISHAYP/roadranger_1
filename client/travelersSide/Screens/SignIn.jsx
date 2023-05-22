@@ -61,7 +61,7 @@ export default function SignIn() {
           console.log("*********", data)
           console.log("*********", data.traveler_id)
           console.log("^^*", data.save_location)
-          // setTravlerId(data.traveler_id)
+          setTravlerId(data.traveler_id)
 
           fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/updatetoken?email=${traveler.travler_email}`, {
             method: 'PUT',
