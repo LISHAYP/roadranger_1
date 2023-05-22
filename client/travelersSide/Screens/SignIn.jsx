@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
         marginTop: 100,
         // backgroundColor:'#F0FFF0'
         // backgroundColor:'#3CB371'
-
+        
     },
     frame:{
         // backgroundColor:  'rgba(0, 0, 0, 0.07)',
@@ -292,7 +292,8 @@ const styles = StyleSheet.create({
     RoadRanger: {
         alignSelf: 'center',
         resizeMode: 'contain',
-        height: 100
+        height: 100,
+        
 
     },
     text: {
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
     },
     input: {
         marginVertical: 20,
-        width: "90%",
+        width: "100%",
         fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
@@ -311,7 +312,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor:  'white',
+        backgroundColor:  'white', 
+        shadowColor: "#000",
+        shadowOffset: {
+     	width: 0,
+	    height: 2},
+        shadowOpacity: 0.32,
+        shadowRadius: 3.46,
+        elevation: 9
     },
     btnLogIn: {
         marginVertical: 20,
