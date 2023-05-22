@@ -236,7 +236,7 @@ export default function AroundYou(props) {
                                             onPress={() => {
                                                 navigation.navigate("New event", {
                                                     traveler: traveler,
-                                                    userLocation: userLocation
+                                                   
                                                 }), setIsMenuOpen(false);
                                             }}
                                         >
