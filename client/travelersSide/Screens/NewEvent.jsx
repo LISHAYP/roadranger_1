@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
+import { Divider } from "@react-native-material/core";
 
 
 export default function NewEvent(props) {
@@ -163,7 +164,7 @@ export default function NewEvent(props) {
             .then(data1 => {
               const relatedEventsData = data1; // Assign the data to a constant variable
               const matchedEvents = []; // Array to store matched events
-  
+
               for (let i = 0; i < relatedEventsData.length; i++) {
                 const event = relatedEventsData[i];
                 if (compareLabels(event, newEvent)) {
@@ -178,7 +179,7 @@ export default function NewEvent(props) {
               }
               Alert.alert('Publish');
               const data = traveler;
-              navigation.navigate("Around You", { data, matchedEvents});
+              navigation.navigate("Around You", { data, matchedEvents });
             })
             .catch(error => {
               console.error(error);
@@ -191,21 +192,21 @@ export default function NewEvent(props) {
         });
     }
   };
-  
+
   const compareLabels = (event1, event2) => {
     if (!event1.labels || !event2.labels) {
       // If either event is missing the labels property, return false
       return false;
     }
-  
-    if ( event1.Details === event2.Details) {
+
+    if (event1.Details === event2.Details) {
       // If Details are defined and identical, return false
       return false;
     }
-  
+
     const labels1 = JSON.parse(event1.labels).map(label => label.description);
     const labels2 = JSON.parse(event2.labels).map(label => label.description);
-  
+
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
@@ -213,13 +214,13 @@ export default function NewEvent(props) {
         }
       }
     }
-  
+
     return false;
   };
-  
-  
-  
-  
+
+
+
+
 
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
@@ -233,6 +234,7 @@ export default function NewEvent(props) {
         <View style={styles.container}>
           <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
+          <Divider style={{ marginBottom: 50 }} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -269,7 +271,6 @@ export default function NewEvent(props) {
               Add Photo
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
             <Text style={styles.btnText}>
               Publish
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    alignSelf:'center'
+    alignSelf: 'center'
 
   },
 
@@ -299,8 +300,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     shadowColor: "#000",
     shadowOffset: {
-   width: 0,
-  height: 4},
+      width: 0,
+      height: 4
+    },
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
     elevation: 9
@@ -309,13 +311,13 @@ const styles = StyleSheet.create({
   text: {
     color: '#144800',
     fontSize: 20,
-    left:15,
+    left: 15,
   },
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-   
+
   },
 
   dropdown: {
@@ -360,12 +362,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     flexDirection: 'row',
     shadowColor: "#000",
-        shadowOffset: {
-     	width: 0,
-	    height: 4},
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
 
   },
   icon: {
@@ -393,7 +396,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
-   height:55,
+    height: 55,
     marginVertical: 20,
     width: "55%",
     alignSelf: 'center',
@@ -404,12 +407,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#144800',
     shadowColor: "#000",
-        shadowOffset: {
-     	width: 0,
-	    height: 5},
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });
 
