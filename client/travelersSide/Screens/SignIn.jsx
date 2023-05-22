@@ -313,7 +313,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor:  'white',
     },
-
     btnLogIn: {
         marginVertical: 20,
         width: "50%",
