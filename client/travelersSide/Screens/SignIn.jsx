@@ -33,6 +33,7 @@ export default function SignIn() {
       setLocation(currentLocation);
     })();
   }, [handleLogin]);
+
   const handleLogin = () => {
     const traveler = {
       travler_email: email,
@@ -70,6 +71,7 @@ export default function SignIn() {
               console.log(data); // Traveler updated successfully.
               //Alert.alert('Token updated successfully')
               //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
+              // saveLocation();
               navigation.navigate("Around You", { data });
             })
             .catch((error) => {
@@ -85,10 +87,10 @@ export default function SignIn() {
         console.error(error);
         console.log('Error', 'Failed to sign in. Please try again later.');
       });
-    saveLocation();
+    
   };
-
-  const saveLocation = () => {
+  
+  useEffect(() => {
     try {
       if (!location) {
         console.log('Location data is not available');
@@ -103,8 +105,10 @@ export default function SignIn() {
     } catch (error) {
       console.log(error);
     }
-  }
+  }, [travelerId]);
+
   const saveUserLocation = () => {
+    console.log("&&&&&&&&&&&&&&&&",travelerId)
     const now = new Date();
     const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
     const userLoction = {

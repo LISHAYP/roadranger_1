@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker,Polyline } from 'react-native-maps';
 
 
 export default function FollowTraveler(props) {
