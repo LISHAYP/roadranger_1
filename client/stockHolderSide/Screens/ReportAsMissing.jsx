@@ -16,7 +16,8 @@ export default function ReportAsMissing(props) {
     // console.log("sta", stakeholder)
     // console.log("loc", userLocation)
     console.log("tra", traveler)
-    console.log(userLocation[0].Latitude, userLocation[0].Longitude)
+    console.log("**********8",userLocation)
+    // console.log(userLocation.Latitude, userLocation.Longitude)
     const navigation = useNavigation();
 
     const [country, setCountry] = useState('');
@@ -34,7 +35,7 @@ export default function ReportAsMissing(props) {
     useEffect(() => {
         //insert the API Key
         Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-        Geocoder.from(userLocation[0].Latitude, userLocation[0].Longitude)
+        Geocoder.from(userLocation.Latitude, userLocation.Longitude)
             .then(json => {
                 const addressComponents = json.results[0].address_components;
                 const countryComponent = addressComponents.find(component => component.types.includes('country'));
@@ -53,8 +54,8 @@ export default function ReportAsMissing(props) {
         Details: details,
         event_date: new Date().toISOString().slice(0, 10),
         event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-        Latitude: userLocation[0].Latitude,
-        Longitude: userLocation[0].Longitude,
+        Latitude: userLocation.Latitude,
+        Longitude: userLocation.Longitude,
         event_status: eventStatus,
         Picture: picture,
         TravelerId: TravelerId,

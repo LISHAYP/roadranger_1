@@ -18,6 +18,7 @@ export default function FollowTraveler(props) {
   const traveler = props.route.params.traveler;
   const [travelerLocation, setTravelerLocation] = useState([])
   const [lastLocation, setLastLocation] = useState()
+
   Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
   const mapViewRef = useRef(null);
 
@@ -61,36 +62,37 @@ export default function FollowTraveler(props) {
 
       });
   }
- const reportClick=()=>{
+  const reportClick = () => {
+    console.log("&&&&&&&", lastLocation)
     setMissing(!missing);
     const newMissing = !missing;
     if (newMissing) {
-      navigation.navigate('Report', { stakeholder: stakeholder, traveler: traveler, location: travelerLocation }) 
+      navigation.navigate('Report', { stakeholder: stakeholder, traveler: traveler, location: lastLocation })
       console.log('Reported as missing');
     } else {
       const travelerIdObj = {
         traveler_id: traveler.traveler_id
-    }
-   
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/missingfalse', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(travelerIdObj),
+      }
+
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/missingfalse', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(travelerIdObj),
+      })
+        .then(response => response.json())
+        .then(data => {
+          Alert.alert("Found")
         })
-            .then(response => response.json())
-            .then(data => {          
-             Alert.alert("Found")
-          })
-            .catch(error => {
-                console.error(error);
-                Alert.alert('Error', error);
-            });
-    
+        .catch(error => {
+          console.error(error);
+          Alert.alert('Error', error);
+        });
+
       console.log('Reported as found');
     }
-   
+
   }
 
   function formatDateTime(isoDateTime) {
@@ -100,7 +102,7 @@ export default function FollowTraveler(props) {
     return `${formattedTime} ${formattedDate}`
   }
 
- 
+
   return (
     <GradientBackground>
       <BackButton />
@@ -119,7 +121,7 @@ export default function FollowTraveler(props) {
             <Text style={styles.text}>{lastLocation.address}</Text>
           </View>
         )}
-        <TouchableOpacity style={styles.btnSave}  onPress={reportClick} >
+        <TouchableOpacity style={styles.btnSave} onPress={reportClick} >
           <Text style={styles.btnText}  >
             {missing ? 'Report as found' : 'Report as missing'}
           </Text>
@@ -149,6 +151,7 @@ export default function FollowTraveler(props) {
             />
           )}
         </MapView>
+      
 
         <ScrollView>
           {travelerLocation.length > 0 && (
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: '100%',
     height: '40%',
-  },  
+  },
   commentContainer: {
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
