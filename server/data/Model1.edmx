@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="pushnotifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eventid" Type="int" Nullable="false" />
+          <Property Name="travelerid" Type="int" Nullable="false" />
+          <Property Name="sent" Type="bit" Nullable="false" />
+          <Property Name="token" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -432,6 +442,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="igroup190_test1ModelStoreContainer">
+          <EntitySet Name="pushnotifications" EntityType="Self.pushnotifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblApi" EntityType="Self.tblApi" Schema="dbo" store:Type="Tables" />
@@ -533,6 +544,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="pushnotifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eventid" Type="Int32" Nullable="false" />
+          <Property Name="travelerid" Type="Int32" Nullable="false" />
+          <Property Name="sent" Type="Boolean" Nullable="false" />
+          <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -970,6 +991,7 @@
           <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
         </Association>
         <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="pushnotifications" EntityType="Self.pushnotifications" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tblApi" EntityType="Self.tblApi" />
@@ -1067,6 +1089,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
+          <EntitySetMapping Name="pushnotifications">
+            <EntityTypeMapping TypeName="igroup190_test1Model.pushnotifications">
+              <MappingFragment StoreEntitySet="pushnotifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="eventid" ColumnName="eventid" />
+                <ScalarProperty Name="travelerid" ColumnName="travelerid" />
+                <ScalarProperty Name="sent" ColumnName="sent" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="stakeholders">
             <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
               <MappingFragment StoreEntitySet="stakeholders">

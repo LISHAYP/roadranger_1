@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApplication1.DTO;
 
 namespace WebApplication1
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        //code for timer
+        static Timer timer = new Timer();
+        EventDto PNevent = new EventDto();
+        
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -20,6 +26,29 @@ namespace WebApplication1
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            //code for timer
+            timer.Interval = 5000;
+            timer.Elapsed += tm_Tick;
+
+        }
+        //code for timer
+        private void tm_Tick(object sender, ElapsedEventArgs e)
+        {
+            EndTimer();
+            var timerServices = new TimerServices();
+            timerServices.SendPushForEvent(PNevent);
+        }
+
+        //code for timer
+        public static void StartTimer()
+        {
+            timer.Enabled = true;
+
+        }
+        public static void EndTimer()
+        {
+            timer.Enabled = false;
 
         }
     }

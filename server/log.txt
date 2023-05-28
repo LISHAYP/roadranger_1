@@ -84,3 +84,32 @@
  2023-05-15 11:24:12.8766 INFO: Traveler with ID: 10 was updated successfully!
  2023-05-15 11:24:38.0853 INFO: Traveler with ID: 10 was updated successfully!
  2023-05-15 11:25:21.8287 INFO: Traveler with ID: 10 was updated successfully!
+ 2023-05-22 18:26:48.9287 INFO: 0 events were updated and saved to the database!
+ 2023-05-22 18:28:47.0794 INFO: 0 events were updated and saved to the database!
+ 2023-05-22 18:34:36.0541 INFO: Traveler with ID: 10 was updated successfully!
+ 2023-05-24 11:29:12.9891 INFO: System.InvalidOperationException: No connection string named 'igroup190_test1Entities' could be found in the application config file.
+   ב-  System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   ב-  System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   ב-  System.Data.Entity.Internal.InternalContext.Initialize()
+   ב-  System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   ב-  System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   ב-  System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   ב-  System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   ב-  System.Linq.Queryable.GroupBy[TSource,TKey](IQueryable`1 source, Expression`1 keySelector)
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-05-24 11:38:19.2517 ERROR: השיטה או הפעולה אינן מיושמות.
+ 2023-05-24 12:01:21.0016 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"c10709b2-655e-4596-84e5-d93d7ca37ef0"}}
+ 2023-05-24 12:09:24.3968 ERROR: שגיאה במהלך העתקת תוכן לזרם.
+ 2023-05-24 12:10:25.5508 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: error: שגיאה במהלך העתקת תוכן לזרם.
+ 2023-05-24 12:44:04.7463 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"aa98d043-36c9-4935-8475-e674eaca8026"}}
+ 2023-05-24 13:08:49.4154 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"4b21afe8-2fde-43f5-af7b-15cf04c5bb87"}}
+ 2023-05-24 13:09:40.2479 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
+ 2023-05-24 13:09:44.6877 INFO: Push notification sent to traveler ID: 55, Event ID: 1411, Response: {"data":{"status":"ok","id":"bd45473b-f92f-4ef3-8938-56e56bef8fc3"}}
+ 2023-05-24 13:27:06.2757 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"0c9bbd26-c643-4344-8ad9-05f8ed1fe231"}}
+ 2023-05-24 13:27:20.5391 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
+ 2023-05-24 13:27:24.4986 INFO: Push notification sent to traveler ID: 55, Event ID: 1411, Response: {"data":{"status":"ok","id":"fe10204f-4454-4b52-9b7f-dec7ea0f216b"}}
+ 2023-05-24 13:27:35.1720 INFO: Push notification sent to traveler ID: 55, Event ID: 1411
+ 2023-05-25 11:38:43.3993 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"f817ed1c-799b-4846-9672-e8d629ac563a"}}
+ 2023-05-25 11:38:55.8731 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
+ 2023-05-25 11:39:07.7798 INFO: Push notification sent to traveler ID: 55, Event ID: 1411, Response: {"data":{"status":"ok","id":"c0d4c5d9-f6d3-4b7c-bde4-249fa84da770"}}
+ 2023-05-25 11:39:16.8742 INFO: Push notification sent to traveler ID: 55, Event ID: 1411

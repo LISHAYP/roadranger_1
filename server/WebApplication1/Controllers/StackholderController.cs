@@ -197,7 +197,73 @@ namespace WebApplication1.Controllers
             }
         }
 
+        //Get Travelers By Insurance Company no last location
+        [HttpPost]
+        [Route("api/post/GetTravelersByInsuranceCompanyNLL")]
+        public IHttpActionResult GetTravelersByInsuranceCompanyNLL([FromBody] TravelerDto insuranceCompany)
+        {
+            try
+            {
+                var travelers = db.traveleres
+                    .Where(x => x.insurence_company == insuranceCompany.insurence_company)
+                    .ToList();
 
+                if (travelers == null)
+                {
+                    logger.Info($"travelers were not found in the insurence {insuranceCompany.insurence_company}");
+                    return NotFound();
+                }
+
+                var travelerLocations = db.tblLocations
+                    .GroupBy(x => x.travelerId)
+                    .Select(g => new
+                    {
+                        TravelerId = g.Key,
+                        LastLocation = g.OrderByDescending(x => x.dateAndTime)
+                            .Select(x => new LocationDto
+                            {
+                                TravelerId = x.travelerId,
+                                DateAndTime = x.dateAndTime,
+                                Latitude = x.latitude,
+                                Longitude = x.longitude
+                            })
+                            .FirstOrDefault()
+                    })
+                    .ToList();
+
+                var result = travelers
+                    .Select(t => new
+                    {
+                        traveler_id = t.traveler_id,
+                        first_name = t.first_name,
+                        last_name = t.last_name,
+                        travler_email = t.travler_email,
+                        phone = t.phone,
+                        notifications = t.notifications,
+                        insurence_company = t.insurence_company,
+                        location = t.location,
+                        save_location = t.save_location,
+                        dateOfBirth = t.dateOfBirth,
+                        gender = t.gender,
+                        password = t.password,
+                        chat = t.chat,
+                        Picture = t.picture,
+                        missing = t.missing,
+                        last_location = travelerLocations
+                            .Where(x => x.TravelerId == t.traveler_id)
+                            .Select(x => x.LastLocation)
+                            .FirstOrDefault()
+                    }).Where(t => t.last_location != null) // Exclude travelers with null last location
+                    .ToList();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
         [HttpPut]
         [Route("api/put/stakeholder/update")]
         public IHttpActionResult PutUpdateStakeholder([FromBody] StackholderDto value)

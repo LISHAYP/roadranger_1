@@ -183,87 +183,6 @@ namespace WebApplication1.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Route("api/post/neweventdistance")]
-        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
-        //{
-        //    try
-        //    {
-
-        //        // Check if there are any existing events within 3 km with the same serialTypeNumber
-        //        var existingEvents = db.tblEvents
-        //            .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
-        //                        && e.event_status == true) // only consider events with status "true"
-        //            .ToList()
-        //            .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
-        //            .ToList();
-
-        //        // Detach deleted entities from the context
-        //        var deletedEntities = existingEvents.Where(e => db.Entry(e).State == EntityState.Deleted).ToList();
-        //        if (deletedEntities.Any())
-        //        {
-        //            foreach (var deletedEntity in deletedEntities)
-        //            {
-        //                db.Entry(deletedEntity).State = EntityState.Detached;
-        //            }
-        //        }
-
-        //        if (existingEvents.Any())
-        //        {
-        //            // Create a relation between the new event and any existing events within 3 km
-        //            foreach (var existingEvent in existingEvents)
-        //            {
-        //                // Detach the existingEvent entity from the context
-        //                db.Entry(existingEvent).State = EntityState.Detached;
-
-        //                // Create the relationship between the newEvent and the existingEvent
-        //                newEvent.tblEvents1 = existingEvent;
-        //                existingEvent.tblEvents2 = newEvent;
-        //            }
-        //        }
-
-        //        // Generate a new event number that doesn't conflict with any existing event numbers
-        //        int maxEventNumber = db.tblEvents.Max(e => e.eventNumber);
-        //        newEvent.eventNumber = maxEventNumber + 1;
-
-        //        // Add the new event to the database
-        //        db.tblEvents.Add(newEvent);
-
-        //        // Save changes to the database
-        //        db.SaveChanges();
-        //        return Ok();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.Error(ex.Message);
-        //        return BadRequest();
-        //    }
-        //}
-
-        //[HttpPost]
-        //[Route("api/post/neweventdistance")]
-        //public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
-        //{
-        //    try
-        //    {
-
-        //        // Check if there are any existing events within 3 km with the same serialTypeNumber
-        //        var existingEvents = db.tblEvents
-        //            .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
-        //                        && e.event_status == true) // only consider events with status "true"
-        //            .ToList()
-        //            .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
-        //            .ToList();
-
-        //        return Ok(existingEvents);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.Error(ex.Message);
-        //        return BadRequest();
-        //    }
-        //}
         [HttpPost]
         [Route("api/post/neweventdistance")]
         public IHttpActionResult PostNewEventDistance([FromBody] tblEvents newEvent)
@@ -553,15 +472,40 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+        //עדכון של סטטוס אירוע - לא למחוק את הקונטרולר
+        //[HttpPut]
+        //[Route("api/put/updateeventstatus")]
+        //public IHttpActionResult PutUpdateEventStatus(int travelerid)
+        //{
+        //    try
+        //    {
+        //        // Retrieve the events from the database that match the conditions
+        //        var events = db.tblEvents.Where(e => e.event_status == true && e.serialTypeNumber == 1003 && e.travelerId == travelerid);
 
+        //        // If no matching events are found, return a bad request
+        //        if (!events.Any())
+        //        {
+        //            return BadRequest("No matching events found.");
+        //        }             
 
-        public class EventApprovalDto
-        {
-            public int Approved { get; set; }
-            public int NotApproved { get; set; }
-        }
+        //        foreach (var existingEvent in events)
+        //        {
+        //            // Update the event status to false
+        //            existingEvent.event_status = false;
+        //        }
 
+        //        // Save the changes to the database
+        //        db.SaveChanges();
+        //        logger.Info($"{events.Count()} events were updated and saved to the database!");
 
+        //        return Ok("Events updated successfully!");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
 
         // DELETE: api/NewEvent/5
         public void Delete(int id)
@@ -652,6 +596,29 @@ namespace WebApplication1.Controllers
             return "success:) --- " + responseFromServer + ", " + returnStatus;
         }
 
+        //private static async Task<string> PostPN(PushNotData pushNotificationData)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        // Set the API endpoint URL
+        //        string apiUrl = "https://exp.host/--/api/v2/push/send";
+
+        //        // Serialize the push notification data to JSON
+        //        string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(pushNotificationData);
+
+        //        // Create the HTTP request content
+        //        HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+        //        // Send the POST request and get the response
+        //        HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+
+        //        // Read the response content as string
+        //        string responseContent = await response.Content.ReadAsStringAsync();
+
+        //        // Return the response content
+        //        return responseContent;
+        //    }
+        //}
     }
 
 }

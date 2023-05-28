@@ -75,7 +75,7 @@ export default function AroundYou(props) {
 
     const closeMenu = () => {
         setIsMenuOpen(false);
-        
+
     };
 
     const typePinColors = {
@@ -93,15 +93,16 @@ export default function AroundYou(props) {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
-                {/* <AntDesign name="menu" size={24} color="black" /> */}
-                <Icon name="menu" size={40} color={'white'} alignSelf={'center'} />
-                <Text style={styles.titlename}>  Hello, {stakeholder.FullName} ! </Text>
-
+                <Icon name="menu" size={40} color="white" alignSelf="ceter" />
+                <View style={styles.textContainer}>
+                    <Text style={styles.titlename}>Hello, {stakeholder.FullName} !</Text>
+                </View>
+                <Image source={{ uri: stakeholder.picture }} style={styles.user} />
             </TouchableOpacity>
-           
 
 
-             {location && location.coords && (
+
+            {location && location.coords && (
                 <MapView
                     style={styles.map}
                     initialRegion={{
@@ -137,121 +138,109 @@ export default function AroundYou(props) {
 
                 </MapView>
 
-             )}
-              <Modal
+            )}
+            <Modal
                 visible={isMenuOpen}
                 animationType='slide'
                 transparent={true}
                 onRequestClose={() => setIsMenuOpen(false)}
-              >
-             {isMenuOpen && (
-                <View style={styles.menu}>
-                    <View >
+            >
+                {isMenuOpen && (
+                    <View style={styles.menu}>
+                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
+                            navigation.navigate("Sign In"), setIsMenuOpen(false);
+                        }}>
+                            <Text style={styles.textLO} > Log out  </Text>
+                        </TouchableOpacity>
+
                         <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
                             <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
 
-                        <Image source={{ uri: stakeholder.picture }} style={styles.user} />
+                        <View style={styles.optionsContainer}>
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }), setIsMenuOpen(false) }}
+                            >
+
+                                <Icon name="chatbubble-ellipses-outline" size={30} style={styles.icon} />
+                                <Text style={styles.text}>Chat</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => {
+                                    navigation.navigate("New event", {
+                                        stakeholder: stakeholder,
+                                        userLocation: userLocation
+                                    }), setIsMenuOpen(false);
+                                }}
+                            >
+                                <Icon name="add-circle-outline" size={30} style={styles.icon} />
+                                <Text style={styles.text}>New Post</Text>
+
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => { navigation.navigate("Your Travelers", { stakeholder }), setIsMenuOpen(false) }}>
+
+                                <Icon name="people-outline" size={30} style={styles.icon} />
+                                <Text style={styles.text}>Your Travelers</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { stakeholder }), setIsMenuOpen(false) }}>
+                                <Icon name="search-outline" size={30} style={styles.icon} />
+                                <Text style={styles.text}>Search </Text>
+
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => { navigation.navigate("Setting", { stakeholder }), setIsMenuOpen(false) }}
+                            >
+                                <Icon name="settings-outline" size={30} style={styles.icon} />
+                                <Text style={styles.text}>Setting</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => {
+                                    navigation.navigate("Warning", {
+                                        stakeholder: stakeholder,
+                                        userLocation: userLocation
+                                    }), setIsMenuOpen(false);
+                                }}
+                            >
+                                <Icon name="warning-outline" size={30} style={styles.icon} />
+                                <Text style={styles.text}>Warnings </Text>
+                            </TouchableOpacity>
+                        </View>
 
                     </View>
 
-                    <View style={styles.optionsContainer}>
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }),setIsMenuOpen(false) }}
-                    >
-
-                        <Icon name="chatbubble-ellipses-outline" size={30} style={styles.icon} />
-                        <Text style={styles.text}>Chat</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => {
-                            navigation.navigate("New event", {
-                                stakeholder: stakeholder,
-                                userLocation: userLocation
-                            }),setIsMenuOpen(false);
-                        }}
-                    >
-                        <Icon name="add-circle-outline" size={30} style={styles.icon} />
-                        <Text style={styles.text}>New Post</Text>
-
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Your Travelers", { stakeholder }),setIsMenuOpen(false) }}>
-
-                        <Icon name="people-outline" size={30} style={styles.icon} />
-                        <Text style={styles.text}>Your Travelers</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { stakeholder }),setIsMenuOpen(false) }}>
-                        <Icon name="search-outline" size={30} style={styles.icon} />
-                        <Text style={styles.text}>Search </Text>
-
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => { navigation.navigate("Setting", { stakeholder }),setIsMenuOpen(false) }}
-                    >
-                        <Icon name="settings-outline" size={30} style={styles.icon} />
-                        <Text style={styles.text}>Setting</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.option}
-                        onPress={() => {
-                            navigation.navigate("Warning", {
-                                stakeholder: stakeholder,
-                                userLocation: userLocation
-                            }),setIsMenuOpen(false);
-                        }}
-                    >
-                        <Icon name="warning-outline" size={30} style={styles.icon} />
-                        <Text style={styles.text}>Warnings </Text>
-                    </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                        navigation.navigate("Sign In"),setIsMenuOpen(false);
-                    }}>
-                        <Text style={styles.textLO} > Log out  </Text>
-                    </TouchableOpacity>
-                </View>
-                
-               )}
+                )}
             </Modal>
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
     },
     user: {
-        alignItems:'center',
+        width: 50,
+        height: 50,
+        borderRadius: 90 / 2,
         resizeMode: 'cover',
-        height: 75,
-        borderRadius: 75,
-        width: 75,
-        
-
+        right:-10,
+        top:-5,
+        alignSelf:'flex-end'
     },
-    name: {
-        position: "absolute",
-        fontSize: 20,
-        top: 250,
-        left: 80,
-
-    },
+    
     map: {
         width: '100%',
         height: '100%',
     },
     titlename: {
         color: 'white',
-        width: '100%',
-        left: 70,
         fontSize: 22,
-        alignSelf: "center"
+        alignSelf:'center'
     },
     hamburger: {
         flexDirection: 'row',
@@ -261,28 +250,29 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        // borderRadius: 30,
-        // paddingVertical: 10,
-        // paddingHorizontal: 25,
         backgroundColor: '#8FBC8F',
-        paddingTop: 55
-
+        paddingTop: 55,
+        paddingHorizontal: 20,
+    },
+    textContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     menu: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
         alignItems: 'center',
         position: 'absolute',
-        width: '99%',
-        height: '60%',
+        bottom: 0, 
+        width: '100%', 
+        height: '50%', 
         backgroundColor: '#F0F8FF',
         zIndex: 1,
         flex: 1,
-        margin:'90%',
-        marginHorizontal: 2,
-        padding: 30,
-        borderRadius: 10,
+        borderTopLeftRadius:15,
+        borderTopRightRadius: 15,
+        borderbottomEndRadius: 0,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -291,36 +281,29 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        justifyContent: 'space-evenly',
       },
     closeButton: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
+        right: -80,
+        paddingTop:10,
     },
     btnLogOut: {
-        top: 10,
-        padding:10,
-        flexDirection: 'row',
-        position: 'absolute',
-        // bottom: 30,
-        // alignSelf: 'center',
-        // alignItems: 'center',
-        // justifyContent: 'center',
-
+        left:-80,
+        paddingTop:10,
     },
     textLO: {
         color: '#144800',
         fontSize: 20,
         textDecorationLine: 'underline',
-
-    }, 
+    },
     optionsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         width: '100%',
-        paddingHorizontal: 2,
-        alignContent:'center',
+        paddingHorizontal: 5,
+        height: '100%',
+        alignContent: 'center',
     },
     option: {
         alignContent: 'center',
@@ -331,31 +314,28 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#F5F5F5',
         marginBottom: 10,
+        
         padding: 5,
         resizeMode: 'contain',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
         elevation: 4,
-      },
-    
+    },
     text: {
-       color:'#8FBC8F',
+        color: '#8FBC8F',
         fontSize: 23,
-        alignSelf:'center',
-        paddingBottom:2,
-
-
+        alignSelf: 'center',
+        paddingBottom: 2,
     },
     icon: {
-        alignSelf:'center',
-        color:'#8FBC8F',
-        alignItems:'center',
+        alignSelf: 'center',
+        color: '#8FBC8F',
+        alignItems: 'center',
         size: 30,
-
-    }
+    },
 });

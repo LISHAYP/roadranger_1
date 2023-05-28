@@ -1,6 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
+    <EntitySetMapping Name="pushnotifications">
+      <EntityTypeMapping TypeName="igroup190_test1Model.pushnotifications">
+        <MappingFragment StoreEntitySet="pushnotifications">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="eventid" ColumnName="eventid" />
+          <ScalarProperty Name="travelerid" ColumnName="travelerid" />
+          <ScalarProperty Name="sent" ColumnName="sent" />
+          <ScalarProperty Name="token" ColumnName="token" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="stakeholders">
       <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
         <MappingFragment StoreEntitySet="stakeholders">

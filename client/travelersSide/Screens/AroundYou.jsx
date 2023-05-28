@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
-import MapView, { Marker, Circle } from 'react-native-maps';
+import MapView, { Marker, Circle, AnimatedRegion } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientBackground from '../Components/GradientBackground';
-
 
 
 
@@ -42,8 +41,8 @@ export default function AroundYou(props) {
             })
                 .then(response => response.json())
                 .then(data => {
-                    setLasteventOfTraveler(data)
-                    console.log(data);
+                    setLasteventOfTraveler(data.lastEventId);
+                    console.log("++++",data.lastEventId);
                 }
                 )
                 .catch(error => {
@@ -55,6 +54,7 @@ export default function AroundYou(props) {
 
     }, [matchedEvent]);
     const [Events, setEvents] = useState([])
+    
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
         setUserLocation(userlocation); // Save user location in state
@@ -130,6 +130,7 @@ export default function AroundYou(props) {
             is_related: eventNumber
         }
         console.log("**************", updateEventObj);
+        console.log("*****-*********", lasteventOfTraveler);
 
         fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',
@@ -142,7 +143,8 @@ export default function AroundYou(props) {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data); // Traveler updated successfully.
-                // Alert.alert('Event updated successfully')
+                setModalVisible(false);
+                setLasteventOfTraveler('');
             })
             .catch((error) => {
                 console.error(error);
@@ -189,7 +191,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.event_status !== false).map(event => (
+                            {Events.filter(event => event.event_status !== false && event.is_related==null  ).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{
@@ -200,7 +202,7 @@ export default function AroundYou(props) {
                                     description={event.EventTime}
                                     pinColor={typePinColors[event.SerialTypeNumber]}
                                     onPress={() => {
-                                        navigation.navigate('Event Details', { event, traveler });
+                                        navigation.navigate('TimeLine', { event, traveler });
                                     }}
                                 />
 
@@ -306,17 +308,17 @@ export default function AroundYou(props) {
                                    
                                         {/* Modal content */}
                                         <Text>Did u mean this event?</Text>
-                                         <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
+                                      
+                                        <Text>{matchedEvent.Details}</Text>
+                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
+
+                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
+                                        <TouchableOpacity style={styles.btnLogIn} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
                                             <Text>Yes</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.btnLogIn} onPress={() => setModalVisible(false)} >
                                             <Text>No</Text>
                                         </TouchableOpacity> 
-                                        <Text>{matchedEvent.Details}</Text>
-                                        <Image style={styles.user} source={{ uri: matchedEvent.Picture }} />
-
-                                        <Text>Event Number: {matchedEvent.eventNumber}</Text>
-                                     
                                         {/* Add more Text components for other parameters */}
                                     
                                 </View>
@@ -392,9 +394,8 @@ const styles = StyleSheet.create({
     name: {
         position: "absolute",
         fontSize: 20,
-        top: 250,
-        left:80,
-
+        top: 240,
+        left: 60,
     },
     map: {
         width: '100%',
@@ -418,12 +419,11 @@ const styles = StyleSheet.create({
         // borderRadius: 30,
         // paddingVertical: 15,
         // paddingHorizontal: 20,
-        backgroundColor: '#FF0000',
-        
+        backgroundColor: '#FF0000'
 
     },
     titlename: {
-        color: 'black',
+        color: 'white',
         width: '100%',
         left: 70,
         fontSize: 22,
@@ -446,36 +446,21 @@ const styles = StyleSheet.create({
 
     },
     menu: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'center',
         position: 'absolute',
         bottom: 0,
         left: 0,
         width: '100%',
         height: '50%',
         backgroundColor: '#F0F8FF',
-        zIndex: 1,
-        flex: 1,
-        margin:'90%',
-        marginHorizontal: 2,
-        padding: 30,
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
 
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        zIndex: 1,
     },
     closeButton: {
         position: 'absolute',
-        top: 0,
-        right: 0,
+        top: 40,
+        right: 20,
     },
     optionSOS: {
         flexDirection: 'row',
@@ -501,11 +486,8 @@ const styles = StyleSheet.create({
         marginBottom: 21
     },
     text: {
-        color:'#8FBC8F',
-        fontSize: 23,
-        alignSelf:'center',
-        paddingBottom:2,
-
+        fontSize: 30,
+        left: 40
     },
     textLO: {
         color: '#144800',
@@ -514,10 +496,8 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-        alignSelf:'center',
-        color:'#8FBC8F',
-        alignItems:'center',
-        size:30,
+        left: 30,
+        size: 30,
 
     },
     user: {

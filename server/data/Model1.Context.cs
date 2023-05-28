@@ -25,6 +25,7 @@ namespace data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<pushnotifications> pushnotifications { get; set; }
         public virtual DbSet<stakeholders> stakeholders { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tblApi> tblApi { get; set; }

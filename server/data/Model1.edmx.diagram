@@ -4,14 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="faf0171eae374008b81ef5c50458b861" Name="Diagram1">
+      <Diagram DiagramId="36374142c39a48c3b64ca712e1b60f5c" Name="Diagram1">
+        <EntityTypeShape EntityType="igroup190_test1Model.pushnotifications" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.stakeholders" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblApi" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblApi" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="6" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="20.875" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblComments" Width="1.5" PointX="8.25" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblContactUs" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblContactUs" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelers" Width="1.5" PointX="5.25" PointY="28.625" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblCountries" Width="1.5" PointX="3.75" PointY="14.625" IsExpanded="true" />

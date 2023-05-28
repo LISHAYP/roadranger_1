@@ -115,7 +115,7 @@ namespace WebApplication1.Controllers
         [Route("api/post/login")]
         public IHttpActionResult Post([FromBody] TravelerDto value)
         {
-            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email == value.travler_email);
+            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email.ToLower() == value.travler_email.ToLower());
             if (existingUser == null)
             {
                 logger.Info("login faild! email does not exist in the system");
@@ -279,6 +279,21 @@ namespace WebApplication1.Controllers
                 {
                     logger.Error($"Traveler with ID: {travelerDto.traveler_id} was not found");
                     return NotFound();
+                }
+
+                // Retrieve the events from the database that match the conditions
+                var events = db.tblEvents.Where(e => e.event_status == true && e.serialTypeNumber == 1003 && e.travelerId == travelerDto.traveler_id);
+
+                // If no matching events are found, return a bad request
+                if (!events.Any())
+                {
+                    return BadRequest("No matching events found.");
+                }
+
+                foreach (var existingEvent in events)
+                {
+                    // Update the event status to false
+                    existingEvent.event_status = false;
                 }
 
                 // Update the missing field to false
