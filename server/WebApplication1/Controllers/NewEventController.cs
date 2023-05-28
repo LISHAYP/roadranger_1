@@ -545,7 +545,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
-
+     
         [HttpPost]
         [Route("sendpushnotification")]
         public string PostPN([FromBody] PushNotData pnd)
