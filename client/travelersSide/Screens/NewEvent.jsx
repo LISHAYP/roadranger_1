@@ -11,7 +11,7 @@ import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
 import { Divider } from "@react-native-material/core";
-
+import { cgroup90 } from '../cgroup90';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
@@ -118,7 +118,7 @@ export default function NewEvent(props) {
   };
   addContry = () => {
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+    fetch(`${cgroup90}/api/post/country`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -145,7 +145,7 @@ export default function NewEvent(props) {
       area_name: city
     }
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+    fetch(`${cgroup90}/api/post/area`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -169,7 +169,7 @@ export default function NewEvent(props) {
       Alert.alert('Please enter details and type');
     } else {
       // Send a POST request to your backend API with the event data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+      fetch(`${cgroup90}/api/post/newevent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -184,8 +184,7 @@ export default function NewEvent(props) {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           };
-          fetch(
-            'http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance',
+          fetch(`${cgroup90}/api/post/neweventdistance`,
             {
               method: 'POST',
               headers: {
@@ -259,7 +258,7 @@ export default function NewEvent(props) {
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, location, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+    setPicture(`${cgroup90}/uploadEventPic/E_${date}.jpg`)
   }
 
   return (

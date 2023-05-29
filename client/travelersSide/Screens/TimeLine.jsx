@@ -4,6 +4,7 @@ import Timeline from 'react-native-timeline-flatlist';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { cgroup90 } from '../cgroup90';
 
 export default function TimeLine(props) {
     const event = props.route.params.event;
@@ -16,7 +17,7 @@ export default function TimeLine(props) {
           eventNumber: event.eventNumber,
         };
       
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/relatedevents', {
+        fetch(`${cgroup90}/api/post/relatedevents`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',

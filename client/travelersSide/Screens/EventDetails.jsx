@@ -9,6 +9,7 @@ import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
+import { cgroup90 } from '../cgroup90';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -33,7 +34,7 @@ export default function EventDetails(props) {
       traveler_Id: event.TravelerId
     };
     try {
-      const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
+      const response = await fetch(`${cgroup90}/api/traveler/details`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -60,7 +61,7 @@ export default function EventDetails(props) {
 
     try {
       console.log("in try fretchfetchNumberEvent", { eventNumberObj })
-      const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/events/comments', {
+      const response = await fetch(`${cgroup90}/api/events/comments`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -107,7 +108,7 @@ export default function EventDetails(props) {
       console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
 
       try {
-        const response = await fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
+        const response = await fetch(`${cgroup90}/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -180,7 +181,7 @@ export default function EventDetails(props) {
     }
     else {
       // Send a POST request to your backend API with the comment data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcomment', {
+      fetch(`${cgroup90}/api/newcomment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +221,7 @@ export default function EventDetails(props) {
     };
     console.log(eventObj)
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deleteevent', {
+    fetch(`${cgroup90}/api/deleteevent`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -243,7 +244,7 @@ export default function EventDetails(props) {
     };
     console.log(commentObj)
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deletecomment', {
+    fetch(`${cgroup90}/api/deletecomment`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',

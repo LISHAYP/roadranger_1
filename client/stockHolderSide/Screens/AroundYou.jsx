@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { getCenter } from 'geolib';
+import { cgroup90 } from '../cgroup90';
 
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
@@ -48,7 +49,7 @@ export default function AroundYou(props) {
 
     const handleGet = () => {
 
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent', {
+        fetch(`${cgroup90}/api/NewEvent`, {
 
             method: 'GET',
             headers: new Headers({
@@ -119,8 +120,7 @@ export default function AroundYou(props) {
                         title="My Location"
                         description="This is my current location"
                     />
-                    {Events.filter(event => event.event_status !== false && event.SerialTypeNumber
-                        !== 1004 && event.SerialTypeNumber !== 1003).map(event => (<Marker
+                    {Events.filter(event => event.event_status !== false && event.is_related == null).map(event => (<Marker
                             key={event.EventNumber}
                             coordinate={{
                                 latitude: event.Latitude,
@@ -130,7 +130,7 @@ export default function AroundYou(props) {
                             description={event.EventTime}
                             pinColor={typePinColors[event.SerialTypeNumber]}
                             onPress={() => {
-                                navigation.navigate('Event Details', { event, stakeholder });
+                                navigation.navigate('TimeLine', { event, stakeholder });
                             }}
                         />
 
@@ -175,7 +175,7 @@ export default function AroundYou(props) {
                                 }}
                             >
                                 <Icon name="add-circle-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>New Post</Text>
+                                <Text style={styles.text}>New Warning</Text>
 
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option}
@@ -327,14 +327,14 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     text: {
-        color: '#8FBC8F',
+        color: '#144800',
         fontSize: 23,
         alignSelf: 'center',
         paddingBottom: 2,
     },
     icon: {
         alignSelf: 'center',
-        color: '#8FBC8F',
+        color: '#144800',
         alignItems: 'center',
         size: 30,
     },

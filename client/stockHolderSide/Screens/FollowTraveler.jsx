@@ -10,7 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
 import MapView, { Marker,Polyline } from 'react-native-maps';
-
+import { cgroup90 } from '../cgroup90';
 
 export default function FollowTraveler(props) {
   const navigation = useNavigation();
@@ -32,7 +32,7 @@ export default function FollowTraveler(props) {
     const objTravelerId = {
       TravelerId: traveler.traveler_id
     }
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/locations', {
+    fetch(`${cgroup90}/api/locations`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -74,7 +74,7 @@ export default function FollowTraveler(props) {
         traveler_id: traveler.traveler_id
       }
 
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/missingfalse', {
+      fetch(`${cgroup90}/api/post/missingfalse`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

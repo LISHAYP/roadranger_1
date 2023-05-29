@@ -63,7 +63,7 @@ export default function ContactUs() {
 
             return;
         }
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcontactus', {
+        fetch(`${cgroup90}/prod/api/newcontactus`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

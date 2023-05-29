@@ -10,7 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 
 
 export default function SignUp({ route }) {
-  const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
+  const defaultPic = `${cgroup90}/profilePictures/id1.png`;
   const [newProfilePic, setNewProfilePic] = useState(null);
 
   useFocusEffect(
@@ -73,7 +73,7 @@ export default function SignUp({ route }) {
     Picture : newProfilePic ?? defaultPic 
   };
   const handleSignUp = async () => {
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
+    fetch(`${cgroup90}/api/post/SignUp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

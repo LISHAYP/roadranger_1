@@ -8,6 +8,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 export default function Search(props) {
   const navigation = useNavigation();
@@ -78,7 +79,7 @@ export default function Search(props) {
     else {
 
       // Send a POST request to backend API with the search data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/searchByParameters', {
+      fetch(`${cgroup90}/api/post/searchByParameters`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ export default function Search(props) {
   //GET the countries and cities from data
   const loadData = () => {
     //GET the countries into array
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getcountries', {
+    fetch(`${cgroup90}/api/getcountries`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -127,7 +128,7 @@ export default function Search(props) {
 
 
     //GET the cities into array
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getareaswithcountry', {
+    fetch(`${cgroup90}/api/getareaswithcountry`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

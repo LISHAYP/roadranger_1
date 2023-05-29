@@ -12,6 +12,8 @@ import { useRef } from 'react';
 import { Button, Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { cgroup90 } from '../cgroup90';
+
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,7 +45,7 @@ export default function SignIn() {
       travler_email: email,
       token: devaiceToken
     };
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
+    fetch(`${cgroup90}/api/post/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -63,7 +65,7 @@ export default function SignIn() {
           console.log("^^*", data.save_location)
           setTravlerId(data.traveler_id)
 
-          fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/updatetoken?email=${traveler.travler_email}`, {
+          fetch(`${cgroup90}/api/traveler/updatetoken?email=${traveler.travler_email}`, {
             method: 'PUT',
             headers: {
               Accept: 'application/json',
@@ -126,7 +128,7 @@ export default function SignIn() {
     }
     console.log("^^^^^^^^^", userLoction)
     //Send a POST request to your backend API with the 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/location', {
+    fetch(`${cgroup90}/api/traveler/location`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

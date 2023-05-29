@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
-
+import { cgroup90 } from '../cgroup90';
 
 export default function YourTravelers(props) {
   const navigation = useNavigation();
@@ -31,7 +31,7 @@ export default function YourTravelers(props) {
   }, []);
 
   const stackholderType = () => {
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/lastlocation', {
+    fetch(`${cgroup90}/api/lastlocation`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -68,7 +68,7 @@ export default function YourTravelers(props) {
       insurence_company: stakeholder.StakeholderName
     }
     console.log("============",objInsuranceCompany)
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/GetTravelersByInsuranceCompanyNLL', {
+    fetch(`${cgroup90}/api/post/GetTravelersByInsuranceCompanyNLL`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -116,7 +116,7 @@ export default function YourTravelers(props) {
     < GradientBackground>
       <BackButton />
       <View style={styles.container}>
-        <Text>My ravelers</Text>
+        <Text>My Travelers</Text>
         <ScrollView>
           {myTravelers.length > 0 && (
             myTravelers.map((traveler, index) => (
@@ -143,7 +143,7 @@ export default function YourTravelers(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 90,
+    marginTop: 30,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

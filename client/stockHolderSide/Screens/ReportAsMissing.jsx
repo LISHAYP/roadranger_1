@@ -8,6 +8,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 export default function ReportAsMissing(props) {
     const stakeholder = props.route.params.stakeholder;
@@ -70,7 +71,7 @@ export default function ReportAsMissing(props) {
     };
     addContry = () => {
 
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+        fetch(`${cgroup90}/api/post/country`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -97,7 +98,7 @@ export default function ReportAsMissing(props) {
             area_name: city
         }
 
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+        fetch(`${cgroup90}/api/post/area`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -126,7 +127,7 @@ export default function ReportAsMissing(props) {
         else {
             reportAsTrue()
             // Send a POST request to your backend API with the event data
-            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+            fetch(`${cgroup90}/api/post/newevent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ export default function ReportAsMissing(props) {
         traveler_id: traveler.traveler_id
     }
     const reportAsTrue = () => {
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/missingtrue', {
+        fetch(`${cgroup90}/api/post/missingtrue`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
