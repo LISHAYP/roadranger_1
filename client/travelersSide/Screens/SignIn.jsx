@@ -42,6 +42,7 @@ export default function SignIn() {
             travler_email: email,
             token: devaiceToken
         };
+        console.log(devaiceToken)
         fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/login', {
             method: 'POST',
             headers: {

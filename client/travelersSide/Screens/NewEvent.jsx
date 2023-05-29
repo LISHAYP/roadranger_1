@@ -8,8 +8,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
-import * as Notifications from 'expo-notifications';
-import { auth } from '../firebase';
+import { GoogleCloudVisionApiKey } from '../config';
 
 
 export default function NewEvent(props) {
@@ -44,7 +43,6 @@ export default function NewEvent(props) {
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
-
   useEffect(() => {
     //insert the API Key
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -129,6 +127,8 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
+  const translations = []; // Array to store translations
+
   const createEvent = async () => {
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
@@ -163,22 +163,106 @@ export default function NewEvent(props) {
             .then(data1 => {
               const relatedEventsData = data1; // Assign the data to a constant variable
               const matchedEvents = []; // Array to store matched events
-  
+
               for (let i = 0; i < relatedEventsData.length; i++) {
                 const event = relatedEventsData[i];
                 if (compareLabels(event, newEvent)) {
                   matchedEvents.push(event);
                   break;
                 }
+                else {
+                  // 
+                  // Initialize the translation client
+                  const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCm4O6vwbRKam7AO4vyBXAvMOGeMAIyBuY`;
+                  // Function to translate text using Google Translate API
+                  console.log('here 1:');
+
+                  const translateText = async (text, targetLanguage) => {
+                    const requestBody = {
+                      q: text,
+                      target: targetLanguage,
+                    };
+                    console.log('here 2:');
+                    const response = await fetch(translateUrl, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(requestBody),
+                    });
+                    console.log('Translation 1:', translation1);
+                    if (!response.ok) {
+                      throw new Error('Translation request failed');
+                    }
+
+                    const data = await response.json();
+                    if (
+                      data &&
+                      data.data &&
+                      data.data.translations &&
+                      data.data.translations.length > 0
+                    ) {
+                      return data.data.translations[0].translatedText;
+                    } else {
+                      throw new Error('Translation not available');
+                    }
+                  };
+                 
+
+                  // Create an object to hold the translation values
+                  const translation1 = { value: null };
+
+                  // Call the translateText function for newEvent.Details
+                  const textToTranslate1 = newEvent.Details; // Replace with your actual text
+                  const targetLanguage1 = 'en'; // Replace with the desired target language code
+                  translateText(textToTranslate1, targetLanguage1)
+                    .then(translation => {
+                      translation1.value = translation;
+
+                      // Call the translateText function for event.Details
+                      const textToTranslate2 = event.Details; // Replace with your actual text
+                      const targetLanguage2 = 'en'; // Replace with the desired target language code
+                      translateText(textToTranslate2, targetLanguage2)
+                        .then(translation2 => {
+                          if (event.Details !== newEvent.Details) {
+                            const translationData = {
+                              id: event.eventNumber, // Replace 'id' with the actual property name that holds the event ID
+                              translation: translation2,
+                            };
+                      
+                            translations.push(translationData);
+
+                          console.log('Translation 1:', translation1.value);
+                          console.log('added:', translationData, translations);
+                          translations.map(translationData => console.log(translationData.translation));
+
+                          }
+                          // Rest of your code
+                          // Access the translations using translation1.value and translation2.value
+                        })
+                        .catch(error => {
+                          console.error('Translation Error:', error);
+                          // Rest of your error handling code
+                        });
+                    })
+                    .catch(error => {
+                      console.error('Translation Error:', error);
+                      // Rest of your error handling code
+                    });
+                }
+
               }
+
               if (matchedEvents.length > 0) {
                 console.log('Matches found:', matchedEvents);
               } else {
                 console.log('No matches found');
               }
+              console.log('translation similar arrays', translations);
+
               Alert.alert('Publish');
               const data = traveler;
-              navigation.navigate("Around You", { data, matchedEvents});
+              navigation.navigate("Around You", { data, matchedEvents });
             })
             .catch(error => {
               console.error(error);
@@ -191,21 +275,24 @@ export default function NewEvent(props) {
         });
     }
   };
-  
+
   const compareLabels = (event1, event2) => {
     if (!event1.labels || !event2.labels) {
       // If either event is missing the labels property, return false
+
       return false;
     }
-  
-    if ( event1.Details === event2.Details) {
+
+    if (event1.Details === event2.Details) {
       // If Details are defined and identical, return false
       return false;
     }
-  
-    const labels1 = JSON.parse(event1.labels).map(label => label.description);
-    const labels2 = JSON.parse(event2.labels).map(label => label.description);
-  
+
+
+    const labels1 = JSON.parse(event1.labels).filter(label => label.score > 0.5).map(label => label.description);
+    const labels2 = JSON.parse(event2.labels).filter(label => label.score > 0.5).map(label => label.description);
+
+
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
@@ -213,13 +300,13 @@ export default function NewEvent(props) {
         }
       }
     }
-  
+
     return false;
   };
-  
-  
-  
-  
+
+
+
+
 
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
@@ -288,7 +375,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    alignSelf:'center'
+    alignSelf: 'center'
 
   },
 
@@ -299,8 +386,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     shadowColor: "#000",
     shadowOffset: {
-   width: 0,
-  height: 4},
+      width: 0,
+      height: 4
+    },
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
     elevation: 9
@@ -309,13 +397,13 @@ const styles = StyleSheet.create({
   text: {
     color: '#144800',
     fontSize: 20,
-    left:15,
+    left: 15,
   },
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-   
+
   },
 
   dropdown: {
@@ -360,12 +448,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     flexDirection: 'row',
     shadowColor: "#000",
-        shadowOffset: {
-     	width: 0,
-	    height: 4},
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
 
   },
   icon: {
@@ -393,7 +482,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
-   height:55,
+    height: 55,
     marginVertical: 20,
     width: "55%",
     alignSelf: 'center',
@@ -404,12 +493,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#144800',
     shadowColor: "#000",
-        shadowOffset: {
-     	width: 0,
-	    height: 5},
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });
 
