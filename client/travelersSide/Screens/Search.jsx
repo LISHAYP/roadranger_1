@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,

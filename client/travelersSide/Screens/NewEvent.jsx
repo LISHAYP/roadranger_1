@@ -12,6 +12,9 @@ import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
 import { Divider } from "@react-native-material/core";
 import { cgroup90 } from '../cgroup90';
+import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
@@ -52,36 +55,17 @@ export default function NewEvent(props) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Permission to access location was denied');
-        return;
+        console.log('Permission to access location was denied');       
       }
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
-      setLocationFetched(true); // Set locationFetched to true after location is fetched
       console.log("&&&&&&&&&", currentLocation);
+      setLocationFetched(true); // Set locationFetched to true after location is fetched  
+      getLocation()
     })();
   }, []);
   
-  useEffect(() => {
-    try {
-      if (!locationFetched || !location) {
-        console.log('Location data is not available');
-        return;
-      }
-      AsyncStorage.setItem('latitude', location.coords.latitude.toString());
-      AsyncStorage.setItem('longitude', location.coords.longitude.toString());
-      console.log('Location saved successfully!');
-      console.log("%%%%%%%%%%%%", location.coords.latitude);
-      console.log("%%%%%%%%%%%%", location.coords.longitude);
-      saveCountryAndCity();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [locationFetched, location]);
-
-
-
-  const saveCountryAndCity = () => {
+  const getLocation=()=>{
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
     Geocoder.from(location.coords.latitude, location.coords.longitude)
       .then(json => {
@@ -91,28 +75,51 @@ export default function NewEvent(props) {
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        addContry();
+        console.log("^^^^^^^^^^^^^^^^^^^^",location.coords.latitude)
       })
       .catch(error => console.warn(error))
   }
 
 
-  const newEvent = {
-    Details: details,
-    event_date: new Date().toISOString().slice(0, 10),
-    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    Latitude: location.coords.latitude,
-    Longitude: location.coords.longitude,
-    event_status: eventStatus,
-    Picture: picture,
-    TravelerId: id,
-    StackholderId: stackholderId,
-    serialTypeNumber: serialTypeNumber,
-    country_number: countryNumber,
-    area_number: areaNumber,
-    labels: JSON.stringify(labels)
-  };
-  //console.log("--------", { newEvent, labels })
+  useEffect(() => {
+    addContry();
+  }, [location,locationFetched]);
+
+
+
+  // const saveCountryAndCity = () => {
+  //   Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+  //   Geocoder.from(location.coords.latitude, location.coords.longitude)
+  //     .then(json => {
+  //       const addressComponents = json.results[0].address_components;
+  //       const countryComponent = addressComponents.find(component => component.types.includes('country'));
+  //       const cityComponent = addressComponents.find(component => component.types.includes('locality'));
+  //       // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
+  //       setCountry(countryComponent.long_name);
+  //       setCity(cityComponent.long_name);
+  //       addContry();
+  //     })
+  //     .catch(error => console.warn(error))
+  // }
+
+  // const newEvent = {
+  //   Details: details,
+  //   event_date: new Date().toISOString().slice(0, 10),
+  //   event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+  //   Latitude: location.coords.latitude,
+  //   Longitude: location.coords.longitude,
+  //   event_status: eventStatus,
+  //   Picture: picture,
+  //   TravelerId: id,
+  //   StackholderId: stackholderId,
+  //   serialTypeNumber: serialTypeNumber,
+  //   country_number: countryNumber,
+  //   area_number: areaNumber,
+  //   labels: JSON.stringify(labels)
+  // };
+  // console.log("--------", { newEvent, labels })
+
+
   const countryObj = {
     country_name: country,
   };
@@ -164,7 +171,25 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
-  const createEvent = async () => {
+  const createEvent = () => {
+    const newEvent = {
+      Details: details,
+      event_date: new Date().toISOString().slice(0, 10),
+      event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      Latitude: location.coords.latitude,
+      Longitude: location.coords.longitude,
+      event_status: eventStatus,
+      Picture: picture,
+      TravelerId: id,
+      StackholderId: stackholderId,
+      serialTypeNumber: serialTypeNumber,
+      country_number: countryNumber,
+      area_number: areaNumber,
+      labels: JSON.stringify(labels)
+    };
+    console.log("--------",  newEvent )
+
+
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
@@ -250,9 +275,6 @@ export default function NewEvent(props) {
 
     return false;
   };
-
-
-
 
 
   const OpenCameraE = () => {
@@ -361,7 +383,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -384,7 +406,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
 
 
   },
@@ -396,7 +418,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
+    borderRadius: 15,
     backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
