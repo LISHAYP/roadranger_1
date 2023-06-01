@@ -4,6 +4,7 @@ import Timeline from 'react-native-timeline-flatlist';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { cgroup90 } from '../cgroup90';
 
 export default function TimeLine(props) {
     const event = props.route.params.event;
@@ -12,27 +13,33 @@ export default function TimeLine(props) {
     const navigation = useNavigation();
   
     useEffect(() => {
-      const eventNumberObj = {
-        eventNumber: event.eventNumber,
-      };
-  
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/relatedevents', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(eventNumberObj),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setEvents(data);
+        const eventNumberObj = {
+          eventNumber: event.eventNumber,
+        };
+      
+        fetch(`${cgroup90}/api/post/relatedevents`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventNumberObj),
         })
-        .catch((error) => {
-          console.error(error);
-          console.log('Error');
-        });
-    }, [event]);
+          .then((response) => response.json())
+          .then((data) => {
+            setEvents(data);
+            
+            if (data.length === 1) {
+              const event = data[0];
+              navigation.navigate('Event Details', { event, traveler });
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            console.log('Error');
+          });
+      }, [event, navigation]);
+      
     
     const handleEventPress = (rowData) => {
       const event = rowData;

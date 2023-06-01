@@ -8,6 +8,8 @@ import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useRef } from 'react';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
+
 export default function ForgotPassword() {
 
 
@@ -19,7 +21,7 @@ export default function ForgotPassword() {
         "travler_email":email
        }
        console.log(travelerEmail);
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/forgotpassword', {
+        fetch(`${cgroup90}/api/post/forgotpassword`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

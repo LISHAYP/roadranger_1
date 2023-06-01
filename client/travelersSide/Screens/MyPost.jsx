@@ -18,28 +18,38 @@ export default function MyPost(props) {
     console.log("iiiiiii", traveler)
     console.log("iiiiiii", events)
     const navigation = useNavigation();
+    const [eventWithAddresses, setEventWithAddresses] = useState([]);
+    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
-    const [eventAddresses, setEventAddresses] = useState([]);
-
+    console.log("%%%%%%%%%%%%", events)
     useEffect(() => {
-        Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-        Promise.all(
-            events.map((event) =>
-                Geocoder.from(event.Latitude, event.Longitude)
-                    .then((json) => json.results[0].formatted_address)
-                    .catch(() => 'Address not found')
-            )
-        ).then((addresses) => setEventAddresses(addresses));
-    }, [events]);
+        Promise.all(events.map(event => {
+            const lat = event.Latitude;
+            const lng = event.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+                const location = json.results[0].address_components;
+                const number = location[0].long_name;
+                const street = location[1].long_name;
+                const city = location[2].long_name;
+                const address = `${street} ${number}, ${city}`;
+                return { ...event, address };
+            });
+        })).then(eventsWithAddress => {
+            setEventWithAddresses(eventsWithAddress);
 
+        });
+     console.log("-----------------", eventWithAddresses)
+
+    }, [events]);
+    console.log("-----------------", eventWithAddresses)
     return (
         <GradientBackground>
             <ScrollView>
                 <View style={styles.container}>
                     <BackButton />
                     <View>
-                        {events !== undefined ? (
-                            events.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
+                        {eventWithAddresses !== undefined ? (
+                            eventWithAddresses.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
                                 <TouchableOpacity onPress={() => {
                                     navigation.navigate('Event Details', { event: event, traveler: traveler });
                                 }} >
@@ -48,7 +58,7 @@ export default function MyPost(props) {
                                             <Text style={styles.details}>{event.Details}</Text>
                                             <Text>{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
                                             <Text>{event.EventTime.slice(0, 5)}</Text>
-                                            <Text>{eventAddresses[index]}</Text>
+                                            <Text>{event.address}</Text>
 
                                         </View>
                                         <Image source={{ uri: event.Picture }} style={styles.img} />
@@ -109,7 +119,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
-    }
+    }
 
 
 

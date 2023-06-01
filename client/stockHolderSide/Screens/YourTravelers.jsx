@@ -9,7 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
-
+import { cgroup90 } from '../cgroup90';
 
 export default function YourTravelers(props) {
   const navigation = useNavigation();
@@ -19,84 +19,92 @@ export default function YourTravelers(props) {
   const [myTravelers, setMyTravelers] = useState([])
   console.log(stakeholder)
   useEffect(() => {
-    stackholderType()
+    console.log("----------",stakeholder.StakeholderType)
+    if (stakeholder.StakeholderType == 'Insurance Company') {
+      console.log("----------","Insurance Company" )
+
+      stackholderTypeInsurence()
+    }
+    else {
+      stackholderType()
+    }
   }, []);
 
   const stackholderType = () => {
-    if (stakeholder.StakeholderType == 'Insurance Company') {
-      const objInsuranceCompany = {
-        insurence_company: stakeholder.StakeholderName
-      }
-     
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/GetTravelersByInsuranceCompany', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(objInsuranceCompany),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log("^^^^^", data)
-          // Map over the data and get the address for each traveler
-          Promise.all(data.map(traveler => {
-            if (!traveler.last_location.Latitude) {
-              return Promise.reject(new Error('Traveler does not have a location'));
-            }
-            const lat = traveler.last_location.Latitude;       
-            const lng = traveler.last_location.Longitude;
-            return Geocoder.from(lat, lng).then(json => {
-              const location = json.results[0].address_components;
-              const number = location[0].long_name;
-              const street = location[1].long_name;
-              const city = location[2].long_name;
-              const address = `${street} ${number}, ${city}`;
-              return { ...traveler, address };
-            }).catch(error => {
-              console.error(error);
-              // handle the error appropriately
-            });
-          })).then(travelersWithAddress => {
-            setMyTravelers(travelersWithAddress);
+    fetch(`${cgroup90}/api/lastlocation`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
 
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("%%%%%%%%%%%%%%", data)
+        // Map over the data and get the address for each traveler
+        Promise.all(data.map(traveler => {
+          const lat = traveler.last_location.Latitude;
+          const lng = traveler.last_location.Longitude;
+          return Geocoder.from(lat, lng).then(json => {
+            const location = json.results[0].address_components;
+            const number = location[0].long_name;
+            const street = location[1].long_name;
+            const city = location[2].long_name;
+            const address = `${street} ${number}, ${city}`;
+            return { ...traveler, address };
+          });
+        })).then(travelersWithAddress => {
+          setMyTravelers(travelersWithAddress);
+
+        });
+      });
+
+  }
+
+
+  const stackholderTypeInsurence = () => {
+    const objInsuranceCompany = {
+      insurence_company: stakeholder.StakeholderName
+    }
+    console.log("============",objInsuranceCompany)
+    fetch(`${cgroup90}/api/post/GetTravelersByInsuranceCompanyNLL`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(objInsuranceCompany),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("^^^^^", data)
+        // Map over the data and get the address for each traveler
+        Promise.all(data.map(traveler => {
+          const lat = traveler.last_location.Latitude;
+          const lng = traveler.last_location.Longitude;
+          return Geocoder.from(lat, lng).then(json => {
+            const location = json.results[0].address_components;
+            const number = location[0].long_name;
+            const street = location[1].long_name;
+            const city = location[2].long_name;
+            const address = `${street} ${number}, ${city}`;
+            return { ...traveler, address };
           }).catch(error => {
             console.error(error);
             // handle the error appropriately
           });
-        });
-    }
-    if (stakeholder.StakeholderType != 'Insurance Company') {
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/lastlocation', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
+        })).then(travelersWithAddress => {
+          setMyTravelers(travelersWithAddress);
 
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log("%%%%%%%%%%%%%%", data)
-          // Map over the data and get the address for each traveler
-          Promise.all(data.map(traveler => {
-            const lat = traveler.last_location.Latitude;       
-            const lng = traveler.last_location.Longitude;
-            return Geocoder.from(lat, lng).then(json => {
-              const location = json.results[0].address_components;
-              const number = location[0].long_name;
-              const street = location[1].long_name;
-              const city = location[2].long_name;
-              const address = `${street} ${number}, ${city}`;
-              return { ...traveler, address };
-            });
-          })).then(travelersWithAddress => {
-            setMyTravelers(travelersWithAddress);
-
-          });
+        }).catch(error => {
+          console.error(error);
+          // handle the error appropriately
         });
-    }
+      });
   }
+
+
 
   function formatDateTime(isoDateTime) {
     const date = new Date(isoDateTime);
@@ -108,7 +116,7 @@ export default function YourTravelers(props) {
     < GradientBackground>
       <BackButton />
       <View style={styles.container}>
-        <Text>My ravelers</Text>
+        <Text>My Travelers</Text>
         <ScrollView>
           {myTravelers.length > 0 && (
             myTravelers.map((traveler, index) => (
@@ -135,7 +143,7 @@ export default function YourTravelers(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 90,
+    marginTop: 30,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
@@ -154,10 +162,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2},
-      shadowOpacity: 0.23,
-      shadowRadius: 2.62,
-      elevation: 4
+      height: 2
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4
   },
   event: {
     flexDirection: 'row',

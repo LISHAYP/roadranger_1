@@ -11,15 +11,19 @@ import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
 import { Divider } from "@react-native-material/core";
+import { cgroup90 } from '../cgroup90';
+import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
-  const userLocation = props.route.params.userLocation;
   const labels = props.route.params.labels;
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
+  const [location, setLocation] = useState('');
+
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
@@ -45,11 +49,25 @@ export default function NewEvent(props) {
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
+  const [locationFetched, setLocationFetched] = useState(false);
 
-  useEffect(() => {
-    //insert the API Key
+  useEffect(() => { 
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');       
+      }
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+      console.log("&&&&&&&&&", currentLocation);
+      setLocationFetched(true); // Set locationFetched to true after location is fetched  
+      getLocation()
+    })();
+  }, []);
+  
+  const getLocation=()=>{
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-    Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
+    Geocoder.from(location.coords.latitude, location.coords.longitude)
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
@@ -57,34 +75,57 @@ export default function NewEvent(props) {
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        addContry();
+        console.log("^^^^^^^^^^^^^^^^^^^^",location.coords.latitude)
       })
       .catch(error => console.warn(error))
-  }, []);
+  }
 
 
-  const newEvent = {
-    Details: details,
-    event_date: new Date().toISOString().slice(0, 10),
-    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    Latitude: userLocation.coords.latitude,
-    Longitude: userLocation.coords.longitude,
-    event_status: eventStatus,
-    Picture: picture,
-    TravelerId: id,
-    StackholderId: stackholderId,
-    serialTypeNumber: serialTypeNumber,
-    country_number: countryNumber,
-    area_number: areaNumber,
-    labels: JSON.stringify(labels)
-  };
-  //console.log("--------", { newEvent, labels })
+  useEffect(() => {
+    addContry();
+  }, [location,locationFetched]);
+
+
+
+  // const saveCountryAndCity = () => {
+  //   Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+  //   Geocoder.from(location.coords.latitude, location.coords.longitude)
+  //     .then(json => {
+  //       const addressComponents = json.results[0].address_components;
+  //       const countryComponent = addressComponents.find(component => component.types.includes('country'));
+  //       const cityComponent = addressComponents.find(component => component.types.includes('locality'));
+  //       // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
+  //       setCountry(countryComponent.long_name);
+  //       setCity(cityComponent.long_name);
+  //       addContry();
+  //     })
+  //     .catch(error => console.warn(error))
+  // }
+
+  // const newEvent = {
+  //   Details: details,
+  //   event_date: new Date().toISOString().slice(0, 10),
+  //   event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+  //   Latitude: location.coords.latitude,
+  //   Longitude: location.coords.longitude,
+  //   event_status: eventStatus,
+  //   Picture: picture,
+  //   TravelerId: id,
+  //   StackholderId: stackholderId,
+  //   serialTypeNumber: serialTypeNumber,
+  //   country_number: countryNumber,
+  //   area_number: areaNumber,
+  //   labels: JSON.stringify(labels)
+  // };
+  // console.log("--------", { newEvent, labels })
+
+
   const countryObj = {
     country_name: country,
   };
   addContry = () => {
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+    fetch(`${cgroup90}/api/post/country`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -111,7 +152,7 @@ export default function NewEvent(props) {
       area_name: city
     }
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+    fetch(`${cgroup90}/api/post/area`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -130,12 +171,30 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
-  const createEvent = async () => {
+  const createEvent = () => {
+    const newEvent = {
+      Details: details,
+      event_date: new Date().toISOString().slice(0, 10),
+      event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      Latitude: location.coords.latitude,
+      Longitude: location.coords.longitude,
+      event_status: eventStatus,
+      Picture: picture,
+      TravelerId: id,
+      StackholderId: stackholderId,
+      serialTypeNumber: serialTypeNumber,
+      country_number: countryNumber,
+      area_number: areaNumber,
+      labels: JSON.stringify(labels)
+    };
+    console.log("--------",  newEvent )
+
+
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
       // Send a POST request to your backend API with the event data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+      fetch(`${cgroup90}/api/post/newevent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,11 +206,10 @@ export default function NewEvent(props) {
           const comonventdetailsObj = {
             serialTypeNumber: serialTypeNumber,
             event_status: eventStatus,
-            latitude: userLocation.coords.latitude,
-            longitude: userLocation.coords.longitude,
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
           };
-          fetch(
-            'http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance',
+          fetch(`${cgroup90}/api/post/neweventdistance`,
             {
               method: 'POST',
               headers: {
@@ -219,13 +277,10 @@ export default function NewEvent(props) {
   };
 
 
-
-
-
   const OpenCameraE = () => {
-    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, location, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+    setPicture(`${cgroup90}/uploadEventPic/E_${date}.jpg`)
   }
 
   return (
@@ -321,10 +376,10 @@ const styles = StyleSheet.create({
   },
 
   dropdown: {
-    alignSelf: 'center',
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
+    borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
@@ -333,14 +388,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 10,
     marginTop: 10,
-    width: "95%",
+    width: "90%",
 
   },
-  input: {
+  text1: {
+    fontSize: 18,
     alignSelf: 'center',
+    color: "#A9A9A9"
+  },
+
+  input: {
     flexDirection: 'row',
     marginVertical: 10,
-    width: "100%",
+    width: "90%",
     fontSize: 20,
     paddingVertical: 70,
     paddingHorizontal: 15,
@@ -348,18 +408,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
 
+
   },
   photo: {
     marginVertical: 20,
-    width: "70%",
+    width: "80%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 20,
+    borderRadius: 15,
     backgroundColor: '#144800',
-    marginBottom: 40,
+    marginBottom: 50,
     flexDirection: 'row',
     shadowColor: "#000",
     shadowOffset: {
@@ -398,7 +459,7 @@ const styles = StyleSheet.create({
   btnSave: {
     height: 55,
     marginVertical: 20,
-    width: "55%",
+    width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -416,6 +477,5 @@ const styles = StyleSheet.create({
     elevation: 9
   },
 });
-
 
 

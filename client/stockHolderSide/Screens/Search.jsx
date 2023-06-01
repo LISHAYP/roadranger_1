@@ -8,6 +8,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 export default function Search(props) {
   const navigation = useNavigation();
@@ -63,11 +64,11 @@ export default function Search(props) {
     { Name: 'endDate', Value: selectedEndDate },
 
   ]
-  
+
   console.log(searchObj)
 
   const searchEvents = async () => {
-    console.log(selectedCity, selectedCountry, selectedStartDate,selectedEndDate, selectedSerialType)
+    console.log(selectedCity, selectedCountry, selectedStartDate, selectedEndDate, selectedSerialType)
     if (selectedCountry === '' && selectedStartDate === '' && selectedSerialType == '') {
       Alert.alert('Please enter for search');
     }
@@ -76,7 +77,7 @@ export default function Search(props) {
     }
     else {
       // Send a POST request to backend API with the search data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/searchByParameters', {
+      fetch(`${cgroup90}/api/post/searchByParameters`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ export default function Search(props) {
   //GET the countries and cities from data
   const loadData = () => {
     //GET the countries into array
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getcountries', {
+    fetch(`${cgroup90}/api/getcountries`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -125,7 +126,7 @@ export default function Search(props) {
 
 
     //GET the cities into array
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getareaswithcountry', {
+    fetch(`${cgroup90}/api/getareaswithcountry`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -150,85 +151,85 @@ export default function Search(props) {
     < GradientBackground>
       <BackButton />
       <ScrollView>
-      <View style={styles.container}>
+        <View style={styles.container}>
 
 
-        <Text style={styles.text}>Country:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={country}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select country"}
-          value={selectedCountry}
-          onChange={item => {
-            setSelectedCountry(item.value)
-          }} />
+          <Text style={styles.text}>Country:</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={country}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select country"}
+            value={selectedCountry}
+            onChange={item => {
+              setSelectedCountry(item.value)
+            }} />
 
-        <Text style={styles.text}>City:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={filteredCities}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select country before"}
-          value={selectedCity}
-          onChange={item => {
-            setSelectedCity(item.value)
-          }}
+          <Text style={styles.text}>City:</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={filteredCities}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select country before"}
+            value={selectedCity}
+            onChange={item => {
+              setSelectedCity(item.value)
+            }}
 
-        />
-        <Text style={styles.text}>Type:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={serialType}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select type of event"}
-          value={selectedSerialType}
-          onChange={item => {
-            setSelectedSerialType(item.value)
-          }} />
-        <Text style={styles.text}>Start Date:</Text>
-        <View>
-          <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
-            <Icon style={styles.icon} name="calendar-outline" />
+          />
+          <Text style={styles.text}>Type:</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={serialType}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select type of event"}
+            value={selectedSerialType}
+            onChange={item => {
+              setSelectedSerialType(item.value)
+            }} />
+          <Text style={styles.text}>Start Date:</Text>
+          <View>
+            <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
+              <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
+              <Icon style={styles.icon} name="calendar-outline" />
+            </TouchableOpacity>
+            {isCalendarOpenStart && (
+              <View>
+                <CalendarPicker onDateChange={handleStartDateSelect} />
+              </View>
+            )}
+          </View>
+          <Text style={styles.text}>End Date:</Text>
+          <View>
+            <TouchableOpacity onPress={() => setIsCalendarOpenEnd(!isCalendarOpenEnd)} style={styles.calendar}>
+              <Text style={styles.text1}>{selectedEndDate ? selectedEndDate.toISOString().substr(0, 10) : "Select End Date "}</Text>
+              <Icon style={styles.icon} name="calendar-outline" />
+            </TouchableOpacity>
+            {isCalendarOpenEnd && (
+              <View>
+                <CalendarPicker onDateChange={handleEndDateSelect} />
+              </View>
+            )}
+          </View>
+
+          <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
+            <Text style={styles.btnText}>
+              Search
+            </Text>
           </TouchableOpacity>
-          {isCalendarOpenStart && (
-            <View>
-              <CalendarPicker onDateChange={handleStartDateSelect} />
-            </View>
-          )}
         </View>
-        <Text style={styles.text}>End Date:</Text>
-        <View>
-          <TouchableOpacity onPress={() => setIsCalendarOpenEnd(!isCalendarOpenEnd)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedEndDate ? selectedEndDate.toISOString().substr(0, 10): "Select End Date "}</Text>
-            <Icon style={styles.icon} name="calendar-outline" />
-          </TouchableOpacity>
-          {isCalendarOpenEnd && (
-            <View>
-              <CalendarPicker onDateChange={handleEndDateSelect} />
-            </View>
-          )}
-        </View>
-
-        <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
-          <Text style={styles.btnText}>
-            Search
-          </Text>
-        </TouchableOpacity>
-      </View>
       </ScrollView>
     </GradientBackground>
   )
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -279,13 +280,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
-    borderWidth: 1,
-    borderRadius: 25,
+    // borderWidth: 1,
+    // borderRadius: 25,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
     marginTop: 10,
     width: "90%",
+    borderWidth: 1,
+    borderRadius: 15,
 
   },
   text1: {
@@ -324,11 +327,12 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#144800',
     shadowColor: "#000",
-        shadowOffset: {
-        width: 0,
-        height: 4},
-        shadowOpacity: 0.30,
-        shadowRadius: 4.65,
-        elevation: 8
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8
   },
 });

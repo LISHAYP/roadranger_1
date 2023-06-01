@@ -13,8 +13,8 @@ import BackButton from './Components/BackButton';
 import OpenCamera from './Components/OpenCamera';
 import OpenCameraE from './Components/OpenCameraE';
 import Warning from './Screens/Warning';
-//import ReportAsMissing from './Screens/ReportAsMissing';
-// import TimeLine from './Screens/TimeLine'
+import ReportAsMissing from './Screens/ReportAsMissing';
+import TimeLine from './Screens/TimeLine'
 import followTraveler from './Screens/FollowTraveler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
@@ -41,7 +41,7 @@ export default function App() {
         <Stack.Screen name="New event" component={NewEvent} />
         <Stack.Screen name="Events" component={Events} />
         <Stack.Screen name="SOS" component={SOS} />
-        {/* <Stack.Screen name="TimeLine" component={Timeline} /> */}
+        <Stack.Screen name="TimeLine" component={TimeLine} />
         <Stack.Screen name="Camera" component={OpenCamera} />
         <Stack.Screen name="CameraE" component={OpenCameraE} />
         <Stack.Screen name="BackButton" component={BackButton} />
@@ -50,7 +50,7 @@ export default function App() {
         <Stack.Screen name="Event Details" component={EventDetails} />
         <Stack.Screen name="Chat" component={Chat} /> 
         <Stack.Screen name="Home chat" component={HomeChat} />
-        {/* <Stack.Screen name="Report" component={ReportAsMissing} /> */}
+        <Stack.Screen name="Report" component={ReportAsMissing} />
 
       </Stack.Navigator>
     </NavigationContainer>

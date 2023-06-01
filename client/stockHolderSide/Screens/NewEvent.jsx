@@ -8,6 +8,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 export default function NewEvent(props) {
   const stakeholder = props.route.params.stakeholder;
@@ -72,7 +73,7 @@ export default function NewEvent(props) {
   };
   addContry = () => {
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+    fetch(`${cgroup90}/api/post/country`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -99,7 +100,7 @@ export default function NewEvent(props) {
       area_name: city
     }
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+    fetch(`${cgroup90}/api/post/area`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -125,7 +126,7 @@ export default function NewEvent(props) {
     }
     else {
       // Send a POST request to your backend API with the event data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+      fetch(`${cgroup90}/api/post/newevent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ export default function NewEvent(props) {
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+    setPicture(`${cgroup90}/uploadEventPic/E_${date}.jpg`)
   }
   return (
     < GradientBackground>
@@ -274,7 +275,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
   },
   photo: {
     marginVertical: 20,

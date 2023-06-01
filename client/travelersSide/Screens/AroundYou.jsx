@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientBackground from '../Components/GradientBackground';
+import { cgroup90 } from '../cgroup90'; 
 
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
@@ -17,8 +18,7 @@ export default function AroundYou(props) {
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
-
-    
+ 
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -33,7 +33,7 @@ export default function AroundYou(props) {
             }
 
 
-            fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/lastevent', {
+            fetch(`${cgroup90}/api/post/lastevent`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -81,7 +81,7 @@ export default function AroundYou(props) {
         if (matchedEvent) {
             console.log("this is working!!!", matchedEvent)
         }
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
+        fetch(`${cgroup90}/api/newevent`, {
 
             method: 'GET',
             headers: new Headers({
@@ -134,7 +134,7 @@ export default function AroundYou(props) {
         console.log("**************", updateEventObj);
         console.log("*****-*********", lasteventOfTraveler);
 
-        fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/updateevent/${lasteventOfTraveler}`, {
+        fetch(`${cgroup90}/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
@@ -235,8 +235,8 @@ export default function AroundYou(props) {
                                         <TouchableOpacity style={styles.option}
                                             onPress={() => {
                                                 navigation.navigate("New event", {
-                                                    traveler: traveler,
-                                                    userLocation: userLocation
+                                                    traveler: traveler
+                                                   
                                                 }), setIsMenuOpen(false);
                                             }}
                                         >

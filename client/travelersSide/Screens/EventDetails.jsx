@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -9,6 +9,7 @@ import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
+import { cgroup90 } from '../cgroup90';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -27,13 +28,13 @@ export default function EventDetails(props) {
   const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
   const [deletedComment, setDeletedComment] = useState(false)
   const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
-
+  const [trueOrFalse, setTrueOrFalse] = useState('');
   const fetchTravelerDetails = async () => {
     const travelerobj = {
       traveler_Id: event.TravelerId
     };
     try {
-      const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
+      const response = await fetch(`${cgroup90}/api/traveler/details`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -60,7 +61,7 @@ export default function EventDetails(props) {
 
     try {
       console.log("in try fretchfetchNumberEvent", { eventNumberObj })
-      const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/events/comments', {
+      const response = await fetch(`${cgroup90}/api/events/comments`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -98,44 +99,44 @@ export default function EventDetails(props) {
         return;
       }
       console.log("", event);
-  
+
       const eventIdObj = {
         eventNumber: event.eventNumber
       };
-  
+
       const { latitude, longitude } = userLocation; // Destructure latitude and longitude
       console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
-  
+
       try {
-        const response = await fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
+        const response = await fetch(`${cgroup90}/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(eventIdObj),
         });
-  
+
         const data = await response.json();
         console.log("here3");
         console.log("Is it true or false?", data);
+        setTrueOrFalse(data);
         console.log("Is it true or false?", latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
         console.log("Is it true or false?", event.Latitude, event.Longitude);
-        console.log(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`);
       } catch (error) {
         console.error(error);
         Alert.alert('Error', error);
       }
     };
-  
+
     const timeoutId = setTimeout(() => {
       checkTravelersLocation();
     }, 1000); // Adjust the delay as needed
-  
+
     checkTravelersLocation(); // Call it immediately to log "here2" and "here7"
-  
+
     return () => clearTimeout(timeoutId); // Cleanup timeout on component unmount
   }, [userLocation, event]);
-  
+
 
 
   useEffect(() => {
@@ -157,8 +158,8 @@ export default function EventDetails(props) {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-    
-  }, [newCommentPublished, deletedComment,]); 
+
+  }, [newCommentPublished, deletedComment,]);
 
   const newComment = {
     eventNumber: event.eventNumber,
@@ -180,7 +181,7 @@ export default function EventDetails(props) {
     }
     else {
       // Send a POST request to your backend API with the comment data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcomment', {
+      fetch(`${cgroup90}/api/newcomment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +221,7 @@ export default function EventDetails(props) {
     };
     console.log(eventObj)
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deleteevent', {
+    fetch(`${cgroup90}/api/deleteevent`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -243,7 +244,7 @@ export default function EventDetails(props) {
     };
     console.log(commentObj)
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deletecomment', {
+    fetch(`${cgroup90}/api/deletecomment`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -263,6 +264,15 @@ export default function EventDetails(props) {
   }
   return (
     <GradientBackground>
+      {trueOrFalse === true && (
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Is it true?</Text>
+          <View style={styles.buttonContainer}>
+            <Button title="Yes" />
+            <Button title="No" />
+          </View>
+        </View>
+      )}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
@@ -492,6 +502,24 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row-reverse'
 
-  }
-
+  },
+  headerContainer: {
+    top: 35,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#e1e1e1',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });

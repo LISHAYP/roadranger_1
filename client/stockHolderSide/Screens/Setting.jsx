@@ -8,7 +8,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
-
+import { cgroup90 } from '../cgroup90';
 
 export default function Setting(props) {
   const stakeholder = props.route.params.stakeholder;
@@ -36,7 +36,7 @@ export default function Setting(props) {
   const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
   const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
   useEffect(() => {
-    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${stakeholder_email}.jpg`);
+    setUserPic(`${cgroup90}/uploadUserPic/U_${stakeholder_email}.jpg`);
 
   }, [userPic]);
   const changeStakeholder = {
@@ -55,7 +55,7 @@ export default function Setting(props) {
   console.log("*****", changeStakeholder);
   const saveChanges = async () => {
     console.log("IM IN saveChanges", changeStakeholder);
-    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/stakeholder/update?email=${stakeholder.StakeholderEmail}`, {
+    fetch(`${cgroup90}/api/put/stakeholder/update?email=${stakeholder.StakeholderEmail}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -82,17 +82,17 @@ export default function Setting(props) {
     handleSavePhoto();
   }
   const handleSavePhoto = () => {
-    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${stakeholder.StakeholderEmail}.jpg`);
+    setUserPic(`${cgroup90}/uploadUserPic/U_${stakeholder.StakeholderEmail}.jpg`);
   }
   return (
-    <ScrollView>
-      < GradientBackground>
+    < GradientBackground> 
         <BackButton />
         <View style={styles.container}>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
           </TouchableOpacity >
-          <Text style={styles.text}>Stakeholder Type:</Text>
+
+          {/* <Text style={styles.text}>Stakeholder Type:</Text>
           <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
@@ -105,7 +105,8 @@ export default function Setting(props) {
             value={selectedStakeholderType}
             onChange={item => {
               setSelectedStakeholderType(item.label)
-            }} />
+            }} /> */}
+
           <Text style={styles.text}>stakeholder Name:</Text>
           <TextInput style={styles.input}
             //value={StakeholderName}
@@ -121,12 +122,13 @@ export default function Setting(props) {
           </TextInput>
 
 
-          <Text style={styles.text}>Email:</Text>
+          {/* <Text style={styles.text}>Email:</Text>
           <TextInput style={styles.input}
             // value={email}
             onChangeText={(text) => setEmail(text)}
             placeholder={stakeholder.StakeholderEmail}>
-          </TextInput>
+          </TextInput> */}
+
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
             placeholder={'0' + stakeholder.Phone.toString()}
@@ -174,7 +176,6 @@ export default function Setting(props) {
           </TouchableOpacity>
         </View>
       </GradientBackground>
-    </ScrollView >
   )
 }
 const styles = StyleSheet.create({
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
 
   },
   label: {
