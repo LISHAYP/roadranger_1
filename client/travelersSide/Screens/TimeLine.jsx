@@ -68,8 +68,9 @@ export default function TimeLine(props) {
             onEventPress={handleEventPress}
             detailContainerStyle={{
               marginBottom: 20,
-              paddingLeft: 5,
+              paddingLeft: 15,
               paddingRight: 5,
+              marginRight:10,
               borderRadius: 15,
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
               borderColor:'black',
