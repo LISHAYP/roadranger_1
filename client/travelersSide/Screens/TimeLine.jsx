@@ -62,15 +62,17 @@ export default function TimeLine(props) {
             }}
             innerCircle='dot'
             options={{
-              style: { paddingTop: 40, paddingLeft: 25 },
+              style: { paddingTop: 30, paddingLeft: 15 },
             }}
-            separator={true}
+            separator={false}
             onEventPress={handleEventPress}
             detailContainerStyle={{
               marginBottom: 20,
               paddingLeft: 5,
               paddingRight: 5,
-              borderRadius: 10,
+              borderRadius: 15,
+              backgroundColor: 'rgba(0, 0, 0, 0.05)',
+              borderColor:'black',
             }}
             renderDetail={(rowData) => (
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
         padding: 20,
         paddingTop: 65,
         backgroundColor: 'white',
+        
     },
     time: {
         fontSize: 14,
@@ -108,6 +111,7 @@ const styles = StyleSheet.create({
     list: {
         flex: 1,
         marginTop: 20,
+        
     },
     date: {
         fontSize: 14,
@@ -118,10 +122,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontWeight: 'bold',
+        
     },
     descriptionContainer: {
         flexDirection: 'row',
         paddingRight: 50,
+
+        
     },
     image: {
         width: 50,
@@ -130,6 +137,6 @@ const styles = StyleSheet.create({
     },
     textDescription: {
         marginLeft: 10,
-        color: 'gray',
+        color: 'gray', 
     },
 });    

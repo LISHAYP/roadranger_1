@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'column',
         justifyContent: 'center',
-
+        
     },
     textModal1:{
         fontSize:20,
