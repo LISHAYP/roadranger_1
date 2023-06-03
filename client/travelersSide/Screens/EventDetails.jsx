@@ -10,6 +10,7 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -264,6 +265,7 @@ export default function EventDetails(props) {
   }
   return (
     <GradientBackground>
+          <Navbar traveler={traveler} />        
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
@@ -278,7 +280,7 @@ export default function EventDetails(props) {
         style={styles.container}
       >
         <BackButton />
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
+        <View style={[styles.eventContainer, { height: comments.length > 0 ? '67%' : '40%' }]}>
           <View>
             <View style={styles.event}>
               <View style={styles.row}>
@@ -358,7 +360,7 @@ export default function EventDetails(props) {
               />
             </View>
           </View>
-        </ScrollView>
+          </ScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
   );
@@ -404,9 +406,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '70%',
-    
-
+    height: '60%',
   },
   commentContainer: {
     borderColor: '#DCDCDC',

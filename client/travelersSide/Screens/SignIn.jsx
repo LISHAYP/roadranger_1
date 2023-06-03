@@ -80,7 +80,7 @@ export default function SignIn() {
               //Alert.alert('Token updated successfully')
               //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
               // saveLocation();
-              navigation.navigate("Around You", {  data });
+              navigation.navigate("Around You", { traveler: data });
             })
             .catch((error) => {
               console.error(error);

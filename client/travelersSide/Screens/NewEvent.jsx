@@ -10,12 +10,13 @@ import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
-
+import Navbar from '../Components/Navbar';
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation;
   const labels = props.route.params.labels;
+  console.log("------------------------",traveler)
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
@@ -229,9 +230,12 @@ export default function NewEvent(props) {
 
   return (
     < GradientBackground>
+          <BackButton text="New Post"/>
+
+      <Navbar traveler={traveler} userLocation={userLocation}  />
       <ScrollView>
         <View style={styles.container}>
-          <BackButton />
+        
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -283,7 +287,7 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 120,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,

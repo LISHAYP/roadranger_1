@@ -12,6 +12,7 @@ import { auth } from '../firebase';
 import 'firebase/database';
 import { Divider } from '@react-native-material/core';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
 
@@ -113,132 +114,143 @@ export default function Setting(props) {
   }
 
   return (
-    <ScrollView>
-      < GradientBackground>
-        <View style={styles.container}>
-          <BackButton />
-          <TouchableOpacity onPress={openCamera}>
-            <Image source={{ uri: traveler.Picture }} style={styles.user} />
-            <Divider style={{ marginBottom: 30 }} />
-          </TouchableOpacity >
-          <Text style={styles.text}>First Name:</Text>
-          <TextInput style={styles.input}
-            // value={firstName}
-            onChangeText={(text) => setFirstName(text)}
-            placeholder={traveler.first_name}>
-          </TextInput>
-          <Text style={styles.text}>Last Name:</Text>
-          <TextInput style={styles.input}
-            //value={lastName}
-            onChangeText={(text) => setLastName(text)}
-            placeholder={traveler.last_name}>
-          </TextInput>
+    < GradientBackground>
+      <Navbar traveler={traveler} />
+      <BackButton text="Setting"/>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>  
+            <TouchableOpacity onPress={openCamera}>
+              <Image source={{ uri: traveler.Picture }} style={styles.user} />
+              <Divider style={{ marginBottom: 30 }} />
+            </TouchableOpacity >
+            <Text style={styles.text}>First Name:</Text>
+            <TextInput style={styles.input}
+              // value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+              placeholder={traveler.first_name}>
+            </TextInput>
+            <Text style={styles.text}>Last Name:</Text>
+            <TextInput style={styles.input}
+              //value={lastName}
+              onChangeText={(text) => setLastName(text)}
+              placeholder={traveler.last_name}>
+            </TextInput>
 
-          <Text style={styles.text}>Phone:</Text>
-          <TextInput style={styles.input}
-            placeholder={'0' + traveler.phone.toString()}
-            value={phone}
-            keyboardType='numeric'
-            onChangeText={(text) => setPhone(text)}
-          >
-          </TextInput>
-          <Text style={styles.text}>Gender:</Text>
+            <Text style={styles.text}>Phone:</Text>
+            <TextInput style={styles.input}
+              placeholder={'0' + traveler.phone.toString()}
+              value={phone}
+              keyboardType='numeric'
+              onChangeText={(text) => setPhone(text)}
+            >
+            </TextInput>
+            <Text style={styles.text}>Gender:</Text>
 
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={gender}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={traveler.gender}
-            value={selectedGender}
-            onChange={item => {
-              setSelectedGender(item.value)
-            }} />
-          <Text style={styles.text}>Insurance Company:</Text>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              data={gender}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={traveler.gender}
+              value={selectedGender}
+              onChange={item => {
+                setSelectedGender(item.value)
+              }} />
+            <Text style={styles.text}>Insurance Company:</Text>
 
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={insurance}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={traveler.insurence_company}
-            value={traveler.insurance_company}
-            onChange={item => {
-              setSelectedInsurance(item.value)
-            }}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              data={insurance}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={traveler.insurence_company}
+              value={traveler.insurance_company}
+              onChange={item => {
+                setSelectedInsurance(item.value)
+              }}
 
-          />
-          <Text style={styles.text}>Date of Birth:</Text>
-          <View>
-            <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-
-              <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
-              <Icon style={styles.icon} name="calendar-outline" />
-            </TouchableOpacity>
-            {isCalendarOpen && (
-              <View>
-                <CalendarPicker onDateChange={handleDateSelect} />
-              </View>
-            )}
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Location Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.location ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchLocation}
-              value={isEnabledLocation}
             />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Notification</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.notifications ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotification}
-              value={isEnabledNotification}
-            />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Chat Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.chat ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchChatMode}
-              value={isEnabledChatMode}
-            />
-          </View>
-          <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
-            <Text style={styles.btnText}>
-              Save Changes
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </GradientBackground>
-    </ScrollView >
+            <Text style={styles.text}>Date of Birth:</Text>
+            <View>
+              <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
+
+                <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
+                <Icon style={styles.icon} name="calendar-outline" />
+              </TouchableOpacity>
+              {isCalendarOpen && (
+                <View>
+                  <CalendarPicker onDateChange={handleDateSelect} />
+                </View>
+              )}
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.text2}>Location Mode</Text>
+              <Switch
+                style={styles.switch}
+                trackColor={{ false: "#767577", true: "#8FBC8F" }}
+                thumbColor={traveler.location ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchLocation}
+                value={isEnabledLocation}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.text2}>Notification</Text>
+              <Switch
+                style={styles.switch}
+                trackColor={{ false: "#767577", true: "#8FBC8F" }}
+                thumbColor={traveler.notifications ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleNotification}
+                value={isEnabledNotification}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.text2}>Chat Mode</Text>
+              <Switch
+                style={styles.switch}
+                trackColor={{ false: "#767577", true: "#8FBC8F" }}
+                thumbColor={traveler.chat ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchChatMode}
+                value={isEnabledChatMode}
+              />
+            </View>
+            <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
+              <Text style={styles.btnText}>
+                Save Changes
+              </Text>
+            </TouchableOpacity>     
+        </ScrollView >
+      </View>
+    </GradientBackground>
 
   )
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
-    padding: 10,
+    paddingTop:120,
+    // padding: 10,
     marginVertical: 10,
-    marginHorizontal: 10,
+    // marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    flex:1,
+    // marginTop: 40,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    
+
+  },
+  scrollContent: {
+    paddingBottom: 70, // Adjust this value as needed
+    
   },
   RoadRanger: {
     alignSelf: 'center',
@@ -352,7 +364,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 },
   btnSave: {
     alignSelf: 'center',
-    height:55,
+    height: 55,
     marginVertical: 20,
     width: "55%",
     alignSelf: 'center',
@@ -363,11 +375,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#144800',
     shadowColor: "#000",
-        shadowOffset: {
-     	width: 0,
-	    height: 5},
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

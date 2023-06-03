@@ -9,6 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Search(props) {
   const navigation = useNavigation();
@@ -151,6 +152,8 @@ export default function Search(props) {
   const filteredCities = city.filter(city => city.countryNumber === selectedCountry);
   return (
     < GradientBackground>
+      <Navbar traveler={traveler} />
+
       <ScrollView>
         <View style={styles.container}>
           <BackButton />

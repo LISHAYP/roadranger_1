@@ -21,6 +21,7 @@ import OpenCameraSOS from './Components/OpenCameraSOS';
 import Chat from './Screens/Chat';
 import HomeChat from './Screens/HomeChat';
 import BackButton from './Components/BackButton';
+import Navbar from './Components/Navbar';
 import GroupChat from './Screens/GroupChat'
 import {  StyleSheet } from 'react-native';
 import ChatWithSH from './Screens/ChatWithSH';

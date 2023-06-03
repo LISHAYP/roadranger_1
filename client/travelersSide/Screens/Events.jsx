@@ -9,12 +9,12 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import Navbar from '../Components/Navbar';
 
 export default function Events(props) {
   // const [events, setEvents] = useState([]);
   const events = props.route.params.events;
   const traveler = props.route.params.traveler;
-
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
 
@@ -40,8 +40,10 @@ export default function Events(props) {
 
   return (
     <GradientBackground>
+                  <Navbar traveler={traveler} />
+
       <BackButton />
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>  
 
         <View style={styles.container}>
           <View>
@@ -73,11 +75,14 @@ export default function Events(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    marginVertical: 10,
+    // marginTop: 40,
+    // marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
     height: "100%"
+  },
+  scrollContent: {
+    paddingBottom: 70, // Adjust this value as needed
   },
   event: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
