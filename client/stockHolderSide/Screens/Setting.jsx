@@ -9,7 +9,7 @@ import moment from 'moment';
 import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
-
+import { Divider } from 'react-native-paper';
 export default function Setting(props) {
   const stakeholder = props.route.params.stakeholder;
   console.log("********", stakeholder);
@@ -90,6 +90,7 @@ export default function Setting(props) {
         <View style={styles.container}>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
+            <Divider style={{ marginBottom: 30 }} />
           </TouchableOpacity >
 
           {/* <Text style={styles.text}>Stakeholder Type:</Text>
@@ -180,6 +181,7 @@ export default function Setting(props) {
 }
 const styles = StyleSheet.create({
   container: {
+    marginTop: 30,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
@@ -208,17 +210,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
+    borderRadius: 15,
     backgroundColor: '#144800'
   },
   user: {
     alignSelf: 'center',
     resizeMode: 'cover',
-    height: 150,
+    height: 140,
     borderRadius: 75,
-    width: 150,
+    width: 140,
     marginBottom: 25,
-    
   },
   btnText: {
     color: '#F8F8FF',
@@ -245,7 +246,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
-    borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
@@ -299,21 +299,23 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 },
   btnSave: {
+    height: 55,
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
+    borderColor: '#426c32',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800',
+    borderRadius: 15,
+    backgroundColor: '#426c32',
     shadowColor: "#000",
     shadowOffset: {
-    width: 0,
-    height: 4},
-    shadowOpacity: 0.30,
-    shadowRadius: 4.65,
-    elevation: 8,
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

@@ -322,7 +322,7 @@ export default function NewEvent(props) {
 
           <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
-            <Text style={styles.btnText}>
+            <Text style={styles.btnPText}>
               Add Photo
             </Text>
           </TouchableOpacity>
@@ -344,8 +344,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    alignSelf: 'center'
-
+    alignSelf: 'center',
   },
 
   RoadRanger: {
@@ -371,15 +370,21 @@ const styles = StyleSheet.create({
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
+    fontSize: 25,
+
+  },btnPText: {
+    color: '#A9A9A9',
+    alignSelf: 'center',
     fontSize: 20,
 
   },
 
   dropdown: {
+    alignSelf: 'center',
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
-    borderRadius: 8,
+    borderRadius: 15,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
@@ -398,6 +403,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
     width: "90%",
@@ -412,30 +418,23 @@ const styles = StyleSheet.create({
   },
   photo: {
     marginVertical: 20,
-    width: "80%",
+    width: "90%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 15,
-    backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9
+    borderColor: '#144800',
+    borderWidth: 1
 
   },
   icon: {
     left: 30,
     size: 30,
-    marginRight: 50
+    marginRight: 50,
+    color:'#A9A9A9',
 
   },
   // label: {
@@ -463,10 +462,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
+    borderColor: '#426c32',
     borderWidth: 2,
-    borderRadius: 20,
-    backgroundColor: '#144800',
+    borderRadius: 15,
+    backgroundColor: '#426c32',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

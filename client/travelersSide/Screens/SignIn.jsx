@@ -13,6 +13,7 @@ import { Button, Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { cgroup90 } from '../cgroup90';
+import { Divider } from "@react-native-material/core";
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -206,7 +207,7 @@ export default function SignIn() {
     < GradientBackground>
       <View style={styles.container}>
         <Image source={RoadRanger} style={styles.RoadRanger} />
-
+        <Divider style={{ marginBottom: 50 }} />
         <View style={styles.frame}>
           <Text style={styles.text}>Email:</Text>
           <TextInput style={styles.input}
@@ -280,7 +281,6 @@ export default function SignIn() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     // marginVertical: 10,
     // marginHorizontal: 10,
     padding: 20,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 20,
-    width: "90%",
+    width: "100%",
     fontSize: 20,
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -324,21 +324,30 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 0
   },
   btnLogIn: {
+    height: 55,
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
+    borderColor: '#426c32',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800',
+    borderRadius: 15,
+    backgroundColor: '#426c32',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4
+      height: 5
     },
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
@@ -347,7 +356,7 @@ const styles = StyleSheet.create({
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: 22,
   },
   btnSignUp: {
     flexDirection: 'row',
@@ -355,6 +364,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   contact: {
+    
     fontSize: 20,
     alignSelf: 'center',
     marginLeft: 10,
@@ -362,6 +372,6 @@ const styles = StyleSheet.create({
   text1: {
     fontWeight: 'bold',
     fontSize: 15,
-
+    color: '#426c32'
   }
 });

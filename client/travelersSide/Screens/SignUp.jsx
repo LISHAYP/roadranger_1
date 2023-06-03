@@ -323,13 +323,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
+    borderRadius: 15,
     backgroundColor: '#144800'
   },
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: 25,
 
   },
 
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
 
   },
   label: {
@@ -412,7 +412,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 15,
+    backgroundColor: '#144800', height: 55,
+    marginVertical: 20,
+    width: "50%",
+    alignSelf: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderColor: '#426c32',
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: '#426c32',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

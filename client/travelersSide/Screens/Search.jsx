@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#F8F8FF',
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: 25,
 
   },
 
@@ -325,17 +325,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
-    alignSelf: 'center',
     height: 55,
     marginVertical: 20,
-    width: "55%",
+    width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
+    borderColor: '#426c32',
     borderWidth: 2,
-    borderRadius: 20,
-    backgroundColor: '#144800',
+    borderRadius: 15,
+    backgroundColor: '#426c32',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

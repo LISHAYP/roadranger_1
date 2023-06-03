@@ -9,7 +9,7 @@ import { useRef } from 'react';
 import { Button, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { cgroup90 } from '../cgroup90';
-
+import { Divider } from "@react-native-material/core";
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -139,6 +139,7 @@ export default function SignIn() {
 
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
+                <Divider style={{ marginBottom: 50 }} />
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input}
                     value={email}
@@ -210,16 +211,16 @@ export default function SignIn() {
 
     const styles = StyleSheet.create({
         container: {
-          padding: 10,
-          // marginVertical: 10,
-          // marginHorizontal: 10,
-          padding: 20,
-          width: "100%",
-          marginTop: 100,
-          // backgroundColor:'#F0FFF0'
-          // backgroundColor:'#3CB371'
-      
-        },
+            padding: 10,
+            // marginVertical: 10,
+            // marginHorizontal: 10,
+            padding: 20,
+            width: "100%",
+            marginTop: 100,
+            // backgroundColor:'#F0FFF0'
+            // backgroundColor:'#3CB371'
+        
+          },
         frame: {
           // backgroundColor:  'rgba(0, 0, 0, 0.07)',
           padding: 20,
@@ -232,66 +233,76 @@ export default function SignIn() {
           size: 35
         },
         RoadRanger: {
-          alignSelf: 'center',
-          resizeMode: 'contain',
-          height: 100
-      
-        },
+            alignSelf: 'center',
+            resizeMode: 'contain',
+            height: 100
+        
+          },
         text: {
           color: '#144800',
           fontSize: 30,
         },
         input: {
-          marginVertical: 20,
-          width: "90%",
-          fontSize: 20,
-          paddingVertical: 10,
-          paddingHorizontal: 15,
-          borderColor: '#144800',
-          borderWidth: 1,
-          borderRadius: 15,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          backgroundColor: 'white',
+            marginVertical: 20,
+            width: "100%",
+            fontSize: 20,
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            borderColor: '#144800',
+            borderWidth: 1,
+            borderRadius: 15,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 4
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 0
         },
         btnLogIn: {
-          marginVertical: 20,
-          width: "50%",
-          alignSelf: 'center',
-          paddingVertical: 10,
-          paddingHorizontal: 15,
-          borderColor: '#144800',
-          borderWidth: 2,
-          borderRadius: 25,
-          backgroundColor: '#144800',
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 4
-          },
-          shadowOpacity: 0.32,
-          shadowRadius: 5.46,
-          elevation: 9
+            height: 55,
+            marginVertical: 20,
+            width: "50%",
+            alignSelf: 'center',
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            borderColor: '#426c32',
+            borderWidth: 2,
+            borderRadius: 15,
+            backgroundColor: '#426c32',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 5
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9
         },
         btnText: {
-          color: '#F8F8FF',
-          alignSelf: 'center',
-          fontSize: 20,
+            color: '#F8F8FF',
+            alignSelf: 'center',
+            fontSize: 22,
         },
         btnSignUp: {
-          flexDirection: 'row',
-          marginBottom: 20,
-          marginTop: 20
-        },
-        contact: {
-          fontSize: 20,
-          alignSelf: 'center',
-          marginLeft: 10,
-        },
+            flexDirection: 'row',
+            marginBottom: 20,
+            marginTop: 20
+          },
+          contact: {
+            fontSize: 20,
+            alignSelf: 'center',
+            marginLeft: 10,
+          },
         text1: {
-          fontWeight: 'bold',
-          fontSize: 15,
+            fontWeight: 'bold',
+            fontSize: 15,
+            color: '#426c32'
       
         }
       })

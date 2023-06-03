@@ -98,7 +98,15 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     event: {
-        backgroundColor: 'rgba(0, 0, 0, 0.07)',
+        backgroundColor: '#F5F5F5',
+              shadowColor: '#000',
+              shadowOffset: {
+              width: 0,
+              height: 2,
+               },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
         borderRadius: 15,
         padding: 10,
         margin: 10,

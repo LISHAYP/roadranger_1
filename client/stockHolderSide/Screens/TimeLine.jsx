@@ -52,12 +52,12 @@ export default function TimeLine(props) {
             <Timeline
                 style={styles.list}
                 showTime={false}
-                circleSize={20}
-                circleColor='green'
-                lineColor={'yellowgreen'}
-                separatorStyle={{
-                    backgroundColor: '#144800',
-                    height: 2,
+                circleSize={25}
+          circleColor='#A7BEAE'
+          lineColor={'#7b94a9'}
+          separatorStyle={{
+            backgroundColor: '#144800',
+            height: 2,
                 }}
                 data={events}
                 timeStyle={{
@@ -69,15 +69,26 @@ export default function TimeLine(props) {
                 }}
                 innerCircle='dot'
                 options={{
-                    style: { paddingTop: 40, paddingLeft: 25 },
+                    style: { paddingTop: 30, paddingLeft: 15 },
                 }}
-                separator={true}
+                separator={false}
                 onEventPress={handleEventPress}
                 detailContainerStyle={{
                     marginBottom: 20,
-                    paddingLeft: 5,
+                    paddingLeft: 15,
                     paddingRight: 5,
-                    borderRadius: 10,
+                    marginRight:10,
+                    borderRadius: 15,
+                    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                    backgroundColor: '#F5F5F5',
+                    shadowColor: '#000',
+                    shadowOffset: {
+                    width: 0,
+                    height: 2,
+                     },
+              shadowOpacity: 0.23,
+              shadowRadius: 2.62,
+              elevation: 4,
                 }}
                 renderDetail={(rowData) => (
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

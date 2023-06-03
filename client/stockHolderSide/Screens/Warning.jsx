@@ -138,22 +138,24 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     btnSave: {
+        height: 55,
         marginVertical: 20,
         width: "50%",
         alignSelf: 'center',
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderColor: '#144800',
+        borderColor: '#426c32',
         borderWidth: 2,
-        borderRadius: 25,
-        backgroundColor: '#144800',
+        borderRadius: 15,
+        backgroundColor: '#426c32',
         shadowColor: "#000",
         shadowOffset: {
-        width: 0,
-        height: 4},
-        shadowOpacity: 0.30,
-        shadowRadius: 4.65,
-        elevation: 8,
+          width: 0,
+          height: 5
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
     },
 
     btnText: {

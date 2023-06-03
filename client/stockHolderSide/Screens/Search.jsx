@@ -236,7 +236,8 @@ export default function Search(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 90,
+    alignSelf: 'center',
+    marginTop: 20,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
@@ -246,20 +247,23 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#144800',
-    fontSize: 20,
+    fontSize: 22,
+    left: 20,
 
   },
   icon: {
     fontSize: 25
   },
   btnText: {
+    alignSelf: 'center',
     color: '#F8F8FF',
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: 25,
 
   },
 
   calendar: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
     fontSize: 20,
@@ -275,30 +279,32 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 40,
+    alignSelf: 'center',
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
-    // borderWidth: 1,
-    // borderRadius: 25,
+    borderWidth: 1,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
     marginTop: 10,
     width: "90%",
-    borderWidth: 1,
-    borderRadius: 15,
 
   },
   text1: {
+
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
 
   },
 
+
   label: {
+
     position: 'absolute',
     backgroundColor: 'white',
     left: 22,
@@ -317,22 +323,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+    height: 55,
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
+    borderColor: '#426c32',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800',
+    borderRadius: 15,
+    backgroundColor: '#426c32',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4
+      height: 5
     },
-    shadowOpacity: 0.30,
-    shadowRadius: 4.65,
-    elevation: 8
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

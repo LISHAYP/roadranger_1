@@ -195,7 +195,7 @@ console.log(data)
             }} />
           <TouchableOpacity style={styles.photo} onPress={OpenCameraSOS} >
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
-            <Text style={styles.btnText}>
+            <Text style={styles.btnPText}>
               Add Photo
             </Text>
           </TouchableOpacity>
@@ -238,11 +238,17 @@ const styles = StyleSheet.create({
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
+    fontSize: 25,
+
+  },btnPText: {
+    color: '#A9A9A9',
+    alignSelf: 'center',
     fontSize: 20,
 
   },
 
   dropdown: {
+    alignSelf: 'center',
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
@@ -250,7 +256,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -265,28 +271,28 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
     width: "90%",
     fontSize: 20,
-    paddingVertical: 70,
+    paddingVertical: 60,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
 
 
   },
   photo: {
     marginVertical: 20,
-    width: "80%",
+    width: "90%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
-    borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800',
+    borderWidth: 1,
+    borderRadius: 15,
     marginBottom: 50,
     flexDirection: 'row',
 
@@ -294,7 +300,8 @@ const styles = StyleSheet.create({
   icon: {
     left: 30,
     size: 30,
-    marginRight: 50
+    marginRight: 50,
+    color:'#A9A9A9',
 
   },
   // label: {
@@ -316,14 +323,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+    height: 55,
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#144800',
+    borderColor: '#426c32',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 15,
+    backgroundColor: '#426c32',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

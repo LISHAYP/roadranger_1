@@ -52,12 +52,13 @@ export default function TimeLine(props) {
           <Timeline
             style={styles.list}
             showTime={false}
-            circleSize={20}
-          circleColor='green'
-          lineColor={'yellowgreen'}
+            circleSize={25}
+          circleColor='#A7BEAE'
+          lineColor={'#7b94a9'}
           separatorStyle={{
             backgroundColor: '#144800',
             height: 2,
+            
           }}
             data={events}
             timeStyle={{
@@ -80,7 +81,15 @@ export default function TimeLine(props) {
               marginRight:10,
               borderRadius: 15,
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
-              borderColor:'black',
+              backgroundColor: '#F5F5F5',
+              shadowColor: '#000',
+              shadowOffset: {
+              width: 0,
+              height: 2,
+               },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
             }}
             renderDetail={(rowData) => (
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -107,7 +116,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         paddingTop: 65,
-        backgroundColor: 'white',
+        backgroundColor: 'white', 
         
     },
     time: {
@@ -126,6 +135,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
         color: 'gray',
+      
     },
     title: {
         fontSize: 16,
@@ -135,7 +145,6 @@ const styles = StyleSheet.create({
     descriptionContainer: {
         flexDirection: 'row',
         paddingRight: 50,
-
         
     },
     image: {
