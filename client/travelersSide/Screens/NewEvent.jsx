@@ -254,9 +254,9 @@ export default function NewEvent(props) {
                             }
                             const data = await response.json();
                             for (const entit of data.entities) {
-                               entityname = entit.name;
+                              entityname = data.entities[0].name;
                             }
-                            console.log('entityname', entityname);
+                            //console.log('entityname', entityname);
                             translations.forEach(async translationData => {
                               const requestBody = {
                                 document: {
@@ -286,13 +286,36 @@ export default function NewEvent(props) {
                                 entities.push(entObj);
                               }
                               if (entityname) {
-                                console.log("here in entityname", entityname)
-                                console.log('entities', entities);
-                                for (const e of entities) {
-                                  const similarity = stringSimilarity.compareTwoStrings(e.name, entityname);
-                                  console.log('Similarity between', e.name, 'and', entityname, 'is', similarity);
+                                // console.log("here in entityname", entityname)
+                                // console.log('entities', entities);
+                                for (let i = 0; i < entities.length; i++) {
+                                  const similarity = stringSimilarity.compareTwoStrings(entities[i].name, entityname);
+
+                                  if (similarity > 0.7) {
+
+                                    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent?eventNumber=${entities[i].id}`, {
+
+                                      method: 'GET',
+                                      headers: new Headers({
+                                        'Content-Type': 'application/json; charset=UTF-8',
+                                        'Accept': 'application/json; charset=UTF-8',
+                                      })
+                                    })
+                                      .then(response => {
+                                        return response.json()
+                                      })
+                                      .then(
+                                        (result) => {
+                                          matchedEvents.push(result);
+                                        },
+                                        (error) => {
+                                          console.log("err post=", error);
+                                        }, []);
+                                        break; // Exit the loop after finding a match
+                                  }
                                 }
                               }
+
                             });
                           });
 

@@ -18,9 +18,7 @@ export default function AroundYou(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
-    const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
-
-    
+    const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');    
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
