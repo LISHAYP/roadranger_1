@@ -36,7 +36,7 @@ export default function NewEvent(props) {
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
-  const [picture, setPicture] = useState('#');
+  const [picture, setPicture] = useState('http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/no-image.png');
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
