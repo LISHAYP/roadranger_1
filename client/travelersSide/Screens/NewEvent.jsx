@@ -10,20 +10,15 @@ import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
-import { Divider } from "@react-native-material/core";
-import { cgroup90 } from '../cgroup90';
-import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
+  const userLocation = props.route.params.userLocation;
   const labels = props.route.params.labels;
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const [location, setLocation] = useState('');
-
   const serialType = [
     //creating type of different eventtypes
     { label: 'Weather', value: '1' },
@@ -49,25 +44,11 @@ export default function NewEvent(props) {
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
-  const [locationFetched, setLocationFetched] = useState(false);
 
-  useEffect(() => { 
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');       
-      }
-      let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation);
-      console.log("&&&&&&&&&", currentLocation);
-      setLocationFetched(true); // Set locationFetched to true after location is fetched  
-      getLocation()
-    })();
-  }, []);
-  
-  const getLocation=()=>{
+  useEffect(() => {
+    //insert the API Key
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-    Geocoder.from(location.coords.latitude, location.coords.longitude)
+    Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
@@ -75,57 +56,34 @@ export default function NewEvent(props) {
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        console.log("^^^^^^^^^^^^^^^^^^^^",location.coords.latitude)
+        addContry();
       })
       .catch(error => console.warn(error))
-  }
+  }, []);
 
 
-  useEffect(() => {
-    addContry();
-  }, [location,locationFetched]);
-
-
-
-  // const saveCountryAndCity = () => {
-  //   Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-  //   Geocoder.from(location.coords.latitude, location.coords.longitude)
-  //     .then(json => {
-  //       const addressComponents = json.results[0].address_components;
-  //       const countryComponent = addressComponents.find(component => component.types.includes('country'));
-  //       const cityComponent = addressComponents.find(component => component.types.includes('locality'));
-  //       // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
-  //       setCountry(countryComponent.long_name);
-  //       setCity(cityComponent.long_name);
-  //       addContry();
-  //     })
-  //     .catch(error => console.warn(error))
-  // }
-
-  // const newEvent = {
-  //   Details: details,
-  //   event_date: new Date().toISOString().slice(0, 10),
-  //   event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-  //   Latitude: location.coords.latitude,
-  //   Longitude: location.coords.longitude,
-  //   event_status: eventStatus,
-  //   Picture: picture,
-  //   TravelerId: id,
-  //   StackholderId: stackholderId,
-  //   serialTypeNumber: serialTypeNumber,
-  //   country_number: countryNumber,
-  //   area_number: areaNumber,
-  //   labels: JSON.stringify(labels)
-  // };
-  // console.log("--------", { newEvent, labels })
-
-
+  const newEvent = {
+    Details: details,
+    event_date: new Date().toISOString().slice(0, 10),
+    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+    Latitude: userLocation.coords.latitude,
+    Longitude: userLocation.coords.longitude,
+    event_status: eventStatus,
+    Picture: picture,
+    TravelerId: id,
+    StackholderId: stackholderId,
+    serialTypeNumber: serialTypeNumber,
+    country_number: countryNumber,
+    area_number: areaNumber,
+    labels: JSON.stringify(labels)
+  };
+  //console.log("--------", { newEvent, labels })
   const countryObj = {
     country_name: country,
   };
   addContry = () => {
 
-    fetch(`${cgroup90}/api/post/country`, {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -152,7 +110,7 @@ export default function NewEvent(props) {
       area_name: city
     }
 
-    fetch(`${cgroup90}/api/post/area`, {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -171,30 +129,12 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
-  const createEvent = () => {
-    const newEvent = {
-      Details: details,
-      event_date: new Date().toISOString().slice(0, 10),
-      event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-      Latitude: location.coords.latitude,
-      Longitude: location.coords.longitude,
-      event_status: eventStatus,
-      Picture: picture,
-      TravelerId: id,
-      StackholderId: stackholderId,
-      serialTypeNumber: serialTypeNumber,
-      country_number: countryNumber,
-      area_number: areaNumber,
-      labels: JSON.stringify(labels)
-    };
-    console.log("--------",  newEvent )
-
-
+  const createEvent = async () => {
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
       // Send a POST request to your backend API with the event data
-      fetch(`${cgroup90}/api/post/newevent`, {
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -206,10 +146,11 @@ export default function NewEvent(props) {
           const comonventdetailsObj = {
             serialTypeNumber: serialTypeNumber,
             event_status: eventStatus,
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude,
           };
-          fetch(`${cgroup90}/api/post/neweventdistance`,
+          fetch(
+            'http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance',
             {
               method: 'POST',
               headers: {
@@ -222,7 +163,7 @@ export default function NewEvent(props) {
             .then(data1 => {
               const relatedEventsData = data1; // Assign the data to a constant variable
               const matchedEvents = []; // Array to store matched events
-
+  
               for (let i = 0; i < relatedEventsData.length; i++) {
                 const event = relatedEventsData[i];
                 if (compareLabels(event, newEvent)) {
@@ -237,7 +178,7 @@ export default function NewEvent(props) {
               }
               Alert.alert('Publish');
               const data = traveler;
-              navigation.navigate("Around You", { data, matchedEvents });
+              navigation.navigate("Around You", { data, matchedEvents});
             })
             .catch(error => {
               console.error(error);
@@ -250,21 +191,21 @@ export default function NewEvent(props) {
         });
     }
   };
-
+  
   const compareLabels = (event1, event2) => {
     if (!event1.labels || !event2.labels) {
       // If either event is missing the labels property, return false
       return false;
     }
-
-    if (event1.Details === event2.Details) {
+  
+    if ( event1.Details === event2.Details) {
       // If Details are defined and identical, return false
       return false;
     }
-
+  
     const labels1 = JSON.parse(event1.labels).map(label => label.description);
     const labels2 = JSON.parse(event2.labels).map(label => label.description);
-
+  
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
@@ -272,15 +213,18 @@ export default function NewEvent(props) {
         }
       }
     }
-
+  
     return false;
   };
-
+  
+  
+  
+  
 
   const OpenCameraE = () => {
-    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, location, traveler });
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`${cgroup90}/uploadEventPic/E_${date}.jpg`)
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
   }
 
   return (
@@ -289,7 +233,6 @@ export default function NewEvent(props) {
         <View style={styles.container}>
           <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
-          <Divider style={{ marginBottom: 50 }} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -326,6 +269,7 @@ export default function NewEvent(props) {
               Add Photo
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.btnSave} onPress={createEvent}>
             <Text style={styles.btnText}>
               Publish
@@ -344,7 +288,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    alignSelf: 'center'
 
   },
 
@@ -352,21 +295,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9
+    marginBottom: 20
 
   },
   text: {
     color: '#144800',
     fontSize: 20,
-    left: 15,
+
   },
   btnText: {
     color: '#F8F8FF',
@@ -383,7 +318,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 25,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -406,7 +341,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 25,
 
 
   },
@@ -418,18 +353,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 25,
     backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9
 
   },
   icon: {
@@ -457,7 +384,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
-    height: 55,
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
@@ -465,16 +391,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 20,
-    backgroundColor: '#144800',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9
+    borderRadius: 25,
+    backgroundColor: '#144800'
   },
 });
 

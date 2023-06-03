@@ -235,8 +235,9 @@ export default function AroundYou(props) {
                                         <TouchableOpacity style={styles.option}
                                             onPress={() => {
                                                 navigation.navigate("New event", {
-                                                    traveler: traveler
-                                                   
+                                                    traveler: traveler,
+                                                    userLocation: userLocation
+
                                                 }), setIsMenuOpen(false);
                                             }}
                                         >

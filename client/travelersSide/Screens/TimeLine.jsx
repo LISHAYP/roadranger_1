@@ -70,16 +70,17 @@ export default function TimeLine(props) {
             innerCircle='dot'
             options={{
               style: { paddingTop: 30, paddingLeft: 15 },
-            }}
+           marginRight:20 }}
             separator={false}
             onEventPress={handleEventPress}
             detailContainerStyle={{
               marginBottom: 20,
-              paddingLeft: 5,
+              paddingLeft: 15,
+              marginRight:10,
               paddingRight: 5,
               borderRadius: 15,
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
-              borderColor:'black',
+              borderColor:'black',           
             }}
             renderDetail={(rowData) => (
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
