@@ -8,6 +8,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
+import stringSimilarity from 'string-similarity';
 
 
 export default function NewEvent(props) {
@@ -288,11 +289,8 @@ export default function NewEvent(props) {
                                 console.log("here in entityname", entityname)
                                 console.log('entities', entities);
                                 for (const e of entities) {
-                                  if (entityname == e.name) {
-                                    setSetEntitiy(true);
-                                    console.log("e.name",e.name, e.id)
-                                 break;
-                                  }
+                                  const similarity = stringSimilarity.compareTwoStrings(e.name, entityname);
+                                  console.log('Similarity between', e.name, 'and', entityname, 'is', similarity);
                                 }
                               }
                             });
@@ -362,17 +360,6 @@ export default function NewEvent(props) {
   };
 
 
-  const copmareEntities = (x, y) => {
-    console.log('No copmareEntitiescopmareEntitiescopmareEntitiescopmareEntities found', x, y);
-
-    for (const entity of x) {
-      if (entity === y) {
-        return true;
-      }
-    }
-
-    return false;
-  };
 
 
 
