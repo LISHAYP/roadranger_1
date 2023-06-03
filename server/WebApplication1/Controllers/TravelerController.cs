@@ -115,32 +115,37 @@ namespace WebApplication1.Controllers
         [Route("api/post/login")]
         public IHttpActionResult Post([FromBody] TravelerDto value)
         {
-            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email.ToLower() == value.travler_email.ToLower());
+            var email = value.travler_email.ToLower(); // Convert email to lowercase
+
+            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email.ToLower() == email);
             if (existingUser == null)
             {
-                logger.Info("login faild! email does not exist in the system");
-                return BadRequest("login faild! email does not exist in the system, please register first!");
+                logger.Info("login failed! Email does not exist in the system");
+                return BadRequest("login failed! Email does not exist in the system, please register first!");
             }
-            var users = db.traveleres.Where(x => x.travler_email == value.travler_email && x.password == value.password).Select(x => new TravelerDto
-            {
-                traveler_id = x.traveler_id,
-                travler_email = x.travler_email,
-                password = x.password,
-                first_name = x.first_name,
-                last_name = x.last_name,
-                phone = x.phone,
-                dateOfBirth = x.dateOfBirth,
-                gender = x.gender,
-                insurence_company = x.insurence_company,
-                notifications = x.notifications,
-                location = x.location,
-                save_location = x.save_location,
-                chat = x.chat,
-                Picture = x.picture,
-                token=x.token
 
-            })
-        .ToList();
+            var users = db.traveleres
+                .Where(x => x.travler_email.ToLower() == email && x.password == value.password)
+                .Select(x => new TravelerDto
+                {
+                    traveler_id = x.traveler_id,
+                    travler_email = x.travler_email,
+                    password = x.password,
+                    first_name = x.first_name,
+                    last_name = x.last_name,
+                    phone = x.phone,
+                    dateOfBirth = x.dateOfBirth,
+                    gender = x.gender,
+                    insurence_company = x.insurence_company,
+                    notifications = x.notifications,
+                    location = x.location,
+                    save_location = x.save_location,
+                    chat = x.chat,
+                    Picture = x.picture,
+                    token = x.token
+                })
+                .ToList();
+
             try
             {
                 if (users.Count == 1)
@@ -149,16 +154,17 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    logger.Error("wrong email/password in the login");
-                    return BadRequest("wrong email or password");
+                    logger.Error("Wrong email/password in the login");
+                    return BadRequest("Wrong email or password");
                 }
             }
             catch
             {
-                logger.Error($"login failed");
-                return BadRequest("bad");
+                logger.Error("Login failed");
+                return BadRequest("Bad");
             }
         }
+
         // GET: api/Traveler/5
         public string Get(int id)
         {

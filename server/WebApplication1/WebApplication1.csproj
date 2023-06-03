@@ -302,6 +302,8 @@
     <Compile Include="DTO\EventParam.cs" />
     <Compile Include="DTO\FcmService.cs" />
     <Compile Include="DTO\LocationDto.cs" />
+    <Compile Include="DTO\MyRegistry.cs" />
+    <Compile Include="DTO\MyTask.cs" />
     <Compile Include="DTO\PushNotData.cs" />
     <Compile Include="DTO\PushNotificationDto.cs" />
     <Compile Include="DTO\StackholderDto.cs" />

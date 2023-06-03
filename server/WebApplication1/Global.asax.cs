@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentScheduler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
@@ -26,18 +27,19 @@ namespace WebApplication1
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            JobManager.Initialize(new MyRegistry());
 
             //code for timer
-            timer.Interval = 5000;
-            timer.Elapsed += tm_Tick;
+            //timer.Interval = 5000;
+            //timer.Elapsed += tm_Tick;
 
         }
         //code for timer
         private void tm_Tick(object sender, ElapsedEventArgs e)
         {
             EndTimer();
-            var timerServices = new TimerServices();
-            timerServices.SendPushForEvent(PNevent);
+            //var timerServices = new TimerServices();
+            //timerServices.SendPushForEvent(PNevent);
         }
 
         //code for timer

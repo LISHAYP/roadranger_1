@@ -56,6 +56,34 @@ namespace WebApplication1.Controllers
             return eventsDto;
         }
 
+        // GET: api/NewEvent/{eventNumber}
+        public EventDto Getevent(int eventNumber)
+        {
+            tblEvents newevent = db.tblEvents.FirstOrDefault(e => e.eventNumber == eventNumber);
+
+            EventDto eventDto = new EventDto
+            {
+                eventNumber = newevent.eventNumber,
+                Details = newevent.details,
+                EventDate = newevent.event_date,
+                EventTime = newevent.event_time,
+                Latitude = newevent.latitude,
+                Longitude = newevent.longitude,
+                EventStatus = newevent.event_status,
+                Picture = newevent.picture,
+                TravelerId = newevent.travelerId,
+                StackholderId = newevent.stackholderId,
+                SerialTypeNumber = newevent.serialTypeNumber,
+                CountryNumber = newevent.country_number,
+                AreaNumber = newevent.area_number,
+                labels = newevent.labels,
+                is_related = newevent.is_related
+            };
+
+            return eventDto;
+        }
+
+
         // GET: api/NewEvent?travelerId={travelerId}
         public IEnumerable<EventDto> Get(int travelerId)
         {
@@ -154,6 +182,18 @@ namespace WebApplication1.Controllers
                     {
                         userName = traveler.first_name + " " + traveler.last_name;
                         userPicture = traveler.picture;
+
+                        // Get the event details
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = newEvent.eventNumber,
+                            Latitude = newEvent.latitude,
+                            Longitude = newEvent.longitude
+                        };
+
+                        //// Send push notifications to travelers within 3 kilometers of the event
+                        //var timerServices = new TimerServices();
+                        //_ = timerServices.SendPushForEvent(eventDto);
                     }
                 }
                 else if (newEvent.stackholderId.HasValue)
@@ -163,7 +203,49 @@ namespace WebApplication1.Controllers
                     {
                         userName = stakeholder.full_name;
                         userPicture = stakeholder.picture;
+
+                        // Get the event details
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = newEvent.eventNumber,
+                            Latitude = newEvent.latitude,
+                            Longitude = newEvent.longitude
+                        };
+
+                        //// Send push notifications to travelers within 3 kilometers of the event
+                        //var timerServices = new TimerServices();
+                        //_ = timerServices.SendPushForEvent(eventDto);
                     }
+                }
+
+                // Check if the serialTypeNumber is 1004
+                if (newEvent.serialTypeNumber == 1004 || newEvent.serialTypeNumber == 1003)
+                {
+                    // Send push notifications to all travelers
+                    var timerServices = new TimerServices();
+                    var eventDto = new EventDto
+                    {
+                        eventNumber = newEvent.eventNumber,
+                        Latitude = newEvent.latitude,
+                        Longitude = newEvent.longitude,
+                        SerialTypeNumber = newEvent.serialTypeNumber 
+                    };
+                    _ = timerServices.SendPushForEvent(eventDto);
+                }
+                else
+                {
+                    // Get the event details
+                    var eventDto = new EventDto
+                    {
+                        eventNumber = newEvent.eventNumber,
+                        Latitude = newEvent.latitude,
+                        Longitude = newEvent.longitude,
+                        SerialTypeNumber = newEvent.serialTypeNumber // Add serialTypeNumber to eventDto
+                    };
+
+                    // Send push notifications to travelers within 3 kilometers of the event
+                    var timerServices = new TimerServices();
+                    _ = timerServices.SendPushForEvent(eventDto);
                 }
 
                 // Construct the response message
@@ -462,6 +544,12 @@ namespace WebApplication1.Controllers
                 eventToUpdate.approved += approvalDto.approved;
                 eventToUpdate.not_approved += approvalDto.not_approved;
 
+                // Update event status to false if not_approved equals 5
+                if (eventToUpdate.not_approved == 5)
+                {
+                    eventToUpdate.event_status = false;
+                }
+
                 db.SaveChanges();
 
                 return Ok();
@@ -595,6 +683,32 @@ namespace WebApplication1.Controllers
 
             return "success:) --- " + responseFromServer + ", " + returnStatus;
         }
+
+        [HttpPost]
+        [Route("api/mytask")]
+        public IHttpActionResult MyTaskAction([FromBody] EventDto eventDto)
+        {
+            try
+            {
+                // Instantiate MyTask class and pass the eventDto object to the constructor
+                MyTask myTask = new MyTask(eventDto);
+
+                // Call Execute method to trigger the SendPushForEvent method
+                myTask.Execute();
+
+                // Return a success response
+                return Ok("Task executed successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during execution
+                // Log the error, return an error response, etc.
+                return BadRequest("An error occurred: " + ex.Message);
+            }
+        }
+
+
+
 
         //private static async Task<string> PostPN(PushNotData pushNotificationData)
         //{

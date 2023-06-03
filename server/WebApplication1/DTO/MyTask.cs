@@ -1,54 +1,63 @@
-﻿using data;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using data;
+using FluentScheduler;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace WebApplication1.DTO
 {
-    public class TimerServices
+    public class MyTask : IJob
     {
-        igroup190_test1Entities db = new igroup190_test1Entities();
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        public EventDto eventDto;
+
+        public MyTask(EventDto eventDto)
+        {
+            this.eventDto = eventDto;
+        }
+
+        public void Execute()
+        {
+            SendPushForEvent(eventDto).GetAwaiter().GetResult();
+        }
 
         // Method to be executed by the timer
         public async Task SendPushForEvent(EventDto eventDto)
         {
+            int eventNumber = eventDto.eventNumber;
+            decimal eventLatitude = eventDto.Latitude;
+            decimal eventLongitude = eventDto.Longitude;
+
             try
             {
-                if (eventDto.SerialTypeNumber == 1003 || eventDto.SerialTypeNumber == 1004)
-                {
-                    await SendPushNotificationToAll(eventDto.SerialTypeNumber);
-                }
-                else
+                using (igroup190_test1Entities db = new igroup190_test1Entities())
                 {
                     var lastLocations = db.tblLocations
                         .GroupBy(l => l.travelerId)
                         .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault())
                         .ToList();
 
-                    var travelerIdsWithin3km = new List<int>();
-
                     foreach (var location in lastLocations)
                     {
                         decimal travelerLatitude = location.latitude;
                         decimal travelerLongitude = location.longitude;
 
-                        double distance = CalculateDistance((double)eventDto.Latitude, (double)eventDto.Longitude, (double)travelerLatitude, (double)travelerLongitude);
+                        double distance = CalculateDistance((double)eventLatitude, (double)eventLongitude, (double)travelerLatitude, (double)travelerLongitude);
 
                         if (distance <= 3)
                         {
-                            travelerIdsWithin3km.Add(location.travelerId);
+                            await SendPushNotification(location.travelerId, eventNumber);
                         }
                     }
 
-                    await SendPushNotification(travelerIdsWithin3km, eventDto.SerialTypeNumber);
+                    logger.Info("Task executed at: " + DateTime.Now);
                 }
             }
             catch (Exception ex)
@@ -57,34 +66,27 @@ namespace WebApplication1.DTO
             }
         }
 
-        public async Task SendPushNotification(List<int> travelerIds, int serialTypeNumber)
+        // Method to send push notification
+        public async Task SendPushNotification(int travelerId, int eventId)
         {
             try
             {
-                var travelers = db.traveleres.Where(t => travelerIds.Contains(t.traveler_id)).ToList();
+                using (igroup190_test1Entities db = new igroup190_test1Entities())
+                {
+                    var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == travelerId);
+                    if (traveler != null)
+                    {
+                        // Create the push notification data
+                        var pushNotificationData = new PushNotData
+                        {
+                            to = traveler.token,
+                            title = "New Event Update",
+                            body = "You are within 3 km of a new event, check it out on the map!"
+                        };
 
-                // Create the push notification data
-                var pushNotificationData = new PushNotData
-                {
-                    title = "New Event Update",
-                    body = "You are within 3 km of a new event, check it out on the map!"
-                };
-
-                if (serialTypeNumber == 1003)
-                {
-                    pushNotificationData.title = "Missing Traveler";
-                    pushNotificationData.body = "A traveler is reported missing. Please be cautious and report any information you may have.";
-                }
-                else if (serialTypeNumber == 1004)
-                {
-                    pushNotificationData.title = "Travel warning";
-                    pushNotificationData.body = "A travel warning has been issued for your current location. Stay safe and follow local authorities' instructions.";
-                }
-
-                foreach (var traveler in travelers)
-                {
-                    pushNotificationData.to = traveler.token;
-                    await PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
+                        // Send the push notification request
+                        await PostPN(pushNotificationData, travelerId, eventId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -92,25 +94,6 @@ namespace WebApplication1.DTO
                 logger.Error(ex.Message);
             }
         }
-
-        public async Task SendPushNotificationToAll(int serialTypeNumber)
-        {
-            try
-            {
-                var travelerIds = db.traveleres.Where(t => t.token != null).Select(t => t.traveler_id).ToList();
-
-                foreach (var travelerId in travelerIds)
-                {
-                   // await SendPushNotification(travelerId, serialTypeNumber);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message);
-            }
-        }
-
-
 
         public async Task PostPN(PushNotData pushNotificationData, int travelerId, int eventId)
         {
@@ -209,7 +192,6 @@ namespace WebApplication1.DTO
             return Task.CompletedTask;
         }
 
-
         public static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
             // Implementation of the Haversine formula
@@ -224,6 +206,5 @@ namespace WebApplication1.DTO
             var distance = R * c;
             return distance;
         }
-
     }
 }

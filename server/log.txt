@@ -113,3 +113,86 @@
  2023-05-25 11:38:55.8731 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
  2023-05-25 11:39:07.7798 INFO: Push notification sent to traveler ID: 55, Event ID: 1411, Response: {"data":{"status":"ok","id":"c0d4c5d9-f6d3-4b7c-bde4-249fa84da770"}}
  2023-05-25 11:39:16.8742 INFO: Push notification sent to traveler ID: 55, Event ID: 1411
+ 2023-05-29 12:49:50.6170 INFO: Task executed at: 29/05/2023 12:49:50
+ 2023-05-29 13:00:21.6040 INFO: Task executed at: 29/05/2023 13:00:21
+ 2023-05-29 13:03:37.0704 INFO: Task executed at: 29/05/2023 13:03:37
+ 2023-05-29 13:10:27.3909 INFO: Task executed at: 29/05/2023 13:10:27
+ 2023-05-29 13:16:27.1269 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"5600a0f4-864e-44ed-9146-1a26bfbf978e"}}
+ 2023-05-29 13:16:28.2578 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
+ 2023-05-29 13:16:29.2570 INFO: Push notification sent to traveler ID: 55, Event ID: 1411, Response: {"data":{"status":"ok","id":"82ce0167-72db-41b6-ae60-c3f28aee7b2f"}}
+ 2023-05-29 13:16:29.5593 INFO: Push notification sent to traveler ID: 55, Event ID: 1411
+ 2023-05-29 13:16:29.5593 INFO: Task executed at: 29/05/2023 13:16:29
+ 2023-05-29 13:35:52.9187 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"28b8b914-b7be-4af3-9d40-5e9f28429497"}}
+ 2023-05-29 13:35:53.8522 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
+ 2023-05-29 13:35:55.1561 INFO: Push notification sent to traveler ID: 55, Event ID: 1411, Response: {"data":{"status":"ok","id":"ff58107c-2587-45f0-91e5-d2f841df4fbb"}}
+ 2023-05-29 13:35:55.4646 INFO: Push notification sent to traveler ID: 55, Event ID: 1411
+ 2023-05-29 13:35:55.4646 INFO: Task executed at: 29/05/2023 13:35:55
+ 2023-05-29 15:29:07.1647 INFO: Push notification sent to traveler ID: 8, Event ID: 1411, Response: {"data":{"status":"ok","id":"6b132a73-9c18-443b-9532-1a0c67f61e79"}}
+ 2023-05-29 15:29:09.0384 INFO: Push notification sent to traveler ID: 8, Event ID: 1411
+ 2023-05-29 15:48:04.0520 INFO: login faild! email does not exist in the system
+ 2023-05-29 15:52:59.2822 INFO: login failed! Email does not exist in the system
+ 2023-06-03 11:15:29.6129 INFO: new event was added to the database!
+ 2023-06-03 11:31:35.2618 INFO: new event was added to the database!
+ 2023-06-03 11:45:38.8242 INFO: new event was added to the database!
+ 2023-06-03 12:01:49.3007 INFO: new event was added to the database!
+ 2023-06-03 12:07:59.7776 INFO: new event was added to the database!
+ 2023-06-03 12:12:58.3756 INFO: new event was added to the database!
+ 2023-06-03 12:15:15.7087 INFO: new event was added to the database!
+ 2023-06-03 12:19:12.7684 INFO: new event was added to the database!
+ 2023-06-03 12:24:32.2148 INFO: new event was added to the database!
+ 2023-06-03 12:27:02.3076 INFO: new event was added to the database!
+ 2023-06-03 12:38:03.5501 INFO: new event was added to the database!
+ 2023-06-03 12:38:05.5903 INFO: Push notification sent to traveler ID: 8, Event ID: 1532, Response: {"data":{"status":"ok","id":"676ef20e-b646-43e9-aaf4-f9fedc7a7885"}}
+ 2023-06-03 12:38:05.7407 INFO: Push notification sent to traveler ID: 8, Event ID: 1532
+ 2023-06-03 13:20:21.0934 INFO: new event was added to the database!
+ 2023-06-03 13:20:25.8800 INFO: Push notification sent to traveler ID: 8, Event ID: 1541, Response: {"data":{"status":"ok","id":"7be5714f-8a50-40f6-82c5-0a90e8595e05"}}
+ 2023-06-03 13:20:26.0616 INFO: Push notification sent to traveler ID: 8, Event ID: 1541
+ 2023-06-03 13:21:22.5153 INFO: new event was added to the database!
+ 2023-06-03 13:21:24.9223 INFO: Push notification sent to traveler ID: 8, Event ID: 1542, Response: {"data":{"status":"ok","id":"a0e664f7-57fb-41f9-8482-fdd31b9f6c7e"}}
+ 2023-06-03 13:21:24.9959 INFO: Push notification sent to traveler ID: 8, Event ID: 1542
+ 2023-06-03 13:29:29.2658 INFO: new event was added to the database!
+ 2023-06-03 13:31:36.3205 INFO: Push notification sent to traveler ID: 8, Event ID: 1546, Response: {"data":{"status":"ok","id":"e7c33a46-bda5-4c5a-8fe9-2a605750e2be"}}
+ 2023-06-03 13:31:45.1144 INFO: Push notification sent to traveler ID: 8, Event ID: 1546
+ 2023-06-03 13:33:34.7693 INFO: new event was added to the database!
+ 2023-06-03 13:38:21.9835 INFO: new event was added to the database!
+ 2023-06-03 13:39:03.3271 INFO: Push notification sent to traveler ID: 8, Event ID: 1552, Response: {"data":{"status":"ok","id":"8f0a1204-f2e0-4486-8b3d-c2f2bbc103bd"}}
+ 2023-06-03 13:39:03.4503 INFO: Push notification sent to traveler ID: 8, Event ID: 1552
+ 2023-06-03 13:40:17.0800 INFO: new event was added to the database!
+ 2023-06-03 13:41:19.8043 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"59ba30e1-8086-4d61-911f-5564781f5734"}}
+ 2023-06-03 13:41:22.3762 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-03 13:48:15.6887 INFO: new event was added to the database!
+ 2023-06-03 13:48:18.5047 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"147bef5e-0398-4427-8e7f-188d623b3ee2"}}
+ 2023-06-03 13:48:18.6425 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-03 13:48:44.7066 INFO: new event was added to the database!
+ 2023-06-03 13:48:45.2758 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"d77540f9-10ac-4d03-b85d-34c289ceba33"}}
+ 2023-06-03 13:48:45.3500 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 13:51:00.8614 INFO: new event was added to the database!
+ 2023-06-03 13:52:03.0563 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"e7dc0dc7-8b01-4765-a9b9-1cc245204b86"}}
+ 2023-06-03 13:52:10.6205 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 14:00:34.5777 INFO: new event was added to the database!
+ 2023-06-03 14:00:36.1884 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"ad1be5de-57a0-478a-9c6a-4e2cc068cd7a"}}
+ 2023-06-03 14:00:36.2994 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-03 14:06:41.5048 INFO: new event was added to the database!
+ 2023-06-03 14:06:43.2806 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"4e396c9c-23e4-42a1-b0b5-938860c242e3"}}
+ 2023-06-03 14:06:43.4230 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-03 14:06:58.0943 INFO: new event was added to the database!
+ 2023-06-03 14:06:58.6495 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"cbcb571f-8200-4acd-82a8-335ef97505fe"}}
+ 2023-06-03 14:06:58.7215 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 14:15:51.5179 INFO: new event was added to the database!
+ 2023-06-03 14:15:53.8510 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"8c399da8-e38c-411e-8d1f-1fcc3f5a45f7"}}
+ 2023-06-03 14:15:53.9478 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-03 14:18:12.5728 INFO: new event was added to the database!
+ 2023-06-03 14:18:14.5747 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"8fa1a5dd-95ee-4b47-8922-b1a35711d99e"}}
+ 2023-06-03 14:18:14.7063 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 15:46:27.9941 INFO: new event was added to the database!
+ 2023-06-03 15:48:15.9002 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"98ad212a-6a9e-4216-bda6-399209286788"}}
+ 2023-06-03 15:48:23.5435 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 16:13:25.6885 INFO: new event was added to the database!
+ 2023-06-03 16:13:27.7072 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"5c933f83-e1e5-44db-9757-5d837b2fd1a1"}}
+ 2023-06-03 16:13:27.8400 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 16:23:55.0762 INFO: new event was added to the database!
+ 2023-06-03 16:23:56.8981 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"6deb287c-89cb-4049-93fa-fd9ffd637c17"}}
+ 2023-06-03 16:23:57.0410 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-06-03 16:24:59.2977 INFO: new event was added to the database!
+ 2023-06-03 16:25:09.8876 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"59116cab-2367-4fe7-9f09-a46f571ad318"}}
+ 2023-06-03 16:25:10.0451 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
