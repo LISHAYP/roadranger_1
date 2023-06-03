@@ -11,6 +11,8 @@ import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
 import Navbar from '../Components/Navbar';
+import stringSimilarity from 'string-similarity';
+
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
@@ -38,14 +40,14 @@ export default function NewEvent(props) {
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
-  const [picture, setPicture] = useState('#');
+  const [picture, setPicture] = useState('http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/no-image.png');
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
-
+  const [setEntitiy, setSetEntitiy] = useState(false);
   useEffect(() => {
     //insert the API Key
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -130,7 +132,12 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
+  const translations = []; // Array to store translations
+  const entities = [];
+
+
   const createEvent = async () => {
+
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
@@ -164,13 +171,171 @@ export default function NewEvent(props) {
             .then(data1 => {
               const relatedEventsData = data1; // Assign the data to a constant variable
               const matchedEvents = []; // Array to store matched events
-  
+
               for (let i = 0; i < relatedEventsData.length; i++) {
                 const event = relatedEventsData[i];
                 if (compareLabels(event, newEvent)) {
                   matchedEvents.push(event);
                   break;
                 }
+
+                if (!compareLabels(event, newEvent)) {                  // Initialize the translation client
+                  const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCm4O6vwbRKam7AO4vyBXAvMOGeMAIyBuY`;
+                  // Function to translate text using Google Translate API
+                  console.log('here 1:');
+
+                  const translateText = async (text, targetLanguage) => {
+                    const requestBody = {
+                      q: text,
+                      target: targetLanguage,
+                    };
+                    console.log('here 2:');
+                    const response = await fetch(translateUrl, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(requestBody),
+                    });
+                    console.log('Translation 1:', translation1);
+                    if (!response.ok) {
+                      throw new Error('Translation request failed');
+                    }
+
+                    const data = await response.json();
+                    if (
+                      data &&
+                      data.data &&
+                      data.data.translations &&
+                      data.data.translations.length > 0
+                    ) {
+                      return data.data.translations[0].translatedText;
+                    } else {
+                      throw new Error('Translation not available');
+                    }
+                  };
+
+                  const translation1 = { value: null };// Create an object to hold the translation values
+                  // Call the translateText function for newEvent.Details
+                  const textToTranslate1 = newEvent.Details; // Replace with your actual text
+                  const targetLanguage1 = 'en'; // Replace with the desired target language code
+                  translateText(textToTranslate1, targetLanguage1)
+                    .then(translation => {
+                      translation1.value = translation;
+                      // Call the translateText function for event.Details
+                      const textToTranslate2 = event.Details; // Replace with your actual text
+                      const targetLanguage2 = 'en'; // Replace with the desired target language code
+                      translateText(textToTranslate2, targetLanguage2)
+                        .then(translation2 => {
+                          if (event.Details !== newEvent.Details) {
+                            const translationData = {
+                              id: event.eventNumber, // Replace 'id' with the actual property name that holds the event ID
+                              translation: translation2,
+                            };
+                            console.log('translations.push', translationData);
+                            translations.push(translationData);
+                            console.log('translations.push', translations);
+                          }
+                          console.log('Translation 1:', translation1.value);
+                          translations.forEach(async translationData => {
+                            const requestBody = {
+                              document: {
+                                content: translation1.value,
+                                type: 'PLAIN_TEXT',
+                              }
+                            };
+                            const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCOe-yxajZt8TRDqhGYlq_5SfPmJIaIsxI`;
+                            const response = await fetch(apiUrl, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify(requestBody),
+                            });
+
+                            if (!response.ok) {
+                              throw new Error('Text comparison request failed');
+                            }
+                            const data = await response.json();
+                            for (const entit of data.entities) {
+                              entityname = data.entities[0].name;
+                            }
+                            //console.log('entityname', entityname);
+                            translations.forEach(async translationData => {
+                              const requestBody = {
+                                document: {
+                                  content: translationData.translation,
+                                  type: 'PLAIN_TEXT',
+                                }
+                              };
+                              const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCOe-yxajZt8TRDqhGYlq_5SfPmJIaIsxI`;
+                              const response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(requestBody),
+                              });
+
+                              if (!response.ok) {
+                                throw new Error('Text comparison request failed');
+                              }
+                              const data1 = await response.json();
+
+                              for (const entity of data1.entities) {
+                                const entObj = {
+                                  name: entity.name,
+                                  id: translationData.id
+                                }
+                                entities.push(entObj);
+                              }
+                              if (entityname) {
+                                // console.log("here in entityname", entityname)
+                                // console.log('entities', entities);
+                                for (let i = 0; i < entities.length; i++) {
+                                  const similarity = stringSimilarity.compareTwoStrings(entities[i].name, entityname);
+
+                                  if (similarity > 0.7) {
+
+                                    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent?eventNumber=${entities[i].id}`, {
+
+                                      method: 'GET',
+                                      headers: new Headers({
+                                        'Content-Type': 'application/json; charset=UTF-8',
+                                        'Accept': 'application/json; charset=UTF-8',
+                                      })
+                                    })
+                                      .then(response => {
+                                        return response.json()
+                                      })
+                                      .then(
+                                        (result) => {
+                                          matchedEvents.push(result);
+                                        },
+                                        (error) => {
+                                          console.log("err post=", error);
+                                        }, []);
+                                        break; // Exit the loop after finding a match
+                                  }
+                                }
+                              }
+
+                            });
+                          });
+
+                        })
+                        .catch(error => {
+                          console.error('Translation Error:', error);
+                          // Rest of your error handling code
+                        });
+                    })
+                    .catch(error => {
+                      console.error('Translation Error:', error);
+                      // Rest of your error handling code
+                    });
+
+                }
+
               }
               if (matchedEvents.length > 0) {
                 console.log('Matches found:', matchedEvents);
@@ -179,7 +344,7 @@ export default function NewEvent(props) {
               }
               Alert.alert('Publish');
               const data = traveler;
-              navigation.navigate("Around You", { data, matchedEvents});
+              navigation.navigate("Around You", { data, matchedEvents });
             })
             .catch(error => {
               console.error(error);
@@ -192,21 +357,24 @@ export default function NewEvent(props) {
         });
     }
   };
-  
+
   const compareLabels = (event1, event2) => {
     if (!event1.labels || !event2.labels) {
       // If either event is missing the labels property, return false
+
       return false;
     }
-  
-    if ( event1.Details === event2.Details) {
+
+    if (event1.Details === event2.Details) {
       // If Details are defined and identical, return false
       return false;
     }
-  
-    const labels1 = JSON.parse(event1.labels).map(label => label.description);
-    const labels2 = JSON.parse(event2.labels).map(label => label.description);
-  
+
+
+    const labels1 = JSON.parse(event1.labels).filter(label => label.score > 0.5).map(label => label.description);
+    const labels2 = JSON.parse(event2.labels).filter(label => label.score > 0.5).map(label => label.description);
+
+
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
@@ -214,13 +382,15 @@ export default function NewEvent(props) {
         }
       }
     }
-  
+
     return false;
   };
-  
-  
-  
-  
+
+
+
+
+
+
 
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
@@ -305,7 +475,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#144800',
     fontSize: 20,
-
   },
   btnText: {
     color: '#F8F8FF',
