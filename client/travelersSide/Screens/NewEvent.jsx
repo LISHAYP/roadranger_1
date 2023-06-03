@@ -8,7 +8,6 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
-import { GoogleCloudVisionApiKey } from '../config';
 
 
 export default function NewEvent(props) {
@@ -43,6 +42,7 @@ export default function NewEvent(props) {
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
+  const [setEntitiy, setSetEntitiy] = useState(false);
   useEffect(() => {
     //insert the API Key
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -128,8 +128,11 @@ export default function NewEvent(props) {
       });
   }
   const translations = []; // Array to store translations
+  const entities = [];
+
 
   const createEvent = async () => {
+
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
@@ -170,9 +173,8 @@ export default function NewEvent(props) {
                   matchedEvents.push(event);
                   break;
                 }
-                else {
-                  // 
-                  // Initialize the translation client
+
+                if (!compareLabels(event, newEvent)) {                  // Initialize the translation client
                   const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCm4O6vwbRKam7AO4vyBXAvMOGeMAIyBuY`;
                   // Function to translate text using Google Translate API
                   console.log('here 1:');
@@ -207,18 +209,14 @@ export default function NewEvent(props) {
                       throw new Error('Translation not available');
                     }
                   };
-                 
 
-                  // Create an object to hold the translation values
-                  const translation1 = { value: null };
-
+                  const translation1 = { value: null };// Create an object to hold the translation values
                   // Call the translateText function for newEvent.Details
                   const textToTranslate1 = newEvent.Details; // Replace with your actual text
                   const targetLanguage1 = 'en'; // Replace with the desired target language code
                   translateText(textToTranslate1, targetLanguage1)
                     .then(translation => {
                       translation1.value = translation;
-
                       // Call the translateText function for event.Details
                       const textToTranslate2 = event.Details; // Replace with your actual text
                       const targetLanguage2 = 'en'; // Replace with the desired target language code
@@ -229,16 +227,77 @@ export default function NewEvent(props) {
                               id: event.eventNumber, // Replace 'id' with the actual property name that holds the event ID
                               translation: translation2,
                             };
-                      
+                            console.log('translations.push', translationData);
                             translations.push(translationData);
-
-                          console.log('Translation 1:', translation1.value);
-                          console.log('added:', translationData, translations);
-                          translations.map(translationData => console.log(translationData.translation));
-
+                            console.log('translations.push', translations);
                           }
-                          // Rest of your code
-                          // Access the translations using translation1.value and translation2.value
+                          console.log('Translation 1:', translation1.value);
+                          translations.forEach(async translationData => {
+                            const requestBody = {
+                              document: {
+                                content: translation1.value,
+                                type: 'PLAIN_TEXT',
+                              }
+                            };
+                            const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCOe-yxajZt8TRDqhGYlq_5SfPmJIaIsxI`;
+                            const response = await fetch(apiUrl, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify(requestBody),
+                            });
+
+                            if (!response.ok) {
+                              throw new Error('Text comparison request failed');
+                            }
+                            const data = await response.json();
+                            for (const entit of data.entities) {
+                               entityname = entit.name;
+                            }
+                            console.log('entityname', entityname);
+                            translations.forEach(async translationData => {
+                              const requestBody = {
+                                document: {
+                                  content: translationData.translation,
+                                  type: 'PLAIN_TEXT',
+                                }
+                              };
+                              const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCOe-yxajZt8TRDqhGYlq_5SfPmJIaIsxI`;
+                              const response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(requestBody),
+                              });
+
+                              if (!response.ok) {
+                                throw new Error('Text comparison request failed');
+                              }
+                              const data1 = await response.json();
+
+                              for (const entity of data1.entities) {
+                                const entObj = {
+                                  name: entity.name,
+                                  id: translationData.id
+                                }
+                                entities.push(entObj);
+                              }
+                              if (entityname) {
+                                console.log("here in entityname", entityname)
+                                console.log('entities', entities);
+                                for (const e of entities) {
+                                  if (entityname == e.name) {
+                                    setSetEntitiy(true);
+                                    console.log("e.name",e.name, e.id)
+                                 break;
+                                  }
+                                }
+                              }
+                            });
+                          });
+
                         })
                         .catch(error => {
                           console.error('Translation Error:', error);
@@ -249,17 +308,15 @@ export default function NewEvent(props) {
                       console.error('Translation Error:', error);
                       // Rest of your error handling code
                     });
+
                 }
 
               }
-
               if (matchedEvents.length > 0) {
                 console.log('Matches found:', matchedEvents);
               } else {
                 console.log('No matches found');
               }
-              console.log('translation similar arrays', translations);
-
               Alert.alert('Publish');
               const data = traveler;
               navigation.navigate("Around You", { data, matchedEvents });
@@ -298,6 +355,19 @@ export default function NewEvent(props) {
         if (label1 === label2) {
           return true;
         }
+      }
+    }
+
+    return false;
+  };
+
+
+  const copmareEntities = (x, y) => {
+    console.log('No copmareEntitiescopmareEntitiescopmareEntitiescopmareEntities found', x, y);
+
+    for (const entity of x) {
+      if (entity === y) {
+        return true;
       }
     }
 
