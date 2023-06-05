@@ -11,8 +11,6 @@ import BackButton from '../Components/BackButton';
 import * as Notifications from 'expo-notifications';
 import { auth } from '../firebase';
 import Navbar from '../Components/Navbar';
-import stringSimilarity from 'string-similarity';
-
 
 export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
@@ -39,14 +37,14 @@ export default function NewEvent(props) {
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
-  const [picture, setPicture] = useState('http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/no-image.png');
+  const [picture, setPicture] = useState('#');
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
-  const [setEntitiy, setSetEntitiy] = useState(false);
+
   useEffect(() => {
     //insert the API Key
     Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
@@ -131,10 +129,6 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
-  const translations = []; // Array to store translations
-  const entities = [];
-
-
   const createEvent = async () => {
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
@@ -169,7 +163,7 @@ export default function NewEvent(props) {
             .then(data1 => {
               const relatedEventsData = data1; // Assign the data to a constant variable
               const matchedEvents = []; // Array to store matched events
-
+  
               for (let i = 0; i < relatedEventsData.length; i++) {
                 const event = relatedEventsData[i];
                 if (compareLabels(event, newEvent)) {
@@ -341,7 +335,7 @@ export default function NewEvent(props) {
               }
               Alert.alert('Publish');
               const data = traveler;
-              navigation.navigate("Around You", { data, matchedEvents });
+              navigation.navigate("Around You", { data, matchedEvents});
             })
             .catch(error => {
               console.error(error);
@@ -354,24 +348,21 @@ export default function NewEvent(props) {
         });
     }
   };
-
+  
   const compareLabels = (event1, event2) => {
     if (!event1.labels || !event2.labels) {
       // If either event is missing the labels property, return false
-
       return false;
     }
-
-    if (event1.Details === event2.Details) {
+  
+    if ( event1.Details === event2.Details) {
       // If Details are defined and identical, return false
       return false;
     }
-
-
-    const labels1 = JSON.parse(event1.labels).filter(label => label.score > 0.5).map(label => label.description);
-    const labels2 = JSON.parse(event2.labels).filter(label => label.score > 0.5).map(label => label.description);
-
-
+  
+    const labels1 = JSON.parse(event1.labels).map(label => label.description);
+    const labels2 = JSON.parse(event2.labels).map(label => label.description);
+  
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
@@ -379,15 +370,13 @@ export default function NewEvent(props) {
         }
       }
     }
-
+  
     return false;
   };
-
-
-
-
-
-
+  
+  
+  
+  
 
   const OpenCameraE = () => {
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
@@ -472,6 +461,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#144800',
     fontSize: 20,
+
   },
   btnText: {
     color: '#F8F8FF',
