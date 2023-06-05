@@ -10,7 +10,6 @@ import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
 //import * as Notifications from 'expo-notifications';
 import { async } from "@firebase/util";
-import { cgroup90 } from "../cgroup90";
 
 export default function ChatWithSH(props) {
 
@@ -153,7 +152,7 @@ const [isStackholder, setisStackhold] = useState(false);
         };
 
         // Send the notification to the recipient         
-        fetch(`${cgroup90}/sendpushnotification`, {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

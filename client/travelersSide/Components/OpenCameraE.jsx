@@ -5,7 +5,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { GoogleCloudVisionApiKey } from '../config';
-import { cgroup90 } from '../cgroup90';
 
 export default function OpenCameraE(props) {
   const [type, setType] = useState(CameraType.back);
@@ -89,7 +88,7 @@ export default function OpenCameraE(props) {
         setLabels(labels)
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
-        urlAPI = `${cgroup90}/uploadeventpicture`
+        urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
         fetch(urlAPI, {
           method: 'POST',
           headers: {
@@ -171,7 +170,7 @@ export default function OpenCameraE(props) {
       setLabels(labels);
       // Add the following lines to call the uploadBase64ToASMX function
       setAnimate(true);
-      const urlAPI = `${cgroup90}/uploadeventpicture`
+      const urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadeventpicture'
       fetch(urlAPI, {
         method: 'POST',
         headers: {

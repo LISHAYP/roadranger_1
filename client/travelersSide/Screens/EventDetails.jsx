@@ -9,8 +9,6 @@ import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
-import { cgroup90 } from '../cgroup90';
-import Navbar from '../Components/Navbar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -35,7 +33,7 @@ export default function EventDetails(props) {
       traveler_Id: event.TravelerId
     };
     try {
-      const response = await fetch(`${cgroup90}/api/traveler/details`, {
+      const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/traveler/details', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -62,7 +60,7 @@ export default function EventDetails(props) {
 
     try {
       console.log("in try fretchfetchNumberEvent", { eventNumberObj })
-      const response = await fetch(`${cgroup90}/api/events/comments`, {
+      const response = await fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/events/comments', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -109,7 +107,7 @@ export default function EventDetails(props) {
       console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
 
       try {
-        const response = await fetch(`${cgroup90}/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
+        const response = await fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -182,7 +180,7 @@ export default function EventDetails(props) {
     }
     else {
       // Send a POST request to your backend API with the comment data
-      fetch(`${cgroup90}/api/newcomment`, {
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcomment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -222,7 +220,7 @@ export default function EventDetails(props) {
     };
     console.log(eventObj)
 
-    fetch(`${cgroup90}/api/deleteevent`, {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deleteevent', {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -245,7 +243,7 @@ export default function EventDetails(props) {
     };
     console.log(commentObj)
 
-    fetch(`${cgroup90}/api/deletecomment`, {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/deletecomment', {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -263,15 +261,59 @@ export default function EventDetails(props) {
         console.error(error);
       });
   }
+
+  const handleButtonPress = (approved) => {
+    console.log("2222", approved);
+
+    const ansObj = {
+      Approved: approved ? 1 : 0,
+      Not_approved: approved ? 0 : 1
+    };
+
+    let relatedEvent;
+
+    if (event.is_related === null) {
+      relatedEvent = event.eventNumber;
+    } else {
+      relatedEvent = event.is_related;
+    }
+
+    console.log(ansObj);
+
+    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/eventapproval/${relatedEvent}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(ansObj),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Event approval request succeeded");
+          // Handle the successful approval request
+          Alert.alert('Thank you! ');
+          setTrueOrFalse(false)
+        } else {
+          console.log("Event approval request failed");
+          // Handle the failed approval request
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error if needed
+      });
+  };
+
   return (
     <GradientBackground>
-          <Navbar traveler={traveler} />        
+              <BackButton />
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
           <View style={styles.buttonContainer}>
-            <Button title="Yes" />
-            <Button title="No" />
+            <Button title="Yes" onPress={() => handleButtonPress(true)} />
+            <Button title="No" onPress={() => handleButtonPress(false)} />
           </View>
         </View>
       )}
@@ -279,8 +321,8 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <BackButton />
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '67%' : '40%' }]}>
+
+        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
           <View>
             <View style={styles.event}>
               <View style={styles.row}>
@@ -360,7 +402,7 @@ export default function EventDetails(props) {
               />
             </View>
           </View>
-          </ScrollView>
+        </ScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
   );
@@ -400,13 +442,15 @@ const styles = StyleSheet.create({
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    
+
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '60%',
+    height: '70%',
+
+
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -416,7 +460,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     resizeMode: "contain",
-    
+
   },
 
   locationText: {
@@ -443,14 +487,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-      shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
     // width:'95%'
   },
   img: {
@@ -504,7 +548,7 @@ const styles = StyleSheet.create({
 
   },
   headerContainer: {
-    top: 35,
+    top: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

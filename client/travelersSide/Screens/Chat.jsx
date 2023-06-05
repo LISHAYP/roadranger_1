@@ -10,8 +10,6 @@ import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
 import * as Notifications from 'expo-notifications';
 import { async } from "@firebase/util";
-import { cgroup90 } from "../cgroup90";
-import Navbar from "../Components/Navbar";
 
 export default function Chat(props) {
 
@@ -152,7 +150,7 @@ export default function Chat(props) {
         };
 
         // Send the notification to the recipient         
-        fetch(`${cgroup90}/sendpushnotification`, {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/sendpushnotification', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -173,9 +171,11 @@ export default function Chat(props) {
 
     return (
         <GradientBackground>
-            <Navbar traveler={traveler} />
             <View style={styles.container}>
                 <View style={styles.row}>
+                    <View style={styles.back}>
+                        <BackButton />
+                    </View >
                     <View style={styles.user}>
                         <Image style={styles.img} source={{ uri: traveler1.Picture }} />
                     </View>
@@ -183,7 +183,7 @@ export default function Chat(props) {
                         <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
                     </View>
                 </View>
-
+              
                 {messages && (
                     <GiftedChat
                         isTyping={true}

@@ -4,7 +4,6 @@ import { Button, Image, StyleSheet, Text, TouchableOpacity, View,Alert } from 'r
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import { cgroup90 } from '../cgroup90';
 
 export default function OpenCamera(props) {
   const [type, setType] = useState(CameraType.back);
@@ -51,7 +50,7 @@ export default function OpenCamera(props) {
 
         // Add the following lines to call the uploadBase64ToASMX function
         setAnimate(true);
-        urlAPI = `${cgroup90}/uploadpicture`
+        urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
         fetch(urlAPI, {
           method: 'POST',
           headers: {
@@ -100,7 +99,7 @@ export default function OpenCamera(props) {
   
       // Add the following lines to call the uploadBase64ToASMX function
       setAnimate(true);
-      const urlAPI = `${cgroup90}/uploadpicture`
+      const urlAPI = 'http://cgroup90@194.90.158.74/cgroup90/prod/uploadpicture'
       fetch(urlAPI, {
         method: 'POST',
         headers: {

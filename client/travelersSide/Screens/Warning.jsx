@@ -9,8 +9,6 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
-import { cgroup90 } from '../cgroup90';
-import Navbar from '../Components/Navbar';
 
 export default function Warning(props) {
     const navigation = useNavigation();
@@ -18,12 +16,12 @@ export default function Warning(props) {
 
     const [events, setEvents] = useState([]);
     const traveler = props.route.params.traveler;
-
+    
 
     // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
     useEffect(() => {
-        fetch(`${cgroup90}/api/NewEvent`, {
+        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -52,11 +50,10 @@ export default function Warning(props) {
     // console.log(eventAddresses)
     return (
         <GradientBackground>
-            <Navbar traveler={traveler} />
             <BackButton />
             <ScrollView>
                 <View style={styles.container}>
-
+                   
                     <TextInput
                         style={styles.searchInput}
                         placeholder="Search..."
@@ -67,7 +64,7 @@ export default function Warning(props) {
                         {events !== undefined && events.length > 0 ? (
                             events.filter(event => event.SerialTypeNumber == 1004 && event.Details.toLowerCase().includes(searchKeyword.toLowerCase())).map((event, index) => (
                                 <TouchableOpacity onPress={() => {
-                                    navigation.navigate('Event Details', { event: event, traveler: traveler });
+                                    navigation.navigate('Event Details', { event: event, traveler:traveler });
                                 }} >
                                     <View style={styles.event} key={event.eventNumber}>
                                         <View style={styles.detailsContainer}>
@@ -145,9 +142,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
 
     },
-    searchInput: {
-        fontSize: 35,
-        marginBottom: 20
+    searchInput:{
+        fontSize:35,
+        marginBottom:20
     }
 
 

@@ -10,16 +10,14 @@ import GradientBackground from '../Components/GradientBackground';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
 import BackButton from '../Components/BackButton';
-import { cgroup90 } from '../cgroup90';
-
 
 export default function SignUp() {
 
-  const defaultPic = `${cgroup90}/profilePictures/id1.png`;
+  const defaultPic = 'http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/id1.png';
   const [newProfilePic, setNewProfilePic] = useState(defaultPic);
 
   useEffect(() => {
-    setupdatednewProfilePic(`${cgroup90}/profilePictures/U_${email}.jpg`);
+    setupdatednewProfilePic(`http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/U_${email}.jpg`);
 
   }, [email]);
 
@@ -50,12 +48,12 @@ export default function SignUp() {
   const [selectedInsurance, setSelectedInsurance] = useState(null);
   const [insuranceSelection, setInsuranceSelection] = useState(null);
   const [updatednewProfilePic, setupdatednewProfilePic] = useState(
-    `${cgroup90}/uploadUserPic/U_${email}.jpg`
+    `http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`
   );
 
   useEffect(() => {
     setupdatednewProfilePic(
-      `${cgroup90}/uploadUserPic/U_${email}.jpg`
+      `http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`
     );
   }, [email]);
 
@@ -110,7 +108,7 @@ export default function SignUp() {
     }
     else {
         createUserWithEmailAndPassword(auth, newTraveler.travler_email, newTraveler.password)
-      fetch(`${cgroup90}/api/post/SignUp`, {
+      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/SignUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

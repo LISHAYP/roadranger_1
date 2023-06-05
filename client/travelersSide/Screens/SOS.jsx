@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -8,16 +8,13 @@ import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
-import { Divider } from "@react-native-material/core";
-import { cgroup90 } from '../cgroup90';
-import Navbar from '../Components/Navbar';
 
 export default function SOS(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
+  const [city,setCity]=useState('');
   const serialType = [
     { label: 'Weather', value: '1' },
     { label: 'Car Accidents', value: '2' },
@@ -43,7 +40,7 @@ export default function SOS(props) {
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
         addContry();
-
+        
       })
       .catch(error => console.warn(error))
   }, []);
@@ -63,9 +60,9 @@ export default function SOS(props) {
   const countryObj = {
     country_name: country,
   };
-  addContry = () => {
+   addContry = () => {
 
-    fetch(`${cgroup90}/api/post/country`, {
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -75,24 +72,24 @@ export default function SOS(props) {
     })
       .then(response => response.json())
       .then(data => {
-
+      
         setCountryNumber(data)
         addCity();
       }
       )
       .catch(error => {
         console.error(error);
-
+       
       });
   }
 
-  addCity = () => {
+   addCity = () => {
     const areaObj = {
       country_number: countryNumber,
       area_name: city
     }
-
-    fetch(`${cgroup90}/api/post/area`, {
+    
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -101,9 +98,9 @@ export default function SOS(props) {
       body: JSON.stringify(areaObj),
     })
       .then(response => response.json())
-      .then(data => {
+      .then(data => {     
         setAreaNumber(data)
-
+      
       }
       )
       .catch(error => {
@@ -123,49 +120,46 @@ export default function SOS(props) {
     latitude: userLocation.coords.latitude,
     longitude: userLocation.coords.longitude
   };
-  console.log('new', newSOS);
+  console.log('new',newSOS);
 
   const createSOS = async () => {
-    if (newSOS.details === '' || newSOS.serialTypeNumber === '') {
-      Alert.alert('Please enter details and type');
+   if (newSOS.details === '' || newSOS.serialTypeNumber === '') {
+    Alert.alert('Please enter details and type');    
     }
-    else {
-      // Send a POST request to your backend API with the event data
-      fetch(`${cgroup90}/api/askforhelp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newSOS),
+else{
+    // Send a POST request to your backend API with the event data
+    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/askforhelp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newSOS),
+    })
+      .then(response => response.json())
+      .then(data => {
+console.log(data)
+        // Handle the response data as needed
+        console.log({ newSOS })
+        Alert.alert('Publish')
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          // Handle the response data as needed
-          console.log({ newSOS })
-          Alert.alert('Publish')
-        })
-        .catch(error => {
-          console.error(error);
-          Alert.alert('Error', 'Failed to sign in. Please try again later.');
-        });
+      .catch(error => {
+        console.error(error);
+        Alert.alert('Error', 'Failed to sign in. Please try again later.');
+      });
     }
   }
   const OpenCameraSOS = () => {
-    navigation.navigate('CameraSOS', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}` });
-    const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`${cgroup90}/uploadEventPic/SOS_${date}.jpg`)
+    navigation.navigate('CameraSOS', {idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`} );
+    const date=`${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
+    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/SOS_${date}.jpg`)
   }
 
   return (
     < GradientBackground>
-      <Navbar traveler={traveler} />
-
       <ScrollView>
         <View style={styles.container}>
-          <BackButton />
+          <BackButton/>
           <Image source={RoadRanger} style={styles.RoadRanger} />
-          <Divider style={{ marginBottom: 50 }} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -202,7 +196,7 @@ export default function SOS(props) {
               Add Photo
             </Text>
           </TouchableOpacity>
-
+        
           <TouchableOpacity style={styles.btnSave} onPress={createSOS}>
             <Text style={styles.btnText}>
               Publish
