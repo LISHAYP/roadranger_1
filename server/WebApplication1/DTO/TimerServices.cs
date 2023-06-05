@@ -18,37 +18,22 @@ namespace WebApplication1.DTO
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         // Method to be executed by the timer
-        public async Task SendPushForEvent(EventDto eventDto)
+        public void SendPushForEvent(EventDto eventDto)
         {
             try
             {
                 if (eventDto.SerialTypeNumber == 1003 || eventDto.SerialTypeNumber == 1004)
                 {
-                    await SendPushNotificationToAll(eventDto.SerialTypeNumber);
+                     SendPushNotificationToAll(eventDto.SerialTypeNumber,(int)eventDto.TravelerId);
                 }
                 else
                 {
-                    var lastLocations = db.tblLocations
-                        .GroupBy(l => l.travelerId)
-                        .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault())
-                        .ToList();
+                    var travelerIdsWithin3km = GetTravelerIdsWithin3km(eventDto.Latitude, eventDto.Longitude);
 
-                    var travelerIdsWithin3km = new List<int>();
+                    // Remove the traveler who opened the event from the list
+                    travelerIdsWithin3km.Remove((int)eventDto.TravelerId);
 
-                    foreach (var location in lastLocations)
-                    {
-                        decimal travelerLatitude = location.latitude;
-                        decimal travelerLongitude = location.longitude;
-
-                        double distance = CalculateDistance((double)eventDto.Latitude, (double)eventDto.Longitude, (double)travelerLatitude, (double)travelerLongitude);
-
-                        if (distance <= 3)
-                        {
-                            travelerIdsWithin3km.Add(location.travelerId);
-                        }
-                    }
-
-                    await SendPushNotification(travelerIdsWithin3km, eventDto.SerialTypeNumber);
+                    SendPushNotification(travelerIdsWithin3km, eventDto.SerialTypeNumber);
                 }
             }
             catch (Exception ex)
@@ -57,7 +42,32 @@ namespace WebApplication1.DTO
             }
         }
 
-        public async Task SendPushNotification(List<int> travelerIds, int serialTypeNumber)
+        public List<int> GetTravelerIdsWithin3km(decimal latitude, decimal longitude)
+        {
+            var lastLocations = db.tblLocations
+                .GroupBy(l => l.travelerId)
+                .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault())
+                .ToList();
+
+            var travelerIdsWithin3km = new List<int>();
+
+            foreach (var location in lastLocations)
+            {
+                decimal travelerLatitude = location.latitude;
+                decimal travelerLongitude = location.longitude;
+
+                double distance = CalculateDistance((double)latitude, (double)longitude, (double)travelerLatitude, (double)travelerLongitude);
+
+                if (distance <= 3)
+                {
+                    travelerIdsWithin3km.Add(location.travelerId);
+                }
+            }
+
+            return travelerIdsWithin3km;
+        }
+
+        public void SendPushNotification(List<int> travelerIds, int serialTypeNumber)
         {
             try
             {
@@ -69,6 +79,42 @@ namespace WebApplication1.DTO
                     title = "New Event Update",
                     body = "You are within 3 km of a new event, check it out on the map!"
                 };
+
+                //if (serialTypeNumber == 1003)
+                //{
+                //    pushNotificationData.title = "Missing Traveler";
+                //    pushNotificationData.body = "A traveler is reported missing. Please be cautious and report any information you may have.";
+                //}
+                //else if (serialTypeNumber == 1004)
+                //{
+                //    pushNotificationData.title = "Travel warning";
+                //    pushNotificationData.body = "A travel warning has been issued for your current location. Stay safe and follow local authorities' instructions.";
+                //}
+
+                foreach (var traveler in travelers)
+                {
+                    pushNotificationData.to = traveler.token;
+                    _=PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+            }
+        }
+
+        public  void SendPushNotificationToAll(int serialTypeNumber, int excludingTravelerId)
+        {
+            try
+            {
+                var travelers = db.traveleres.Where(t => t.traveler_id != excludingTravelerId).ToList();
+
+                // Create the push notification data
+                var pushNotificationData = new PushNotData();
+                //{
+                //    title = "New Event Update",
+                //    body = "You are within 3 km of a new event, check it out on the map!"
+                //};
 
                 if (serialTypeNumber == 1003)
                 {
@@ -83,33 +129,20 @@ namespace WebApplication1.DTO
 
                 foreach (var traveler in travelers)
                 {
-                    pushNotificationData.to = traveler.token;
-                    await PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
+                    if (traveler.token != null)
+                    {
+                        pushNotificationData.to = traveler.token;
+                        _ = PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
+                    }
                 }
+
+            
             }
             catch (Exception ex)
             {
                 logger.Error(ex.Message);
             }
         }
-
-        public async Task SendPushNotificationToAll(int serialTypeNumber)
-        {
-            try
-            {
-                var travelerIds = db.traveleres.Where(t => t.token != null).Select(t => t.traveler_id).ToList();
-
-                foreach (var travelerId in travelerIds)
-                {
-                   // await SendPushNotification(travelerId, serialTypeNumber);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message);
-            }
-        }
-
 
 
         public async Task PostPN(PushNotData pushNotificationData, int travelerId, int eventId)

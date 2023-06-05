@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -8,12 +8,14 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Search(props) {
   const navigation = useNavigation();
- //user-the user who use the app
- const traveler =  props.route.params.traveler;
-console.log("trrrrrrrr",traveler)
+  //user-the user who use the app
+  const traveler = props.route.params.traveler;
+  console.log("trrrrrrrr", traveler)
   useEffect(() => {
     loadData();
   }, []);
@@ -37,7 +39,7 @@ console.log("trrrrrrrr",traveler)
     { label: 'Financial issues', value: '11' }
   ]
 
-  const [events,setEvents]=useState('')
+  const [events, setEvents] = useState('')
   const [selectedSerialType, setSelectedSerialType] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
@@ -68,7 +70,7 @@ console.log("trrrrrrrr",traveler)
   console.log(searchObj)
 
   const searchEvents = async () => {
-    console.log(selectedCity, selectedCountry, selectedStartDate,selectedEndDate, selectedSerialType)
+    console.log(selectedCity, selectedCountry, selectedStartDate, selectedEndDate, selectedSerialType)
     if (selectedCountry === '' && selectedStartDate === '' && selectedSerialType == '') {
       Alert.alert('Please enter for search');
     }
@@ -78,7 +80,7 @@ console.log("trrrrrrrr",traveler)
     else {
 
       // Send a POST request to backend API with the search data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/searchByParameters', {
+      fetch(`${cgroup90}/api/post/searchByParameters`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,24 +92,24 @@ console.log("trrrrrrrr",traveler)
         .then(data => {
           // Handle the response data as needed
           setEvents(data)
-        console.log(data);
-          navigation.navigate("Events",{data: data, traveler: traveler} );
+          console.log(data);
+          navigation.navigate("Events", { events: data, traveler: traveler });
         })
         .catch(error => {
           console.error(error);
           Alert.alert('No events in this coutry ', error);
         });
     }
-  
+
   }
-  
+
 
 
 
   //GET the countries and cities from data
- const loadData = () => {
+  const loadData = () => {
     //GET the countries into array
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getcountries', {
+    fetch(`${cgroup90}/api/getcountries`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -127,7 +129,7 @@ console.log("trrrrrrrr",traveler)
 
 
     //GET the cities into array
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/getareaswithcountry', {
+    fetch(`${cgroup90}/api/getareaswithcountry`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -150,110 +152,115 @@ console.log("trrrrrrrr",traveler)
   const filteredCities = city.filter(city => city.countryNumber === selectedCountry);
   return (
     < GradientBackground>
-    <ScrollView>
-      <View style={styles.container}>
-      <BackButton />
+      <Navbar traveler={traveler} />
 
-        <Text style={styles.text}>Country:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={country}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select country"}
-          value={selectedCountry}
-          onChange={item => {
-            setSelectedCountry(item.value)
-          }} />
+      <ScrollView>
+        <View style={styles.container}>
+          <BackButton />
 
-        <Text style={styles.text}>City:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={filteredCities}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select country before"}
-          value={selectedCity}
-          onChange={item => {
-            setSelectedCity(item.value)
-          }}
+          <Text style={styles.text}>Country:</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={country}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select country"}
+            value={selectedCountry}
+            onChange={item => {
+              setSelectedCountry(item.value)
+            }} />
 
-        />
-        <Text style={styles.text}>Type:</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          data={serialType}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select type of event"}
-          value={selectedSerialType}
-          onChange={item => {
-            setSelectedSerialType(item.value)
-          }} />
+          <Text style={styles.text}>City:</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={filteredCities}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select country before"}
+            value={selectedCity}
+            onChange={item => {
+              setSelectedCity(item.value)
+            }}
 
-       <Text style={styles.text}>Start Date:</Text>
-        <View>
-          <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
-            <Icon style={styles.icon} name="calendar-outline" />
+          />
+          <Text style={styles.text}>Type:</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={serialType}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select type of event"}
+            value={selectedSerialType}
+            onChange={item => {
+              setSelectedSerialType(item.value)
+            }} />
+
+          <Text style={styles.text}>Start Date:</Text>
+          <View>
+            <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
+              <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
+              <Icon style={styles.icon} name="calendar-outline" />
+            </TouchableOpacity>
+            {isCalendarOpenStart && (
+              <View>
+                <CalendarPicker onDateChange={handleStartDateSelect} />
+              </View>
+            )}
+          </View>
+          <Text style={styles.text}>End Date:</Text>
+          <View>
+            <TouchableOpacity onPress={() => setIsCalendarOpenEnd(!isCalendarOpenEnd)} style={styles.calendar}>
+              <Text style={styles.text1}>{selectedEndDate ? selectedEndDate.toISOString().substr(0, 10) : "Select End Date "}</Text>
+              <Icon style={styles.icon} name="calendar-outline" />
+            </TouchableOpacity>
+            {isCalendarOpenEnd && (
+              <View>
+                <CalendarPicker onDateChange={handleEndDateSelect} />
+              </View>
+            )}
+          </View>
+
+          <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
+            <Text style={styles.btnText}>
+              Search
+            </Text>
           </TouchableOpacity>
-          {isCalendarOpenStart && (
-            <View>
-              <CalendarPicker onDateChange={handleStartDateSelect} />
-            </View>
-          )}
         </View>
-        <Text style={styles.text}>End Date:</Text>
-        <View>
-          <TouchableOpacity onPress={() => setIsCalendarOpenEnd(!isCalendarOpenEnd)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedEndDate ? selectedEndDate.toISOString().substr(0, 10): "Select End Date "}</Text>
-            <Icon style={styles.icon} name="calendar-outline" />
-          </TouchableOpacity>
-          {isCalendarOpenEnd && (
-            <View>
-              <CalendarPicker onDateChange={handleEndDateSelect} />
-            </View>
-          )}
-        </View>
-
-        <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
-          <Text style={styles.btnText}>
-            Search
-          </Text>
-        </TouchableOpacity>
-      </View>
       </ScrollView>
     </GradientBackground>
   )
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop:20,
+    alignSelf: 'center',
+    marginTop: 20,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-  
+
   },
   text: {
     color: '#144800',
-    fontSize: 20,
+    fontSize: 22,
+    left: 20,
 
   },
   icon: {
     fontSize: 25
   },
   btnText: {
+    alignSelf: 'center',
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
@@ -261,6 +268,7 @@ const styles = StyleSheet.create({
   },
 
   calendar: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
     fontSize: 20,
@@ -268,7 +276,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -276,13 +284,14 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 40,
+    alignSelf: 'center',
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -291,6 +300,7 @@ const styles = StyleSheet.create({
 
   },
   text1: {
+
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
@@ -299,6 +309,7 @@ const styles = StyleSheet.create({
 
 
   label: {
+
     position: 'absolute',
     backgroundColor: 'white',
     left: 22,
@@ -317,14 +328,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
+    alignSelf: 'center',
+    height: 55,
     marginVertical: 20,
-    width: "50%",
+    width: "55%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 2,
-    borderRadius: 25,
-    backgroundColor: '#144800'
+    borderRadius: 20,
+    backgroundColor: '#144800',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

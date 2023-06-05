@@ -8,7 +8,7 @@ import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { Dropdown } from 'react-native-element-dropdown';
 import { Swipeable , GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { cgroup90 } from '../cgroup90';
 
 const HomeChat = (props) => {
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ const HomeChat = (props) => {
 
 
   useEffect(() => {
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/Traveler')
+    fetch(`${cgroup90}/api/Traveler`)
       .then((response) => response.json())
       .then((data) => {
         console.log("All travelers:", data);

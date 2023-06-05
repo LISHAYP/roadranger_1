@@ -196,3 +196,95 @@
  2023-06-03 16:24:59.2977 INFO: new event was added to the database!
  2023-06-03 16:25:09.8876 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"59116cab-2367-4fe7-9f09-a46f571ad318"}}
  2023-06-03 16:25:10.0451 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-04 03:08:52.2412 ERROR: ההפניה לאובייקט לא הוגדרה למופע של אובייקט.
+ 2023-06-04 03:09:42.5520 INFO: new event was added to the database!
+ 2023-06-04 03:10:58.6657 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"1670533a-9775-4d14-9f2a-e4e674f2768b"}}
+ 2023-06-04 03:11:07.5408 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-04 03:22:35.8545 INFO: new event was added to the database!
+ 2023-06-04 03:22:37.3296 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.<SendPushForEvent>d__2.MoveNext() ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-06-04 03:23:59.6539 INFO: new event was added to the database!
+ 2023-06-04 03:24:02.7875 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"94708861-ad9d-4d35-a249-3a34bf0529be"}}
+ 2023-06-04 03:24:02.9901 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-04 03:29:40.4746 INFO: new event was added to the database!
+ 2023-06-04 03:29:42.6221 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"c0eca5c6-8bf4-404c-b8c1-32c7a7d730d2"}}
+ 2023-06-04 03:29:42.8268 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-05 09:53:51.4713 INFO: new event was added to the database!
+ 2023-06-05 09:56:37.0082 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"b3cd002f-004f-4993-ac8a-bd2cd0d20542"}}
+ 2023-06-05 09:56:48.9942 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-05 10:09:07.5333 INFO: new event was added to the database!
+ 2023-06-05 10:12:39.6374 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"b74e25b9-49c5-443f-b9b5-d48a12854201"}}
+ 2023-06-05 10:12:43.9599 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-05 13:36:33.4765 INFO: new event was added to the database!
+ 2023-06-05 13:39:48.8546 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"4ac00273-e81d-449d-b061-0e073270ea1f"}}
+ 2023-06-05 13:40:03.2331 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-05 13:49:01.2592 INFO: new event was added to the database!
+ 2023-06-05 13:49:59.8130 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"62c2355a-a72a-49d6-98a8-0b1613445801"}}
+ 2023-06-05 13:49:59.8340 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: {"data":{"status":"ok","id":"f4f373b1-ff90-417b-8432-ebafced2879b"}}
+ 2023-06-05 13:49:59.8558 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"3c946283-5130-4607-8ef9-d491eeae8f08"}}
+ 2023-06-05 13:49:59.8773 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"911e3bc9-fec2-4e9c-8e9d-669db3d6c657"}}
+ 2023-06-05 13:49:59.8954 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"2ae523d1-8ac1-4d8b-81bf-d90b9c8ff121"}}
+ 2023-06-05 13:49:59.9443 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-06-05 13:49:59.9443 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-06-05 13:49:59.9774 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"1bb609b5-6fea-46c2-a7c0-f496e0bd38cc"}}
+ 2023-06-05 13:49:59.9981 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: {"data":{"status":"ok","id":"d5337e90-a4d9-4752-8a36-cab8e08da622"}}
+ 2023-06-05 13:50:00.0068 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-06-05 13:50:00.0068 INFO: Push notification sent to traveler ID: 55, Event ID: 1004
+ 2023-06-05 13:50:00.0643 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"603087c4-5005-4752-9e8f-0437217c4f3f"}}
+ 2023-06-05 13:50:00.0684 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-05 13:50:00.0684 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-06-05 13:50:00.0684 INFO: Push notification sent to traveler ID: 78, Event ID: 1004
+ 2023-06-05 13:50:00.1439 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-06-05 14:37:23.4827 INFO: new event was added to the database!
+ 2023-06-05 14:37:25.6539 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-06-05 14:41:29.0382 INFO: new event was added to the database!
+ 2023-06-05 14:42:46.2727 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-06-05 14:50:50.7456 INFO: new event was added to the database!
+ 2023-06-05 14:52:13.9328 INFO: new event was added to the database!
+ 2023-06-05 14:53:07.0807 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: {"data":{"status":"ok","id":"ad3a2541-7486-43f3-aa40-c1076b0161b0"}}
+ 2023-06-05 14:53:07.1101 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"5d8385b5-bb7f-45d6-8a16-562c78dfff55"}}
+ 2023-06-05 14:53:07.4724 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"a003d80c-a977-4b11-b437-245364baac39"}}
+ 2023-06-05 14:53:07.4977 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"8a6f2b38-760e-4af2-bddd-7ee25e6d90b4"}}
+ 2023-06-05 14:53:07.5260 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: {"data":{"status":"ok","id":"31edd684-1686-4113-bd37-b68f0285da82"}}
+ 2023-06-05 14:53:07.5260 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"75928a4f-d6f5-482f-830f-19463af9ea77"}}
+ 2023-06-05 14:53:07.8223 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"f0bd0f32-7857-4c90-b617-1abba9e6135a"}}
+ 2023-06-05 14:53:08.6304 INFO: Push notification sent to traveler ID: 78, Event ID: 1004
+ 2023-06-05 14:53:08.6304 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-06-05 14:53:08.6304 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-06-05 14:53:09.7174 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-06-05 14:53:10.3494 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-06-05 14:53:10.3494 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-06-05 14:53:11.3705 INFO: Push notification sent to traveler ID: 55, Event ID: 1004
+ 2023-06-05 14:53:18.2329 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"d8693fa2-8059-4ece-a0df-53d0dcea20b7"}}
+ 2023-06-05 14:53:21.4915 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-06-05 14:59:37.2112 INFO: new event was added to the database!
+ 2023-06-05 15:00:52.2573 INFO: new event was added to the database!
+ 2023-06-05 15:00:54.1106 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-06-05 15:07:53.2114 INFO: new event was added to the database!
+ 2023-06-05 15:11:20.6461 INFO: new event was added to the database!
+ 2023-06-05 15:20:24.2640 INFO: new event was added to the database!
+ 2023-06-05 15:21:17.4788 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"9e4ea538-e403-4cf6-8f4a-80ae6400a0af"}}
+ 2023-06-05 15:21:18.2893 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"b062220e-be9c-4d53-a234-daf8436f13c2"}}
+ 2023-06-05 15:21:18.3254 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"2e57576c-4ff9-466d-afd4-ead5029d5987"}}
+ 2023-06-05 15:21:18.3254 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"5c3dbabd-aad7-4323-9d81-efedd661f9bd"}}
+ 2023-06-05 15:21:18.5570 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: {"data":{"status":"ok","id":"e6d61d85-1383-4bfc-a94d-4d3d7014a2c9"}}
+ 2023-06-05 15:21:20.1081 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: {"data":{"status":"ok","id":"aec792cd-212e-4b82-bc50-84bde334fdc0"}}
+ 2023-06-05 15:21:21.6582 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-06-05 15:21:21.6582 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-06-05 15:21:21.6582 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-06-05 15:21:21.6582 INFO: Push notification sent to traveler ID: 55, Event ID: 1004
+ 2023-06-05 15:21:21.8028 INFO: Push notification sent to traveler ID: 78, Event ID: 1004
+ 2023-06-05 15:21:21.8918 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-06-05 15:21:26.8665 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"30fac31e-bad3-4e7b-accd-505a3be55de3"}}
+ 2023-06-05 15:21:30.0222 INFO: Push notification sent to traveler ID: 10, Event ID: 1004

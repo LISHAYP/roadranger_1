@@ -9,36 +9,75 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function MyPost(props) {
-    // const [events, setEvents] = useState([]);
-    const events = props.route.params.events;
+    const [events, setEvents] = useState([]);
+    // const events = props.route.params.events;
     const traveler = props.route.params.traveler;
+    const [eventWithAddresses, setEventWithAddresses] = useState([]);
+
     console.log("iiiiiii", traveler)
-    console.log("iiiiiii", events)
+    // console.log("iiiiiii", events)
+
     const navigation = useNavigation();
 
-    const [eventAddresses, setEventAddresses] = useState([]);
+    useEffect(() => {
+        fetch(`${cgroup90}/api/newevent`, {
+
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(
+                (result) => {
+                    setEvents(result)
+                    console.log("%%%%%%%%%%%%", result)
+
+                },
+                (error) => {
+                    console.log("err post=", error);
+                })
+
+    })
+    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
     useEffect(() => {
-        Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-        Promise.all(
-            events.map((event) =>
-                Geocoder.from(event.Latitude, event.Longitude)
-                    .then((json) => json.results[0].formatted_address)
-                    .catch(() => 'Address not found')
-            )
-        ).then((addresses) => setEventAddresses(addresses));
+        Promise.all(events.map(event => {
+            const lat = event.Latitude;
+            const lng = event.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+                const location = json.results[0].address_components;
+                const number = location[0].long_name;
+                const street = location[1].long_name;
+                const city = location[2].long_name;
+                const address = `${street} ${number}, ${city}`;
+                return { ...event, address };
+            });
+        })).then(eventsWithAddress => {
+            setEventWithAddresses(eventsWithAddress);
+
+        });
+        console.log("-----------------", eventWithAddresses)
+
     }, [events]);
 
+    console.log("-----------------", eventWithAddresses)
     return (
         <GradientBackground>
-            <ScrollView>
+            <Navbar traveler={traveler} />
+            <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.container}>
                     <BackButton />
                     <View>
-                        {events !== undefined ? (
-                            events.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
+                        {eventWithAddresses !== undefined ? (
+                            eventWithAddresses.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
                                 <TouchableOpacity onPress={() => {
                                     navigation.navigate('Event Details', { event: event, traveler: traveler });
                                 }} >
@@ -47,7 +86,7 @@ export default function MyPost(props) {
                                             <Text style={styles.details}>{event.Details}</Text>
                                             <Text>{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
                                             <Text>{event.EventTime.slice(0, 5)}</Text>
-                                            <Text>{eventAddresses[index]}</Text>
+                                            <Text>{event.address}</Text>
 
                                         </View>
                                         <Image source={{ uri: event.Picture }} style={styles.img} />
@@ -72,6 +111,9 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
+    scrollContent: {
+        paddingVertical: 70, // Adjust this value as needed
+      },
     event: {
         backgroundColor: 'rgba(0, 0, 0, 0.07)',
         borderRadius: 15,
@@ -80,7 +122,17 @@ const styles = StyleSheet.create({
         marginRight: 30,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '90%'
+        width: '90%',
+        borderRadius: 20,
+        backgroundColor: '#F5F5F5',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
     },
     detailsContainer: {
         flex: 1,

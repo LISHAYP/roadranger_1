@@ -212,13 +212,10 @@ namespace WebApplication1.Controllers
                             Longitude = newEvent.longitude
                         };
 
-                        //// Send push notifications to travelers within 3 kilometers of the event
-                        //var timerServices = new TimerServices();
-                        //_ = timerServices.SendPushForEvent(eventDto);
                     }
                 }
 
-                // Check if the serialTypeNumber is 1004
+                // Check if the serialTypeNumber is 1004 or 1003
                 if (newEvent.serialTypeNumber == 1004 || newEvent.serialTypeNumber == 1003)
                 {
                     // Send push notifications to all travelers
@@ -228,9 +225,10 @@ namespace WebApplication1.Controllers
                         eventNumber = newEvent.eventNumber,
                         Latitude = newEvent.latitude,
                         Longitude = newEvent.longitude,
-                        SerialTypeNumber = newEvent.serialTypeNumber 
+                        SerialTypeNumber = newEvent.serialTypeNumber,
+                        TravelerId = newEvent.travelerId,
                     };
-                    _ = timerServices.SendPushForEvent(eventDto);
+                    timerServices.SendPushForEvent(eventDto);
                 }
                 else
                 {
@@ -240,12 +238,13 @@ namespace WebApplication1.Controllers
                         eventNumber = newEvent.eventNumber,
                         Latitude = newEvent.latitude,
                         Longitude = newEvent.longitude,
-                        SerialTypeNumber = newEvent.serialTypeNumber // Add serialTypeNumber to eventDto
+                        SerialTypeNumber = newEvent.serialTypeNumber,
+                        TravelerId = newEvent.travelerId,
                     };
 
                     // Send push notifications to travelers within 3 kilometers of the event
                     var timerServices = new TimerServices();
-                    _ = timerServices.SendPushForEvent(eventDto);
+                    timerServices.SendPushForEvent(eventDto);
                 }
 
                 // Construct the response message
