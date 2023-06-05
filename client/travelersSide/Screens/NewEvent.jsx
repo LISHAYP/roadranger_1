@@ -18,7 +18,6 @@ export default function NewEvent(props) {
   const traveler = props.route.params.traveler;
   const userLocation = props.route.params.userLocation;
   const labels = props.route.params.labels;
-  console.log("------------------------",traveler)
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
@@ -137,7 +136,6 @@ export default function NewEvent(props) {
 
 
   const createEvent = async () => {
-
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
@@ -257,9 +255,8 @@ export default function NewEvent(props) {
                               throw new Error('Text comparison request failed');
                             }
                             const data = await response.json();
-                            for (const entit of data.entities) {
                               entityname = data.entities[0].name;
-                            }
+                            
                             //console.log('entityname', entityname);
                             translations.forEach(async translationData => {
                               const requestBody = {
@@ -289,9 +286,9 @@ export default function NewEvent(props) {
                                 }
                                 entities.push(entObj);
                               }
-                              if (entityname) {
-                                // console.log("here in entityname", entityname)
-                                // console.log('entities', entities);
+                              if(entityname) {
+                                 console.log("here in entityname", entityname)
+                                console.log('entities', entities);
                                 for (let i = 0; i < entities.length; i++) {
                                   const similarity = stringSimilarity.compareTwoStrings(entities[i].name, entityname);
 
@@ -315,7 +312,7 @@ export default function NewEvent(props) {
                                         (error) => {
                                           console.log("err post=", error);
                                         }, []);
-                                        break; // Exit the loop after finding a match
+                                    break; // Exit the loop after finding a match
                                   }
                                 }
                               }
@@ -400,12 +397,12 @@ export default function NewEvent(props) {
 
   return (
     < GradientBackground>
-          <BackButton text="New Post"/>
+      <BackButton text="New Post" />
 
-      <Navbar traveler={traveler} userLocation={userLocation}  />
+      <Navbar traveler={traveler} userLocation={userLocation} />
       <ScrollView>
         <View style={styles.container}>
-        
+
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}

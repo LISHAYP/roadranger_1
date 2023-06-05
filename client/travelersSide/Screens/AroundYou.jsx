@@ -19,7 +19,8 @@ export default function AroundYou(props) {
     const traveler = props.route.params.traveler;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
-    
+    console.log('matchedEvent');
+
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
@@ -32,8 +33,6 @@ export default function AroundYou(props) {
             const travelerIdObj = {
                 travelerId: traveler.traveler_id,
             }
-
-
             fetch(`${cgroup90}/api/post/lastevent`, {
                 method: 'POST',
                 headers: {
@@ -54,7 +53,6 @@ export default function AroundYou(props) {
                 });
         }
         setModalVisible(true);
-
     }, [matchedEvent]);
     const [Events, setEvents] = useState([])
 
