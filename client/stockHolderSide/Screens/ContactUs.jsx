@@ -9,9 +9,37 @@ import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
 import BackButton from '../Components/BackButton';
-
+import {
+    useFonts,
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  } from '@expo-google-fonts/roboto';
 
 export default function ContactUs() {
+    let [fontsLoaded] = useFonts({
+        Roboto_100Thin,
+        Roboto_100Thin_Italic,
+        Roboto_300Light,
+        Roboto_300Light_Italic,
+        Roboto_400Regular,
+        Roboto_400Regular_Italic,
+        Roboto_500Medium,
+        Roboto_500Medium_Italic,
+        Roboto_700Bold,
+        Roboto_700Bold_Italic,
+        Roboto_900Black,
+        Roboto_900Black_Italic,
+      });
     const Subject = [
         { label: 'General', value: '1' },
         { label: 'Help', value: '2' },
@@ -99,7 +127,7 @@ export default function ContactUs() {
                 <BackButton />
                 <ScrollView>
                     <View style={styles.container}>
-                        <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
+                        <Text style={{fontFamily:'Roboto_400Regular_Italic'}}>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
                         {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                         <Text style={styles.text}>Email:</Text>
                         <TextInput style={styles.input}
@@ -177,8 +205,6 @@ const styles = StyleSheet.create({
         // padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,
-        width: "100%",
-        marginTop: 10
     },
 
     RoadRanger: {
@@ -188,71 +214,89 @@ const styles = StyleSheet.create({
 
     },
     text: {
+        fontFamily:'Roboto_400Regular',
         paddingTop: 10,
         color: '#144800',
         fontSize: 25,
     },
     input: {
+        fontFamily:'Roboto_400Regular',
+        alignSelf: 'center',
         flexDirection: 'row',
         marginVertical: 10,
-        width: "90%",
+        width: "100%",
         fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderColor: '#144800',
         borderWidth: 1,
-        borderRadius: 25,
+        borderRadius: 15,
         flexDirection: 'row',
         alignItems: 'center'
     },
     btnLogIn: {
-        marginVertical: 20,
-        width: "50%",
-        alignSelf: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderColor: '#144800',
-        borderWidth: 2,
-        borderRadius: 25,
-        backgroundColor: '#144800'
+        height: 55,
+            marginVertical: 8,
+            width: "50%",
+            alignSelf: 'center',
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            borderColor: '#426c32',
+            borderWidth: 2,
+            borderRadius: 15,
+            backgroundColor: '#426c32',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 5
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9
     },
     btnText: {
+        fontFamily:'Roboto_400Regular_Italic',
         color: '#F8F8FF',
         alignSelf: 'center',
-        fontSize: 20,
+        fontSize: 22,
     },
     placeholderStyle: {
+        fontFamily:'Roboto_400Regular',
         fontSize: 18,
         color: "#A9A9A9"
     },
 
     dropdown: {
-        height: 40,
+        fontFamily:'Roboto_400Regular',
+        alignSelf: 'center',
+        height: 50,
         borderColor: '#8FBC8F',
         borderWidth: 0.5,
-        borderRadius: 8,
         paddingHorizontal: 8,
         borderColor: '#144800',
         borderWidth: 1,
-        borderRadius: 25,
+        borderRadius: 15,
         paddingVertical: 10,
         paddingHorizontal: 15,
         marginBottom: 10,
         marginTop: 10,
-        width: "90%",
+        width: "100%",
 
     },
     input1: {
+        fontFamily:'Roboto_400Regular',
+        alignSelf: 'center',
         flexDirection: 'row',
         marginVertical: 10,
-        width: "90%",
+        width: "100%",
         fontSize: 20,
-        paddingVertical: 20,
+        paddingVertical: 10,
         paddingHorizontal: 15,
         borderColor: '#144800',
         borderWidth: 1,
-        borderRadius: 25,
-        minHeight: 120,
+        borderRadius: 15,
+        minHeight: 100,
         textAlign: 'top',
+        
     },
 });

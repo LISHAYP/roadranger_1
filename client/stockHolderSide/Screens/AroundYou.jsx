@@ -7,8 +7,22 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { getCenter } from 'geolib';
 import { cgroup90 } from '../cgroup90';
-
+import { useFonts,Roboto_100Thin,Roboto_100Thin_Italic,Roboto_300Light,Roboto_300Light_Italic,Roboto_400Regular,Roboto_400Regular_Italic,Roboto_500Medium,Roboto_500Medium_Italic,Roboto_700Bold,Roboto_700Bold_Italic,Roboto_900Black,Roboto_900Black_Italic,} from '@expo-google-fonts/roboto';
 export default function AroundYou(props) {
+    let [fontsLoaded] = useFonts({
+        Roboto_100Thin,
+        Roboto_100Thin_Italic,
+        Roboto_300Light,
+        Roboto_300Light_Italic,
+        Roboto_400Regular,
+        Roboto_400Regular_Italic,
+        Roboto_500Medium,
+        Roboto_500Medium_Italic,
+        Roboto_700Bold,
+        Roboto_700Bold_Italic,
+        Roboto_900Black,
+        Roboto_900Black_Italic,
+      });
     const [location, setLocation] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
@@ -240,7 +254,8 @@ const styles = StyleSheet.create({
     titlename: {
         color: 'white',
         fontSize: 22,
-        alignSelf:'center'
+        alignSelf:'center',
+        fontFamily:'Roboto_400Regular_Italic'
     },
     hamburger: {
         flexDirection: 'row',
@@ -286,17 +301,21 @@ const styles = StyleSheet.create({
     closeButton: {
         right: -80,
         paddingTop:10,
+        
     },
     btnLogOut: {
+        
         left:-80,
         paddingTop:10,
     },
     textLO: {
+        fontFamily:'Roboto_500Medium_Italic',
         color: '#144800',
-        fontSize: 20,
+        fontSize: 18,
         textDecorationLine: 'underline',
     },
     optionsContainer: {
+        
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
@@ -306,6 +325,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     option: {
+        
         alignContent: 'center',
         height: '18%',
         width: '48%',
@@ -326,6 +346,7 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     text: {
+        fontFamily:'Roboto_400Regular',
         color: '#144800',
         fontSize: 23,
         alignSelf: 'center',

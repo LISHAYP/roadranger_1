@@ -10,7 +10,23 @@ import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
 import { Divider } from 'react-native-paper';
+import { useFonts,Roboto_100Thin,Roboto_100Thin_Italic,Roboto_300Light,Roboto_300Light_Italic,Roboto_400Regular,Roboto_400Regular_Italic,Roboto_500Medium,Roboto_500Medium_Italic,Roboto_700Bold,Roboto_700Bold_Italic,Roboto_900Black,Roboto_900Black_Italic,} from '@expo-google-fonts/roboto';
+
 export default function Setting(props) {
+  let [fontsLoaded] = useFonts({
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  });
   const stakeholder = props.route.params.stakeholder;
   console.log("********", stakeholder);
 
@@ -195,6 +211,7 @@ const styles = StyleSheet.create({
 
   },
   text: {
+    fontFamily:'Roboto_400Regular',
     color: '#144800',
     fontSize: 20,
 
@@ -203,6 +220,7 @@ const styles = StyleSheet.create({
     fontSize: 25
   },
   btnSignUp: {
+    fontFamily:'Roboto_400Regular_Italic',
     marginVertical: 20,
     width: "50%",
     alignSelf: 'center',
@@ -222,6 +240,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   btnText: {
+    fontFamily:'Roboto_400Regular_Italic',
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
@@ -258,16 +277,19 @@ const styles = StyleSheet.create({
 
   },
   text1: {
+    fontFamily:'Roboto_400Regular',
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
   },
   text2: {
+    fontFamily:'Roboto_400Regular',
     fontSize: 18,
     alignSelf: 'center',
 
   },
   input: {
+    fontFamily:'Roboto_400Regular',
     flexDirection: 'row',
     marginVertical: 5,
     width: "90%",
@@ -280,6 +302,7 @@ const styles = StyleSheet.create({
 
   },
   label: {
+    fontFamily:'Roboto_400Regular',
     position: 'absolute',
     backgroundColor: 'white',
     left: 22,
@@ -291,10 +314,12 @@ const styles = StyleSheet.create({
 
   },
   placeholderStyle: {
+    fontFamily:'Roboto_400Regular',
     fontSize: 18,
     color: "#A9A9A9"
   },
   selectedTextStyle: {
+    
     fontSize: 18,
   },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 },

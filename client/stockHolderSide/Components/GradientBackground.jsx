@@ -43,7 +43,7 @@ const GradientBackground = ({ children }) => {
     <View style={styles.container}>
       <LinearGradient
         // colors={['#006400','#ADD8E6', '#3b5998', '#192f6a']}
-        colors={['#ffffff','#ccffcc']}
+        colors={['#ffffff','#ffffff','#ccffcc']}
         
 
         style={styles.gradient}

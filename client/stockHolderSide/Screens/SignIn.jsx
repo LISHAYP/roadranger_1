@@ -10,7 +10,23 @@ import { Button, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { cgroup90 } from '../cgroup90';
 import { Divider } from "@react-native-material/core";
+import {
+    useFonts,
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  } from '@expo-google-fonts/roboto';
 export default function SignIn() {
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
@@ -133,7 +149,20 @@ export default function SignIn() {
             Notifications.removeNotificationSubscription(responseListener.current);
         };
     }, []);
-
+    let [fontsLoaded] = useFonts({
+        Roboto_100Thin,
+        Roboto_100Thin_Italic,
+        Roboto_300Light,
+        Roboto_300Light_Italic,
+        Roboto_400Regular,
+        Roboto_400Regular_Italic,
+        Roboto_500Medium,
+        Roboto_500Medium_Italic,
+        Roboto_700Bold,
+        Roboto_700Bold_Italic,
+        Roboto_900Black,
+        Roboto_900Black_Italic,
+      });
     return (
         < GradientBackground>
 
@@ -184,14 +213,14 @@ export default function SignIn() {
                 <TouchableOpacity onPress={() => {
                     navigation.navigate("Forgot password")
                 }}>
-                    <Text >
+                    <Text style={{ fontFamily: 'Roboto_400Regular' }}>
                         Forgot your password?
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnSignUp} onPress={() => {
                     navigation.navigate("Sign Up");
                 }}>
-                    <Text > Don't have an Account?  </Text>
+                   <Text style={{ fontFamily: 'Roboto_400Regular' }}> Don't have an Account?  </Text>
                     <Text style={styles.text1}> Click Here </Text>
 
                 </TouchableOpacity>
@@ -216,10 +245,9 @@ export default function SignIn() {
             // marginHorizontal: 10,
             padding: 20,
             width: "100%",
-            marginTop: 100,
+            marginTop: 40,
             // backgroundColor:'#F0FFF0'
             // backgroundColor:'#3CB371'
-        
           },
         frame: {
           // backgroundColor:  'rgba(0, 0, 0, 0.07)',
@@ -241,8 +269,12 @@ export default function SignIn() {
         text: {
           color: '#144800',
           fontSize: 30,
+          fontFamily:'Roboto_400Regular'
+
+          
         },
         input: {
+            fontFamily: 'Roboto_400Regular',
             marginVertical: 20,
             width: "100%",
             fontSize: 20,
@@ -262,9 +294,12 @@ export default function SignIn() {
             },
             shadowOpacity: 0.32,
             shadowRadius: 5.46,
-            elevation: 0
+            elevation: 0,
+            fontFamily:'Roboto_400Regular'
+
         },
         btnLogIn: {
+            fontFamily:'Roboto_400Regular',
             height: 55,
             marginVertical: 20,
             width: "50%",
@@ -285,24 +320,29 @@ export default function SignIn() {
             elevation: 9
         },
         btnText: {
+            fontFamily:'Roboto_400Regular_Italic',
             color: '#F8F8FF',
             alignSelf: 'center',
             fontSize: 22,
+            
+            
         },
         btnSignUp: {
+            fontFamily:'Roboto_400Regular_Italic',
             flexDirection: 'row',
             marginBottom: 20,
             marginTop: 20
           },
           contact: {
+            fontFamily:'Roboto_400Regular',
             fontSize: 20,
             alignSelf: 'center',
             marginLeft: 10,
           },
         text1: {
-            fontWeight: 'bold',
             fontSize: 15,
-            color: '#426c32'
-      
+            color: '#426c32',
+            fontFamily:'Roboto_900Black_Italic',
+            
         }
       })

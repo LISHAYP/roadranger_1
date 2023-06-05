@@ -9,8 +9,23 @@ import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import { useFonts,Roboto_100Thin,Roboto_100Thin_Italic,Roboto_300Light,Roboto_300Light_Italic,Roboto_400Regular,Roboto_400Regular_Italic,Roboto_500Medium,Roboto_500Medium_Italic,Roboto_700Bold,Roboto_700Bold_Italic,Roboto_900Black,Roboto_900Black_Italic,} from '@expo-google-fonts/roboto';
 
 export default function NewEvent(props) {
+  let [fontsLoaded] = useFonts({
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  });
   const stakeholder = props.route.params.stakeholder;
   const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
@@ -231,6 +246,7 @@ const styles = StyleSheet.create({
 
   },
   text: {
+    fontFamily:'Roboto_400Regular',
     color: '#144800',
     fontSize: 20,
 
@@ -238,12 +254,15 @@ const styles = StyleSheet.create({
 
 
   btnText: {
+    fontFamily:'Roboto_400Regular_Italic',
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 25,
+    
 
   },
   btnPText: {
+    fontFamily:'Roboto_400Regular',
     color: '#A9A9A9',
     alignSelf: 'center',
     fontSize: 20,
@@ -266,12 +285,14 @@ const styles = StyleSheet.create({
 
   },
   text1: {
+    fontFamily:'Roboto_400Regular',
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
   },
 
   input: {
+    fontFamily:'Roboto_400Regular',
     alignSelf: 'center',
     flexDirection: 'row',
     marginVertical: 10,
@@ -284,6 +305,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   photo: {
+    
     marginVertical: 20,
     width: "90%",
     alignSelf: 'center',
@@ -315,6 +337,7 @@ const styles = StyleSheet.create({
 
   // },
   placeholderStyle: {
+    fontFamily:'Roboto_400Regular',
     fontSize: 18,
     color: "#A9A9A9"
   },
@@ -322,24 +345,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnSave: {
-    height: 55,
-    marginVertical: 20,
-    width: "50%",
-    alignSelf: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderColor: '#426c32',
-    borderWidth: 2,
-    borderRadius: 15,
-    backgroundColor: '#426c32',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9
+            height: 55,
+            marginVertical: 20,
+            width: "50%",
+            alignSelf: 'center',
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            borderColor: '#426c32',
+            borderWidth: 2,
+            borderRadius: 15,
+            backgroundColor: '#426c32',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 5
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9
   },
 });
 
