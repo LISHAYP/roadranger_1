@@ -8,6 +8,7 @@ import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 export default function SOS(props) {
   const traveler = props.route.params.traveler;
@@ -30,7 +31,7 @@ export default function SOS(props) {
   ]
   useEffect(() => {
     //insert the API Key
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
       .then(json => {
         const addressComponents = json.results[0].address_components;
@@ -62,7 +63,7 @@ export default function SOS(props) {
   };
    addContry = () => {
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+    fetch(`${cgroup90}/api/post/country`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -89,7 +90,7 @@ export default function SOS(props) {
       area_name: city
     }
     
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+    fetch(`${cgroup90}/api/post/area`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -128,7 +129,7 @@ export default function SOS(props) {
     }
 else{
     // Send a POST request to your backend API with the event data
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/askforhelp', {
+    fetch(`${cgroup90}/api/askforhelp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -151,7 +152,7 @@ console.log(data)
   const OpenCameraSOS = () => {
     navigation.navigate('CameraSOS', {idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`} );
     const date=`${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/SOS_${date}.jpg`)
+    setPicture(`${cgroup90}/uploadEventPic/SOS_${date}.jpg`)
   }
 
   return (

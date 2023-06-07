@@ -18,7 +18,7 @@ export default function MyPost(props) {
     console.log("iiiiiii", events)
     const navigation = useNavigation();
     const [eventWithAddresses, setEventWithAddresses] = useState([]);
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
     console.log("%%%%%%%%%%%%", events)
     useEffect(() => {

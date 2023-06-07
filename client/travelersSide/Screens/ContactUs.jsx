@@ -9,6 +9,7 @@ import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
 import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 
 export default function ContactUs() {
@@ -63,7 +64,7 @@ export default function ContactUs() {
 
             return;
         }
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newcontactus', {
+        fetch(`${cgroup90}/api/newcontactus`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

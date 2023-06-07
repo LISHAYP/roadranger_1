@@ -9,6 +9,7 @@ import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import stringSimilarity from 'string-similarity';
+import { cgroup90 } from '../cgroup90';
 
 
 export default function NewEvent(props) {
@@ -36,7 +37,7 @@ export default function NewEvent(props) {
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
   const [eventStatus, setEventStatus] = useState('true');
-  const [picture, setPicture] = useState('http://cgroup90@194.90.158.74/cgroup90/prod/profilePictures/no-image.png');
+  const [picture, setPicture] = useState(`${cgroup90}/profilePictures/no-image.png`);
   const [stackholderId, setStackholderId] = useState('null');
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
@@ -82,7 +83,7 @@ export default function NewEvent(props) {
   };
   addContry = () => {
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/country', {
+    fetch(`${cgroup90}/api/post/country`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -109,7 +110,7 @@ export default function NewEvent(props) {
       area_name: city
     }
 
-    fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/area', {
+    fetch(`${cgroup90}/api/post/area`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -138,7 +139,7 @@ export default function NewEvent(props) {
       Alert.alert('Please enter details and type');
     } else {
       // Send a POST request to your backend API with the event data
-      fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/post/newevent', {
+      fetch(`${cgroup90}/api/post/newevent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +155,7 @@ export default function NewEvent(props) {
             longitude: userLocation.coords.longitude,
           };
           fetch(
-            'http://cgroup90@194.90.158.74/cgroup90/prod/api/post/neweventdistance',
+            `${cgroup90}/api/post/neweventdistance`,
             {
               method: 'POST',
               headers: {
@@ -167,25 +168,31 @@ export default function NewEvent(props) {
             .then(data1 => {
               const relatedEventsData = data1; // Assign the data to a constant variable
               const matchedEvents = []; // Array to store matched events
+              console.log(`here1 data1`)
 
               for (let i = 0; i < relatedEventsData.length; i++) {
                 const event = relatedEventsData[i];
                 if (compareLabels(event, newEvent)) {
+                  console.log(`here1 compareLabelscompareLabels`)
+                  console.log(event)
+
                   matchedEvents.push(event);
+                  console.log('matchedEvents compareLabels', matchedEvents);
                   break;
                 }
-
-                if (!compareLabels(event, newEvent)) {                  // Initialize the translation client
-                  const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCm4O6vwbRKam7AO4vyBXAvMOGeMAIyBuY`;
+                
+                else{
+                  // Initialize the translation client
+                  const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
                   // Function to translate text using Google Translate API
-                  console.log('here 1:');
+                  console.log('here else:');
 
                   const translateText = async (text, targetLanguage) => {
                     const requestBody = {
                       q: text,
                       target: targetLanguage,
                     };
-                    console.log('here 2:');
+                    console.log('here else:translateText');
                     const response = await fetch(translateUrl, {
                       method: 'POST',
                       headers: {
@@ -224,6 +231,7 @@ export default function NewEvent(props) {
                       translateText(textToTranslate2, targetLanguage2)
                         .then(translation2 => {
                           if (event.Details !== newEvent.Details) {
+                            console.log('here else:translateText translations.pushtranslations.push');
                             const translationData = {
                               id: event.eventNumber, // Replace 'id' with the actual property name that holds the event ID
                               translation: translation2,
@@ -240,7 +248,7 @@ export default function NewEvent(props) {
                                 type: 'PLAIN_TEXT',
                               }
                             };
-                            const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCOe-yxajZt8TRDqhGYlq_5SfPmJIaIsxI`;
+                            const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
                             const response = await fetch(apiUrl, {
                               method: 'POST',
                               headers: {
@@ -264,7 +272,9 @@ export default function NewEvent(props) {
                                   type: 'PLAIN_TEXT',
                                 }
                               };
-                              const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCOe-yxajZt8TRDqhGYlq_5SfPmJIaIsxI`;
+                              console.log('here else:documents:analyzeEntities');
+
+                              const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
                               const response = await fetch(apiUrl, {
                                 method: 'POST',
                                 headers: {
@@ -293,7 +303,7 @@ export default function NewEvent(props) {
 
                                   if (similarity > 0.7) {
 
-                                    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/NewEvent?eventNumber=${entities[i].id}`, {
+                                    fetch(`${cgroup90}/api/NewEvent?eventNumber=${entities[i].id}`, {
 
                                       method: 'GET',
                                       headers: new Headers({
@@ -307,10 +317,12 @@ export default function NewEvent(props) {
                                       .then(
                                         (result) => {
                                           matchedEvents.push(result);
+                                          
                                         },
                                         (error) => {
                                           console.log("err post=", error);
                                         }, []);
+                                        //console.log("Around You", { traveler, matchedEvents })
                                         break; // Exit the loop after finding a match
                                   }
                                 }
@@ -330,7 +342,7 @@ export default function NewEvent(props) {
                       // Rest of your error handling code
                     });
 
-                }
+                } 
 
               }
               if (matchedEvents.length > 0) {
@@ -338,8 +350,10 @@ export default function NewEvent(props) {
               } else {
                 console.log('No matches found');
               }
+              console.log("Around You", { traveler, matchedEvents })
               Alert.alert('Publish');
               const data = traveler;
+              console.log('matchedEventsPublishPublishPublishPublishPublishPublish', matchedEvents);
               navigation.navigate("Around You", { data, matchedEvents });
             })
             .catch(error => {
@@ -355,14 +369,19 @@ export default function NewEvent(props) {
   };
 
   const compareLabels = (event1, event2) => {
-    if (!event1.labels || !event2.labels) {
+    console.log(`here1 compareLabels`,event1, event2)
+
+    if (event1.labels==null || event2.labels==null ) {
       // If either event is missing the labels property, return false
+      console.log(`here1 compareLabels false`)
 
       return false;
     }
 
     if (event1.Details === event2.Details) {
       // If Details are defined and identical, return false
+      console.log(`here1 compareLabels false2`)
+
       return false;
     }
 
@@ -374,6 +393,8 @@ export default function NewEvent(props) {
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
+          console.log(`here1 compareLabels true`)
+
           return true;
         }
       }
@@ -389,9 +410,10 @@ export default function NewEvent(props) {
 
 
   const OpenCameraE = () => {
+    console.log(`here1`)
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
-    setPicture(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadEventPic/E_${date}.jpg`)
+    setPicture(`${cgroup90}/uploadEventPic/E_${date}.jpg`)
   }
 
   return (

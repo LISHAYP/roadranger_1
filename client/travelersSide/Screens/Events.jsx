@@ -20,7 +20,7 @@ export default function Events(props) {
  
 
   useEffect(() => {
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Promise.all(
       events.map((event) =>
         Geocoder.from(event.Latitude, event.Longitude)

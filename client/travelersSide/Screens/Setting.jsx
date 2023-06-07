@@ -10,6 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { auth } from '../firebase';
 import 'firebase/database';
+import { cgroup90 } from '../cgroup90';
 
 export default function Setting(props) {
 
@@ -17,7 +18,7 @@ export default function Setting(props) {
   console.log(traveler);
 
   useEffect(() => {
-    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
+    setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
 
   }, [userPic]);
   const navigation = useNavigation();
@@ -82,7 +83,7 @@ export default function Setting(props) {
       Alert.alert('Phone must be 10 numbers.');
       return;
     }
-    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/update?email=${traveler.travler_email}`, {
+    fetch(`${cgroup90}/api/put/update?email=${traveler.travler_email}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -107,7 +108,7 @@ export default function Setting(props) {
     handleSavePhoto();
   }
   const handleSavePhoto = () => {
-    setUserPic(`http://cgroup90@194.90.158.74/cgroup90/prod/uploadUserPic/U_${email}.jpg`);
+    setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
   }
 
   return (
