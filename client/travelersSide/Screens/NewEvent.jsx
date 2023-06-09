@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import stringSimilarity from 'string-similarity';
 import { cgroup90 } from '../cgroup90';
+//import Geolocation from 'react-native-geolocation-service';
+
 
 
 export default function NewEvent(props) {
@@ -44,10 +46,30 @@ export default function NewEvent(props) {
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [relatedEvents, setRelatedEvents] = useState('');
-  const [setEntitiy, setSetEntitiy] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  const getCurrentLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      error => {
+        console.error(error);
+        // Handle error retrieving location
+      }
+    );
+  };
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
+
   useEffect(() => {
     //insert the API Key
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    console.log("traveler", traveler)
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
       .then(json => {
         const addressComponents = json.results[0].address_components;
@@ -66,8 +88,8 @@ export default function NewEvent(props) {
     Details: details,
     event_date: new Date().toISOString().slice(0, 10),
     event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    Latitude: userLocation.coords.latitude,
-    Longitude: userLocation.coords.longitude,
+    Latitude: latitude,
+    Longitude: longitude,
     event_status: eventStatus,
     Picture: picture,
     TravelerId: id,
@@ -77,7 +99,7 @@ export default function NewEvent(props) {
     area_number: areaNumber,
     labels: JSON.stringify(labels)
   };
-  //console.log("--------", { newEvent, labels })
+  console.log("--------", { newEvent, labels })
   const countryObj = {
     country_name: country,
   };
@@ -180,169 +202,8 @@ export default function NewEvent(props) {
                   console.log('matchedEvents compareLabels', matchedEvents);
                   break;
                 }
-                
-                else{
-                  // Initialize the translation client
-                  const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
-                  // Function to translate text using Google Translate API
-                  console.log('here else:');
 
-                  const translateText = async (text, targetLanguage) => {
-                    const requestBody = {
-                      q: text,
-                      target: targetLanguage,
-                    };
-                    console.log('here else:translateText');
-                    const response = await fetch(translateUrl, {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify(requestBody),
-                    });
-                    console.log('Translation 1:', translation1);
-                    if (!response.ok) {
-                      throw new Error('Translation request failed');
-                    }
 
-                    const data = await response.json();
-                    if (
-                      data &&
-                      data.data &&
-                      data.data.translations &&
-                      data.data.translations.length > 0
-                    ) {
-                      return data.data.translations[0].translatedText;
-                    } else {
-                      throw new Error('Translation not available');
-                    }
-                  };
-
-                  const translation1 = { value: null };// Create an object to hold the translation values
-                  // Call the translateText function for newEvent.Details
-                  const textToTranslate1 = newEvent.Details; // Replace with your actual text
-                  const targetLanguage1 = 'en'; // Replace with the desired target language code
-                  translateText(textToTranslate1, targetLanguage1)
-                    .then(translation => {
-                      translation1.value = translation;
-                      // Call the translateText function for event.Details
-                      const textToTranslate2 = event.Details; // Replace with your actual text
-                      const targetLanguage2 = 'en'; // Replace with the desired target language code
-                      translateText(textToTranslate2, targetLanguage2)
-                        .then(translation2 => {
-                          if (event.Details !== newEvent.Details) {
-                            console.log('here else:translateText translations.pushtranslations.push');
-                            const translationData = {
-                              id: event.eventNumber, // Replace 'id' with the actual property name that holds the event ID
-                              translation: translation2,
-                            };
-                            console.log('translations.push', translationData);
-                            translations.push(translationData);
-                            console.log('translations.push', translations);
-                          }
-                          console.log('Translation 1:', translation1.value);
-                          translations.forEach(async translationData => {
-                            const requestBody = {
-                              document: {
-                                content: translation1.value,
-                                type: 'PLAIN_TEXT',
-                              }
-                            };
-                            const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
-                            const response = await fetch(apiUrl, {
-                              method: 'POST',
-                              headers: {
-                                'Content-Type': 'application/json',
-                              },
-                              body: JSON.stringify(requestBody),
-                            });
-
-                            if (!response.ok) {
-                              throw new Error('Text comparison request failed');
-                            }
-                            const data = await response.json();
-                            for (const entit of data.entities) {
-                              entityname = data.entities[0].name;
-                            }
-                            //console.log('entityname', entityname);
-                            translations.forEach(async translationData => {
-                              const requestBody = {
-                                document: {
-                                  content: translationData.translation,
-                                  type: 'PLAIN_TEXT',
-                                }
-                              };
-                              console.log('here else:documents:analyzeEntities');
-
-                              const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
-                              const response = await fetch(apiUrl, {
-                                method: 'POST',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(requestBody),
-                              });
-
-                              if (!response.ok) {
-                                throw new Error('Text comparison request failed');
-                              }
-                              const data1 = await response.json();
-
-                              for (const entity of data1.entities) {
-                                const entObj = {
-                                  name: entity.name,
-                                  id: translationData.id
-                                }
-                                entities.push(entObj);
-                              }
-                              if (entityname) {
-                                // console.log("here in entityname", entityname)
-                                // console.log('entities', entities);
-                                for (let i = 0; i < entities.length; i++) {
-                                  const similarity = stringSimilarity.compareTwoStrings(entities[i].name, entityname);
-
-                                  if (similarity > 0.7) {
-
-                                    fetch(`${cgroup90}/api/NewEvent?eventNumber=${entities[i].id}`, {
-
-                                      method: 'GET',
-                                      headers: new Headers({
-                                        'Content-Type': 'application/json; charset=UTF-8',
-                                        'Accept': 'application/json; charset=UTF-8',
-                                      })
-                                    })
-                                      .then(response => {
-                                        return response.json()
-                                      })
-                                      .then(
-                                        (result) => {
-                                          matchedEvents.push(result);
-                                          
-                                        },
-                                        (error) => {
-                                          console.log("err post=", error);
-                                        }, []);
-                                        //console.log("Around You", { traveler, matchedEvents })
-                                        break; // Exit the loop after finding a match
-                                  }
-                                }
-                              }
-
-                            });
-                          });
-
-                        })
-                        .catch(error => {
-                          console.error('Translation Error:', error);
-                          // Rest of your error handling code
-                        });
-                    })
-                    .catch(error => {
-                      console.error('Translation Error:', error);
-                      // Rest of your error handling code
-                    });
-
-                } 
 
               }
               if (matchedEvents.length > 0) {
@@ -350,10 +211,8 @@ export default function NewEvent(props) {
               } else {
                 console.log('No matches found');
               }
-              console.log("Around You", { traveler, matchedEvents })
               Alert.alert('Publish');
-              const data = traveler;
-              console.log('matchedEventsPublishPublishPublishPublishPublishPublish', matchedEvents);
+              data = traveler;
               navigation.navigate("Around You", { data, matchedEvents });
             })
             .catch(error => {
@@ -369,9 +228,9 @@ export default function NewEvent(props) {
   };
 
   const compareLabels = (event1, event2) => {
-    console.log(`here1 compareLabels`,event1, event2)
+    console.log(`here1 compareLabels`, event1, event2)
 
-    if (event1.labels==null || event2.labels==null ) {
+    if (event1.labels == null || event2.labels == null) {
       // If either event is missing the labels property, return false
       console.log(`here1 compareLabels false`)
 

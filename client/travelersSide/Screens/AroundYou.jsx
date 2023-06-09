@@ -20,21 +20,22 @@ export default function AroundYou(props) {
     const traveler = props.route.params.data;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
+    const [Events, setEvents] = useState([])
     
+
     useFocusEffect(
         React.useCallback(() => {
+            console.log("traveler",traveler)
             handleGet();
             return () => {
             };
-        }, [])
+        }, [isMenuOpen])
     );
-    
     useEffect(() => {
         if (matchedEvent && matchedEvent.length > 0) {
             const travelerIdObj = {
                 travelerId: traveler.traveler_id,
             }
-
             fetch(`${cgroup90}/api/post/lastevent`, {
                 method: 'POST',
                 headers: {
@@ -47,7 +48,6 @@ export default function AroundYou(props) {
                 .then(data => {
                     setLasteventOfTraveler(data.lastEventId);
                     console.log("++++", data.lastEventId);
-
                 }
                 )
                 .catch(error => {
@@ -56,9 +56,7 @@ export default function AroundYou(props) {
                 });
         }
         setModalVisible(true);
-
     }, [matchedEvent]);
-    const [Events, setEvents] = useState([])
 
     const getUserLocation = async () => {
         const userlocation = await Location.getCurrentPositionAsync();
@@ -84,7 +82,7 @@ export default function AroundYou(props) {
         if (matchedEvent) {
             console.log("this is working!!!", matchedEvent)
         }
-        fetch('http://cgroup90@194.90.158.74/cgroup90/prod/api/newevent', {
+        fetch(`${cgroup90}/api/newevent`, {
 
             method: 'GET',
             headers: new Headers({
@@ -130,7 +128,6 @@ export default function AroundYou(props) {
     };
     const relatedEvent = (eventNumber) => {
         console.log("**************", eventNumber);
-
         const updateEventObj = {
             is_related: eventNumber
         }
@@ -150,6 +147,7 @@ export default function AroundYou(props) {
                 console.log(data); // Traveler updated successfully.
                 setModalVisible(false);
                 setLasteventOfTraveler('');
+                handleGet();
             })
             .catch((error) => {
                 console.error(error);
@@ -165,7 +163,7 @@ export default function AroundYou(props) {
                     <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
                         <Icon name="menu" size={40} color="white" alignSelf="ceter" />
                         <View style={styles.textContainer}>
-                            <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name}!</Text>
+                            <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
                         </View>
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
                     </TouchableOpacity>
@@ -187,7 +185,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.event_status !== false && event.is_related == null).map(event => (
+                            {Events.filter(event => event.EventStatus !== false && event.is_related == null).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{

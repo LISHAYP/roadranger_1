@@ -4,8 +4,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from 'react';
 import GradientBackground from '../Components/GradientBackground';
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRef } from 'react';
