@@ -49,22 +49,7 @@ export default function NewEvent(props) {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
-  const getCurrentLocation = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-      },
-      error => {
-        console.error(error);
-        // Handle error retrieving location
-      }
-    );
-  };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
 
   useEffect(() => {
     //insert the API Key
@@ -88,8 +73,8 @@ export default function NewEvent(props) {
     Details: details,
     event_date: new Date().toISOString().slice(0, 10),
     event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    Latitude: latitude,
-    Longitude: longitude,
+    Latitude: userLocation.coords.latitude,
+    Longitude: userLocation.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
     TravelerId: id,
@@ -122,7 +107,6 @@ export default function NewEvent(props) {
       )
       .catch(error => {
         console.error(error);
-
       });
   }
 
@@ -143,7 +127,6 @@ export default function NewEvent(props) {
       .then(response => response.json())
       .then(data => {
         setAreaNumber(data)
-
       }
       )
       .catch(error => {
@@ -156,7 +139,6 @@ export default function NewEvent(props) {
 
 
   const createEvent = async () => {
-
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
     } else {
@@ -201,8 +183,179 @@ export default function NewEvent(props) {
                   matchedEvents.push(event);
                   console.log('matchedEvents compareLabels', matchedEvents);
                   break;
+
+                }
+                if ( similarContent(event, newEvent)) {
+                  console.log(`here similarContent`, event, newEvent);
+                  matchedEvents.push(event);
+                  break;
                 }
 
+                //  else{
+                //   // Initialize the translation client
+                //   const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
+                //   // Function to translate text using Google Translate API
+                //   console.log('here else:');
+
+                //   const translateText = async (text, targetLanguage) => {
+                //     const requestBody = {
+                //       q: text,
+                //       target: targetLanguage,
+                //     };
+                //     console.log('here else:translateText');
+                //     const response = await fetch(translateUrl, {
+                //       method: 'POST',
+                //       headers: {
+                //         'Content-Type': 'application/json',
+                //       },
+                //       body: JSON.stringify(requestBody),
+                //     });
+                //     console.log('Translation 1:', translation1);
+                //     if (!response.ok) {
+                //       throw new Error('Translation request failed');
+                //     }
+
+                //     const data = await response.json();
+                //     if (
+                //       data &&
+                //       data.data &&
+                //       data.data.translations &&
+                //       data.data.translations.length > 0
+                //     ) {
+                //       return data.data.translations[0].translatedText;
+                //     } else {
+                //       throw new Error('Translation not available');
+                //     }
+                //   };
+
+                //   const translation1 = { value: null };// Create an object to hold the translation values
+                //   // Call the translateText function for newEvent.Details
+                //   const textToTranslate1 = newEvent.Details; // Replace with your actual text
+                //   const targetLanguage1 = 'en'; // Replace with the desired target language code
+                //   translateText(textToTranslate1, targetLanguage1)
+                //     .then(translation => {
+                //       translation1.value = translation;
+                //       // Call the translateText function for event.Details
+                //       const textToTranslate2 = event.Details; // Replace with your actual text
+                //       const targetLanguage2 = 'en'; // Replace with the desired target language code
+                //       translateText(textToTranslate2, targetLanguage2)
+                //         .then(translation2 => {
+                //           if (event.Details !== newEvent.Details) {
+                //             console.log('here else:translateText translations.pushtranslations.push');
+                //             const translationData = {
+                //               id: event.eventNumber, // Replace 'id' with the actual property name that holds the event ID
+                //               translation: translation2,
+                //             };
+                //             console.log('translations.push', translationData);
+                //             translations.push(translationData);
+                //             console.log('translations.push', translations);
+                //           }
+                //           console.log('Translation 1:', translation1.value);
+                //           translations.forEach(async translationData => {
+                //             const requestBody = {
+                //               document: {
+                //                 content: translation1.value,
+                //                 type: 'PLAIN_TEXT',
+                //               }
+                //             };
+                //             const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
+                //             const response = await fetch(apiUrl, {
+                //               method: 'POST',
+                //               headers: {
+                //                 'Content-Type': 'application/json',
+                //               },
+                //               body: JSON.stringify(requestBody),
+                //             });
+
+                //             if (!response.ok) {
+                //               throw new Error('Text comparison request failed');
+                //             }
+                //             const data = await response.json();
+                //             for (const entit of data.entities) {
+                //               entityname = data.entities[0].name;
+                //             }
+                //             let matchFound = false; // Flag variable to track if a match is found
+
+                //             //console.log('entityname', entityname);
+                //             translations.forEach(async translationData => {
+                //               const requestBody = {
+                //                 document: {
+                //                   content: translationData.translation,
+                //                   type: 'PLAIN_TEXT',
+                //                 }
+                //               };
+                //               console.log('here else:documents:analyzeEntities');
+
+                //               const apiUrl = `https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
+                //               const response = await fetch(apiUrl, {
+                //                 method: 'POST',
+                //                 headers: {
+                //                   'Content-Type': 'application/json',
+                //                 },
+                //                 body: JSON.stringify(requestBody),
+                //               });
+
+                //               if (!response.ok) {
+                //                 throw new Error('Text comparison request failed');
+                //               }
+                //               const data1 = await response.json();
+
+                //               for (const entity of data1.entities) {
+                //                 const entObj = {
+                //                   name: entity.name,
+                //                   id: translationData.id
+                //                 }
+                //                 entities.push(entObj);
+                //               }
+                //               if (entityname) {
+                //                 // console.log("here in entityname", entityname)
+                //                 // console.log('entities', entities);
+                //                 for (let i = 0; i < entities.length; i++) {
+                //                   const similarity = stringSimilarity.compareTwoStrings(entities[i].name, entityname);
+
+                //                   if (similarity > 0.7) {
+
+                //                     fetch(`${cgroup90}/api/NewEvent?eventNumber=${entities[i].id}`, {
+                //                       method: 'GET',
+                //                       headers: new Headers({
+                //                         'Content-Type': 'application/json; charset=UTF-8',
+                //                         'Accept': 'application/json; charset=UTF-8',
+                //                       })
+                //                     })
+                //                       .then(response => {
+                //                         return response.json()
+                //                       })
+                //                       .then(
+                //                         (result) => {
+                //                           matchedEvents(result);
+                //                           matchFound = true; // Set the flag to true
+                //                          },
+                //                         (error) => {
+                //                           console.log("err post=", error);
+                //                         });
+                //                         break;
+                //                         //console.log("Around You", { traveler, matchedEvents })
+                //                   }
+
+                //                 }
+
+                //               }
+
+                //             });
+                //           });
+
+                //         })
+                //         .catch(error => {
+                //           console.error('Translation Error:', error);
+                //           // Rest of your error handling code
+                //         });
+                //     })
+                //     .catch(error => {
+                //       console.error('Translation Error:', error);
+                //       // Rest of your error handling code
+                //     });
+
+                // } 
 
 
               }
@@ -212,6 +365,7 @@ export default function NewEvent(props) {
                 console.log('No matches found');
               }
               Alert.alert('Publish');
+              console.log('Matches found:', matchedEvents);
               data = traveler;
               navigation.navigate("Around You", { data, matchedEvents });
             })
@@ -228,7 +382,7 @@ export default function NewEvent(props) {
   };
 
   const compareLabels = (event1, event2) => {
-    console.log(`here1 compareLabels`, event1, event2)
+    console.log(`here1 compareLabelsssssss`, event1, event2)
 
     if (event1.labels == null || event2.labels == null) {
       // If either event is missing the labels property, return false
@@ -262,12 +416,182 @@ export default function NewEvent(props) {
     return false;
   };
 
+  // const similarContent = (event1, event2) => {
+  //   console.log(`here1 similarContent`, event1, event2)
+  //   if (event1.Details === event2.Details) {
+  //     // If Details are defined and identical, return false
+  //     console.log(`here1 similarContent false2`)
+  //     return false;
+  //   }
+  //   // Initialize the translation client
+  //   const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
+  //   // Function to translate text using Google Translate API
+  //   console.log('here else:');
+
+  //   const translateText = async (text, targetLanguage) => {
+  //     const requestBody = {
+  //       q: text,
+  //       target: targetLanguage,
+  //     };
+  //     console.log('here else:translateText');
+  //     const response = await fetch(translateUrl, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(requestBody),
+  //     });
+  //     console.log('Translation 1:', translation1);
+  //     if (!response.ok) {
+  //       throw new Error('Translation request failed');
+  //     }
+
+  //     const data = await response.json();
+  //     if (
+  //       data &&
+  //       data.data &&
+  //       data.data.translations &&
+  //       data.data.translations.length > 0
+  //     ) {
+  //       return data.data.translations[0].translatedText;
+  //     } else {
+  //       throw new Error('Translation not available');
+  //     }
+  //   };
+
+  //   const translation1 = { value: null };// Create an object to hold the translation values
+  //   const textToTranslate1 = event2.Details; // Replace with your actual text
+  //   const targetLanguage1 = 'en'; // Replace with the desired target language code
+  //   translateText(textToTranslate1, targetLanguage1)
+  //     .then(translation => {
+  //       translation1.value = translation;
+
+  //       const textToTranslate2 = event1.Details; // Replace with your actual text
+  //       const targetLanguage2 = 'en'; // Replace with the desired target language code
+  //       translateText(textToTranslate2, targetLanguage2)
+
+  //         .then(translation2 => {
+  //           if (event1.Details !== newEvent.Details) {
+  //             console.log('here else:translateText translations.pushtranslations.push');
+  //             const translationData = {
+  //               id: event1.eventNumber, // Replace 'id' with the actual property name that holds the event ID
+  //               translation: translation2,
+  //             };
+  //             console.log('translations.push', translationData);
+  //             translations.push(translationData);
+  //             console.log('translations.push', translations);
+  //           }
+  //           console.log('Translation 1:', translation1.value);
+  //           translations.forEach(async translationData => {
+  //             const requestBody = {
+  //               document: {
+  //                 content: translation1.value,
+  //                 type: 'PLAIN_TEXT',
+  //               }
+  //             };
+
+  //             const similarity = stringSimilarity.compareTwoStrings(translation1.value, 'similarity translationData.translation', translationData.translation);
+
+  //             if (similarity > 0.05) {
+  //               console.log('similarity translation1.value', translation1.value, translationData.translation);
+  //               console.log('similarity', similarity);
+
+  //               return true;
+
+  //             }
+  //             else {
+  //               return false;
+  //             }
+
+  //           });
+
+  //         })
+
+  //     })
 
 
+  // }
 
+  const similarContent = async (event1, event2) => {
+    console.log(`here1 similarContent`, event1, event2);
+    if (event1.Details === event2.Details) {
+      // If events are identical, return false
+      console.log(`here1 similarContent false2`);
+      return false;
+    }
+  
+    const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
+  
+    const translateText = async (text, targetLanguage) => {
+      const requestBody = {
+        q: text,
+        target: targetLanguage,
+      };
+  
+      const response = await fetch(translateUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Translation request failed');
+      }
+  
+      const data = await response.json();
+      if (data && data.data && data.data.translations && data.data.translations.length > 0) {
+        return data.data.translations[0].translatedText;
+      } else {
+        throw new Error('Translation not available');
+      }
+    };
+  
+    const translation1 = { value: null };
+    const textToTranslate1 = event2.Details;
+    const targetLanguage1 = 'en';
+    const translation2 = await translateText(textToTranslate1, targetLanguage1);
+    translation1.value = translation2;
+  
+    const textToTranslate2 = event1.Details;
+    const targetLanguage2 = 'en';
+    const translation3 = await translateText(textToTranslate2, targetLanguage2);
+  
+      const translationData = {
+        id: event1.eventNumber,
+        translation: translation3,
+      };
+      translations.push(translationData);
+    
+  
+    for (const translationData of translations) {
+      const requestBody = {
+        document: {
+          content: translation1.value,
+          type: 'PLAIN_TEXT',
+        },
+      };
+  
+      const similarity = await stringSimilarity.compareTwoStrings(
+        translation1.value,
+        translationData.translation
+      );
+      console.log('similarity', similarity);
+  
+      if (similarity > 0.5) {
+        console.log('similarity translation1.value', translation1.value, translationData.translation);
+        console.log('similarity', similarity);
+        return true;
+      }
+      return false;
+    };
+    return false;
+  };
+  
+  
 
-
-
+  
   const OpenCameraE = () => {
     console.log(`here1`)
     navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
