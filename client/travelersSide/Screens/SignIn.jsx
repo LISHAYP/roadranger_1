@@ -22,17 +22,22 @@ export default function SignIn() {
     const [devaiceToken, setDevaiceToken] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                console.log('Permission to access location was denied');
-                return;
-            }
-            let currentLocation = await Location.getCurrentPositionAsync({});
-            setLocation(currentLocation);
-        })();
+    const getPermissionLocation = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            console.log('Permission to access location was denied');
+            return;
+        }
+    }
+    const getUserLocation = async () => {
+        return await Location.getCurrentPositionAsync({});
+    }
+    useEffect(async () => {
+        await getPermissionLocation();
+        let currentLocation = await getUserLocation()
+        setLocation(currentLocation);
     }, [handleLogin]);
+
     const handleLogin = () => {
         const traveler = {
             travler_email: email,
@@ -54,8 +59,8 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
-                    console.log("*********",data)
-                    console.log("*********",data.traveler_id)
+                    console.log("*********", data)
+                    console.log("*********", data.traveler_id)
                     setTravlerId(data.traveler_id)
                     fetch(`${cgroup90}/api/traveler/updatetoken?email=${traveler.travler_email}`, {
                         method: 'PUT',
@@ -192,7 +197,7 @@ export default function SignIn() {
     }, []);
 
     return (
-         < GradientBackground>
+        < GradientBackground>
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
 
@@ -222,7 +227,7 @@ export default function SignIn() {
                             <Icon size={25}
                                 name={showPassword ? 'eye-off' : 'eye'}
                                 type='feather'
-                                color={ '#144800'}
+                                color={'#144800'}
                             />
                         </TouchableOpacity>
                     </View>
@@ -255,14 +260,14 @@ export default function SignIn() {
                         navigation.navigate("Contact Us");
                     }}>
 
-                        <Icon name="mail-open-outline" size={30} color={ '#144800'}/>
+                        <Icon name="mail-open-outline" size={30} color={'#144800'} />
                         <Text style={styles.contact}>
                             Contact us
                         </Text>
                     </TouchableOpacity>
-                    </View>
-                </View >
-        </ GradientBackground> 
+                </View>
+            </View >
+        </ GradientBackground>
 
     )
 }
@@ -279,12 +284,12 @@ const styles = StyleSheet.create({
         // backgroundColor:'#3CB371'
 
     },
-    frame:{
+    frame: {
         // backgroundColor:  'rgba(0, 0, 0, 0.07)',
-        padding:20,
+        padding: 20,
         borderWidth: 0,
         borderRadius: 25,
-        borderColor:  'rgba(0, 0, 0, 0.07)'
+        borderColor: 'rgba(0, 0, 0, 0.07)'
 
     },
     iconContainer: {
@@ -306,13 +311,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderColor:  '#144800',
+        borderColor: '#144800',
         borderWidth: 1,
         borderRadius: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor:  'white',
+        backgroundColor: 'white',
     },
     btnLogIn: {
         marginVertical: 20,
@@ -326,8 +331,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#144800',
         shadowColor: "#000",
         shadowOffset: {
-     	width: 0,
-	    height: 4},
+            width: 0,
+            height: 4
+        },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
         elevation: 9
