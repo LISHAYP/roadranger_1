@@ -25,14 +25,14 @@ import GroupChat from './Screens/GroupChat'
 import {  StyleSheet } from 'react-native';
 import ChatWithSH from './Screens/ChatWithSH';
 import Warning from './Screens/Warning';
-
+import LocationContextProvider from './Context/LocationContext'
 const Stack = createNativeStackNavigator()
 
 export default function App() {
 
 
   return (
-
+<LocationContextProvider>
     <NavigationContainer>
     <Stack.Navigator initialRouteName="Sign In" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Sign In" component={SignIn} />
@@ -59,7 +59,7 @@ export default function App() {
         <Stack.Screen name="Warning" component={Warning} />        
       </Stack.Navigator>
     </NavigationContainer>
-
+    </LocationContextProvider>
   );
 }
 

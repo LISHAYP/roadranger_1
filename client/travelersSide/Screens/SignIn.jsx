@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } fro
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,31 +11,22 @@ import { Button, Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { cgroup90 } from '../cgroup90';
+import { LocationContext } from '../Context/LocationContext'
 
 export default function SignIn() {
+    const { location, getPermissionLocation, getUserLocation } = useContext(LocationContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
     const navigation = useNavigation();
-    const [location, setLocation] = useState('');
+    //const [location, setLocation] = useState('');
     const [travelerId, setTravlerId] = useState('')
     const [devaiceToken, setDevaiceToken] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const getPermissionLocation = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            console.log('Permission to access location was denied');
-            return;
-        }
-    }
-    const getUserLocation = async () => {
-        return await Location.getCurrentPositionAsync({});
-    }
     useEffect(async () => {
         await getPermissionLocation();
-        let currentLocation = await getUserLocation()
-        setLocation(currentLocation);
+        await getUserLocation();
     }, [handleLogin]);
 
     const handleLogin = () => {
