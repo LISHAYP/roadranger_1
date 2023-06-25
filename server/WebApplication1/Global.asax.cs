@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApplication1.Controllers;
 using WebApplication1.DTO;
 
 namespace WebApplication1
@@ -17,7 +18,9 @@ namespace WebApplication1
         //code for timer
         static Timer timer = new Timer();
         EventDto PNevent = new EventDto();
-        
+        private static EventTimer _eventTimer;
+
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -32,6 +35,9 @@ namespace WebApplication1
             //code for timer
             //timer.Interval = 5000;
             //timer.Elapsed += tm_Tick;
+
+            _eventTimer = new EventTimer();
+            _eventTimer.Start();
 
         }
         //code for timer
@@ -52,6 +58,11 @@ namespace WebApplication1
         {
             timer.Enabled = false;
 
+        }
+
+        protected void Application_End()
+        {
+            _eventTimer.Stop();
         }
     }
 }

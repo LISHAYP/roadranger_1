@@ -191,9 +191,6 @@ namespace WebApplication1.Controllers
                             Longitude = newEvent.longitude
                         };
 
-                        //// Send push notifications to travelers within 3 kilometers of the event
-                        //var timerServices = new TimerServices();
-                        //_ = timerServices.SendPushForEvent(eventDto);
                     }
                 }
                 else if (newEvent.stackholderId.HasValue)
@@ -720,7 +717,8 @@ namespace WebApplication1.Controllers
         //        string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(pushNotificationData);
 
         //        // Create the HTTP request content
-        //        HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        //
+        //    HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
         //        // Send the POST request and get the response
         //        HttpResponseMessage response = await client.PostAsync(apiUrl, content);

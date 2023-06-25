@@ -280,6 +280,7 @@
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\ConversationController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Controllers\EventTimer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\NewEventController.cs" />
