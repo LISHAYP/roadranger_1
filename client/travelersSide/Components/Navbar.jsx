@@ -9,7 +9,7 @@ function Navbar(props) {
     const navigation = useNavigation();
     const traveler = props.traveler;
     // const userLocation = props.userLocation;
-    const Events = props.Events;
+    // const matchedEvents = props.matchedEvents;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -41,7 +41,7 @@ function Navbar(props) {
                 <Text style={styles.text1}>Chat</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { navigation.navigate("Around You", {traveler }), setIsMenuOpen(false) }} style={styles.icon1} >
+            <TouchableOpacity onPress={() => { navigation.navigate("Around You", {traveler:traveler}), setIsMenuOpen(false) }} style={styles.icon1} >
                 <Icon name="home" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>Home</Text>
             </TouchableOpacity>

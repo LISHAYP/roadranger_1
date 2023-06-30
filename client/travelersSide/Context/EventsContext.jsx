@@ -24,7 +24,7 @@ export default function EventsContextProvider({ children }) {
                 },
                 (error) => {
                     console.log("err post=", error);
-                }, []);
+                },);
     }
     value = {
         events,

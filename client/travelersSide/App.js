@@ -26,12 +26,15 @@ import {  StyleSheet } from 'react-native';
 import ChatWithSH from './Screens/ChatWithSH';
 import Warning from './Screens/Warning';
 import LocationContextProvider from './Context/LocationContext'
+import EventsContextProvider from './Context/EventsContext';
+
 const Stack = createNativeStackNavigator()
 
 export default function App() {
 
 
   return (
+    <EventsContextProvider>
 <LocationContextProvider>
     <NavigationContainer>
     <Stack.Navigator initialRouteName="Sign In" screenOptions={{ headerShown: false }}>
@@ -60,6 +63,7 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
     </LocationContextProvider>
+    </EventsContextProvider>
   );
 }
 

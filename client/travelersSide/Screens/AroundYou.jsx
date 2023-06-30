@@ -10,8 +10,10 @@ import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
 import { LocationContext } from '../Context/LocationContext'
 import Navbar from '../Components/Navbar';
+import { EventsContext } from '../Context/EventsContext';
 
 export default function AroundYou(props) {
+    const { events, getEvents } = useContext(EventsContext)
     const { location } = useContext(LocationContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigation = useNavigation();
@@ -19,17 +21,23 @@ export default function AroundYou(props) {
     const traveler = props.route.params.traveler;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
-    const [Events, setEvents] = useState([])
+    // const [Events, setEvents] = useState([])
 
+    useEffect(async () => {
+        await getEvents();
+        console.log("iiiiiii", events)
+    }, []);
 
     useFocusEffect(
         React.useCallback(() => {
             console.log("traveler", traveler)
             console.log("Location:", location)
+            getEvents();
+            console.log("IIIIIIIII", events)
             handleGet();
             return () => {
             };
-        }, [isMenuOpen])
+        }, [isMenuOpen, events])
     );
     useEffect(() => {
         if (matchedEvent && matchedEvent.length > 0) {
@@ -149,7 +157,7 @@ export default function AroundYou(props) {
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
                     </TouchableOpacity>
 
-                    <Navbar traveler={traveler} />
+                    <Navbar traveler={traveler}  />
 
                     {location && location.coords && (
                         <MapView
@@ -168,7 +176,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.EventStatus !== false && event.is_related == null).map(event => (
+                            {events.filter(event => event.EventStatus !== false && event.is_related == null).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{
@@ -197,7 +205,7 @@ export default function AroundYou(props) {
 
                         </MapView>
                     )}
-                    <Modal
+                    {/* <Modal
                         visible={isMenuOpen}
                         animationType='slide'
                         transparent={true}
@@ -239,7 +247,7 @@ export default function AroundYou(props) {
                                     <TouchableOpacity style={styles.option} onPress={() => {
                                         navigation.navigate("My Post", {
                                             traveler: traveler,
-                                            events: Events
+                                            // events: Events
                                         }), setIsMenuOpen(false)
                                     }}>
                                         <Icon name="documents-outline" size={35} style={styles.icon} />
@@ -274,7 +282,7 @@ export default function AroundYou(props) {
 
                             </View>
                         )}
-                    </Modal>
+                    </Modal> */}
 
                     <View>
                         {/* Your screen content */}

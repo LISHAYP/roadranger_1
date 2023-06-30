@@ -200,7 +200,7 @@ export default function NewEvent(props) {
       }
       Alert.alert('Publish');
       console.log('Matches found:', matchedEvents);
-      navigation.navigate("Around You", { data: traveler, matchedEvents });
+      navigation.navigate("Around You", { traveler: traveler, matchedEvents: matchedEvents });
     } catch (error) {
       console.error(error);
     }

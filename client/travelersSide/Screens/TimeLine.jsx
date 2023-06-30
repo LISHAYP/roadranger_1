@@ -6,6 +6,7 @@ import BackButton from '../Components/BackButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { cgroup90 } from '../cgroup90';
 
+
 export default function TimeLine(props) {
     const event = props.route.params.event;
     const traveler = props.route.params.traveler;
