@@ -21,8 +21,8 @@ export default function ForgotPassword() {
         "travler_email":email
        }
        console.log(travelerEmail);
-        fetch(`${cgroup90}/api/post/forgotpassword`, {
-            method: 'POST',
+       fetch(`${cgroup90}/api/post/forgotpassword`, {
+        method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

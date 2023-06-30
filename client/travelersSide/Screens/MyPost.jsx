@@ -9,45 +9,18 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
-import { cgroup90 } from '../cgroup90';
-import Navbar from '../Components/Navbar';
 
 export default function MyPost(props) {
-    const [events, setEvents] = useState([]);
-    // const events = props.route.params.events;
+    // const [events, setEvents] = useState([]);
+    const events = props.route.params.events;
     const traveler = props.route.params.traveler;
-    const [eventWithAddresses, setEventWithAddresses] = useState([]);
-
     console.log("iiiiiii", traveler)
-    // console.log("iiiiiii", events)
-
+    console.log("iiiiiii", events)
     const navigation = useNavigation();
+    const [eventWithAddresses, setEventWithAddresses] = useState([]);
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
-    useEffect(() => {
-        fetch(`${cgroup90}/api/newevent`, {
-
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Accept': 'application/json; charset=UTF-8',
-            })
-        })
-            .then(response => {
-                return response.json()
-            })
-            .then(
-                (result) => {
-                    setEvents(result)
-                    console.log("%%%%%%%%%%%%", result)
-
-                },
-                (error) => {
-                    console.log("err post=", error);
-                })
-
-    })
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-
+    console.log("%%%%%%%%%%%%", events)
     useEffect(() => {
         Promise.all(events.map(event => {
             const lat = event.Latitude;
@@ -64,15 +37,13 @@ export default function MyPost(props) {
             setEventWithAddresses(eventsWithAddress);
 
         });
-        console.log("-----------------", eventWithAddresses)
+     console.log("-----------------", eventWithAddresses)
 
     }, [events]);
-
     console.log("-----------------", eventWithAddresses)
     return (
         <GradientBackground>
-            <Navbar traveler={traveler} />
-            <ScrollView contentContainerStyle={styles.scrollContent}>
+            <ScrollView>
                 <View style={styles.container}>
                     <BackButton />
                     <View>
@@ -111,9 +82,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
-    scrollContent: {
-        paddingVertical: 70, // Adjust this value as needed
-      },
     event: {
         backgroundColor: 'rgba(0, 0, 0, 0.07)',
         borderRadius: 15,
@@ -126,13 +94,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#F5F5F5',
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 5
-        },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+            shadowOffset: {
+             width: 0,
+            height: 5},
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9
     },
     detailsContainer: {
         flex: 1,
@@ -151,7 +118,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
-    }
+    }
 
 
 

@@ -12,7 +12,6 @@ import { auth } from '../firebase';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 
-
 export default function SignUp() {
 
   const defaultPic = `${cgroup90}/profilePictures/id1.png`;

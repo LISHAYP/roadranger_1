@@ -8,9 +8,8 @@ import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { Dropdown } from 'react-native-element-dropdown';
 import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Divider } from "@react-native-material/core";
 import { cgroup90 } from '../cgroup90';
-import Navbar from '../Components/Navbar';
+
 
 const HomeChat = (props) => {
   const navigation = useNavigation();
@@ -130,21 +129,17 @@ const HomeChat = (props) => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Navbar traveler={traveler} />
-      <BackButton text="Chat" />
-
       <View style={styles.container}>
         <GradientBackground>
           <ScrollView>
             <View style={styles.back}>
+              <BackButton />
             </View>
             <View>
               <Image source={{ uri: traveler.Picture }} style={styles.user} />
               <Text style={styles.name}>
                 {traveler.first_name} {traveler.last_name}
               </Text>
-              <Divider style={{ marginTop: 40 }} />
-
             </View>
 
             <View
@@ -284,7 +279,7 @@ export default HomeChat;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 100
+
   },
   searchInput: {
     padding: 20,

@@ -10,7 +10,6 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
 import { cgroup90 } from '../cgroup90';
-import Navbar from '../Components/Navbar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -143,7 +142,7 @@ export default function EventDetails(props) {
   useEffect(() => {
     getUserLocation();
     fetchTravelerDetails();
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
       .then((json) => {
         const location = json.results[0].address_components;
@@ -282,7 +281,7 @@ export default function EventDetails(props) {
 
     console.log(ansObj);
 
-    fetch(`http://cgroup90@194.90.158.74/cgroup90/prod/api/put/eventapproval/${relatedEvent}`, {
+    fetch(`${cgroup90}/api/put/eventapproval/${relatedEvent}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -309,7 +308,6 @@ export default function EventDetails(props) {
 
   return (
     <GradientBackground>
-          <Navbar traveler={traveler} />        
               <BackButton />
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
@@ -324,7 +322,8 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '67%' : '40%' }]}>
+
+        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
           <View>
             <View style={styles.event}>
               <View style={styles.row}>
@@ -404,7 +403,7 @@ export default function EventDetails(props) {
               />
             </View>
           </View>
-          </ScrollView>
+        </ScrollView>
       </KeyboardAvoidingView>
     </GradientBackground>
   );
@@ -450,7 +449,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '60%',
+    height: '70%',
+
+
   },
   commentContainer: {
     borderColor: '#DCDCDC',
