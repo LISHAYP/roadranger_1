@@ -67,7 +67,7 @@ export default function SignIn() {
                             console.log(data); // Traveler updated successfully.
                             //Alert.alert('Token updated successfully')
                             //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
-                            navigation.navigate("Around You", { data });
+                            navigation.navigate("Around You", { traveler: data });
                         })
                         .catch((error) => {
                             console.error(error);

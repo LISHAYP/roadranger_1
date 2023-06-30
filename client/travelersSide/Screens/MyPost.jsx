@@ -9,18 +9,24 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import { EventsContext } from '../Context/EventsContext';
 
 export default function MyPost(props) {
+    const { events, getEvents } = useContext(EventsContext)
     // const [events, setEvents] = useState([]);
-    const events = props.route.params.events;
+    // const events = props.route.params.events;
     const traveler = props.route.params.traveler;
     console.log("iiiiiii", traveler)
     console.log("iiiiiii", events)
     const navigation = useNavigation();
     const [eventWithAddresses, setEventWithAddresses] = useState([]);
     Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
-
     console.log("%%%%%%%%%%%%", events)
+
+    useEffect(async () => {
+        await getEvents();
+    }, []);
+
     useEffect(() => {
         Promise.all(events.map(event => {
             const lat = event.Latitude;
@@ -37,7 +43,7 @@ export default function MyPost(props) {
             setEventWithAddresses(eventsWithAddress);
 
         });
-     console.log("-----------------", eventWithAddresses)
+        console.log("-----------------", eventWithAddresses)
 
     }, [events]);
     console.log("-----------------", eventWithAddresses)
@@ -94,12 +100,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#F5F5F5',
         shadowColor: "#000",
-            shadowOffset: {
-             width: 0,
-            height: 5},
-            shadowOpacity: 0.32,
-            shadowRadius: 5.46,
-            elevation: 9
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
     },
     detailsContainer: {
         flex: 1,
@@ -118,7 +125,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
-    }
+    }
 
 
 
