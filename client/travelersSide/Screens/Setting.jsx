@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -11,11 +11,18 @@ import BackButton from '../Components/BackButton';
 import { auth } from '../firebase';
 import 'firebase/database';
 import { cgroup90 } from '../cgroup90';
+// import { EventsContext } from '../Context/EventsContext';
+import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
-
+  // const { events, getEvents } = useContext(EventsContext)
   const traveler = props.route.params.traveler;
   console.log(traveler);
+
+  //   useEffect(async () => {
+  //     await getEvents();
+  //     console.log("iiiiiii", events)
+  // }, []);
 
   useEffect(() => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
@@ -112,8 +119,11 @@ export default function Setting(props) {
   }
 
   return (
+    < GradientBackground>
+                <Navbar traveler={traveler} />
+
     <ScrollView>
-      < GradientBackground>
+  
         <View style={styles.container}>
           <BackButton />
           <TouchableOpacity onPress={openCamera}>
@@ -224,8 +234,8 @@ export default function Setting(props) {
             </Text>
           </TouchableOpacity>
         </View>
-      </GradientBackground>
     </ScrollView >
+    </GradientBackground>
 
   )
 }
@@ -237,7 +247,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    paddingBottom: 100,
+
   },
+
   RoadRanger: {
     alignSelf: 'center',
     resizeMode: 'contain',
@@ -350,7 +363,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 },
   btnSave: {
     alignSelf: 'center',
-    height:55,
+    height: 55,
     marginVertical: 20,
     width: "55%",
     alignSelf: 'center',
@@ -361,11 +374,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#144800',
     shadowColor: "#000",
-        shadowOffset: {
-     	width: 0,
-	    height: 5},
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9
   },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback,useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -9,19 +9,21 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import { EventsContext } from '../Context/EventsContext';
+import Navbar from '../Components/Navbar';
+
 
 export default function MyPost(props) {
-    // const [events, setEvents] = useState([]);
-    const events = props.route.params.events;
+    const { events, getEvents } = useContext(EventsContext)
     const traveler = props.route.params.traveler;
-    console.log("iiiiiii", traveler)
-    console.log("iiiiiii", events)
     const navigation = useNavigation();
     const [eventWithAddresses, setEventWithAddresses] = useState([]);
     Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
-    console.log("%%%%%%%%%%%%", events)
-    useEffect(() => {
+
+    useEffect(async () => {
+        await getEvents();
+        console.log("iiiiiii", events)
         Promise.all(events.map(event => {
             const lat = event.Latitude;
             const lng = event.Longitude;
@@ -35,14 +37,36 @@ export default function MyPost(props) {
             });
         })).then(eventsWithAddress => {
             setEventWithAddresses(eventsWithAddress);
-
         });
-     console.log("-----------------", eventWithAddresses)
+        console.log("-----------------", eventWithAddresses)
 
+    
     }, [events]);
+
+    // useEffect(() => {
+    //     Promise.all(events.map(event => {
+    //         const lat = event.Latitude;
+    //         const lng = event.Longitude;
+    //         return Geocoder.from(lat, lng).then(json => {
+    //             const location = json.results[0].address_components;
+    //             const number = location[0].long_name;
+    //             const street = location[1].long_name;
+    //             const city = location[2].long_name;
+    //             const address = `${street} ${number}, ${city}`;
+    //             return { ...event, address };
+    //         });
+    //     })).then(eventsWithAddress => {
+    //         setEventWithAddresses(eventsWithAddress);
+
+    //     });
+    //     console.log("-----------------", eventWithAddresses)
+
+    // }, [events]);
+    
     console.log("-----------------", eventWithAddresses)
     return (
         <GradientBackground>
+            <Navbar traveler={traveler} />
             <ScrollView>
                 <View style={styles.container}>
                     <BackButton />
@@ -94,12 +118,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#F5F5F5',
         shadowColor: "#000",
-            shadowOffset: {
-             width: 0,
-            height: 5},
-            shadowOpacity: 0.32,
-            shadowRadius: 5.46,
-            elevation: 9
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9
     },
     detailsContainer: {
         flex: 1,
@@ -118,7 +143,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
-    }
+    }
 
 
 

@@ -8,9 +8,10 @@ import { AntDesign } from '@expo/vector-icons';
 function Navbar(props) {
     const navigation = useNavigation();
     const traveler = props.traveler;
-    const userLocation = props.userLocation;
-    // const Events = props.Events;
+    // const userLocation = props.userLocation;
+    // const matchedEvents = props.matchedEvents;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -19,10 +20,7 @@ function Navbar(props) {
         setIsMenuOpen(false);
     };
 
-
     return (
-
-
         <View style={styles.hamburger1}>
             <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.icon1}>
                 <Icon name="menu" size={30} color="#144800" alignItems='center' />
@@ -31,9 +29,7 @@ function Navbar(props) {
 
             <TouchableOpacity onPress={() => {
                 navigation.navigate("New event", {
-                    traveler: traveler,
-                    userLocation: userLocation
-
+                    traveler: traveler
                 }), setIsMenuOpen(false)
             }} style={styles.icon1} >
                 <Icon name="add-circle" size={30} color="#144800" alignItems='center' />
@@ -45,7 +41,7 @@ function Navbar(props) {
                 <Text style={styles.text1}>Chat</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { navigation.navigate("Around You", traveler), setIsMenuOpen(false) }} style={styles.icon1} >
+            <TouchableOpacity onPress={() => { navigation.navigate("Around You", {traveler:traveler}), setIsMenuOpen(false) }} style={styles.icon1} >
                 <Icon name="home" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>Home</Text>
             </TouchableOpacity>
@@ -73,8 +69,6 @@ function Navbar(props) {
                                 onPress={() => {
                                     navigation.navigate("New event", {
                                         traveler: traveler,
-                                        userLocation: userLocation
-
                                     }), setIsMenuOpen(false);
                                 }}
                             >
@@ -94,7 +88,7 @@ function Navbar(props) {
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option} onPress={() => {
                                 navigation.navigate("My Post", {
-                                    traveler: traveler
+                                    traveler: traveler,
                                 }), setIsMenuOpen(false)
                             }}>
                                 <Icon name="documents-outline" size={35} style={styles.icon} />
@@ -116,8 +110,7 @@ function Navbar(props) {
                             <TouchableOpacity style={styles.optionSOS}
                                 onPress={() => {
                                     navigation.navigate("SOS", {
-                                        traveler: traveler,
-                                        userLocation: userLocation
+                                        traveler: traveler                                      
                                     }), setIsMenuOpen(false);
                                 }}
                             >

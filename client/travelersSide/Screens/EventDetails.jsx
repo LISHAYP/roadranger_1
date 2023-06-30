@@ -10,6 +10,7 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -308,7 +309,9 @@ export default function EventDetails(props) {
 
   return (
     <GradientBackground>
-              <BackButton />
+      <Navbar traveler={traveler} />
+
+      <BackButton />
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>

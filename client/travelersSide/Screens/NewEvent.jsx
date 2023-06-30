@@ -11,11 +11,11 @@ import BackButton from '../Components/BackButton';
 import stringSimilarity from 'string-similarity';
 import { cgroup90 } from '../cgroup90';
 import { LocationContext } from '../Context/LocationContext'
-
+import Navbar from '../Components/Navbar';
 
 
 export default function NewEvent(props) {
-  const { location, getUserLocation} = useContext(LocationContext)
+  const { location, getUserLocation } = useContext(LocationContext)
   const traveler = props.route.params.traveler;
   const labels = props.route.params.labels;
   const navigation = useNavigation();
@@ -51,7 +51,7 @@ export default function NewEvent(props) {
 
   useEffect(async () => {
     await getUserLocation();
-}, []);
+  }, []);
 
   useEffect(() => {
     //insert the API Key
@@ -200,7 +200,7 @@ export default function NewEvent(props) {
       }
       Alert.alert('Publish');
       console.log('Matches found:', matchedEvents);
-      navigation.navigate("Around You", { data: traveler, matchedEvents });
+      navigation.navigate("Around You", { traveler: traveler, matchedEvents: matchedEvents });
     } catch (error) {
       console.error(error);
     }
@@ -248,7 +248,7 @@ export default function NewEvent(props) {
     console.log('event2', event2)
 
     // Check if the event times are equal
-    if (event1.Details === event2.Details || event1.EventTime.split(':')[0] === event2.event_time.split(':')[0] &&  event1.EventTime.split(':')[1] === event2.event_time.split(':')[1]) {
+    if (event1.Details === event2.Details || event1.EventTime.split(':')[0] === event2.event_time.split(':')[0] && event1.EventTime.split(':')[1] === event2.event_time.split(':')[1]) {
       console.log(`here1 similarContent false2`);
       return false;
     }
@@ -310,104 +310,13 @@ export default function NewEvent(props) {
       console.log('translation1.value', translation1.value)
       console.log('translation2.value', translation2.value)
 
-      // translations.push(translation1.value);
-      // console.log('translations', translations)
-      // const similarityPromises = translations.map((translationData) => {
-      //   const similarity = stringSimilarity.compareTwoStrings(translation1.value, translationData.translation);
-      //   console.log('similarity translation1.value', translation1.value, translationData.translation);
-      //   console.log('similarity', similarity);
-      //     return similarity > 0.5;
-      // });
-
-      // const similarityResults = await Promise.all(similarityPromises);
-      // console.log('Similarity results:', similarityResults);
-
-      return stringSimilarity.compareTwoStrings(translation1.value, translation2.value)>0.5;
+    
+      return stringSimilarity.compareTwoStrings(translation1.value, translation2.value) > 0.5;
     } catch (error) {
       console.log('Translation error:', error);
       return false;
     }
   };
-
-  // const similarContent = async (event1, event2) => {
-  //   console.log(`here1 similarContent`, event1, event2);
-  //    // Check if the events are the same object
-  // if (event1 === event2) {
-  //   return false;
-  // }
-
-  // if (event1.Details == event2.Details) {
-  //   // If events have identical details, return false
-  //   console.log(`here1 similarContent false2`);
-  //   return false;
-  // }
-
-  //   const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
-
-  //   const translateText = async (text, targetLanguage) => {
-  //     const requestBody = {
-  //       q: text,
-  //       target: targetLanguage,
-  //     };
-
-  //     const response = await fetch(translateUrl, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(requestBody),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Translation request failed');
-  //     }
-
-  //     const data = await response.json();
-  //     if (data && data.data && data.data.translations && data.data.translations.length > 0) {
-  //       return data.data.translations[0].translatedText;
-  //     } else {
-  //       throw new Error('Translation not available');
-  //     }
-  //   };
-
-  //   const translation1 = { value: null };
-  //   const textToTranslate1 = event2.Details;
-  //   const targetLanguage1 = 'en';
-  //   const translation2 = await translateText(textToTranslate1, targetLanguage1);
-  //   translation1.value = translation2;
-
-  //   const textToTranslate2 = event1.Details;
-  //   const targetLanguage2 = 'en';
-  //   const translation3 = await translateText(textToTranslate2, targetLanguage2);
-
-  //     const translationData = {
-  //       id: event1.eventNumber,
-  //       translation: translation3,
-  //     };
-  //     translations.push(translationData);
-  //     console.log('translationData', translationData);
-
-
-  //   for (const translationData1 of translations) {
-  //     const similarity =  stringSimilarity.compareTwoStrings(
-  //       translation1.value,
-  //       translationData1.translation
-  //     );
-  //     console.log('similarity', similarity);
-  //     console.log('translation1.value', translation1.value);
-  //     console.log('translationData1.translation', translationData1.translation);
-
-  //     if (similarity > 0.5) {
-  //       //console.log('similarity translation1.value', translation1.value, translationData.translation);
-  //       //console.log('similarity', similarity);
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // };
-
-
-
 
   const OpenCameraE = () => {
     console.log(`here1`)
@@ -417,7 +326,10 @@ export default function NewEvent(props) {
   }
 
   return (
+
     < GradientBackground>
+      <Navbar traveler={traveler} />
+
       <ScrollView>
         <View style={styles.container}>
           <BackButton />
