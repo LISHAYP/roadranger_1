@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Modal, StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -8,13 +8,12 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
-
+import { LocationContext } from '../Context/LocationContext'
 
 
 export default function AroundYou(props) {
-    const [location, setLocation] = useState(null);
+    const { location} = useContext(LocationContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const traveler = props.route.params.data;
@@ -26,6 +25,7 @@ export default function AroundYou(props) {
     useFocusEffect(
         React.useCallback(() => {
             console.log("traveler",traveler)
+            console.log("Location:",location)
             handleGet();
             return () => {
             };
@@ -58,25 +58,7 @@ export default function AroundYou(props) {
         setModalVisible(true);
     }, [matchedEvent]);
 
-    const getUserLocation = async () => {
-        const userlocation = await Location.getCurrentPositionAsync();
-        setUserLocation(userlocation); // Save user location in state
-        console.log("************", userLocation.coords.latitude)
-    };
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                console.log('Permission denied');
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            handleGet();
-            getUserLocation();
-
-        })();
-    }, []);
-
+  
 
     const handleGet = () => {
         if (matchedEvent) {
@@ -127,12 +109,10 @@ export default function AroundYou(props) {
         headerShown: false,
     };
     const relatedEvent = (eventNumber) => {
-        console.log("**************", eventNumber);
         const updateEventObj = {
             is_related: eventNumber
         }
-        console.log("**************", updateEventObj);
-        console.log("*****-*********", lasteventOfTraveler);
+     
 
         fetch(`${cgroup90}/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',
@@ -235,8 +215,7 @@ export default function AroundYou(props) {
                                         <TouchableOpacity style={styles.option}
                                             onPress={() => {
                                                 navigation.navigate("New event", {
-                                                    traveler: traveler,
-                                                    userLocation: userLocation
+                                                    traveler: traveler                                                 
                                                 }), setIsMenuOpen(false);
                                             }}
                                         >

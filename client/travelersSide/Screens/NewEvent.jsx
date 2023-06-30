@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -10,12 +10,13 @@ import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import stringSimilarity from 'string-similarity';
 import { cgroup90 } from '../cgroup90';
+import { LocationContext } from '../Context/LocationContext'
 
 
 
 export default function NewEvent(props) {
+  const { location, getUserLocation} = useContext(LocationContext)
   const traveler = props.route.params.traveler;
-  const userLocation = props.route.params.userLocation;
   const labels = props.route.params.labels;
   const navigation = useNavigation();
   const [country, setCountry] = useState('');
@@ -44,17 +45,19 @@ export default function NewEvent(props) {
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
-  const [relatedEvents, setRelatedEvents] = useState('');
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  // const [relatedEvents, setRelatedEvents] = useState('');
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
 
-
+  useEffect(async () => {
+    await getUserLocation();
+}, []);
 
   useEffect(() => {
     //insert the API Key
     console.log("traveler", traveler)
     Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
-    Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
+    Geocoder.from(location.coords.latitude, location.coords.longitude)
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
@@ -72,8 +75,8 @@ export default function NewEvent(props) {
     Details: details,
     event_date: new Date().toISOString().slice(0, 10),
     event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    Latitude: userLocation.coords.latitude,
-    Longitude: userLocation.coords.longitude,
+    Latitude: location.coords.latitude,
+    Longitude: location.coords.longitude,
     event_status: eventStatus,
     Picture: picture,
     TravelerId: id,
@@ -155,8 +158,8 @@ export default function NewEvent(props) {
       let comonventdetailsObj = {
         serialTypeNumber: serialTypeNumber,
         event_status: eventStatus,
-        latitude: userLocation.coords.latitude,
-        longitude: userLocation.coords.longitude,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
       };
       res = await fetch(
         `${cgroup90}/api/post/neweventdistance`,
@@ -201,85 +204,6 @@ export default function NewEvent(props) {
     } catch (error) {
       console.error(error);
     }
-
-    // else {
-    //   // Send a POST request to your backend API with the event data
-    //   fetch(`${cgroup90}/api/post/newevent`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(newEvent),
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       const comonventdetailsObj = {
-    //         serialTypeNumber: serialTypeNumber,
-    //         event_status: eventStatus,
-    //         latitude: userLocation.coords.latitude,
-    //         longitude: userLocation.coords.longitude,
-    //       };
-    //       fetch(
-    //         `${cgroup90}/api/post/neweventdistance`,
-    //         {
-    //           method: 'POST',
-    //           headers: {
-    //             'Content-Type': 'application/json',
-    //           },
-    //           body: JSON.stringify(comonventdetailsObj),
-    //         }
-    //       )
-    //         .then(response => response.json())
-    //         .then(data1 => {
-    //           const relatedEventsData = data1; // Assign the data to a constant variable
-    //           const matchedEvents = []; // Array to store matched events
-    //           console.log(`here1 data1`)
-
-    //           for (let i = 0; i < relatedEventsData.length; i++) {
-    //             const event = relatedEventsData[i];
-    //             if (event.Details == newEvent.Details) {
-    //               // If events have identical details, return false
-    //               break;
-    //             }
-    //             if (compareLabels(event, newEvent)) {
-    //               matchedEvents.push(event);
-    //               break;
-    //             }
-    //             console.log(`matchedEventsmatchedEventsmatchedEventsmatchedEventsmatchedEvents`, matchedEvents)
-    //             const isSimilar =  similarContent(event, newEvent);
-
-    //             if (isSimilar) {
-    //               console.log(`inside similarContent`, matchedEvents)
-    //               matchedEvents.push(event);
-    //               console.log(`inside similarContent after push`, matchedEvents)
-
-    //               break;
-    //             }
-    //             console.log(`after the enterance`, matchedEvents)
-    //           }
-    //           console.log(`before the enterance`, matchedEvents)
-
-    //           if (matchedEvents.length > 0) {
-    //             console.log('Matches found:', matchedEvents);
-
-    //           } else {
-    //             console.log('No matches found');
-    //           }
-    //           Alert.alert('Publish');
-    //           console.log('Matches found:', matchedEvents);
-    //           data = traveler;
-    //           navigation.navigate("Around You", { data, matchedEvents });
-    //         })
-    //         .catch(error => {
-    //           console.error(error);
-    //           Alert.alert('Error', error);
-    //         });
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //       Alert.alert('Error', error);
-    //     });
-    // }
   };
 
   const compareLabels = (event1, event2) => {
@@ -487,7 +411,7 @@ export default function NewEvent(props) {
 
   const OpenCameraE = () => {
     console.log(`here1`)
-    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, userLocation, traveler });
+    navigation.navigate('CameraE', { idE: `${new Date().getHours()}:${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`, location, traveler });
     const date = `${new Date().getHours()}_${new Date().getMinutes()}_${new Date().toISOString().slice(0, 10)}`
     setPicture(`${cgroup90}/uploadEventPic/E_${date}.jpg`)
   }
