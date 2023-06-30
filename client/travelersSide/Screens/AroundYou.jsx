@@ -22,7 +22,7 @@ export default function AroundYou(props) {
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
     // const [Events, setEvents] = useState([])
-
+//kjkjkjk
     useEffect(async () => {
         await getEvents();
         console.log("iiiiiii", events)
