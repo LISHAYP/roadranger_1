@@ -7,12 +7,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
 import { Dropdown } from 'react-native-element-dropdown';
-import { Swipeable , GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 const HomeChat = (props) => {
   const navigation = useNavigation();
-  const stakeholder=props.route.params.stakeholder;
+  const stakeholder = props.route.params.stakeholder;
   console.log('aaa', stakeholder)
   const [travelers, setTravelers] = useState([]);
   const [activeChats, setActiveChats] = useState([]);
@@ -85,89 +86,89 @@ const HomeChat = (props) => {
       console.error(e);
     }
   };
-  
+
   return (
+
     <GestureHandlerRootView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      <GradientBackground>
-        <ScrollView>
-          <View style={styles.back}>
-            <BackButton />
-          </View>
-          <View>
-            <Image source={{ uri: stakeholder.picture }} style={styles.user} />
-            <Text style={styles.name}>
-              {stakeholder.FullName} {stakeholder.StakeholderName}
-            </Text>
-          </View>
+      <Navbar stakeholder={stakeholder} />
+      <BackButton text="Chat" />
+      <View style={styles.container}>
+        <GradientBackground>
+          <ScrollView>
+            <View>
+              <Image source={{ uri: stakeholder.picture }} style={styles.user} />
+              <Text style={styles.name}>
+                {stakeholder.FullName} {stakeholder.StakeholderName}
+              </Text>
+            </View>
 
-          <View
-            style={styles.chatContainer}
-          >
-            <ScrollView>
-              <TouchableOpacity style={styles.row} onPress={handleClearActiveChats}>
-                <Icon name="trash-outline" size={35} style={styles.icon} />
-                <Text style={styles.text}>Clear all chat</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.row} onPress={() => setShowModal(true)}>
-                <Icon name="search-outline" size={35} style={styles.icon} />
-                <Text style={styles.text}>Search </Text>
-              </TouchableOpacity>
-              <Modal
-                visible={showModal}
-                animationType='slide'
-                transparent={true}
-                onRequestClose={() => setShowModal(false)}
-              >
-                <View style={styles.modal}>
-                  <TouchableOpacity onPress={() => setShowModal(false)} style={styles.btnClose}>
-                    <Icon name="close-outline" size={35} />
-                  </TouchableOpacity>
-                  <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search for a user"
-                    onChangeText={setSearchQuery}
-                    value={searchQuery}
-                  />
-                  <ScrollView>
-                    {travelers
-                      .filter(traveler1 => traveler1.first_name.toLowerCase().includes(searchQuery.toLowerCase()))
-                      .map((traveler1) => (
-                        <TouchableOpacity key={traveler1.id} onPress={() => {
-                          handleUserPress(traveler1, stakeholder);
-                          setShowModal(false);
-                        }}>
-                          <View style={styles.row}>
-                            <Image style={styles.img} source={{ uri: traveler1.Picture }} />
-                            <Text style={styles.text}>{traveler1.first_name} </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ))}
-                  </ScrollView>
-                </View>
-              </Modal>
-             
-              {activeChats.map((traveler2) => (
-                <Swipeable
-                renderRightActions={() => renderRightActions(traveler2)}
-                onSwipeableRightOpen={() => handleDelete(traveler2)}
-              >
-                <TouchableOpacity onPress={() => handleUserPress(traveler2, stakeholder)}>
-                  <View style={styles.row}>
-                    <Image style={styles.img} source={{ uri: traveler2.Picture }} />
-                    <Text style={styles.text}>{traveler2.first_name}</Text>
-                  </View>
+            <View
+              style={styles.chatContainer}
+            >
+              <ScrollView>
+                <TouchableOpacity style={styles.row} onPress={handleClearActiveChats}>
+                  <Icon name="trash-outline" size={35} style={styles.icon} />
+                  <Text style={styles.text}>Clear all chat</Text>
                 </TouchableOpacity>
-              </Swipeable>
-              
-              ))}
-            </ScrollView>
+                <TouchableOpacity style={styles.row} onPress={() => setShowModal(true)}>
+                  <Icon name="search-outline" size={35} style={styles.icon} />
+                  <Text style={styles.text}>Search </Text>
+                </TouchableOpacity>
+                <Modal
+                  visible={showModal}
+                  animationType='slide'
+                  transparent={true}
+                  onRequestClose={() => setShowModal(false)}
+                >
+                  <View style={styles.modal}>
+                    <TouchableOpacity onPress={() => setShowModal(false)} style={styles.btnClose}>
+                      <Icon name="close-outline" size={35} />
+                    </TouchableOpacity>
+                    <TextInput
+                      style={styles.searchInput}
+                      placeholder="Search for a user"
+                      onChangeText={setSearchQuery}
+                      value={searchQuery}
+                    />
+                     <ScrollView contentContainerStyle={styles.scrollContent}>
+                      {travelers
+                        .filter(traveler1 => traveler1.first_name.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map((traveler1) => (
+                          <TouchableOpacity key={traveler1.id} onPress={() => {
+                            handleUserPress(traveler1, stakeholder);
+                            setShowModal(false);
+                          }}>
+                            <View style={styles.row}>
+                              <Image style={styles.img} source={{ uri: traveler1.Picture }} />
+                              <Text style={styles.text}>{traveler1.first_name} </Text>
+                            </View>
+                          </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                  </View>
+                </Modal>
 
-          </View>
-        </ScrollView>
-      </GradientBackground>
+                {activeChats.map((traveler2) => (
+                  <Swipeable
+                    renderRightActions={() => renderRightActions(traveler2)}
+                    onSwipeableRightOpen={() => handleDelete(traveler2)}
+                  >
+                    <TouchableOpacity onPress={() => handleUserPress(traveler2, stakeholder)}>
+                      <View style={styles.row}>
+                        <Image style={styles.img} source={{ uri: traveler2.Picture }} />
+                        <Text style={styles.text}>{traveler2.first_name}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </Swipeable>
 
-    </View>
+                ))}
+              </ScrollView>
+
+            </View>
+          </ScrollView>
+        </GradientBackground>
+
+      </View>
     </GestureHandlerRootView>
 
 
@@ -179,11 +180,17 @@ export default HomeChat;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    paddingTop: 100,
   },
   searchInput: {
     padding: 20,
     fontSize: 20
+  },
+  scrollContent: {
+    marginTop:20,
+    // paddingVertical: 80,
+    paddingBottom: 20,// Adjust this value as needed
+    // marginBottom:150
   },
   dropdown: {
     height: 40,

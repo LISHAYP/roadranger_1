@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { getCenter } from 'geolib';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function AroundYou(props) {
     const [location, setLocation] = useState(null);
@@ -14,9 +15,9 @@ export default function AroundYou(props) {
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
 
-    const stakeholder = props.route.params.data;
+    const stakeholder = props.route.params.stakeholder;
     console.log("%%%%", stakeholder);
-    console.log("%%%%", userLocation);
+    // console.log("%%%%", userLocation);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -93,15 +94,15 @@ export default function AroundYou(props) {
     };
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
-                <Icon name="menu" size={40} color="white" alignSelf="ceter" />
+            <View style={styles.hamburger}>
+            <Image source={{ uri: stakeholder.picture }} style={styles.user} />
                 <View style={styles.textContainer}>
                     <Text style={styles.titlename}>Hello, {stakeholder.FullName} !</Text>
                 </View>
-                <Image source={{ uri: stakeholder.picture }} style={styles.user} />
-            </TouchableOpacity>
+             
+            </View>
 
-
+            <Navbar stakeholder={stakeholder} />
 
             {location && location.coords && (
                 <MapView
@@ -121,25 +122,25 @@ export default function AroundYou(props) {
                         description="This is my current location"
                     />
                     {Events.filter(event => event.event_status !== false && event.is_related == null).map(event => (<Marker
-                            key={event.EventNumber}
-                            coordinate={{
-                                latitude: event.Latitude,
-                                longitude: event.Longitude,
-                            }}
-                            title={event.Details}
-                            description={event.EventTime}
-                            pinColor={typePinColors[event.SerialTypeNumber]}
-                            onPress={() => {
-                                navigation.navigate('TimeLine', { event, stakeholder });
-                            }}
-                        />
+                        key={event.EventNumber}
+                        coordinate={{
+                            latitude: event.Latitude,
+                            longitude: event.Longitude,
+                        }}
+                        title={event.Details}
+                        description={event.EventTime}
+                        pinColor={typePinColors[event.SerialTypeNumber]}
+                        onPress={() => {
+                            navigation.navigate('TimeLine', { event, stakeholder });
+                        }}
+                    />
 
-                        ))}
+                    ))}
 
                 </MapView>
 
             )}
-            <Modal
+            {/* <Modal
                 visible={isMenuOpen}
                 animationType='slide'
                 transparent={true}
@@ -212,7 +213,7 @@ export default function AroundYou(props) {
                     </View>
 
                 )}
-            </Modal>
+            </Modal> */}
         </View>
     );
 }
@@ -228,19 +229,19 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 90 / 2,
         resizeMode: 'cover',
-        right:-10,
-        top:-5,
-        alignSelf:'flex-end'
+        right: -10,
+        top: -5,
+        alignSelf: 'flex-end'
     },
-    
+
     map: {
         width: '100%',
         height: '100%',
     },
     titlename: {
-        color: 'white',
+        color: '#144800',
         fontSize: 22,
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     hamburger: {
         flexDirection: 'row',
@@ -250,9 +251,10 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        backgroundColor: '#8FBC8F',
+        backgroundColor:'#F5F5F5',
         paddingTop: 55,
         paddingHorizontal: 20,
+        shadowOpacity: 0.9,
     },
     textContainer: {
         flex: 1,
@@ -264,32 +266,32 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'center',
         position: 'absolute',
-        bottom: 0, 
-        width: '100%', 
-        height: '50%', 
+        bottom: 0,
+        width: '100%',
+        height: '50%',
         backgroundColor: '#F0F8FF',
         zIndex: 1,
         flex: 1,
-        borderTopLeftRadius:15,
+        borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         borderbottomEndRadius: 0,
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
         justifyContent: 'space-evenly',
-      },
+    },
     closeButton: {
         right: -80,
-        paddingTop:10,
+        paddingTop: 10,
     },
     btnLogOut: {
-        left:-80,
-        paddingTop:10,
+        left: -80,
+        paddingTop: 10,
     },
     textLO: {
         color: '#144800',
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#F5F5F5',
         marginBottom: 10,
-        
+
         padding: 5,
         resizeMode: 'contain',
         shadowColor: '#000',
