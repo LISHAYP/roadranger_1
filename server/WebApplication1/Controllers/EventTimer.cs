@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
     public class EventTimer
     {
         private Timer _timer;
-        private readonly TimeSpan _interval = TimeSpan.FromSeconds(5);
+        private readonly TimeSpan _interval = TimeSpan.FromHours(24);
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         igroup190_test1Entities db = new igroup190_test1Entities();
 

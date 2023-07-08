@@ -49,6 +49,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="api" Type="varchar" MaxLength="255" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblArea">
           <Key>
@@ -593,6 +594,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="api" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblArea">
           <Key>
@@ -1135,6 +1137,7 @@
               <MappingFragment StoreEntitySet="tblApi">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="api" ColumnName="api" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

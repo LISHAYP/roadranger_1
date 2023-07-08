@@ -30,7 +30,6 @@ namespace WebApplication1
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            JobManager.Initialize(new MyRegistry());
 
             //code for timer
             //timer.Interval = 5000;

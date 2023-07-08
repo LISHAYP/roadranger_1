@@ -16,5 +16,6 @@ namespace data
     {
         public int id { get; set; }
         public string api { get; set; }
+        public string name { get; set; }
     }
 }

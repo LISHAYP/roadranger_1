@@ -390,8 +390,8 @@ namespace WebApplication1.Controllers
                     logger.Error($"traveler with email : {value.travler_email} was not found");
                     return NotFound();
                 }
-
-
+                
+                
                 // Generate a new password and update the user's record in the database
                 var newPassword = GeneratePassword();
                 user.password = newPassword;
@@ -399,7 +399,7 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 logger.Info($"new password was saved in the database to traveler id number: {value.traveler_id}");
 
-                var mailapi = db.tblApi.Select(x => x.api).SingleOrDefault();
+                var mailapi = db.tblApi.FirstOrDefault(x => x.name == "mail")?.api;
                 var sendGridClient = new SendGridClient(mailapi);
                 var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
                 var subject = "New Password";
