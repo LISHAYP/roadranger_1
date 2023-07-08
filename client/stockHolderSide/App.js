@@ -24,6 +24,8 @@ import EventDetails from './Screens/EventDetails';
 import YourTravelers from './Screens/YourTravelers';
  import Chat from './Screens/Chat';
  import HomeChat from './Screens/HomeChat';
+import Navbar from './Components/Navbar';
+
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
