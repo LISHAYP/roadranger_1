@@ -9,12 +9,16 @@ import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
+import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function NewEvent(props) {
   const stakeholder = props.route.params.stakeholder;
-  const userLocation = props.route.params.userLocation
+  // const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
- 
+   console.log("--------------", stakeholder)
   // const serialType = [
   //   //creating type of different eventtypes
   //   { label: 'Missing traveler', value: '1003' },
@@ -27,18 +31,33 @@ export default function NewEvent(props) {
   const [details, setDetails] = useState('');
   const eventStatus = 'true';
   const [picture, setPicture] = useState('#');
-  const stackholderId = stakeholder.stackholderId
+  const stackholderId = stakeholder.StakeholderId
   const TravelerId = null;
   const serialTypeNumber = 1004;
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
+  const [location, setLocation] = useState('');
+  const [locationFetched, setLocationFetched] = useState(false);
 
 
-  useEffect(() => {
-    //insert the API Key
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
-    Geocoder.from(userLocation.coords.latitude, userLocation.coords.longitude)
+  useEffect(() => { 
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');       
+      }
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+      console.log("&&&&&&&&&", currentLocation);
+      setLocationFetched(true); // Set locationFetched to true after location is fetched  
+      getLocation()
+    })();
+  }, []);
+  
+  const getLocation=()=>{
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
+    Geocoder.from(location.coords.latitude, location.coords.longitude)
       .then(json => {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
@@ -46,31 +65,21 @@ export default function NewEvent(props) {
         // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        addContry();
-
+        console.log("^^^^^^^^^^^^^^^^^^^^",location.coords.latitude)
+       
       })
       .catch(error => console.warn(error))
-  }, []);
+  }
 
+  useEffect(() => {
+    addContry();
 
-  const newEvent = {
-    Details: details,
-    event_date: new Date().toISOString().slice(0, 10),
-    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    Latitude: userLocation.coords.latitude,
-    Longitude: userLocation.coords.longitude,
-    event_status: eventStatus,
-    Picture: picture,
-    TravelerId: TravelerId,
-    StackholderId: stackholderId,
-    serialTypeNumber: serialTypeNumber,
-    country_number: countryNumber,
-    area_number: areaNumber,
-  };
-  console.log("--------", { newEvent })
+  }, [location,locationFetched]);
+
   const countryObj = {
     country_name: country,
   };
+
   addContry = () => {
 
     fetch(`${cgroup90}/api/post/country`, {
@@ -90,7 +99,6 @@ export default function NewEvent(props) {
       )
       .catch(error => {
         console.error(error);
-
       });
   }
 
@@ -99,7 +107,6 @@ export default function NewEvent(props) {
       country_number: countryNumber,
       area_name: city
     }
-
     fetch(`${cgroup90}/api/post/area`, {
       method: 'POST',
       headers: {
@@ -111,7 +118,6 @@ export default function NewEvent(props) {
       .then(response => response.json())
       .then(data => {
         setAreaNumber(data)
-
       }
       )
       .catch(error => {
@@ -119,8 +125,23 @@ export default function NewEvent(props) {
         console.log('Error');
       });
   }
+ 
   const createEvent = async () => {
-
+    const newEvent = {
+      Details: details,
+      event_date: new Date().toISOString().slice(0, 10),
+      event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      Latitude: location.coords.latitude,
+      Longitude: location.coords.longitude,
+      event_status: eventStatus,
+      Picture: picture,
+      TravelerId: TravelerId,
+      StackholderId: stackholderId,
+      serialTypeNumber: serialTypeNumber,
+      country_number: countryNumber,
+      area_number: areaNumber,
+    };
+    console.log("--------", { newEvent })
     if (newEvent.Details === '') {
       Alert.alert('Please enter details and type');
     }
@@ -155,9 +176,11 @@ export default function NewEvent(props) {
   }
   return (
     < GradientBackground>
+       <BackButton text={"New Warning"}/>
+      <Navbar stakeholder={stakeholder}/>
       <ScrollView>
         <View style={styles.container}>
-          <BackButton />
+       
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}
@@ -170,23 +193,7 @@ export default function NewEvent(props) {
               TextInput.State.blur(TextInput.State.currentlyFocusedInput())
             }}>
           </TextInput>
-          {/* <Text style={styles.text}>Type:</Text> */}
-
-          {/* <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={serialType}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={"Select type of event"}
-            value={selectedSerialType}
-            onChange={item => {
-              setSerialTypeNumber(item.value)
-              setSelectedSerialType(item) // Update the selected item state variable
-
-            }} /> */}
+       
 
           <TouchableOpacity style={styles.photo} onPress={OpenCameraE}>
             <Icon name="camera-outline" style={styles.icon} size={30} color={'white'} />
@@ -208,12 +215,11 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 120,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-
   },
 
   RoadRanger: {

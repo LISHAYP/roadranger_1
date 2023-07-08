@@ -114,7 +114,7 @@ export default function EventDetails(props) {
   }
   useEffect(() => {
     fetchTravelerDetails();
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
       .then((json) => {
         const location = json.results[0].address_components;
@@ -134,7 +134,7 @@ export default function EventDetails(props) {
 
   return (
     <GradientBackground>
-      <BackButton />
+      <BackButton text="Event Details"/>
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -225,9 +225,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    // marginTop: 10
+    marginTop: 100
   },
-
 
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed

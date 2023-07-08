@@ -43,9 +43,10 @@ export default function ForgotPassword() {
     };
     return (
         < GradientBackground>
+          <BackButton text={"Forgot Your Password?"}/>
             <View style={styles.container}>
-                <BackButton />
-                <Text style={styles.title}>Forgot Your Password?</Text>
+{/*               
+                <Text style={styles.title}>Forgot Your Password?</Text> */}
 
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         padding: 10,
         width: "100%",
+        paddingTop:120
 
     },
     title: {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -7,7 +7,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
-
+import { cgroup90 } from '../cgroup90';
+import BackButton from '../Components/BackButton';
 
 export default function SignUp({ route }) {
   const defaultPic = `${cgroup90}/profilePictures/id1.png`;
@@ -21,7 +22,7 @@ export default function SignUp({ route }) {
       }
     }, [route.params?.image])
   );
-  
+
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -70,7 +71,7 @@ export default function SignUp({ route }) {
     gender: selectedGender,
     password: password,
     chat: isEnabledChatMode,
-    Picture : newProfilePic ?? defaultPic 
+    Picture: newProfilePic ?? defaultPic
   };
   const handleSignUp = async () => {
     fetch(`${cgroup90}/api/post/SignUp`, {
@@ -99,15 +100,18 @@ export default function SignUp({ route }) {
   }
 
   return (
-    <ScrollView>
-      < GradientBackground>
-        <View style={styles.container}>
+
+
+    < GradientBackground>
+      <BackButton text={"Sign Up"} />
+      <View style={styles.container}>
+        <ScrollView>
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <TouchableOpacity onPress={openCamera}>
             {newProfilePic ? (
               <Image source={{ uri: newProfilePic }} style={styles.user} />
             ) : (
-              <Image source={{ uri: defaultPic  }} style={styles.user} />
+              <Image source={{ uri: defaultPic }} style={styles.user} />
             )}
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
@@ -226,9 +230,10 @@ export default function SignUp({ route }) {
               Save
             </Text>
           </TouchableOpacity>
-        </View>
-      </GradientBackground>
-    </ScrollView >
+        </ScrollView >
+      </View>
+    </GradientBackground>
+
   )
 }
 const styles = StyleSheet.create({
@@ -237,7 +242,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
-
+    paddingTop: 120
   },
 
   RoadRanger: {
@@ -254,7 +259,7 @@ const styles = StyleSheet.create({
     width: 150,
     marginBottom: 25,
 
-  },  
+  },
   text: {
     color: '#144800',
     fontSize: 20,

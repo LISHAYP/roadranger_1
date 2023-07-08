@@ -9,6 +9,7 @@ import moment from 'moment';
 import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
   const stakeholder = props.route.params.stakeholder;
@@ -86,7 +87,8 @@ export default function Setting(props) {
   }
   return (
     < GradientBackground> 
-        <BackButton />
+        <Navbar stakeholder={stakeholder} />
+        <BackButton text="Setting"/>
         <View style={styles.container}>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
@@ -185,6 +187,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    paddingTop:100
   },
   RoadRanger: {
     alignSelf: 'center',

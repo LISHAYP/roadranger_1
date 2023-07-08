@@ -92,11 +92,12 @@ export default function ContactUs() {
     }
     return (
         < GradientBackground>
+         <BackButton text={"Contact Us"}/>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.container}
             >
-                <BackButton />
+               
                 <ScrollView>
                     <View style={styles.container}>
                         <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
-        marginTop: 10
+        paddingTop:50
     },
 
     RoadRanger: {

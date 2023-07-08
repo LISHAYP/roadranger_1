@@ -9,15 +9,16 @@ import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function ReportAsMissing(props) {
     const stakeholder = props.route.params.stakeholder;
-    const traveler=props.route.params.traveler;
+    const traveler = props.route.params.traveler;
     const userLocation = props.route.params.location
     // console.log("sta", stakeholder)
     // console.log("loc", userLocation)
     console.log("tra", traveler)
-    console.log("**********8",userLocation)
+    console.log("**********8", userLocation)
     // console.log(userLocation.Latitude, userLocation.Longitude)
     const navigation = useNavigation();
 
@@ -35,7 +36,7 @@ export default function ReportAsMissing(props) {
 
     useEffect(() => {
         //insert the API Key
-        Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+        Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
         Geocoder.from(userLocation.Latitude, userLocation.Longitude)
             .then(json => {
                 const addressComponents = json.results[0].address_components;
@@ -120,7 +121,7 @@ export default function ReportAsMissing(props) {
 
 
     const createEvent = async () => {
-        
+
         if (newEvent.Details === '') {
             Alert.alert('Please enter details and type');
         }
@@ -162,8 +163,8 @@ export default function ReportAsMissing(props) {
             .then(response => response.json())
             .then(data => {
                 // Handle the response data as needed              
-               
-                
+
+
             })
             .catch(error => {
                 console.error(error);
@@ -173,9 +174,11 @@ export default function ReportAsMissing(props) {
 
     return (
         < GradientBackground>
+         <Navbar stakeholder={stakeholder} />
+         <BackButton text="Report As Missing" />
             <ScrollView>
                 <View style={styles.container}>
-                    <BackButton />
+
                     <Text style={styles.text}>Description:</Text>
                     <TextInput style={styles.input}
                         value={details}
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         padding: 20,
         width: "100%",
-
+        paddingTop: 120
     },
 
     RoadRanger: {
