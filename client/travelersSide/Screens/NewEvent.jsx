@@ -222,10 +222,10 @@ export default function NewEvent(props) {
 
       return false;
     }
-
-
-    const labels1 = JSON.parse(event1.labels).filter(label => label.score > 0.5).map(label => label.description);
-    const labels2 = JSON.parse(event2.labels).filter(label => label.score > 0.5).map(label => label.description);
+    let labels1, labels2;
+    try {
+     labels1 = JSON.parse(event1.labels).filter(label => label.score > 0.5).map(label => label.description);
+     labels2 = JSON.parse(event2.labels).filter(label => label.score > 0.5).map(label => label.description);
 
 
     for (const label1 of labels1) {
@@ -237,8 +237,9 @@ export default function NewEvent(props) {
         }
       }
     }
-
+  } catch (error) {
     return false;
+  }
   };
 
   const similarContent = async (event1, event2) => {
