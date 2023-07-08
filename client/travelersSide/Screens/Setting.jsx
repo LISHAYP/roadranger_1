@@ -11,18 +11,12 @@ import BackButton from '../Components/BackButton';
 import { auth } from '../firebase';
 import 'firebase/database';
 import { cgroup90 } from '../cgroup90';
-// import { EventsContext } from '../Context/EventsContext';
 import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
-  // const { events, getEvents } = useContext(EventsContext)
   const traveler = props.route.params.traveler;
   console.log(traveler);
 
-  //   useEffect(async () => {
-  //     await getEvents();
-  //     console.log("iiiiiii", events)
-  // }, []);
 
   useEffect(() => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
@@ -141,11 +135,10 @@ export default function Setting(props) {
             onChangeText={(text) => setLastName(text)}
             placeholder={traveler.last_name}>
           </TextInput>
-
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
-            placeholder={'0' + traveler.phone.toString()}
-            value={phone}
+            placeholder={phone}
+            // value={phone}
             keyboardType='numeric'
             onChangeText={(text) => setPhone(text)}
           >

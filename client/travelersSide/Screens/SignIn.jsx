@@ -13,6 +13,7 @@ import * as Notifications from 'expo-notifications';
 import { cgroup90 } from '../cgroup90';
 import { LocationContext } from '../Context/LocationContext'
 
+
 export default function SignIn() {
     const { location, getPermissionLocation, getUserLocation } = useContext(LocationContext)
     const [email, setEmail] = useState('');
@@ -29,7 +30,9 @@ export default function SignIn() {
         await getUserLocation();
     }, [handleLogin]);
 
+
     const handleLogin = () => {
+
         const traveler = {
             travler_email: email,
             password: password
@@ -50,8 +53,7 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
-                    console.log("*********", data)
-                    console.log("*********", data.traveler_id)
+                    console.log("iiiiiiiiiiiiiii", data.traveler_id)
                     setTravlerId(data.traveler_id)
                     fetch(`${cgroup90}/api/traveler/updatetoken?email=${traveler.travler_email}`, {
                         method: 'PUT',
@@ -68,6 +70,28 @@ export default function SignIn() {
                             //Alert.alert('Token updated successfully')
                             //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                             navigation.navigate("Around You", { traveler: data });
+
+                            const now = new Date();
+                            const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
+                            const userLoction = {
+                                DateAndTime: DateAndTimeFormat,
+                                TravelerId: data.traveler_id,
+                                Latitude: location.coords.latitude,
+                                Longitude: location.coords.longitude
+                            }
+                            //Send a POST request to your backend API with the 
+                            fetch(`${cgroup90}/api/traveler/location`, {
+                                method: 'POST',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(userLoction),
+                            })
+                                .then(response => response.json())
+                                .catch(error => {
+                                    console.error(error);
+                                });
                         })
                         .catch((error) => {
                             console.error(error);
@@ -82,50 +106,9 @@ export default function SignIn() {
                 console.error(error);
                 console.log('Error', 'Failed to sign in. Please try again later.');
             });
-        saveLocation();
     };
 
-    const saveLocation = () => {
-        try {
-            if (!location) {
-                console.log('Location data is not available');
-                return;
-            }
-            AsyncStorage.setItem('latitude', location.coords.latitude.toString());
-            AsyncStorage.setItem('longitude', location.coords.longitude.toString());
-            console.log('Location saved successfully!');
-            console.log(location.coords.latitude)
-            console.log(location.coords.longitude)
-            saveUserLocation()
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    const saveUserLocation = () => {
-        const now = new Date();
-        const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
-        const userLoction = {
 
-            DateAndTime: DateAndTimeFormat,
-            TravelerId: travelerId,
-            Latitude: location.coords.latitude,
-            Longitude: location.coords.longitude
-        }
-        console.log("^^^^^^^^^", userLoction)
-        //Send a POST request to your backend API with the 
-        fetch(`${cgroup90}/api/traveler/location`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userLoction),
-        })
-            .then(response => response.json())
-            .catch(error => {
-                console.error(error);
-            });
-    }
     async function registerForPushNotificationsAsync() {
         let token;
         if (Device.isDevice) {
@@ -189,6 +172,8 @@ export default function SignIn() {
 
     return (
         < GradientBackground>
+
+
             <View style={styles.container}>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
 

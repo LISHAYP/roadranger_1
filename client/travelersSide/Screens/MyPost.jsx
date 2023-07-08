@@ -11,39 +11,40 @@ import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
 import { EventsContext } from '../Context/EventsContext';
 import Navbar from '../Components/Navbar';
+import { cgroup90 } from '../cgroup90';
 
 
 export default function MyPost(props) {
-    const { events, getEvents } = useContext(EventsContext)
+    const [events,setEvents]=useState([])
+    // const { events, getEvents } = useContext(EventsContext)
     const traveler = props.route.params.traveler;
     const navigation = useNavigation();
     const [eventWithAddresses, setEventWithAddresses] = useState([]);
     Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
+    useEffect(()=>{
+        fetch(`${cgroup90}/api/newevent`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(
+                (result) => {
+                    setEvents(result)
+                },
+                (error) => {
+                    console.log("err post=", error);
+                }, []);
+    })
 
-    useEffect(async () => {
-        await getEvents();
-        console.log("iiiiiii", events)
-        Promise.all(events.map(event => {
-            const lat = event.Latitude;
-            const lng = event.Longitude;
-            return Geocoder.from(lat, lng).then(json => {
-                const location = json.results[0].address_components;
-                const number = location[0].long_name;
-                const street = location[1].long_name;
-                const city = location[2].long_name;
-                const address = `${street} ${number}, ${city}`;
-                return { ...event, address };
-            });
-        })).then(eventsWithAddress => {
-            setEventWithAddresses(eventsWithAddress);
-        });
-        console.log("-----------------", eventWithAddresses)
-
-    
-    }, [events]);
-
-    // useEffect(() => {
+    // useEffect(async () => {
+    //     // await getEvents();
+    //     console.log("iiiiiii", events)
     //     Promise.all(events.map(event => {
     //         const lat = event.Latitude;
     //         const lng = event.Longitude;
@@ -57,11 +58,31 @@ export default function MyPost(props) {
     //         });
     //     })).then(eventsWithAddress => {
     //         setEventWithAddresses(eventsWithAddress);
-
     //     });
     //     console.log("-----------------", eventWithAddresses)
 
+    
     // }, [events]);
+
+    useEffect(() => {
+        Promise.all(events.map(event => {
+            const lat = event.Latitude;
+            const lng = event.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+                const location = json.results[0].address_components;
+                const number = location[0].long_name;
+                const street = location[1].long_name;
+                const city = location[2].long_name;
+                const address = `${street} ${number}, ${city}`;
+                return { ...event, address };
+            });
+        })).then(eventsWithAddress => {
+            setEventWithAddresses(eventsWithAddress);
+
+        });
+        console.log("-----------------", eventWithAddresses)
+
+    }, [events]);
     
     console.log("-----------------", eventWithAddresses)
     return (
