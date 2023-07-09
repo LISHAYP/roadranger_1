@@ -328,11 +328,11 @@ export default function NewEvent(props) {
   return (
 
     < GradientBackground>
+       <BackButton text="New Post"/>
       <Navbar traveler={traveler} />
 
       <ScrollView>
         <View style={styles.container}>
-          <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -384,7 +384,7 @@ export default function NewEvent(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 120,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
