@@ -53,7 +53,7 @@ export default function Warning(props) {
     return (
         <GradientBackground>
             <Navbar traveler={traveler} />
-            <BackButton />
+            <BackButton text="Warning"/>
             <ScrollView>
                 <View style={styles.container}>
 
@@ -93,11 +93,12 @@ export default function Warning(props) {
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop: 40,
+        marginTop: 130,
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
-        height: "100%"
+        height: "100%",
+        marginBottom:100
     },
     event: {
         backgroundColor: 'rgba(0, 0, 0, 0.07)',

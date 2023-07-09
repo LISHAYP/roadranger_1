@@ -316,7 +316,7 @@ export default function EventDetails(props) {
     <GradientBackground>
       <Navbar traveler={traveler} />
 
-      <BackButton />
+      <BackButton text="Event Details"/>
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    // marginTop: 10
+    marginTop: 50
   },
 
 

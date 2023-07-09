@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback,useContext } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -15,14 +15,14 @@ import { cgroup90 } from '../cgroup90';
 
 
 export default function MyPost(props) {
-    const [events,setEvents]=useState([])
+    const [events, setEvents] = useState([])
     // const { events, getEvents } = useContext(EventsContext)
     const traveler = props.route.params.traveler;
     const navigation = useNavigation();
     const [eventWithAddresses, setEventWithAddresses] = useState([]);
     Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch(`${cgroup90}/api/newevent`, {
             method: 'GET',
             headers: new Headers({
@@ -40,7 +40,7 @@ export default function MyPost(props) {
                 (error) => {
                     console.log("err post=", error);
                 });
-    },[])
+    }, [])
 
     // useEffect(async () => {
     //     // await getEvents();
@@ -61,7 +61,7 @@ export default function MyPost(props) {
     //     });
     //     console.log("-----------------", eventWithAddresses)
 
-    
+
     // }, [events]);
 
     useEffect(() => {
@@ -83,14 +83,17 @@ export default function MyPost(props) {
         console.log("-----------------", eventWithAddresses)
 
     }, [events]);
-    
+
     console.log("-----------------", eventWithAddresses)
     return (
         <GradientBackground>
+            <BackButton text="My Post" />
+
             <Navbar traveler={traveler} />
             <ScrollView>
+
                 <View style={styles.container}>
-                    <BackButton />
+
                     <View>
                         {eventWithAddresses !== undefined ? (
                             eventWithAddresses.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
@@ -103,7 +106,6 @@ export default function MyPost(props) {
                                             <Text>{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
                                             <Text>{event.EventTime.slice(0, 5)}</Text>
                                             <Text>{event.address}</Text>
-
                                         </View>
                                         <Image source={{ uri: event.Picture }} style={styles.img} />
                                     </View>
@@ -112,20 +114,23 @@ export default function MyPost(props) {
                         ) : (
                             <Text>No events found.</Text>
                         )}
-                    </View>
-                </View>
 
+                    </View>
+
+                </View>
             </ScrollView>
+
         </GradientBackground>
     );
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop: 40,
+        marginTop: 120,
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
-        height: "100%"
+        height: "100%",
+        marginBottom:120
     },
     event: {
         backgroundColor: 'rgba(0, 0, 0, 0.07)',

@@ -165,9 +165,10 @@ export default function SOS(props) {
   return (
     < GradientBackground>
       <Navbar traveler={traveler} />
+      <BackButton text="SOS"/>
+
       <ScrollView>
         <View style={styles.container}>
-          <BackButton />
           <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
@@ -219,7 +220,7 @@ export default function SOS(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 120,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,

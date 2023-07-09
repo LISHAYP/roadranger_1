@@ -152,10 +152,10 @@ console.log("trrrrrrrr",traveler)
   return (
     < GradientBackground>
           <Navbar traveler={traveler} />
+          <BackButton text="Search"/>
 
     <ScrollView>
       <View style={styles.container}>
-      <BackButton />
 
         <Text style={styles.text}>Country:</Text>
         <Dropdown
@@ -241,7 +241,7 @@ console.log("trrrrrrrr",traveler)
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
-    marginTop:20,
+    marginTop:120,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

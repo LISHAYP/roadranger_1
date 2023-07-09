@@ -115,11 +115,11 @@ export default function Setting(props) {
   return (
     < GradientBackground>
                 <Navbar traveler={traveler} />
+                <BackButton text="Setting"/>
 
     <ScrollView>
   
         <View style={styles.container}>
-          <BackButton />
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
           </TouchableOpacity >
@@ -234,7 +234,7 @@ export default function Setting(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 120,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

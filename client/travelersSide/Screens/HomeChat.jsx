@@ -129,12 +129,14 @@ const HomeChat = (props) => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <GradientBackground>
+      <BackButton text="Chat" />
+      <GradientBackground>
+
+        <View style={styles.container}>
+
+
           <ScrollView>
-            <View style={styles.back}>
-              <BackButton />
-            </View>
+
             <View>
               <Image source={{ uri: traveler.Picture }} style={styles.user} />
               <Text style={styles.name}>
@@ -261,13 +263,11 @@ const HomeChat = (props) => {
 
                 ))}
               </ScrollView>
-
             </View>
-
           </ScrollView>
-        </GradientBackground>
+        </View>
+      </GradientBackground>
 
-      </View>
     </GestureHandlerRootView>
 
 
@@ -279,7 +279,8 @@ export default HomeChat;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    marginTop: 120,
+    paddingBottom:40
   },
   searchInput: {
     padding: 20,
@@ -365,6 +366,7 @@ const styles = StyleSheet.create({
     // height: '30%',
     // width: '50%',
     top: 20,
+    marginBottom:30
 
   },
   back: {

@@ -38,10 +38,10 @@ export default function Events(props) {
   return (
     <GradientBackground>
       <Navbar traveler={traveler} />
+      <BackButton text="Events"/>
 
       <ScrollView>
         <View style={styles.container}>
-          <BackButton />
           <View>
             {events !== undefined && events.length > 0 ? (
               events.map((event, index) => (
@@ -70,11 +70,12 @@ export default function Events(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 120,
     marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
-    height: "100%"
+    height: "100%",
+    marginBottom:100
   },
   event: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',

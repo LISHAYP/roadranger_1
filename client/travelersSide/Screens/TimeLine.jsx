@@ -49,7 +49,7 @@ export default function TimeLine(props) {
   
     return (
         <GradientBackground>
-          <BackButton />
+       <BackButton text="TimeLine"/>
           <Timeline
             style={styles.list}
             showTime={false}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        paddingTop: 65,
+        paddingTop: 120,
         backgroundColor: 'white',
     },
     time: {

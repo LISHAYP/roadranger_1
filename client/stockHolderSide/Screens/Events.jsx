@@ -32,7 +32,7 @@ export default function Events(props) {
 
   return (
     <GradientBackground>
-        <BackButton text="Event"/>
+        <BackButton text="Events"/>
       <ScrollView>
     
         <View style={styles.container}>
