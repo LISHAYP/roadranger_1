@@ -39,7 +39,7 @@ export default function MyPost(props) {
                 },
                 (error) => {
                     console.log("err post=", error);
-                }, []);
+                });
     },[])
 
     // useEffect(async () => {

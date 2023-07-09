@@ -307,6 +307,11 @@ export default function EventDetails(props) {
       });
   };
 
+  const handleButtonPressIDK = () => {
+    Alert.alert('Thank you! ');
+    setTrueOrFalse(false)
+  }
+
   return (
     <GradientBackground>
       <Navbar traveler={traveler} />
@@ -316,8 +321,15 @@ export default function EventDetails(props) {
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
           <View style={styles.buttonContainer}>
-            <Button title="Yes" onPress={() => handleButtonPress(true)} />
-            <Button title="No" onPress={() => handleButtonPress(false)} />
+            <TouchableOpacity style={styles.btnModal}  onPress={() => handleButtonPress(true)}>
+              <Text style={styles.textModal1}>Yes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnModal}  onPress={() => handleButtonPress(false)}>
+              <Text style={styles.textModal1}>No</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnModal}  onPress={() => handleButtonPressIDK()}>
+              <Text style={styles.textModal1}>IDK</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -569,5 +581,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
+  }, btnModal: {
+    marginVertical: 10,
+    width: "25%",
+    alignSelf: 'center',
+    paddingVertical: 1,
+    paddingHorizontal: 3,
+    borderColor: '#8FBC8F',
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: '#8FBC8F',
+    //margin: 2
+
+  },   textModal1:{
+    fontSize:15,
+    alignSelf: 'center',
+
+},
 });
