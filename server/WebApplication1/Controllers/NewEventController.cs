@@ -211,7 +211,6 @@ namespace WebApplication1.Controllers
 
                     }
                 }
-
                 // Check if the serialTypeNumber is 1004 or 1003
                 if (newEvent.serialTypeNumber == 1004 || newEvent.serialTypeNumber == 1003)
                 {
@@ -223,7 +222,8 @@ namespace WebApplication1.Controllers
                         Latitude = newEvent.latitude,
                         Longitude = newEvent.longitude,
                         SerialTypeNumber = newEvent.serialTypeNumber,
-                        TravelerId = newEvent.travelerId,
+                        TravelerId = 0,
+                        StackholderId = newEvent.stackholderId,
                     };
                     timerServices.SendPushForEvent(eventDto);
                 }
@@ -241,8 +241,10 @@ namespace WebApplication1.Controllers
 
                     // Send push notifications to travelers within 3 kilometers of the event
                     var timerServices = new TimerServices();
-                    timerServices.SendPushForEvent(eventDto);
+                    var travelerIdsWithin3km = timerServices.GetTravelerIdsWithin3km(newEvent.latitude, newEvent.longitude);
+                    timerServices.SendPushToTravelersWithin3Km(travelerIdsWithin3km, eventDto.SerialTypeNumber);
                 }
+
 
                 // Construct the response message
                 var responseMessage = new

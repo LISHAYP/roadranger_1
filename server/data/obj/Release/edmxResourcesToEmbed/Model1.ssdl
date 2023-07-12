@@ -44,6 +44,7 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="api" Type="varchar" MaxLength="255" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblArea">
     <Key>

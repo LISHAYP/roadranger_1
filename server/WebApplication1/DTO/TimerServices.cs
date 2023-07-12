@@ -24,7 +24,7 @@ namespace WebApplication1.DTO
             {
                 if (eventDto.SerialTypeNumber == 1003 || eventDto.SerialTypeNumber == 1004)
                 {
-                     SendPushNotificationToAll(eventDto.SerialTypeNumber,(int)eventDto.TravelerId);
+                    SendPushNotificationToAll(eventDto.SerialTypeNumber, (int)eventDto.TravelerId);
                 }
                 else
                 {
@@ -33,7 +33,7 @@ namespace WebApplication1.DTO
                     // Remove the traveler who opened the event from the list
                     travelerIdsWithin3km.Remove((int)eventDto.TravelerId);
 
-                    SendPushNotification(travelerIdsWithin3km, eventDto.SerialTypeNumber);
+                    SendPushToTravelersWithin3Km(travelerIdsWithin3km, eventDto.SerialTypeNumber);
                 }
             }
             catch (Exception ex)
@@ -41,7 +41,46 @@ namespace WebApplication1.DTO
                 logger.Info(ex);
             }
         }
+        public void SendPushNotificationToAll(int serialTypeNumber, int excludingTravelerId)
+        {
+            try
+            {
+                var travelers = db.traveleres.Where(t => t.traveler_id != excludingTravelerId).ToList();
 
+                // Create the push notification data
+                var pushNotificationData = new PushNotData();
+                //{
+                //    title = "New Event Update",
+                //    body = "You are within 3 km of a new event, check it out on the map!"
+                //};
+
+                if (serialTypeNumber == 1003)
+                {
+                    pushNotificationData.title = "Missing Traveler";
+                    pushNotificationData.body = "A traveler is reported missing. Please be cautious and report any information you may have.";
+                }
+                else if (serialTypeNumber == 1004)
+                {
+                    pushNotificationData.title = "Travel warning";
+                    pushNotificationData.body = "A travel warning has been issued for your current location. Stay safe and follow local authorities' instructions.";
+                }
+
+                foreach (var traveler in travelers)
+                {
+                    if (traveler.token != null)
+                    {
+                        pushNotificationData.to = traveler.token;
+                        _ = PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+            }
+        }
         public List<int> GetTravelerIdsWithin3km(decimal latitude, decimal longitude)
         {
             var lastLocations = db.tblLocations
@@ -94,7 +133,7 @@ namespace WebApplication1.DTO
                 foreach (var traveler in travelers)
                 {
                     pushNotificationData.to = traveler.token;
-                    _=PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
+                    _ = PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
                 }
             }
             catch (Exception ex)
@@ -103,47 +142,30 @@ namespace WebApplication1.DTO
             }
         }
 
-        public  void SendPushNotificationToAll(int serialTypeNumber, int excludingTravelerId)
+        public void SendPushToTravelersWithin3Km(List<int> travelerIds, int serialTypeNumber)
         {
             try
             {
-                var travelers = db.traveleres.Where(t => t.traveler_id != excludingTravelerId).ToList();
+                var travelers = db.traveleres.Where(t => travelerIds.Contains(t.traveler_id)).ToList();
 
                 // Create the push notification data
-                var pushNotificationData = new PushNotData();
-                //{
-                //    title = "New Event Update",
-                //    body = "You are within 3 km of a new event, check it out on the map!"
-                //};
-
-                if (serialTypeNumber == 1003)
+                var pushNotificationData = new PushNotData
                 {
-                    pushNotificationData.title = "Missing Traveler";
-                    pushNotificationData.body = "A traveler is reported missing. Please be cautious and report any information you may have.";
-                }
-                else if (serialTypeNumber == 1004)
-                {
-                    pushNotificationData.title = "Travel warning";
-                    pushNotificationData.body = "A travel warning has been issued for your current location. Stay safe and follow local authorities' instructions.";
-                }
+                    title = "New Event Update",
+                    body = "You are within 3 km of a new event, check it out on the map!"
+                };
 
                 foreach (var traveler in travelers)
                 {
-                    if (traveler.token != null)
-                    {
-                        pushNotificationData.to = traveler.token;
-                        _ = PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
-                    }
+                    pushNotificationData.to = traveler.token;
+                    _ = PostPN(pushNotificationData, traveler.traveler_id, serialTypeNumber);
                 }
-
-            
             }
             catch (Exception ex)
             {
                 logger.Error(ex.Message);
             }
         }
-
 
         public async Task PostPN(PushNotData pushNotificationData, int travelerId, int eventId)
         {
@@ -242,7 +264,55 @@ namespace WebApplication1.DTO
             return Task.CompletedTask;
         }
 
+        public List<int> GetTravelerIdsWithin1km(decimal latitude, decimal longitude)
+        {
+            var lastLocations = db.tblLocations
+                .GroupBy(l => l.travelerId)
+                .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault())
+                .ToList();
 
+            var travelerIdsWithin1km = new List<int>();
+
+            foreach (var location in lastLocations)
+            {
+                decimal travelerLatitude = location.latitude;
+                decimal travelerLongitude = location.longitude;
+
+                double distance = CalculateDistance((double)latitude, (double)longitude, (double)travelerLatitude, (double)travelerLongitude);
+
+                if (distance <= 1)
+                {
+                    travelerIdsWithin1km.Add(location.travelerId);
+                }
+            }
+
+            return travelerIdsWithin1km;
+        }
+
+        public void SendPushToTravelersWithin1Km(List<int> travelerIds)
+        {
+            try
+            {
+                var travelers = db.traveleres.Where(t => travelerIds.Contains(t.traveler_id)).ToList();
+
+                // Create the push notification data
+                var pushNotificationData = new PushNotData
+                {
+                    title = "Nearby Traveler Update",
+                    body = "There is a traveler within 1 km of your location that need your help!"
+                };
+
+                foreach (var traveler in travelers)
+                {
+                    pushNotificationData.to = traveler.token;
+                    _ = PostPN(pushNotificationData, traveler.traveler_id, 0); // Set eventId to 0 or any default value
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+            }
+        }
         public static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
             // Implementation of the Haversine formula
@@ -257,6 +327,5 @@ namespace WebApplication1.DTO
             var distance = R * c;
             return distance;
         }
-
     }
 }

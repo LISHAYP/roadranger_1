@@ -47,6 +47,7 @@
         <MappingFragment StoreEntitySet="tblApi">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="api" ColumnName="api" />
+          <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -4290,3 +4290,524 @@
  2023-07-08 11:43:04.7733 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
  2023-07-08 11:43:04.8045 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
  2023-07-08 11:43:04.8202 INFO: Push notification sent to traveler ID: 10, Event ID: 1002
+ 2023-07-08 11:46:36.0466 INFO: new password was saved in the database to traveler id number: 0
+ 2023-07-08 11:47:16.8727 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:16.8727 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:17.0431 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:17.0431 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:17.0431 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:17.0431 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:17.0431 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:18.7145 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:18.7145 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:18.7145 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:18.7145 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:28.8860 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"e6c8bc78-5355-4b27-953e-e74282da5e60"}}
+ 2023-07-08 11:47:18.7145 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:28.9464 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:28.9820 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:29.0117 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:29.0372 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:29.0597 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:29.0857 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:29.2115 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:29.2506 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:29.2506 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-08 11:47:29.2681 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"05de5f8b-4c1a-46f1-ae22-37574c9f653f"}}
+ 2023-07-08 11:47:29.2681 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:29.2947 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:29.2947 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:29.3266 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:29.4523 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-08 11:47:30.0834 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.0834 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.1464 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.1778 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:30.4934 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.4934 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.5935 INFO: Push notification sent to traveler ID: 10, Event ID: 1002, Response: {"data":{"status":"ok","id":"ea8d597f-942b-403f-96d9-daecb80bb7ab"}}
+ 2023-07-08 11:47:30.5935 INFO: Push notification sent to traveler ID: 54, Event ID: 1002, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.6248 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:30.6604 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.6604 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.9869 INFO: Push notification sent to traveler ID: 54, Event ID: 1002, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:30.9869 INFO: Push notification sent to traveler ID: 10, Event ID: 1002, Response: {"data":{"status":"ok","id":"b85620fd-14f5-4083-9f24-80214f44494c"}}
+ 2023-07-08 11:47:31.0397 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:31.0397 INFO: Push notification sent to traveler ID: 10, Event ID: 1002
+ 2023-07-08 11:47:31.0981 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.0981 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.1441 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.1441 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.2865 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.2865 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.3343 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.3499 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.3659 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:31.3973 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 11:47:31.6650 INFO: Push notification sent to traveler ID: 10, Event ID: 1002
+ 2023-07-08 11:47:31.7120 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-08 11:47:31.7434 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-08 21:30:55.2455 INFO: new event was added to the database!
+ 2023-07-09 19:47:13.9583 INFO: new event was added to the database!
+ 2023-07-09 19:47:14.7388 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:15.9940 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:16.3478 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:16.3740 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:16.4229 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:16.5331 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:16.6670 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:17.5442 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:18.5750 INFO: Push notification sent to traveler ID: 61, Event ID: 1003, Response: {"data":{"status":"ok","id":"c852a536-6c0e-4428-9d79-1eaad030f9be"}}
+ 2023-07-09 19:47:18.6030 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"9d9cbc4a-e529-4422-bf34-6f9ab59889c5"}}
+ 2023-07-09 19:47:18.6030 INFO: Push notification sent to traveler ID: 54, Event ID: 1003, Response: {"data":{"status":"ok","id":"07cb1638-7a1e-4a11-8d60-a443a84a8cbe"}}
+ 2023-07-09 19:47:19.1122 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.1122 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.1200 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.1200 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2538 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2688 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2792 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2792 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2965 INFO: Push notification sent to traveler ID: 55, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2538 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.3216 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.3216 INFO: Push notification sent to traveler ID: 80, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.2965 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.3396 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.3396 INFO: Push notification sent to traveler ID: 78, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.4493 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.5271 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"9817090f-f5bc-484e-ac60-cadc9171d311"}}
+ 2023-07-09 19:47:19.7795 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:19.7910 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:19.7795 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:19.8984 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:19.9900 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:20.0029 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:20.0296 INFO: Push notification sent to traveler ID: 10, Event ID: 1003, Response: {"data":{"status":"ok","id":"db952d36-d1ae-4239-946d-2c73756cdd9e"}}
+ 2023-07-09 19:47:20.0577 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"272ed0c9-54f7-4655-93f2-d392085d85b9"}}
+ 2023-07-09 19:47:49.4477 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.0853 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.1006 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.1152 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.1990 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.2290 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.3660 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:47:50.7278 INFO: Push notification sent to traveler ID: 51, Event ID: 1003, Response: {"data":{"status":"ok","id":"f0c5dda3-0ab3-4930-93fe-bcc2b929a270"}}
+ 2023-07-09 19:47:50.7765 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.7765 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.7765 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9359 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.8653 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9359 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9359 INFO: Push notification sent to traveler ID: 53, Event ID: 1003, Response: {"data":{"status":"ok","id":"7d05ef04-78c1-4cd8-89b3-5ad113b81336"}}
+ 2023-07-09 19:47:50.9359 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9535 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9359 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9535 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9359 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9627 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9627 INFO: Push notification sent to traveler ID: 55, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9627 INFO: Push notification sent to traveler ID: 78, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:50.9977 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:51.0579 INFO: Push notification sent to traveler ID: 61, Event ID: 1003, Response: {"data":{"status":"ok","id":"dcd39455-499c-48d1-95bc-b025d47fc6e8"}}
+ 2023-07-09 19:47:51.1413 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:51.2018 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:51.1916 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:51.1413 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:51.3660 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"bb449eaf-48eb-4fb3-bcf2-ced08390cf0b"}}
+ 2023-07-09 19:47:50.9977 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:51.0825 INFO: Push notification sent to traveler ID: 80, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:47:51.4269 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"c9b70c02-8316-48f5-80e9-967090e5fec2"}}
+ 2023-07-09 19:47:51.4441 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:51.5043 INFO: Push notification sent to traveler ID: 10, Event ID: 1003, Response: {"data":{"status":"ok","id":"1deb1281-d35b-41c9-9707-d84e24b8d160"}}
+ 2023-07-09 19:47:51.5434 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:51.5769 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:47:51.6035 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"9ccc3cec-e76d-4bc3-b82d-4e065c5ed775"}}
+ 2023-07-09 19:47:51.6035 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"7506263a-ca99-414b-a813-729a85f992d3"}}
+ 2023-07-09 19:47:51.6035 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"f613d691-c46b-4f29-b263-0ad694a72922"}}
+ 2023-07-09 19:47:51.6713 INFO: Push notification sent to traveler ID: 54, Event ID: 1003, Response: {"data":{"status":"ok","id":"b3fbd17e-e1ee-49f8-aa29-6de4773c1f6e"}}
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 10, Event ID: 1003
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 54, Event ID: 1003
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 53, Event ID: 1003
+ 2023-07-09 19:47:52.4048 INFO: Push notification sent to traveler ID: 51, Event ID: 1003
+ 2023-07-09 19:47:52.4421 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 19:47:52.5073 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 19:47:52.5073 INFO: Push notification sent to traveler ID: 61, Event ID: 1003
+ 2023-07-09 19:48:28.1878 INFO: new event was added to the database!
+ 2023-07-09 19:48:28.4477 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:49:10.0457 INFO: new event was added to the database!
+ 2023-07-09 19:49:10.5880 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.6050 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.6330 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.6370 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.6571 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"da96f834-3004-4f99-91a9-5c41c27a446d"}}
+ 2023-07-09 19:49:10.6571 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"bf5e6f0d-f3b6-4d75-8e6e-d54997ef08eb"}}
+ 2023-07-09 19:49:10.6571 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"5b20514d-1686-4d21-9e7e-a79735bb1538"}}
+ 2023-07-09 19:49:10.6571 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.6652 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.6652 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"af51cc27-7c09-4567-88c6-600d2f15171f"}}
+ 2023-07-09 19:49:10.9000 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 19:49:10.9000 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 19:49:10.9625 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.9625 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:49:10.9625 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:10.9000 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 19:49:10.7199 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:49:10.9938 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"d56cd3aa-fd19-4f6b-bbae-3c386db7e451"}}
+ 2023-07-09 19:49:10.9938 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:49:11.0870 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:49:11.0870 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 19:49:11.1365 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 19:51:19.5099 INFO: new event was added to the database!
+ 2023-07-09 19:51:19.6898 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:55:14.4971 INFO: new event was added to the database!
+ 2023-07-09 19:57:33.3168 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:35.9951 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"69c3b692-0707-4e35-a79c-f03e314a2c1d"}}
+ 2023-07-09 19:57:35.9951 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:35.9951 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:36.0312 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"85546f6f-1f5b-4d58-bee6-ea3ac3f5ee58"}}
+ 2023-07-09 19:57:36.6463 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:36.6979 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:37.3041 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:37.2755 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:37.2755 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"974f2411-514f-4288-972f-e6fba4047bb3"}}
+ 2023-07-09 19:57:37.2755 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"17fd8320-5180-4695-903e-5859598cf484"}}
+ 2023-07-09 19:57:37.3337 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:37.3041 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"423664f5-fd48-4c44-a8d6-8bcbc3f2aedc"}}
+ 2023-07-09 19:57:37.3779 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:37.3779 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:37.3779 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:37.4316 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:37.6534 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:37.7036 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:37.7402 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:37.7714 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 19:57:37.7714 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 19:57:37.7714 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:37.7774 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 19:57:37.8063 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:37.8613 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 19:57:37.8613 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 19:57:37.8613 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:38.8857 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:38.8857 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:38.9656 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:38.9656 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:38.9932 INFO: Push notification sent to traveler ID: 54, Event ID: 1003, Response: {"data":{"status":"ok","id":"ded24bfc-15f3-455f-b325-15656a62ef9c"}}
+ 2023-07-09 19:57:38.9932 INFO: Push notification sent to traveler ID: 53, Event ID: 1003, Response: {"data":{"status":"ok","id":"46d25687-255f-4760-a174-647b337bafb6"}}
+ 2023-07-09 19:57:39.4163 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:39.9217 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:39.9432 INFO: Push notification sent to traveler ID: 51, Event ID: 1003, Response: {"data":{"status":"ok","id":"ea2c6b06-0bc4-4a65-9f92-f1370ab302a3"}}
+ 2023-07-09 19:57:39.9487 INFO: Push notification sent to traveler ID: 55, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:39.9487 INFO: Push notification sent to traveler ID: 10, Event ID: 1003, Response: {"data":{"status":"ok","id":"d878adc3-1273-46cb-8db3-8a369d2ff52f"}}
+ 2023-07-09 19:57:39.9666 INFO: Push notification sent to traveler ID: 80, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:39.9900 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"c4e8ebcb-78fa-4bcf-baa0-cf7349f166ba"}}
+ 2023-07-09 19:57:39.9900 INFO: Push notification sent to traveler ID: 61, Event ID: 1003, Response: {"data":{"status":"ok","id":"ed6d1b71-2cde-401f-b713-c8de920615f8"}}
+ 2023-07-09 19:57:40.0208 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"48b7fee2-3958-4b87-90f4-216d06dd186b"}}
+ 2023-07-09 19:57:40.0507 INFO: Push notification sent to traveler ID: 54, Event ID: 1003
+ 2023-07-09 19:57:40.2120 INFO: Push notification sent to traveler ID: 78, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:40.2120 INFO: Push notification sent to traveler ID: 53, Event ID: 1003
+ 2023-07-09 19:57:40.4359 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"a2443b11-9907-496a-9950-4eb84d672818"}}
+ 2023-07-09 19:57:40.4359 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"fa906ab5-457a-4753-bb4c-57de5482c89b"}}
+ 2023-07-09 19:57:40.4853 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 19:57:40.8475 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"b00bf227-f0db-4456-8859-56061c5bd76b"}}
+ 2023-07-09 19:57:41.0843 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:41.0843 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:41.1017 INFO: Push notification sent to traveler ID: 10, Event ID: 1003
+ 2023-07-09 19:57:41.2795 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:41.2795 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:41.2795 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 19:57:41.3507 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:41.3607 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:44.5849 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:45.3625 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 19:57:45.3625 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:45.3754 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:46.7189 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:47.6944 INFO: Push notification sent to traveler ID: 61, Event ID: 1003
+ 2023-07-09 19:57:47.7001 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:47.7183 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 19:57:47.7561 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 19:57:47.7561 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:47.7853 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 19:57:47.7853 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 19:57:47.8138 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:47.8871 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 19:57:48.0365 INFO: Push notification sent to traveler ID: 51, Event ID: 1003
+ 2023-07-09 19:57:54.0374 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"f300575f-34dc-43d5-a8a3-1d5655ee4825"}}
+ 2023-07-09 19:57:58.5162 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-07-09 20:02:32.6413 INFO: new event was added to the database!
+ 2023-07-09 20:02:43.1055 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"ef815ae9-b66d-4132-9887-84bdc7cfbe01"}}
+ 2023-07-09 20:02:43.1296 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"31dd0689-6007-49b0-9e40-2ee4dc833912"}}
+ 2023-07-09 20:02:43.1950 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 20:02:43.2070 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"7c7133aa-4f1a-47bb-ae04-d64e9c7236f5"}}
+ 2023-07-09 20:02:43.2817 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 20:02:43.2817 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"9505d95d-10d7-4e6a-959b-452759e6b5c7"}}
+ 2023-07-09 20:02:43.3272 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"a0d3eb83-cec5-44c9-83a6-15de26024452"}}
+ 2023-07-09 20:02:43.3426 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 20:02:43.3633 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 20:02:43.4105 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"a5232d34-e4a3-47ef-b181-42bf8e40bfc5"}}
+ 2023-07-09 20:02:43.4420 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.4420 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.4420 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 20:02:43.5013 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.5429 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.5429 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.5429 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.5184 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.5819 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.5819 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:02:43.6151 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:02:43.6593 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:02:43.6942 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:02:43.6942 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-07-09 20:03:24.6929 INFO: new event was added to the database!
+ 2023-07-09 20:03:37.6572 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.6658 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.6572 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.7413 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.7878 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.7915 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.8946 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.9858 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:37.9980 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.0543 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.0558 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2228 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2228 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2582 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2595 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2595 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2595 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.2999 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:38.2999 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.4616 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.5283 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.7660 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:38.8411 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:38.8411 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.8411 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.9272 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:38.9272 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:38.9272 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:38.9322 ERROR: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.9322 ERROR: Exception occurred during the POST request: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.9513 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.9745 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:38.9745 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: error: אירעה שגיאה במהלך שליחת הבקשה.
+ 2023-07-09 20:03:39.0201 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:39.0909 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:03:39.1527 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:05:00.9631 INFO: new event was added to the database!
+ 2023-07-09 20:05:00.9631 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 20:05:02.0530 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"30c16560-e9e3-4e2c-9a2f-0d9c4c4817e5"}}
+ 2023-07-09 20:05:02.0598 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"db995295-2c8f-4a9b-af72-3826bcdddc52"}}
+ 2023-07-09 20:05:02.1617 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"c9b5416e-087e-4b87-916c-99882102e8f8"}}
+ 2023-07-09 20:05:02.1684 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"fdabe08d-d75e-4796-9bf5-2c712347b479"}}
+ 2023-07-09 20:05:02.3537 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"852e05b4-a7aa-479a-939b-e0df86c5502c"}}
+ 2023-07-09 20:05:02.4360 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.4590 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.4847 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.4947 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.5140 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"62f5b9d1-c6c3-43e1-b9e7-3498d0a72a93"}}
+ 2023-07-09 20:05:02.5140 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.5140 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.5553 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.5861 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:05:02.5553 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.6872 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:05:02.6872 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:05:02.7783 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:05:03.0100 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-09 20:05:03.0256 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 20:05:03.0256 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 20:05:03.0787 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 20:05:03.0969 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 20:05:03.1397 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 20:06:23.3052 INFO: new event was added to the database!
+ 2023-07-09 20:11:23.8788 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 27
+ 2023-07-09 20:13:53.5846 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"cf7a1aef-44d1-4813-b5b4-bce1a49a2fe6"}}
+ 2023-07-09 20:13:53.6197 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"542a633c-ffee-4f16-9e6a-bb80d63f99bd"}}
+ 2023-07-09 20:13:53.6360 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"73af7583-f879-4fff-9cdd-6182e78c1463"}}
+ 2023-07-09 20:13:53.7985 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"c0410c52-5610-48c3-9f7a-21bd2afdbafd"}}
+ 2023-07-09 20:13:53.8338 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"d7bde04f-2c4d-4d5d-a317-05615c92ddfa"}}
+ 2023-07-09 20:13:53.8744 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"0554e10a-257a-4a80-b865-4606a10c9f13"}}
+ 2023-07-09 20:13:53.8744 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:53.8744 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:53.8744 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:53.8744 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:53.9659 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:54.0368 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:54.0529 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:54.9319 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:13:54.1190 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"996eee9d-f0d5-4fee-b59c-860bbe4ef279"}}
+ 2023-07-09 20:13:54.9289 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:13:54.9289 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:13:58.2317 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-09 20:14:00.0260 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-09 20:14:04.8457 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-09 20:14:04.8457 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-09 20:14:04.8457 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-09 20:14:04.8457 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-09 20:14:04.9144 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-09 20:14:04.9144 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-09 20:14:04.9469 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-09 20:14:32.2114 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"af2ad508-dfb5-4876-b8ea-f2431c5d1a54"}}
+ 2023-07-09 20:14:40.7004 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-09 20:17:39.8146 INFO: new event was added to the database!
+ 2023-07-09 20:19:14.2802 INFO: new event was added to the database!
+ 2023-07-09 20:31:41.5338 INFO: new event was added to the database!
+ 2023-07-09 20:34:22.9156 INFO: new event was added to the database!
+ 2023-07-09 20:35:50.3108 INFO: new event was added to the database!
+ 2023-07-09 20:37:09.1671 INFO: new event was added to the database!
+ 2023-07-12 18:32:56.3735 INFO: new event was added to the database!
+ 2023-07-12 18:34:31.6333 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"611a46dd-1592-4bab-9dad-5b930d8e3327"}}
+ 2023-07-12 18:34:37.6723 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-12 18:40:52.1349 INFO: new event was added to the database!
+ 2023-07-12 18:40:52.4723 INFO: System.InvalidOperationException: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+   ב-  System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   ב-  System.Nullable`1.get_Value()
+   ב-  WebApplication1.DTO.TimerServices.SendPushForEvent(EventDto eventDto) ב- C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\DTO\TimerServices.cs:שורה 34
+ 2023-07-12 18:41:16.4178 INFO: new event was added to the database!
+ 2023-07-12 18:41:17.0885 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"5aa31459-f11f-4f74-bd9b-0736c59f55ac"}}
+ 2023-07-12 18:41:17.1770 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-12 19:35:28.7414 INFO: new event was added to the database!
+ 2023-07-12 19:35:30.5429 INFO: Push notification sent to traveler ID: 54, Event ID: 1, Response: {"data":{"status":"ok","id":"0ee55985-f7de-4578-b9a4-ba3b2d4107cd"}}
+ 2023-07-12 19:35:30.6560 INFO: Push notification sent to traveler ID: 8, Event ID: 1, Response: {"data":{"status":"ok","id":"f0f1b879-a417-4548-b142-3e2f32992927"}}
+ 2023-07-12 19:35:30.6713 INFO: Push notification sent to traveler ID: 54, Event ID: 1
+ 2023-07-12 19:35:30.7325 INFO: Push notification sent to traveler ID: 8, Event ID: 1
+ 2023-07-12 19:37:00.8996 INFO: new event was added to the database!
+ 2023-07-12 19:37:01.6123 INFO: Push notification sent to traveler ID: 10, Event ID: 1003, Response: {"data":{"status":"ok","id":"b3367300-cf30-4bee-91c7-172c47b38d37"}}
+ 2023-07-12 19:37:01.6123 INFO: Push notification sent to traveler ID: 61, Event ID: 1003, Response: {"data":{"status":"ok","id":"f4a2db47-423e-4d3d-9b5c-35458a765982"}}
+ 2023-07-12 19:37:01.7287 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"716bd4cd-b53d-4e74-8472-27659f671153"}}
+ 2023-07-12 19:37:01.7418 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.7418 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.7418 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.7418 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.6970 INFO: Push notification sent to traveler ID: 53, Event ID: 1003, Response: {"data":{"status":"ok","id":"4605c108-af59-41a1-a64c-900cb2030a36"}}
+ 2023-07-12 19:37:01.7418 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.7418 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.7766 INFO: Push notification sent to traveler ID: 51, Event ID: 1003, Response: {"data":{"status":"ok","id":"e5870f40-43c6-4e31-9453-7c06dc2671bf"}}
+ 2023-07-12 19:37:01.7923 INFO: Push notification sent to traveler ID: 61, Event ID: 1003
+ 2023-07-12 19:37:01.7923 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
+ 2023-07-12 19:37:01.8239 INFO: Push notification sent to traveler ID: 78, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.8239 INFO: Push notification sent to traveler ID: 55, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.8627 INFO: Push notification sent to traveler ID: 53, Event ID: 1003
+ 2023-07-12 19:37:01.8627 INFO: Push notification sent to traveler ID: 80, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:37:01.9067 INFO: Push notification sent to traveler ID: 54, Event ID: 1003, Response: {"data":{"status":"ok","id":"4ccfec10-616c-48b2-b3d4-ef4b4e8ce207"}}
+ 2023-07-12 19:37:01.9535 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-12 19:37:01.9593 INFO: Push notification sent to traveler ID: 51, Event ID: 1003
+ 2023-07-12 19:37:01.9535 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-12 19:37:01.9854 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-12 19:37:02.0010 INFO: Push notification sent to traveler ID: 10, Event ID: 1003
+ 2023-07-12 19:37:02.0530 INFO: Push notification sent to traveler ID: 54, Event ID: 1003
+ 2023-07-12 19:38:24.1206 INFO: new event was added to the database!
+ 2023-07-12 19:38:24.6374 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.6647 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.6647 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.6647 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.6907 INFO: Push notification sent to traveler ID: 61, Event ID: 1004, Response: {"data":{"status":"ok","id":"7884c0d8-fc18-4a5b-a6e2-27ecf30c7abb"}}
+ 2023-07-12 19:38:24.6907 INFO: Push notification sent to traveler ID: 54, Event ID: 1004, Response: {"data":{"status":"ok","id":"0df8bf57-3574-43ac-ae59-2989c0079803"}}
+ 2023-07-12 19:38:24.7432 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.7432 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.7432 INFO: Push notification sent to traveler ID: 55, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.6907 INFO: Push notification sent to traveler ID: 53, Event ID: 1004, Response: {"data":{"status":"ok","id":"62b63337-fbd9-44df-8f13-c07158a4aa45"}}
+ 2023-07-12 19:38:24.7720 INFO: Push notification sent to traveler ID: 51, Event ID: 1004, Response: {"data":{"status":"ok","id":"9530743a-7535-43cf-8037-092c738546c2"}}
+ 2023-07-12 19:38:24.7720 INFO: Push notification sent to traveler ID: 80, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.7900 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-12 19:38:24.8259 INFO: Push notification sent to traveler ID: 54, Event ID: 1004
+ 2023-07-12 19:38:24.8259 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-12 19:38:24.8259 INFO: Push notification sent to traveler ID: 61, Event ID: 1004
+ 2023-07-12 19:38:24.8259 INFO: Push notification sent to traveler ID: 78, Event ID: 1004, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-12 19:38:24.8495 INFO: Push notification sent to traveler ID: 10, Event ID: 1004, Response: {"data":{"status":"ok","id":"f109a7ef-75d4-4c01-8af0-083e919f3fe8"}}
+ 2023-07-12 19:38:24.8495 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-12 19:38:24.8495 INFO: Push notification sent to traveler ID: 8, Event ID: 1004, Response: {"data":{"status":"ok","id":"e6a979d2-d3a4-4e5d-8a3f-f385f7cf3925"}}
+ 2023-07-12 19:38:24.8701 INFO: Push notification sent to traveler ID: 51, Event ID: 1004
+ 2023-07-12 19:38:24.9014 INFO: Push notification sent to traveler ID: 53, Event ID: 1004
+ 2023-07-12 19:38:24.9170 INFO: Push notification sent to traveler ID: 10, Event ID: 1004
+ 2023-07-12 19:38:24.9170 INFO: Push notification sent to traveler ID: 8, Event ID: 1004
+ 2023-07-12 19:51:39.2286 INFO: Push notification sent to traveler ID: 54, Event ID: 0, Response: {"data":{"status":"ok","id":"c76f34f4-1466-4023-95d1-541d9febccfc"}}
+ 2023-07-12 19:51:39.2911 INFO: Push notification sent to traveler ID: 8, Event ID: 0, Response: {"data":{"status":"ok","id":"aca5f519-f60f-4a93-a8f8-54343679c871"}}
+ 2023-07-12 19:51:39.5515 INFO: Push notification sent to traveler ID: 8, Event ID: 0
+ 2023-07-12 19:51:39.5515 INFO: Push notification sent to traveler ID: 54, Event ID: 0

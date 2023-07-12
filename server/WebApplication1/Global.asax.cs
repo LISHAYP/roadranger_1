@@ -18,7 +18,7 @@ namespace WebApplication1
         //code for timer
         static Timer timer = new Timer();
         EventDto PNevent = new EventDto();
-        private static EventTimer _eventTimer;
+        //private static EventTimer _eventTimer;
 
 
         protected void Application_Start()
@@ -35,8 +35,8 @@ namespace WebApplication1
             //timer.Interval = 5000;
             //timer.Elapsed += tm_Tick;
 
-            _eventTimer = new EventTimer();
-            _eventTimer.Start();
+            //_eventTimer = new EventTimer();
+            //_eventTimer.Start();
 
         }
         //code for timer
@@ -50,18 +50,18 @@ namespace WebApplication1
         //code for timer
         public static void StartTimer()
         {
-            timer.Enabled = true;
+            //timer.Enabled = true;
 
         }
         public static void EndTimer()
         {
-            timer.Enabled = false;
+            //timer.Enabled = false;
 
         }
 
         protected void Application_End()
         {
-            _eventTimer.Stop();
+            //_eventTimer.Stop();
         }
     }
 }

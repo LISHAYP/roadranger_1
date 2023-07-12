@@ -402,10 +402,10 @@ namespace WebApplication1.Controllers
                 var mailapi = db.tblApi.FirstOrDefault(x => x.name == "mail")?.api;
                 var sendGridClient = new SendGridClient(mailapi);
                 var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
-                var subject = "New Password";
+                var subject = "New Password for Road Ranger app";
                 var to = new EmailAddress(user.travler_email, user.first_name);
-                var plainContent = "Dear " + user.first_name;
-                var htmlContent = $"Dear {value.first_name}, \n Your new password is: {newPassword}";
+                var plainContent = "Dear" + user.first_name;
+                var htmlContent = $"Dear {user.first_name}, \n Your new password is: {newPassword}";
                 var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
                 await sendGridClient.SendEmailAsync(mailMessage);
 
@@ -419,6 +419,27 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+
+        // POST: api/NotifyTravelers
+        [HttpPost]
+        [Route("api/NotifyTravelers")]
+        public IHttpActionResult NotifyTravelers([FromBody] LocationDto locationDto)
+        {
+            try
+            {
+                var timerServices = new TimerServices();
+                var travelerIdsWithin1km = timerServices.GetTravelerIdsWithin1km(locationDto.Latitude, locationDto.Longitude);
+                timerServices.SendPushToTravelersWithin1Km(travelerIdsWithin1km);
+
+                return Ok("Push notification sent to travelers within 1 km.");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
 
         [HttpPost]
         [Route("api/traveler/details")]
