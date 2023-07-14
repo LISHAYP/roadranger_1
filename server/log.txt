@@ -4811,3 +4811,30 @@
  2023-07-12 19:51:39.2911 INFO: Push notification sent to traveler ID: 8, Event ID: 0, Response: {"data":{"status":"ok","id":"aca5f519-f60f-4a93-a8f8-54343679c871"}}
  2023-07-12 19:51:39.5515 INFO: Push notification sent to traveler ID: 8, Event ID: 0
  2023-07-12 19:51:39.5515 INFO: Push notification sent to traveler ID: 54, Event ID: 0
+ 2023-07-14 11:37:17.3055 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 11:37:34.8703 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 11:38:46.5945 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 11:41:38.2365 ERROR: עבור שיטה שאינה סטטית נדרש יעד.
+ 2023-07-14 11:41:44.4958 ERROR: עבור שיטה שאינה סטטית נדרש יעד.
+ 2023-07-14 11:56:37.0160 ERROR: The underlying provider failed on Open.
+ 2023-07-14 11:56:52.7220 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 13:55:59.1618 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 13:58:05.4568 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 13:59:44.9400 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 13:59:51.4403 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 14:10:37.0206 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 14:10:39.8576 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 14:10:41.4955 ERROR: LINQ to Entities does not recognize the method 'Double CalculateDistance(Double, Double, Double, Double)' method, and this method cannot be translated into a store expression.
+ 2023-07-14 14:53:19.0274 ERROR: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+ 2023-07-14 15:07:54.5088 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-07-14 15:10:00.3843 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-07-14 15:12:52.6923 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-07-14 15:13:05.4178 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-07-14 15:14:11.0509 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-07-14 15:16:13.9180 ERROR: An error occurred while updating the entries. See the inner exception for details.
+ 2023-07-14 15:19:48.0876 INFO: new ask for help request was added!
+ 2023-07-14 15:23:05.7930 INFO: New ask for help request was added, and push notification sent to travelers within 1 km.
+ 2023-07-14 15:23:06.3746 INFO: Push notification sent to traveler ID: 8, Event ID: 0, Response: {"data":{"status":"ok","id":"72937557-95d5-422e-852d-7e0d5b7aaae7"}}
+ 2023-07-14 15:23:06.4215 INFO: Push notification sent to traveler ID: 54, Event ID: 0, Response: {"data":{"status":"ok","id":"25d4e325-fa3d-4972-ae40-4a48b4a0d742"}}
+ 2023-07-14 15:23:06.4958 INFO: Push notification sent to traveler ID: 8, Event ID: 0
+ 2023-07-14 15:23:06.4958 INFO: Push notification sent to traveler ID: 54, Event ID: 0

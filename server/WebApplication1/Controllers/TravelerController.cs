@@ -420,25 +420,25 @@ namespace WebApplication1.Controllers
             }
         }
 
-        // POST: api/NotifyTravelers
-        [HttpPost]
-        [Route("api/NotifyTravelers")]
-        public IHttpActionResult NotifyTravelers([FromBody] LocationDto locationDto)
-        {
-            try
-            {
-                var timerServices = new TimerServices();
-                var travelerIdsWithin1km = timerServices.GetTravelerIdsWithin1km(locationDto.Latitude, locationDto.Longitude);
-                timerServices.SendPushToTravelersWithin1Km(travelerIdsWithin1km);
+        //// POST: api/NotifyTravelers
+        //[HttpPost]
+        //[Route("api/NotifyTravelers")]
+        //public IHttpActionResult NotifyTravelers([FromBody] LocationDto locationDto)
+        //{
+        //    try
+        //    {
+        //        var timerServices = new TimerServices();
+        //        var travelerIdsWithin1km = timerServices.GetTravelerIdsWithin1km(locationDto.Latitude, locationDto.Longitude);
+        //        timerServices.SendPushToTravelersWithin1Km(travelerIdsWithin1km);
 
-                return Ok("Push notification sent to travelers within 1 km.");
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message);
-                return BadRequest(ex.InnerException.Message);
-            }
-        }
+        //        return Ok("Push notification sent to travelers within 1 km.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
 
 
         [HttpPost]
