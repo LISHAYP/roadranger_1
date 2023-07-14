@@ -41,9 +41,9 @@ export default function SignUp() {
   const [value, setValue] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [isEnabledLocation, setIsEnabledLocation] = useState(false);
-  const [isEnabledChatMode, setIsEnabledChatMode] = useState(false);
-  const [isEnabledNotification, setIsEnabledNotification] = useState(false);
+  const isEnabledLocation = false
+  const isEnabledChatMode = false
+  const isEnabledNotification = false;
   const [selectedGender, setSelectedGender] = useState(null);
   const [genderSelection, setGenderSelection] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
@@ -58,9 +58,9 @@ export default function SignUp() {
     );
   }, [email]);
 
-  const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
-  const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
-  const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
+  // const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
+  // const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
+  // const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
 
   const handleDateSelect = (date) => {
     const formattedDate = moment(date).format('DD/MM/YY');
@@ -89,7 +89,7 @@ export default function SignUp() {
       return;
     }
     // Email validation
-    const emailPattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (!emailPattern.test(email)) {
       // Email format is invalid
       alert('Please enter a valid email address.');
@@ -98,17 +98,17 @@ export default function SignUp() {
     if (phone.length != 10) {
       // Phone is too short
       Alert.alert('Phone must be 10 numbers.');
-     
+
       return;
     }
     if (password.length < 6) {
       // Password is too short
       Alert.alert('Password must be at least 6 characters long.');
-      
+
       return;
     }
     else {
-        createUserWithEmailAndPassword(auth, newTraveler.travler_email, newTraveler.password)
+      createUserWithEmailAndPassword(auth, newTraveler.travler_email, newTraveler.password)
       fetch(`${cgroup90}/api/post/SignUp`, {
         method: 'POST',
         headers: {
@@ -145,14 +145,17 @@ export default function SignUp() {
   return (
 
     < GradientBackground>
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
         <ScrollView>
-
+          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back-outline" size={35} color='#144800' />
+          </TouchableOpacity>
           <View style={styles.container}>
-            <BackButton />
+
             <Image source={RoadRanger} style={styles.RoadRanger} />
             <TouchableOpacity onPress={openCamera}>
               <Image source={{ uri: newProfilePic }} style={styles.user} />
@@ -235,7 +238,7 @@ export default function SignUp() {
                 </View>
               )}
             </View>
-            <View style={styles.row}>
+            {/* <View style={styles.row}>
               <Text style={styles.text2}>Location Mode</Text>
               <Switch
                 style={styles.switch}
@@ -267,7 +270,7 @@ export default function SignUp() {
                 onValueChange={toggleSwitchChatMode}
                 value={isEnabledChatMode}
               />
-            </View>
+            </View> */}
             <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
               <Text style={styles.btnText}>
                 Save
@@ -284,13 +287,26 @@ export default function SignUp() {
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 7,
     marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
+    marginBottom: 20
+  },
+  hamburger: {
+    flexDirection: 'row',
+    // position: 'absolute',
+    width: '100%',
+    height: '12%',
+    top: 0,
+    left: 0,
+    // zIndex: 1,
+
+    paddingTop: 55,
+    paddingHorizontal: 20,
+
 
   },
-
   RoadRanger: {
     alignSelf: 'center',
     resizeMode: 'contain',
@@ -304,6 +320,7 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     width: 150,
     marginBottom: 25,
+
 
   },
   text: {
@@ -340,7 +357,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
@@ -350,11 +367,10 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#8FBC8F',
     borderWidth: 0.5,
-    borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -381,7 +397,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: '#144800',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 15,
 
   },
   label: {
@@ -413,5 +429,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 25,
     backgroundColor: '#144800'
+  },
+  button: {
+    left: 5,
+    top: 30
   },
 });

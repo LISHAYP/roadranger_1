@@ -49,9 +49,9 @@ export default function SignUp({ route }) {
   const [genderSelection, setGenderSelection] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
   const [insuranceSelection, setInsuranceSelection] = useState(null);
-  const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
-  const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
-  const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
+  // const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
+  // const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
+  // const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
 
   const handleDateSelect = (date) => {
     const formattedDate = moment(date).format('DD/MM/YY');
@@ -203,7 +203,7 @@ export default function SignUp({ route }) {
               value={isEnabledLocation}
             />
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.text2}>Notification</Text>
             <Switch
               style={styles.switch}
@@ -224,7 +224,7 @@ export default function SignUp({ route }) {
               onValueChange={toggleSwitchChatMode}
               value={isEnabledChatMode}
             />
-          </View>
+          </View> */}
           <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
             <Text style={styles.btnText}>
               Save

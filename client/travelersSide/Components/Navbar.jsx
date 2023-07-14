@@ -41,7 +41,7 @@ function Navbar(props) {
                 <Text style={styles.text1}>Chat</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { navigation.navigate("Around You", {traveler:traveler}), setIsMenuOpen(false) }} style={styles.icon1} >
+            <TouchableOpacity onPress={() => { navigation.navigate("Around You", { traveler: traveler }), setIsMenuOpen(false) }} style={styles.icon1} >
                 <Icon name="home" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>Home</Text>
             </TouchableOpacity>
@@ -107,16 +107,22 @@ function Navbar(props) {
                                 <Icon name="settings-outline" size={35} style={styles.icon} />
                                 <Text style={styles.text}>Setting</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionSOS}
+                            <TouchableOpacity style={styles.option}
                                 onPress={() => {
-                                    navigation.navigate("SOS", {
-                                        traveler: traveler                                      
+                                    navigation.navigate("Ask For Help", {
+                                        traveler: traveler
                                     }), setIsMenuOpen(false);
                                 }}
                             >
+                                <Icon name="help-circle-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>Ask For Help</Text>
+
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option}
+                                onPress={() => { navigation.navigate("SOS", traveler ), setIsMenuOpen(false) }}
+                            >
                                 <Icon name="help-buoy" size={35} style={styles.iconSOS} />
                                 <Text style={styles.textSOS}>SOS</Text>
-
                             </TouchableOpacity>
                         </View>
 
@@ -255,6 +261,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         size: 30,
         color: '#B00020',
+        marginTop: 10
 
     },
     textModal: {
@@ -276,7 +283,7 @@ const styles = StyleSheet.create({
         color: '#144800',
         alignItems: 'center',
         size: 30,
-
+        marginTop: 10
 
     },
 

@@ -334,7 +334,6 @@ export default function NewEvent(props) {
 
       <ScrollView>
         <View style={styles.container}>
-          <Image source={RoadRanger} style={styles.RoadRanger} />
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}

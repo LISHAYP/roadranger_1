@@ -110,19 +110,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         marginBottom: 5,
-        color: 'gray',
-    },
-    list: {
-        flex: 1,
-        marginTop: 20,
-    },
-    date: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginBottom: 5,
-        color: 'gray',
-    },
-    title: {
         fontSize: 16,
         fontWeight: 'bold',
     },

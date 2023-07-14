@@ -221,14 +221,14 @@ export default function SignIn() {
                     <TouchableOpacity onPress={() => {
                         navigation.navigate("Forgot password")
                     }}>
-                        <Text >
+                        <Text style={styles.text2}>
                             Forgot your password?
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnSignUp} onPress={() => {
                         navigation.navigate("Sign Up");
                     }}>
-                        <Text > Don't have an Account?  </Text>
+                        <Text style={styles.text2}> Don't have an Account?  </Text>
                         <Text style={styles.text1}> Click Here </Text>
 
                     </TouchableOpacity>
@@ -281,6 +281,9 @@ const styles = StyleSheet.create({
         color: '#144800',
         fontSize: 30,
     },
+    text2:{
+        color: '#144800',
+    },
     input: {
         marginVertical: 20,
         width: "90%",
@@ -328,10 +331,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignSelf: 'center',
         marginLeft: 10,
+        color:'#144800',
+
     },
     text1: {
         fontWeight: 'bold',
         fontSize: 15,
+        color:'#144800',
 
     }
 });

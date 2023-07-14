@@ -183,21 +183,15 @@ export default function SignIn() {
                 <TouchableOpacity onPress={() => {
                     navigation.navigate("Forgot password")
                 }}>
-                    <Text >
+                    <Text style={{ color:'#144800'}}>
                         Forgot your password?
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnSignUp} onPress={() => {
-                    navigation.navigate("Sign Up");
-                }}>
-                    <Text > Don't have an Account?  </Text>
-                    <Text style={styles.text1}> Click Here </Text>
-
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
+               
+                <TouchableOpacity style={{ flexDirection: 'row',marginTop:40}} onPress={() => {
                     navigation.navigate("Contact Us");
                 }}>
-                    <Icon name="mail-open-outline" size={30} />
+                    <Icon name="mail-open-outline" size={30} color={'#144800'} />
                     <Text style={styles.contact}>
                         Contact us
                     </Text>
@@ -288,6 +282,7 @@ export default function SignIn() {
           fontSize: 20,
           alignSelf: 'center',
           marginLeft: 10,
+          color:'#144800'
         },
         text1: {
           fontWeight: 'bold',

@@ -92,8 +92,7 @@ console.log("trrrrrrrr",traveler)
         .then(data => {
           // Handle the response data as needed
           setEvents(data)
-        console.log("fffffffffffffffffffff",data);
-          navigation.navigate("Events",{data: data, traveler: traveler} );
+          navigation.navigate("Events",{events: data, traveler: traveler} );
         })
         .catch(error => {
           Alert.alert('No events in this coutry ');

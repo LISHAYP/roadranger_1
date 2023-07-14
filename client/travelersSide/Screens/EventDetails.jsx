@@ -316,18 +316,18 @@ export default function EventDetails(props) {
     <GradientBackground>
       <Navbar traveler={traveler} />
 
-      <BackButton text="Event Details"/>
+      <BackButton text="Event Details" />
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.btnModal}  onPress={() => handleButtonPress(true)}>
+            <TouchableOpacity style={styles.btnModal} onPress={() => handleButtonPress(true)}>
               <Text style={styles.textModal1}>Yes</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnModal}  onPress={() => handleButtonPress(false)}>
+            <TouchableOpacity style={styles.btnModal} onPress={() => handleButtonPress(false)}>
               <Text style={styles.textModal1}>No</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnModal}  onPress={() => handleButtonPressIDK()}>
+            <TouchableOpacity style={styles.btnModal} onPress={() => handleButtonPressIDK()}>
               <Text style={styles.textModal1}>IDK</Text>
             </TouchableOpacity>
           </View>
@@ -337,33 +337,34 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
+        <View style={[styles.eventContainer,
+        { height: comments.length > 0 ? '71%' : '41%' }
+        ]}>
 
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
-          <View>
-            <View style={styles.event}>
-              <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: traveler.Picture }} />
-                <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
-              </View>
-              <View>
-                <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
-              </View>
+          <View style={styles.event}>
+            <View style={styles.row}>
+              <Image style={styles.img} source={{ uri: traveler.Picture }} />
+              <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
             </View>
             <View>
-              <Text style={styles.detailsText}>{event.Details}</Text>
-              {renderDeleteLogo()}
+              <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
             </View>
-            <View style={styles.locationContainer}>
-              <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
-              <Text style={styles.locationText}>{addressComponents}</Text>
-            </View>
-            {event.Picture != '#' && (
-              <View style={styles.pictureContainer}>
-                <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
-              </View>
-            )}
-
           </View>
+          <View>
+            <Text style={styles.detailsText}>{event.Details}</Text>
+            {renderDeleteLogo()}
+          </View>
+          <View style={styles.locationContainer}>
+            <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
+            <Text style={styles.locationText}>{addressComponents}</Text>
+          </View>
+          {event.Picture != '#' && (
+            <View style={styles.pictureContainer}>
+              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+            </View>
+          )}
+
+
           <ScrollView>
             {comments.length > 0 && (
               comments.map((comment, index) => (
@@ -430,7 +431,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop: 50
+    marginTop: 40,
   },
 
 
@@ -445,11 +446,12 @@ const styles = StyleSheet.create({
     height: height,
     padding: 5,
     borderRadius: 20,
+    position: 'absolute'
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
@@ -464,7 +466,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '70%',
+    height: '75%',
+
 
 
   },
@@ -496,7 +499,6 @@ const styles = StyleSheet.create({
 
   },
   addComment: {
-
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
     borderRadius: 15,
@@ -520,6 +522,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
+
   },
   text: {
     fontSize: 16,
@@ -545,7 +548,6 @@ const styles = StyleSheet.create({
     left: 50,
     paddingBottom: 10,
     width: '75%',
-
   },
 
   icon: {
@@ -593,9 +595,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#8FBC8F',
     //margin: 2
 
-  },   textModal1:{
-    fontSize:15,
+  }, textModal1: {
+    fontSize: 15,
     alignSelf: 'center',
 
-},
+  },
 });

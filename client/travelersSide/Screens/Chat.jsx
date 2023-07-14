@@ -212,7 +212,8 @@ const styles = StyleSheet.create({
         flex: 1,
         // backgroundColor: '#fff',
         // marginTop: 40,
-       
+        marginBottom: 30,
+
     },
     back: {
         paddingTop: 30,
@@ -245,8 +246,8 @@ const styles = StyleSheet.create({
         // margin: 5
     },
     user: {
-        left: 20,
-        top: 20,
+        left: 10,
+        top: 0,
 
 
     },

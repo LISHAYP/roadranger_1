@@ -8,7 +8,6 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
-import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 
 
@@ -93,12 +92,15 @@ export default function ContactUs() {
     }
     return (
         < GradientBackground>
+
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.container}
             >
-                <BackButton />
                 <ScrollView>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                        <Icon name="arrow-back-outline" size={35} color='#144800' />
+                    </TouchableOpacity>
                     <View style={styles.container}>
                         <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
                         {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
-        marginTop: 10
+        marginTop: 20
     },
 
     RoadRanger: {
@@ -255,5 +257,10 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         minHeight: 120,
         textAlign: 'top',
+    },
+    button: {
+        left: 5,
+        top: 30,
+        marginBottom:20
     },
 });

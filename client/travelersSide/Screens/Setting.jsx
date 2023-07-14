@@ -189,7 +189,7 @@ export default function Setting(props) {
             )}
           </View>
           <View style={styles.row}>
-            <Text style={styles.text2}>Location Mode</Text>
+            <Text style={styles.text}>Location Mode</Text>
             <Switch
               style={styles.switch}
               trackColor={{ false: "#767577", true: "#8FBC8F" }}
@@ -199,7 +199,7 @@ export default function Setting(props) {
               value={isEnabledLocation}
             />
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.text2}>Notification</Text>
             <Switch
               style={styles.switch}
@@ -220,7 +220,7 @@ export default function Setting(props) {
               onValueChange={toggleSwitchChatMode}
               value={isEnabledChatMode}
             />
-          </View>
+          </View> */}
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>
               Save Changes
