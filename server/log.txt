@@ -4838,3 +4838,6 @@
  2023-07-14 15:23:06.4215 INFO: Push notification sent to traveler ID: 54, Event ID: 0, Response: {"data":{"status":"ok","id":"25d4e325-fa3d-4972-ae40-4a48b4a0d742"}}
  2023-07-14 15:23:06.4958 INFO: Push notification sent to traveler ID: 8, Event ID: 0
  2023-07-14 15:23:06.4958 INFO: Push notification sent to traveler ID: 54, Event ID: 0
+ 2023-07-14 18:03:17.2488 ERROR: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+ 2023-07-14 18:13:07.6723 ERROR: אובייקט שיכול להיות Null חייב להיות בעל ערך.
+ 2023-07-14 18:34:22.1347 ERROR: אובייקט שיכול להיות Null חייב להיות בעל ערך.

@@ -136,7 +136,7 @@ namespace WebApplication1.Controllers
                             SerialTypeNumber = askForHelpEvent.serialTypeNumber,
                             CountryNumber = askForHelpEvent.country_number,
                             AreaNumber = askForHelpEvent.area_number,
-                            Stakeholder_id = (int)askForHelpEvent.stakeholder_id
+                           // Stakeholder_id = (int)askForHelpEvent.stakeholder_id
                         };
 
                         askForHelpEventsWithin1Km.Add(AskForHelpDto);
