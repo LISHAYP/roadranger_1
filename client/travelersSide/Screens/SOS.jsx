@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import React, { useEffect, useState,useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
+import {  useNavigation } from "@react-navigation/native";
+
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
@@ -16,9 +12,7 @@ import { cgroup90 } from '../cgroup90';
 
 export default function SOS(props) {
   const [events, setEvents] = useState([]);
-
   const traveler = props.route.params.traveler;
-  // const events = props.route.params.data;
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
   const { location, getUserLocation } = useContext(LocationContext)
@@ -34,7 +28,6 @@ export default function SOS(props) {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude
     }
-    console.log("llllllllll", userLocation);
     fetch(`${cgroup90}/api/post/GetAskForHelpWithin1Km`, {
       method: 'POST',
       headers: {
@@ -73,10 +66,8 @@ export default function SOS(props) {
     });
   }, [events]);
 
-
-  console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",{ eventAddresses });
-
-
+console.log(eventAddresses);
+console.log("TTTTT",traveler);
 
   return (
     <GradientBackground>
@@ -89,13 +80,13 @@ export default function SOS(props) {
             {eventAddresses !== undefined && eventAddresses.length > 0 ? (
               eventAddresses.map((event, index) => (
                 <TouchableOpacity onPress={() => {
-                  navigation.navigate('Event Details', { event: event, traveler: traveler });
+                  navigation.navigate('Chat', {  loggeduser: traveler });
                 }} >
                   <View style={styles.event} key={event.eventNumber}>
                     <View style={styles.detailsContainer}>
                       <Text style={styles.details}>{event.Details}</Text>
-                      {/* <Text >{new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
-                      <Text >{event.EventTime.slice(0, 5)}</Text> */}
+                      <Text >{new Date(event.event_date).toLocaleDateString('en-GB')}</Text>
+                      <Text >{event.event_time.slice(0, 5)}</Text>
                       <Text>{event.address}</Text>
                     </View>
                     <Image source={{ uri: event.Picture }} style={styles.img} />
@@ -103,7 +94,7 @@ export default function SOS(props) {
                 </TouchableOpacity>
               ))
             ) : (
-              <Text>No events found.</Text>
+              <Text>No SOS events found.</Text>
             )}
           </View>
         </View>
@@ -114,8 +105,6 @@ export default function SOS(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 40,
-    // marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
     height: "100%",
@@ -123,7 +112,7 @@ const styles = StyleSheet.create({
     marginBottom:30
   },
   scrollContent: {
-    paddingBottom: 70, // Adjust this value as needed
+    paddingBottom: 70, 
   },
   event: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',

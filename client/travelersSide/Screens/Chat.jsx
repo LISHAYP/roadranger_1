@@ -8,8 +8,6 @@ import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
-import * as Notifications from 'expo-notifications';
-import { async } from "@firebase/util";
 import { cgroup90 } from '../cgroup90';
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -168,12 +166,11 @@ export default function Chat(props) {
                 Alert.alert('Error', error);
             });
 
-
     };
 
     return (
         <GradientBackground>
-             <View style={styles.hamburger}>
+            <View style={styles.hamburger}>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Icon name="arrow-back-outline" size={30} color='#144800' />
                 </TouchableOpacity>
@@ -187,22 +184,22 @@ export default function Chat(props) {
                 </View>
 
             </View>
-                <View style={styles.container}>
+            <View style={styles.container}>
 
-                    {messages && (
-                        <GiftedChat
-                            isTyping={true}
-                            showAvatarForEveryMessage={true}
-                            messages={messages}
-                            onSend={messages => onSend(messages)}
-                            user={{
-                                _id: traveler.traveler_id,
-                                avatar: traveler.Picture
-                            }}
-                        />
-                    )}
+                {messages && (
+                    <GiftedChat
+                        isTyping={true}
+                        showAvatarForEveryMessage={true}
+                        messages={messages}
+                        onSend={messages => onSend(messages)}
+                        user={{
+                            _id: traveler.traveler_id,
+                            avatar: traveler.Picture
+                        }}
+                    />
+                )}
 
-                </View>
+            </View>
         </GradientBackground>
     )
 }
@@ -210,9 +207,9 @@ export default function Chat(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#fff',
-        // marginTop: 40,
         marginBottom: 30,
+        // backgroundColor: '#fff',
+
 
     },
     back: {
@@ -243,7 +240,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         width: '100%',
-        // margin: 5
     },
     user: {
         left: 10,

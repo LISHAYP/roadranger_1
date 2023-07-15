@@ -2,7 +2,6 @@ import React, { useState,useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import { useEffect } from 'react';
@@ -117,6 +116,8 @@ export default function AskForHelp(props) {
     picture: picture,
     traveler_id: id,
     country_number: countryNumber,
+    event_date: new Date().toISOString().slice(0, 10),
+    event_time: `${new Date().getHours()}:${new Date().getMinutes()}`,
     area_number: areaNumber,
     serialTypeNumber: serialTypeNumber,
     latitude: location.coords.latitude,
@@ -298,17 +299,7 @@ const styles = StyleSheet.create({
     marginRight: 50
 
   },
-  // label: {
-  //   position: 'absolute',
-  //   backgroundColor: 'white',
-  //   left: 22,
-  //   top: 8,
-  //   zIndex: 999,
-  //   paddingHorizontal: 8,
-  //   fontSize: 14,
-
-
-  // },
+ 
   placeholderStyle: {
     fontSize: 18,
     color: "#A9A9A9"
