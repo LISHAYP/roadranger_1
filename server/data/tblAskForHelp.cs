@@ -24,8 +24,8 @@ namespace data
         public int country_number { get; set; }
         public int area_number { get; set; }
         public Nullable<int> stakeholder_id { get; set; }
-        public System.DateTime date { get; set; }
-        public System.TimeSpan time { get; set; }
+        public System.DateTime event_date { get; set; }
+        public System.TimeSpan event_time { get; set; }
     
         public virtual stakeholders stakeholders { get; set; }
         public virtual tblArea tblArea { get; set; }

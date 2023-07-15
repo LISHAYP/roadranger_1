@@ -82,9 +82,8 @@ namespace WebApplication1.Controllers
                     country_number = value.country_number,
                     area_number = value.area_number,
                     stakeholder_id = value.stakeholder_id,
-                    date= value.date,
-                    time= value.time,
-
+                    event_date= value.event_date,
+                    event_time= value.event_time,
                 };
 
                 db.tblAskForHelp.Add(askForHelp);
@@ -138,8 +137,8 @@ namespace WebApplication1.Controllers
                             SerialTypeNumber = askForHelpEvent.serialTypeNumber,
                             CountryNumber = askForHelpEvent.country_number,
                             AreaNumber = askForHelpEvent.area_number,
-                            date= askForHelpEvent.date,
-                            time= askForHelpEvent.time,
+                            event_date= askForHelpEvent.event_date,
+                            event_time = askForHelpEvent.event_time,
                         };
 
                         askForHelpEventsWithin1Km.Add(AskForHelpDto);
@@ -174,8 +173,8 @@ namespace WebApplication1.Controllers
                     Latitude = x.latitude,
                     Longitude = x.longitude,
                     Picture = x.picture,
-                    date= x.date,
-                    time= x.time,
+                    event_date= x.event_date,
+                    event_time = x.event_time,
                     }).ToList();
 
 

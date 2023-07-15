@@ -17,8 +17,8 @@ namespace WebApplication1.DTO
         public int SerialTypeNumber { get; set; }
         public int CountryNumber { get; set; }
         public int AreaNumber { get; set; }
-        public DateTime date { get; set; }
-        public TimeSpan time { get; set; }
+        public DateTime event_date { get; set; }
+        public TimeSpan event_time { get; set; }
 
     }
     public class ShowAskForHelpDto
@@ -27,8 +27,8 @@ namespace WebApplication1.DTO
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public string Picture { get; set; }
-        public DateTime date { get; set; }
-        public TimeSpan time { get; set; }
+        public DateTime event_date { get; set; }
+        public TimeSpan event_time { get; set; }
 
 
 
