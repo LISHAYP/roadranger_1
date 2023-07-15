@@ -81,7 +81,9 @@ namespace WebApplication1.Controllers
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
                     area_number = value.area_number,
-                    stakeholder_id = value.stakeholder_id
+                    stakeholder_id = value.stakeholder_id,
+                    date= value.date,
+                    time= value.time,
 
                 };
 
@@ -136,7 +138,8 @@ namespace WebApplication1.Controllers
                             SerialTypeNumber = askForHelpEvent.serialTypeNumber,
                             CountryNumber = askForHelpEvent.country_number,
                             AreaNumber = askForHelpEvent.area_number,
-                           // Stakeholder_id = (int)askForHelpEvent.stakeholder_id
+                            date= askForHelpEvent.date,
+                            time= askForHelpEvent.time,
                         };
 
                         askForHelpEventsWithin1Km.Add(AskForHelpDto);
@@ -171,6 +174,8 @@ namespace WebApplication1.Controllers
                     Latitude = x.latitude,
                     Longitude = x.longitude,
                     Picture = x.picture,
+                    date= x.date,
+                    time= x.time,
                     }).ToList();
 
 

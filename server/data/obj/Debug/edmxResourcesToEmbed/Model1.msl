@@ -73,6 +73,8 @@
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
           <ScalarProperty Name="stakeholder_id" ColumnName="stakeholder_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="time" ColumnName="time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

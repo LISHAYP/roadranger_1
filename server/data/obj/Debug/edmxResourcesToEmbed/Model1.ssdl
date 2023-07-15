@@ -69,6 +69,8 @@
     <Property Name="country_number" Type="int" Nullable="false" />
     <Property Name="area_number" Type="int" Nullable="false" />
     <Property Name="stakeholder_id" Type="int" />
+    <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="time" Type="time" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="tblComments">
     <Key>
