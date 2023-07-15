@@ -6,154 +6,140 @@ import BackButton from '../Components/BackButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { cgroup90 } from '../cgroup90';
 
+
 export default function TimeLine(props) {
-    const event = props.route.params.event;
-    const traveler = props.route.params.traveler;
-    const [events, setEvents] = useState(null);
-    const navigation = useNavigation();
-  
-    useEffect(() => {
-        const eventNumberObj = {
-          eventNumber: event.eventNumber,
-        };
-      
-        fetch(`${cgroup90}/api/post/relatedevents`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(eventNumberObj),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setEvents(data);
-            
-            if (data.length === 1) {
-              const event = data[0];
-              navigation.navigate('Event Details', { event, traveler });
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-            console.log('Error');
-          });
-      }, [event, navigation]);
-      
-    
-    const handleEventPress = (rowData) => {
-      const event = rowData;
-      navigation.navigate('Event Details', { event, traveler });
+  const event = props.route.params.event;
+  const traveler = props.route.params.traveler;
+  const [events, setEvents] = useState(null);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const eventNumberObj = {
+      eventNumber: event.eventNumber,
     };
-  
-    return (
-        <GradientBackground>
-          <BackButton />
-          <Timeline
-            style={styles.list}
-            showTime={false}
-            circleSize={25}
-          circleColor='#A7BEAE'
-          lineColor={'#7b94a9'}
-          separatorStyle={{
-            backgroundColor: '#144800',
-            height: 2,
-            
-          }}
-            data={events}
-            timeStyle={{
-              textAlign: 'center',
-              backgroundColor: 'green',
-              color: 'white',
-              padding: 8,
-              borderRadius: 13,
-            }}
-            innerCircle='dot'
-            options={{
-              style: { paddingTop: 30, paddingLeft: 15 },
-            }}
-            separator={false}
-            onEventPress={handleEventPress}
-            detailContainerStyle={{
-              marginBottom: 20,
-              paddingLeft: 15,
-              paddingRight: 5,
-              marginRight:10,
-              borderRadius: 15,
-              backgroundColor: 'rgba(0, 0, 0, 0.05)',
-              backgroundColor: '#F5F5F5',
-              shadowColor: '#000',
-              shadowOffset: {
-              width: 0,
-              height: 2,
-               },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
-            }}
-            renderDetail={(rowData) => (
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.date]}>{rowData.EventDate.substring(0, 10)}</Text>
-                  <Text style={[styles.time]}>{rowData.EventTime.substring(0, 5)}</Text>
-                  <Text style={[styles.title]}>{rowData.Details}</Text>
-                  <View style={styles.descriptionContainer}>
-                    <Image source={{ uri: rowData.Picture }} style={styles.image} />
-                  </View>
-                </View>
+
+    fetch(`${cgroup90}/api/post/relatedevents`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(eventNumberObj),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setEvents(data);
+
+        if (data.length === 1) {
+          const event = data[0];
+          navigation.navigate('Event Details', { event, traveler });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        console.log('Error');
+      });
+  }, [event, navigation]);
+
+
+  const handleEventPress = (rowData) => {
+    const event = rowData;
+    navigation.navigate('Event Details', { event, traveler });
+  };
+
+  return (
+    <GradientBackground>
+      <BackButton text={event.Details} />
+      <Timeline
+        style={styles.list}
+        showTime={false}
+        circleSize={20}
+        circleColor='green'
+        lineColor={'yellowgreen'}
+        separatorStyle={{
+          backgroundColor: '#144800',
+          height: 2,
+        }}
+        data={events}
+        timeStyle={{
+          textAlign: 'center',
+          backgroundColor: 'green',
+          color: 'white',
+          padding: 8,
+          borderRadius: 13,
+
+        }}
+        innerCircle='dot'
+        options={{
+          style: { paddingTop: 40, paddingLeft: 25 },
+        }}
+        separator={true}
+        onEventPress={handleEventPress}
+        detailContainerStyle={{
+          marginBottom: 20,
+          paddingLeft: 5,
+          paddingRight: 5,
+          borderRadius: 10,
+          
+        }}
+        renderDetail={(rowData) => (
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.date]}>{rowData.EventDate.substring(0, 10)}</Text>
+              <Text style={[styles.time]}>{rowData.EventTime.substring(0, 5)}</Text>
+              <Text style={[styles.title]}>{rowData.Details}</Text>
+              <View style={styles.descriptionContainer}>
+                <Image source={{ uri: rowData.Picture }} style={styles.image} />
               </View>
-            )}
-         
-          />
-        </GradientBackground>
-      );
-      
-      
-  }
+            </View>
+          </View>
+        )}
+
+      />
+    </GradientBackground>
+  );
+
+
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        paddingTop: 65,
-        backgroundColor: 'white', 
-        
-    },
-    time: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginBottom: 5,
-        color: 'gray',
-      },
-    list: {
-        flex: 1,
-        marginTop: 20,
-        
-    },
-    date: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginBottom: 5,
-        color: 'gray',
-      
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        
-    },
-    descriptionContainer: {
-        flexDirection: 'row',
-        paddingRight: 50,
-        
-    },
-    image: {
-        width: 50,
-        height: 50,
-      //  borderRadius: 25,
-    },
-    textDescription: {
-        marginLeft: 10,
-        color: 'gray', 
-    },
+  container: {
+    flex: 1,
+    padding: 20,
+    paddingTop: 120,
+    backgroundColor: 'white',
+  },
+  time: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: 'gray',
+  },
+  list: {
+    flex: 1,
+    marginTop: 90,
+  },
+  date: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: 'gray',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  descriptionContainer: {
+    flexDirection: 'row',
+    paddingRight: 50,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    //  borderRadius: 25,
+  },
+  textDescription: {
+    marginLeft: 10,
+    color: 'gray',
+  },
 });    

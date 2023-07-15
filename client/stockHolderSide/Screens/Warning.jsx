@@ -10,6 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Warning(props) {
     const navigation = useNavigation();
@@ -17,9 +18,10 @@ export default function Warning(props) {
 
     const [events, setEvents] = useState([]);
     const stakeholder = props.route.params.stakeholder;
-    const userLocation = props.route.params.userLocation
-
-    // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    // const userLocation = props.route.params.userLocation
+    // console.log("--------------", userLocation)
+    // Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
+    console.log("--------------", stakeholder)
 
     useEffect(() => {
         fetch(`${cgroup90}/api/NewEvent`, {
@@ -39,7 +41,7 @@ export default function Warning(props) {
     const [eventAddresses, setEventAddresses] = useState([]);
 
     useEffect(() => {
-        Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+        Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
         Promise.all(
             events.filter(event => event.SerialTypeNumber == 1004).map((event) =>
                 Geocoder.from(event.Latitude, event.Longitude)
@@ -51,14 +53,15 @@ export default function Warning(props) {
     // console.log(eventAddresses)
     return (
         <GradientBackground>
-            <BackButton />
+            <Navbar stakeholder={stakeholder}  />
+            <BackButton text="Warning" />
             <ScrollView>
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.btnSave}
                         onPress={() => {
                             navigation.navigate("New event", {
                                 stakeholder: stakeholder,
-                                userLocation: userLocation
+                                // userLocation: userLocation
                             });
                         }}
                     >
@@ -102,7 +105,7 @@ export default function Warning(props) {
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop: 40,
+        marginTop: 100,
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%',
-        
+
     },
     detailsContainer: {
         flex: 1,
@@ -150,12 +153,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#426c32',
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 5
+            width: 0,
+            height: 4
         },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
 
     btnText: {
@@ -164,9 +167,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
 
     },
-    searchInput:{
-        fontSize:35,
-        marginBottom:20
+    searchInput: {
+        fontSize: 35,
+        marginBottom: 20
     }
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Modal, StyleSheet, Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -7,32 +7,37 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientBackground from '../Components/GradientBackground';
-import { cgroup90 } from '../cgroup90'; 
+import { cgroup90 } from '../cgroup90';
+import { LocationContext } from '../Context/LocationContext'
+import Navbar from '../Components/Navbar';
+import { EventsContext } from '../Context/EventsContext';
 
 export default function AroundYou(props) {
-    const [location, setLocation] = useState(null);
+    
+    const { location} = useContext(LocationContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
-    const traveler = props.route.params.data;
+    const traveler = props.route.params.traveler;
     const matchedEvent = props.route.params.matchedEvents;
     const [lasteventOfTraveler, setLasteventOfTraveler] = useState('');
- 
+    const [Events, setEvents] = useState([])
+    
+
     useFocusEffect(
         React.useCallback(() => {
+            console.log("traveler",traveler)
+            console.log("Location:",location)
             handleGet();
             return () => {
             };
-        }, [])
+        }, [isMenuOpen])
     );
     useEffect(() => {
-        if (matchedEvent) {
+        if (matchedEvent && matchedEvent.length > 0) {
             const travelerIdObj = {
                 travelerId: traveler.traveler_id,
             }
-
-
             fetch(`${cgroup90}/api/post/lastevent`, {
                 method: 'POST',
                 headers: {
@@ -53,29 +58,9 @@ export default function AroundYou(props) {
                 });
         }
         setModalVisible(true);
-
     }, [matchedEvent]);
-    const [Events, setEvents] = useState([])
 
-    const getUserLocation = async () => {
-        const userlocation = await Location.getCurrentPositionAsync();
-        setUserLocation(userlocation); // Save user location in state
-        console.log("************", userLocation.coords.latitude)
-    };
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                console.log('Permission denied');
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            handleGet();
-            getUserLocation();
-
-        })();
-    }, []);
-
+  
 
     const handleGet = () => {
         if (matchedEvent) {
@@ -126,13 +111,10 @@ export default function AroundYou(props) {
         headerShown: false,
     };
     const relatedEvent = (eventNumber) => {
-        console.log("**************", eventNumber);
-
         const updateEventObj = {
             is_related: eventNumber
         }
-        console.log("**************", updateEventObj);
-        console.log("*****-*********", lasteventOfTraveler);
+     
 
         fetch(`${cgroup90}/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',
@@ -147,6 +129,7 @@ export default function AroundYou(props) {
                 console.log(data); // Traveler updated successfully.
                 setModalVisible(false);
                 setLasteventOfTraveler('');
+                handleGet();
             })
             .catch((error) => {
                 console.error(error);
@@ -159,14 +142,14 @@ export default function AroundYou(props) {
             <TouchableWithoutFeedback onPress={closeMenu}>
 
                 <View style={styles.container}>
-                    <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.hamburger}>
-                        <Icon name="menu" size={40} color="white" alignSelf="ceter" />
+                    <View style={styles.hamburger}>
+                    <Image source={{ uri: traveler.Picture }} style={styles.user} />
                         <View style={styles.textContainer}>
                             <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
-                        </View>
-                        <Image source={{ uri: traveler.Picture }} style={styles.user} />
-                    </TouchableOpacity>
+                        </View>                  
+                    </View>
 
+                    <Navbar traveler={traveler} />
 
                     {location && location.coords && (
                         <MapView
@@ -185,7 +168,7 @@ export default function AroundYou(props) {
                                 title="My Location"
                                 description="This is my current location"
                             />
-                            {Events.filter(event => event.event_status !== false && event.is_related == null).map(event => (
+                            {Events.filter(event => event.EventStatus !== false && event.is_related == null).map(event => (
                                 <Marker
                                     key={event.EventNumber}
                                     coordinate={{
@@ -214,7 +197,7 @@ export default function AroundYou(props) {
 
                         </MapView>
                     )}
-                    <Modal
+                    {/* <Modal
                         visible={isMenuOpen}
                         animationType='slide'
                         transparent={true}
@@ -235,8 +218,7 @@ export default function AroundYou(props) {
                                         <TouchableOpacity style={styles.option}
                                             onPress={() => {
                                                 navigation.navigate("New event", {
-                                                    traveler: traveler
-                                                   
+                                                    traveler: traveler                                                 
                                                 }), setIsMenuOpen(false);
                                             }}
                                         >
@@ -292,7 +274,7 @@ export default function AroundYou(props) {
 
                             </View>
                         )}
-                    </Modal>
+                    </Modal> */}
 
                     <View>
                         {/* Your screen content */}
@@ -309,7 +291,7 @@ export default function AroundYou(props) {
                                     {/* Modal content */}
                                     <Text style={styles.textModal}>Did you mean this event?</Text>
 
-                                    <Text>{matchedEvent.Details}</Text>
+                                    <Text style={styles.textModal1}>{matchedEvent.Details}</Text>
                                     <Image style={styles.img} source={{ uri: matchedEvent.Picture }} />
                                     <View style={styles.rowModal}>
                                         <TouchableOpacity style={styles.btnModal} onPress={() => relatedEvent(matchedEvent.eventNumber)}>
@@ -338,7 +320,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'column',
         justifyContent: 'center',
-        
+
     },
     textModal1:{
         fontSize:20,
@@ -390,11 +372,12 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     titlename: {
-        color: 'white',
+        color: '#144800',
         fontSize: 22,
         alignSelf: 'center'
     },
     hamburger: {
+     
         flexDirection: 'row',
         position: 'absolute',
         width: '100%',
@@ -402,9 +385,10 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        backgroundColor: '#8FBC8F',
+        backgroundColor:'#F5F5F5',
         paddingTop: 55,
         paddingHorizontal: 20,
+        shadowOpacity: 0.9,
     },
     textContainer: {
         flex: 1,

@@ -1,8 +1,10 @@
 {
-  "hostType": "lan",
+  "hostType": "tunnel",
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": null,
-  "https": false
+  "urlRandomness": "fd-b2v",
+  "https": false,
+  "scheme": "exp+roadranger",
+  "devClient": false
 }

@@ -100,7 +100,7 @@ export default function OpenCamera(props) {
   
       // Add the following lines to call the uploadBase64ToASMX function
       setAnimate(true);
-      const urlAPI = `${cgroup90}/uploadpicture`
+      urlAPI = `${cgroup90}/uploadpicture`
       fetch(urlAPI, {
         method: 'POST',
         headers: {

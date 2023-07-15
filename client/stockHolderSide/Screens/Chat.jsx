@@ -6,11 +6,11 @@ import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
-import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
 //import * as Notifications from 'expo-notifications';
 import { async } from "@firebase/util";
 import { cgroup90 } from "../cgroup90";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function Chat(props) {
 
@@ -20,7 +20,7 @@ export default function Chat(props) {
     const userLogged = props.route.params.loggeduser;
     const [chatRoomDocRef, setChatRoomDocRef] = useState('')
     const [shouldRender, setShouldRender] = useState(false); // add state variable
-const [isStackholder, setisStackhold] = useState(true);
+    const [isStackholder, setisStackhold] = useState(true);
 
     console.log('im the logged user', userLogged);
     console.log('im the chosen one!', chosenUser);
@@ -127,7 +127,7 @@ const [isStackholder, setisStackhold] = useState(true);
                     }
                 };
                 setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-               // handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
+                // handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
                 console.log("*********", chosenUser)
                 return addDoc(messagesRef, messageData);
             });
@@ -174,19 +174,22 @@ const [isStackholder, setisStackhold] = useState(true);
 
     return (
         <GradientBackground>
-            <View style={styles.container}>
-                <View style={styles.row}>
-                    <View style={styles.back}>
-                        <BackButton />
-                    </View >
-                    <View style={styles.user}>
-                        <Image style={styles.img} source={{ uri: chosenUser.Picture }} />
-                    </View>
-                    <View style={styles.user}>
-                        <Text style={styles.text}>{chosenUser.first_name} {chosenUser.last_name} </Text>
-                    </View>
+            <View style={styles.hamburger}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                    <Icon name="arrow-back-outline" size={30} color='#144800' />
+                </TouchableOpacity>
+
+                <View style={styles.user}>
+                    <Image style={styles.img} source={{ uri: chosenUser.Picture }} />
+
                 </View>
-              
+                <View style={styles.user}>
+                    <Text style={styles.text}>{chosenUser.first_name} {chosenUser.last_name} </Text>
+                </View>
+
+            </View>
+            <View style={styles.container}>
+
                 {messages && (
                     <GiftedChat
                         isTyping={true}
@@ -209,8 +212,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // backgroundColor: '#fff',
-        // marginTop: 40,
-        marginBottom: 30
+        marginBottom: 30,
     },
     back: {
         paddingTop: 30,
@@ -225,24 +227,51 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     text: {
-        fontSize: 16,
-        top: 0,
+        // fontSize: 16,
+        // top: 0,
         fontWeight: 'bold',
-        fontSize: 25
+        fontSize: 25,
+        color: '#144800',
+        fontSize: 32,
+        alignSelf: 'center',
+        paddingLeft: 30,
+
 
     },
     row: {
 
+        // marginTop: 75,
+        marginBottom: 20,
+        height: '10%',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         width: '100%',
-        // margin: 5
+        // height:100,
+        shadowOpacity: 0.5,
     },
     user: {
-        left: 20,
-        top: 20,
+        left: 10,
+        top: 0,
 
 
-    }
+    },
+    button: {
+        alignSelf: 'center',
+    },
+    hamburger: {
+        flexDirection: 'row',
+        position: 'absolute',
+        width: '100%',
+        height: '12%',
+        top: 0,
+        left: 0,
+        zIndex: 1,
+        backgroundColor: '#F5F5F5',
+        paddingTop: 55,
+        paddingHorizontal: 20,
+        shadowOpacity: 0.95,
+
+    },
+  
 })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -10,13 +10,13 @@ import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { auth } from '../firebase';
 import 'firebase/database';
-import { Divider } from '@react-native-material/core';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
-
   const traveler = props.route.params.traveler;
   console.log(traveler);
+
 
   useEffect(() => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
@@ -113,13 +113,15 @@ export default function Setting(props) {
   }
 
   return (
+    < GradientBackground>
+                <Navbar traveler={traveler} />
+                <BackButton text="Setting"/>
+
     <ScrollView>
-      < GradientBackground>
+  
         <View style={styles.container}>
-          <BackButton />
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
-            <Divider style={{ marginBottom: 30 }} />
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
@@ -133,11 +135,10 @@ export default function Setting(props) {
             onChangeText={(text) => setLastName(text)}
             placeholder={traveler.last_name}>
           </TextInput>
-
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
-            placeholder={'0' + traveler.phone.toString()}
-            value={phone}
+            placeholder={phone}
+            // value={phone}
             keyboardType='numeric'
             onChangeText={(text) => setPhone(text)}
           >
@@ -188,7 +189,7 @@ export default function Setting(props) {
             )}
           </View>
           <View style={styles.row}>
-            <Text style={styles.text2}>Location Mode</Text>
+            <Text style={styles.text}>Location Mode</Text>
             <Switch
               style={styles.switch}
               trackColor={{ false: "#767577", true: "#8FBC8F" }}
@@ -198,7 +199,7 @@ export default function Setting(props) {
               value={isEnabledLocation}
             />
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.text2}>Notification</Text>
             <Switch
               style={styles.switch}
@@ -219,27 +220,30 @@ export default function Setting(props) {
               onValueChange={toggleSwitchChatMode}
               value={isEnabledChatMode}
             />
-          </View>
+          </View> */}
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>
               Save Changes
             </Text>
           </TouchableOpacity>
         </View>
-      </GradientBackground>
     </ScrollView >
+    </GradientBackground>
 
   )
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 120,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    paddingBottom: 100,
+
   },
+
   RoadRanger: {
     alignSelf: 'center',
     resizeMode: 'contain',
@@ -268,9 +272,9 @@ const styles = StyleSheet.create({
   user: {
     alignSelf: 'center',
     resizeMode: 'cover',
-    height: 140,
+    height: 150,
     borderRadius: 75,
-    width: 140,
+    width: 150,
     marginBottom: 25,
   },
   btnText: {
@@ -351,6 +355,7 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 },
   btnSave: {
+    alignSelf: 'center',
     height: 55,
     marginVertical: 20,
     width: "50%",

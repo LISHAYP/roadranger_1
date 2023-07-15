@@ -9,8 +9,7 @@ import moment from 'moment';
 import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
-import { Divider } from 'react-native-paper';
-import { useFonts,Roboto_100Thin,Roboto_100Thin_Italic,Roboto_300Light,Roboto_300Light_Italic,Roboto_400Regular,Roboto_400Regular_Italic,Roboto_500Medium,Roboto_500Medium_Italic,Roboto_700Bold,Roboto_700Bold_Italic,Roboto_900Black,Roboto_900Black_Italic,} from '@expo-google-fonts/roboto';
+import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
   let [fontsLoaded] = useFonts({
@@ -102,7 +101,8 @@ export default function Setting(props) {
   }
   return (
     < GradientBackground> 
-        <BackButton />
+        <Navbar stakeholder={stakeholder} />
+        <BackButton text="Setting"/>
         <View style={styles.container}>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+    paddingTop:100
   },
   RoadRanger: {
     alignSelf: 'center',

@@ -9,16 +9,16 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
+import Navbar from '../Components/Navbar';
 
 export default function Events(props) {
   // const [events, setEvents] = useState([]);
   const events = props.route.params.events;
   const traveler = props.route.params.traveler;
-
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
 
-  Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+  Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
   useEffect(() => {
     Promise.all(events.map(event => {
@@ -36,12 +36,14 @@ export default function Events(props) {
       setEventAddresses(eventsWithAddress);
     });
   }, [events]);
+  console.log("+++++++++++++++", eventAddresses);
 
 
   return (
     <GradientBackground>
-      <BackButton />
-      <ScrollView>
+      <Navbar traveler={traveler} />
+      <BackButton text="Search" />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
 
         <View style={styles.container}>
           <View>
@@ -73,11 +75,15 @@ export default function Events(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    marginVertical: 10,
+    // marginTop: 40,
+    // marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
-    height: "100%"
+    height: "100%",
+    marginTop:120
+  },
+  scrollContent: {
+    paddingBottom: 70, // Adjust this value as needed
   },
   event: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',

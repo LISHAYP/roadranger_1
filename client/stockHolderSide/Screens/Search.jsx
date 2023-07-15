@@ -9,6 +9,7 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function Search(props) {
   const navigation = useNavigation();
@@ -149,11 +150,10 @@ export default function Search(props) {
   const filteredCities = city.filter(city => city.countryNumber === selectedCountry);
   return (
     < GradientBackground>
-      <BackButton />
+     <Navbar stakeholder={stakeholder} />
+      <BackButton text="Search"/>
       <ScrollView>
         <View style={styles.container}>
-
-
           <Text style={styles.text}>Country:</Text>
           <Dropdown
             style={styles.dropdown}
@@ -236,8 +236,7 @@ export default function Search(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'center',
-    marginTop: 20,
+    marginTop: 100,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

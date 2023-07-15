@@ -67,7 +67,7 @@ export default function SignIn() {
                         .then((data1) => {
                             console.log(data1); // stakeholder updated successfully.
                             //Alert.alert('Token updated successfully')
-                            navigation.navigate("Around You", { data });
+                            navigation.navigate("Around You", {stakeholder: data });
                         })
                         .catch((error) => {
                             console.error(error);
@@ -213,21 +213,15 @@ export default function SignIn() {
                 <TouchableOpacity onPress={() => {
                     navigation.navigate("Forgot password")
                 }}>
-                    <Text style={{ fontFamily: 'Roboto_400Regular' }}>
+                    <Text style={{ color:'#144800'}}>
                         Forgot your password?
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnSignUp} onPress={() => {
-                    navigation.navigate("Sign Up");
-                }}>
-                   <Text style={{ fontFamily: 'Roboto_400Regular' }}> Don't have an Account?  </Text>
-                    <Text style={styles.text1}> Click Here </Text>
-
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 150 }} onPress={() => {
+               
+                <TouchableOpacity style={{ flexDirection: 'row',marginTop:40}} onPress={() => {
                     navigation.navigate("Contact Us");
                 }}>
-                    <Icon name="mail-open-outline" size={30} />
+                    <Icon name="mail-open-outline" size={30} color={'#144800'} />
                     <Text style={styles.contact}>
                         Contact us
                     </Text>
@@ -328,17 +322,16 @@ export default function SignIn() {
             
         },
         btnSignUp: {
-            fontFamily:'Roboto_400Regular_Italic',
-            flexDirection: 'row',
-            marginBottom: 20,
-            marginTop: 20
-          },
-          contact: {
-            fontFamily:'Roboto_400Regular',
-            fontSize: 20,
-            alignSelf: 'center',
-            marginLeft: 10,
-          },
+          flexDirection: 'row',
+          marginBottom: 20,
+          marginTop: 20
+        },
+        contact: {
+          fontSize: 20,
+          alignSelf: 'center',
+          marginLeft: 10,
+          color:'#144800'
+        },
         text1: {
             fontSize: 15,
             color: '#426c32',

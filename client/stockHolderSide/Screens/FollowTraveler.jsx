@@ -9,8 +9,9 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
-import MapView, { Marker,Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function FollowTraveler(props) {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ export default function FollowTraveler(props) {
   const [travelerLocation, setTravelerLocation] = useState([])
   const [lastLocation, setLastLocation] = useState()
 
-  Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+  Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
   const mapViewRef = useRef(null);
 
   const [missing, setMissing] = useState(traveler.missing);
@@ -105,7 +106,8 @@ export default function FollowTraveler(props) {
 
   return (
     <GradientBackground>
-      <BackButton />
+      <Navbar stakeholder={stakeholder} />
+      <BackButton text="Follow" />
       <View style={styles.container}>
 
         <View >
@@ -151,9 +153,9 @@ export default function FollowTraveler(props) {
             />
           )}
         </MapView>
-      
 
-        <ScrollView>
+
+        <ScrollView contentContainerStyle={styles.scrollContent}>
           {travelerLocation.length > 0 && (
             travelerLocation.map((traveler, index) => (
               <View key={index} style={styles.commentContainer}>
@@ -171,18 +173,25 @@ export default function FollowTraveler(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 100,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
+   height:"90%"
 
   },
   map: {
     marginTop: 15,
     width: 350,
     height: 300,
+  },
+  scrollContent: {
+    marginTop:20,
+    // paddingVertical: 80,
+    paddingBottom: 150,// Adjust this value as needed
+    // marginBottom:150
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -191,7 +200,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    width:"90%"
+   
+    
   },
   event: {
     flexDirection: 'row',

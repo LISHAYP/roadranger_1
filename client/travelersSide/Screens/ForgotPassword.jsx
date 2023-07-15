@@ -7,7 +7,6 @@ import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useRef } from 'react';
-import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 
 export default function ForgotPassword() {
@@ -17,10 +16,10 @@ export default function ForgotPassword() {
     const [email, setEmail] = useState('');
 
     const handleSendPress = () => {
-       travelerEmail={
-        "travler_email":email
-       }
-       console.log(travelerEmail);
+        travelerEmail = {
+            "travler_email": email
+        }
+        console.log(travelerEmail);
         fetch(`${cgroup90}/api/post/forgotpassword`, {
             method: 'POST',
             headers: {
@@ -44,7 +43,9 @@ export default function ForgotPassword() {
     return (
         < GradientBackground>
             <View style={styles.container}>
-                <BackButton />
+                <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                    <Icon name="arrow-back-outline" size={35} color='#144800' />
+                </TouchableOpacity>
                 <Text style={styles.title}>Forgot Your Password?</Text>
 
                 {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
@@ -54,7 +55,7 @@ export default function ForgotPassword() {
                     onChangeText={(text) => setEmail(text)}>
                 </TextInput>
 
-              
+
                 <TouchableOpacity style={styles.btnLogIn} onPress={handleSendPress}>
 
                     <Text style={styles.btnText}>
@@ -161,5 +162,10 @@ const styles = StyleSheet.create({
     },
     success: {
         color: '#144800'
+    },
+    button: {
+        left: 5,
+        top: 30,
+
     }
 });

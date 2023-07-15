@@ -10,14 +10,18 @@ import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 export default function YourTravelers(props) {
   const navigation = useNavigation();
-  Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+  Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
   const stakeholder = props.route.params.stakeholder;
+  
+
   const [myTravelers, setMyTravelers] = useState([])
-  console.log(stakeholder)
+  console.log("*****************",stakeholder)
+  
   useEffect(() => {
     console.log("----------",stakeholder.StakeholderType)
     if (stakeholder.StakeholderType == 'Insurance Company') {
@@ -114,9 +118,10 @@ export default function YourTravelers(props) {
   }
   return (
     < GradientBackground>
-      <BackButton />
+      <BackButton text="My Travelers" />
+      <Navbar stakeholder={stakeholder} />
       <View style={styles.container}>
-        <Text>My Travelers</Text>
+      
         <ScrollView>
           {myTravelers.length > 0 && (
             myTravelers.map((traveler, index) => (
@@ -143,7 +148,7 @@ export default function YourTravelers(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 100,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,

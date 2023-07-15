@@ -10,6 +10,7 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
 import { cgroup90 } from '../cgroup90';
+import Navbar from '../Components/Navbar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -142,7 +143,7 @@ export default function EventDetails(props) {
   useEffect(() => {
     getUserLocation();
     fetchTravelerDetails();
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
       .then((json) => {
         const location = json.results[0].address_components;
@@ -262,14 +263,73 @@ export default function EventDetails(props) {
         console.error(error);
       });
   }
+
+  const handleButtonPress = (approved) => {
+    console.log("2222", approved);
+
+    const ansObj = {
+      Approved: approved ? 1 : 0,
+      Not_approved: approved ? 0 : 1
+    };
+
+    let relatedEvent;
+
+    if (event.is_related === null) {
+      relatedEvent = event.eventNumber;
+    } else {
+      relatedEvent = event.is_related;
+    }
+
+    console.log(ansObj);
+
+    fetch(`${cgroup90}/api/put/eventapproval/${relatedEvent}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(ansObj),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Event approval request succeeded");
+          // Handle the successful approval request
+          Alert.alert('Thank you! ');
+          setTrueOrFalse(false)
+        } else {
+          console.log("Event approval request failed");
+          // Handle the failed approval request
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error if needed
+      });
+  };
+
+  const handleButtonPressIDK = () => {
+    Alert.alert('Thank you! ');
+    setTrueOrFalse(false)
+  }
+
   return (
     <GradientBackground>
+      <Navbar traveler={traveler} />
+
+      <BackButton text="Event Details" />
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
           <View style={styles.buttonContainer}>
-            <Button title="Yes" />
-            <Button title="No" />
+            <TouchableOpacity style={styles.btnModal} onPress={() => handleButtonPress(true)}>
+              <Text style={styles.textModal1}>Yes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnModal} onPress={() => handleButtonPress(false)}>
+              <Text style={styles.textModal1}>No</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnModal} onPress={() => handleButtonPressIDK()}>
+              <Text style={styles.textModal1}>IDK</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -277,33 +337,34 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <BackButton />
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
-          <View>
-            <View style={styles.event}>
-              <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: traveler.Picture }} />
-                <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
-              </View>
-              <View>
-                <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
-              </View>
+        <View style={[styles.eventContainer,
+        { height: comments.length > 0 ? '71%' : '41%' }
+        ]}>
+
+          <View style={styles.event}>
+            <View style={styles.row}>
+              <Image style={styles.img} source={{ uri: traveler.Picture }} />
+              <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
             </View>
             <View>
-              <Text style={styles.detailsText}>{event.Details}</Text>
-              {renderDeleteLogo()}
+              <Text style={styles.textdateTime}>{event.EventTime.slice(0, 5)} {new Date(event.EventDate).toLocaleDateString('en-GB')}</Text>
             </View>
-            <View style={styles.locationContainer}>
-              <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
-              <Text style={styles.locationText}>{addressComponents}</Text>
-            </View>
-            {event.Picture != '#' && (
-              <View style={styles.pictureContainer}>
-                <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
-              </View>
-            )}
-
           </View>
+          <View>
+            <Text style={styles.detailsText}>{event.Details}</Text>
+            {renderDeleteLogo()}
+          </View>
+          <View style={styles.locationContainer}>
+            <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
+            <Text style={styles.locationText}>{addressComponents}</Text>
+          </View>
+          {event.Picture != '#' && (
+            <View style={styles.pictureContainer}>
+              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+            </View>
+          )}
+
+
           <ScrollView>
             {comments.length > 0 && (
               comments.map((comment, index) => (
@@ -370,7 +431,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    // marginTop: 10
+    marginTop: 40,
   },
 
 
@@ -385,11 +446,12 @@ const styles = StyleSheet.create({
     height: height,
     padding: 5,
     borderRadius: 20,
+    position: 'absolute'
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
@@ -398,14 +460,15 @@ const styles = StyleSheet.create({
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    
+
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '70%',
-    
+    height: '75%',
+
+
 
   },
   commentContainer: {
@@ -416,7 +479,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     resizeMode: "contain",
-    
+
   },
 
   locationText: {
@@ -436,21 +499,20 @@ const styles = StyleSheet.create({
 
   },
   addComment: {
-
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
     borderRadius: 15,
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-      shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
     // width:'95%'
   },
   img: {
@@ -460,6 +522,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
+
   },
   text: {
     fontSize: 16,
@@ -485,7 +548,6 @@ const styles = StyleSheet.create({
     left: 50,
     paddingBottom: 10,
     width: '75%',
-
   },
 
   icon: {
@@ -504,7 +566,7 @@ const styles = StyleSheet.create({
 
   },
   headerContainer: {
-    top: 35,
+    top: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -521,5 +583,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  }, btnModal: {
+    marginVertical: 10,
+    width: "25%",
+    alignSelf: 'center',
+    paddingVertical: 1,
+    paddingHorizontal: 3,
+    borderColor: '#8FBC8F',
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: '#8FBC8F',
+    //margin: 2
+
+  }, textModal1: {
+    fontSize: 15,
+    alignSelf: 'center',
+
   },
 });

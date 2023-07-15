@@ -20,7 +20,7 @@ export default function Events(props) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
+    Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     Promise.all(
       events.map((event) =>
         Geocoder.from(event.Latitude, event.Longitude)
@@ -32,8 +32,9 @@ export default function Events(props) {
 
   return (
     <GradientBackground>
+        <BackButton text="Events"/>
       <ScrollView>
-      <BackButton />
+    
         <View style={styles.container}>
           <View>
             {events !== undefined && events.length > 0 ? (
@@ -63,7 +64,7 @@ export default function Events(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 120,
     marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",

@@ -1,3 +1,3 @@
-const GoogleCloudVisionApiKey = 'AIzaSyAXbZVii4Si2TfQ7IhMsAFarzwB0rRnKMw';
+const GoogleCloudVisionApiKey = 'AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA';
 
 export { GoogleCloudVisionApiKey };
