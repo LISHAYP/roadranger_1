@@ -234,43 +234,12 @@ export default function SignUp() {
               </TouchableOpacity>
               {isCalendarOpen && (
                 <View>
+                  
                   <CalendarPicker onDateChange={handleDateSelect} />
                 </View>
               )}
             </View>
-            {/* <View style={styles.row}>
-              <Text style={styles.text2}>Location Mode</Text>
-              <Switch
-                style={styles.switch}
-                trackColor={{ false: "#767577", true: "#8FBC8F" }}
-                thumbColor={isEnabledLocation ? "#f4f3f4" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchLocation}
-                value={isEnabledLocation}
-              />
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.text2}>Notification</Text>
-              <Switch
-                style={styles.switch}
-                trackColor={{ false: "#767577", true: "#8FBC8F" }}
-                thumbColor={isEnabledNotification ? "#f4f3f4" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleNotification}
-                value={isEnabledNotification}
-              />
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.text2}>Chat Mode</Text>
-              <Switch
-                style={styles.switch}
-                trackColor={{ false: "#767577", true: "#8FBC8F" }}
-                thumbColor={isEnabledChatMode ? "#f4f3f4" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchChatMode}
-                value={isEnabledChatMode}
-              />
-            </View> */}
+          
             <TouchableOpacity style={styles.btnSave} onPress={handleSignUp}>
               <Text style={styles.btnText}>
                 Save
@@ -381,7 +350,7 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 18,
     alignSelf: 'center',
-    color: "#A9A9A9"
+     color: "#A9A9A9"
   },
   text2: {
     fontSize: 18,

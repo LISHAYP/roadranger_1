@@ -340,7 +340,7 @@ export default function EventDetails(props) {
         style={styles.container}
       >
         <View style={[styles.eventContainer,
-          // { height: comments.length > 0 ? '75%' : '75%' }
+          // { height: comments.length > 0 ? '75%' : '45%' }
         ]}>
 
           <View style={styles.event}>
@@ -438,17 +438,14 @@ const styles = StyleSheet.create({
     marginBottom: 30
 
   },
-  picbtn: {
-    height: "100%", // adjust this value as needed
-    width: "100%",
-  },
+
 
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed
     width: width * 0.9,
     // bottom: 10,
-    // heigh:450,
-    // width: 450,
+     heigh:150,
+     width:150,
     paddingTop: 20,
     paddingBottom: 30
 
@@ -456,10 +453,10 @@ const styles = StyleSheet.create({
   picture: {
     flex: 1,
     width: '100%',
-    height: '20%',
+    height: '10%',
     padding: 5,
     borderRadius: 20,
-    transform: [{ scaleX: -1 }]
+    // transform: [{ scaleX: -1 }]
     // scaleX:-1
     // position: 'absolute'
   },

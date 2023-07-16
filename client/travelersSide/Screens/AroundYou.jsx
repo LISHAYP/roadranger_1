@@ -22,8 +22,6 @@ export default function AroundYou(props) {
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log("traveler", traveler)
-            console.log("Location:", location)
             setTravelerId(traveler.traveler_id)
             handleGet();
             return () => {

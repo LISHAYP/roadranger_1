@@ -50,16 +50,14 @@ export default function Setting(props) {
   const [selectedGender, setSelectedGender] = useState(traveler.gender);
   const [selectedInsurance, setSelectedInsurance] = useState(traveler.insurence_company);
   const [userPic, setUserPic] = useState(traveler.picture)
-  const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
-  const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
-  const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
+
 
   const handleDateSelect = (date) => {
-    console.log(date);
-    const formattedDate = moment.utc(date).format('DD/MM/YY');
+    const formattedDate = moment(date).format('DD-MM-YYYY');
     setSelectedDate(formattedDate);
     setIsCalendarOpen(false);
   }
+  console.log("ttttttt",selectedDate);
   const changeTraveler = {
     travler_email: email,
     password: password,
@@ -153,8 +151,8 @@ export default function Setting(props) {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={traveler.gender}
-            value={selectedGender}
+            placeholder={selectedGender}
+            value={traveler.gender} 
             onChange={item => {
               setSelectedGender(item.value)
             }} />
@@ -178,8 +176,7 @@ export default function Setting(props) {
           <Text style={styles.text}>Date of Birth:</Text>
           <View>
             <TouchableOpacity onPress={() => setIsCalendarOpen(!isCalendarOpen)} style={styles.calendar}>
-
-              <Text style={styles.text1}>{moment(selectedDate).format('MM/DD/YY')}</Text>
+              <Text style={styles.text1}>{moment(selectedDate).format('MM-DD-YYYY')}</Text>
               <Icon style={styles.icon} name="calendar-outline" />
             </TouchableOpacity>
             {isCalendarOpen && (

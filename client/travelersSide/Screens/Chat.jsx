@@ -5,7 +5,7 @@ import { collection, doc, addDoc, query, where, getDocs, orderBy, onSnapshot, pu
 import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
-import GradientBackground from '../Components/GradientBackground';
+import ChatBackground from "../Components/ChatBackground";
 import BackButton from "../Components/BackButton";
 import { v4 as uuidv4 } from 'uuid';
 import { cgroup90 } from '../cgroup90';
@@ -169,7 +169,7 @@ export default function Chat(props) {
     };
 
     return (
-        <GradientBackground>
+        <ChatBackground>
             <View style={styles.hamburger}>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Icon name="arrow-back-outline" size={30} color='#144800' />
@@ -200,7 +200,7 @@ export default function Chat(props) {
                 )}
 
             </View>
-        </GradientBackground>
+        </ChatBackground>
     )
 }
 
