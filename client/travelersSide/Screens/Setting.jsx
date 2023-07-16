@@ -188,7 +188,7 @@ export default function Setting(props) {
               </View>
             )}
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.text}>Location Mode</Text>
             <Switch
               style={styles.switch}
@@ -198,7 +198,7 @@ export default function Setting(props) {
               onValueChange={toggleSwitchLocation}
               value={isEnabledLocation}
             />
-          </View>
+          </View> */}
           {/* <View style={styles.row}>
             <Text style={styles.text2}>Notification</Text>
             <Switch
