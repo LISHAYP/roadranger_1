@@ -110,6 +110,7 @@ export default function Setting(props) {
   }
   const handleSavePhoto = () => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
+    
   }
 
   return (

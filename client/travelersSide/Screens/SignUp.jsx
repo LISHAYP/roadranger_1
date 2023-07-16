@@ -11,6 +11,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
+import User from '../assets/User.png';
 
 export default function SignUp() {
 
@@ -18,7 +19,7 @@ export default function SignUp() {
   const [newProfilePic, setNewProfilePic] = useState(defaultPic);
 
   useEffect(() => {
-    setupdatednewProfilePic(`${cgroup90}/profilePictures/U_${email}.jpg`);
+    //setupdatednewProfilePic(`${cgroup90}/profilePictures/U_${email}.jpg`);
 
   }, [email]);
 
@@ -49,14 +50,14 @@ export default function SignUp() {
   const [selectedInsurance, setSelectedInsurance] = useState(null);
   const [insuranceSelection, setInsuranceSelection] = useState(null);
   const [updatednewProfilePic, setupdatednewProfilePic] = useState(
-    `${cgroup90}/uploadUserPic/U_${email}.jpg`
+    defaultPic
   );
 
-  useEffect(() => {
-    setupdatednewProfilePic(
-      `${cgroup90}/uploadUserPic/U_${email}.jpg`
-    );
-  }, [email]);
+  // useEffect(() => {
+  //   setupdatednewProfilePic(
+  //     `${cgroup90}/uploadUserPic/U_${email}.jpg`
+  //   );
+  // }, [email]);
 
   // const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
   // const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
@@ -141,6 +142,7 @@ export default function SignUp() {
   };
   const presentPic = () => {
     console.log(updatednewProfilePic)
+    setupdatednewProfilePic(`${cgroup90}/profilePictures/U_${email}.jpg`);
   }
   return (
 

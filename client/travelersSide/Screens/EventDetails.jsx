@@ -460,7 +460,6 @@ const styles = StyleSheet.create({
     height: '20%',
     padding: 5,
     borderRadius: 20,
-    transform:[{scaleX:-1}]
     // scaleX:-1
     // position: 'absolute'
   },
