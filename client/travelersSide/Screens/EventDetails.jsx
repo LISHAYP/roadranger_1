@@ -311,12 +311,13 @@ export default function EventDetails(props) {
     Alert.alert('Thank you! ');
     setTrueOrFalse(false)
   }
-
+console.log("eeeee",event);
   return (
     <GradientBackground>
       <Navbar traveler={traveler} />
 
       <BackButton text="Event Details" />
+  
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
@@ -338,7 +339,7 @@ export default function EventDetails(props) {
         style={styles.container}
       >
         <View style={[styles.eventContainer,
-        { height: comments.length > 0 ? '71%' : '41%' }
+        // { height: comments.length > 0 ? '75%' : '75%' }
         ]}>
 
           <View style={styles.event}>
@@ -360,7 +361,9 @@ export default function EventDetails(props) {
           </View>
           {event.Picture != '#' && (
             <View style={styles.pictureContainer}>
-              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+              <TouchableOpacity onPress={() => Alert.alert("kk")} style={styles.picbtn}>
+              <Image  source={{ uri: event.Picture }} style={styles.picture} resizeMode="cover" />
+              </TouchableOpacity>
             </View>
           )}
 
@@ -421,6 +424,7 @@ export default function EventDetails(props) {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+     
     </GradientBackground>
   );
 }
@@ -431,22 +435,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop: 40,
-  },
+    marginTop: 120,
+    marginBottom:30
 
+  },
+  picbtn:{
+    height:"100%", // adjust this value as needed
+    width:"100%",
+  },
 
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed
-    width: width + 30,
-    bottom: 10
+    width: width * 0.9,
+    // bottom: 10,
+    // heigh:450,
+    // width: 450,
+    paddingTop: 20,
+    paddingBottom:30
+    
   },
   picture: {
     flex: 1,
-    width: width,
-    height: height,
+    width: '100%',
+    height: '20%',
     padding: 5,
     borderRadius: 20,
-    position: 'absolute'
+    transform:[{scaleX:-1}]
+    // scaleX:-1
+    // position: 'absolute'
   },
   locationContainer: {
     flexDirection: 'row',
@@ -467,8 +483,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     height: '75%',
-
-
+    paddingBottom: 20,
+    
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
   },
   commentContainer: {
@@ -493,11 +513,7 @@ const styles = StyleSheet.create({
     left: 10,
     marginTop: 10
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
 
-  },
   addComment: {
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
@@ -513,7 +529,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    // width:'95%'
+    // position:'relative',
   },
   img: {
     height: 40,
@@ -547,7 +563,8 @@ const styles = StyleSheet.create({
   input: {
     left: 50,
     paddingBottom: 10,
-    width: '75%',
+    // width: '75%',
+    // position:'absolute'
   },
 
   icon: {
@@ -566,7 +583,7 @@ const styles = StyleSheet.create({
 
   },
   headerContainer: {
-    top: 10,
+    top: 120,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
