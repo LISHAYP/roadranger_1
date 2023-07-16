@@ -22,15 +22,12 @@ export default function AroundYou(props) {
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log("traveler", traveler)
-            console.log("Location:", location)
             setTravelerId(traveler.traveler_id)
             handleGet();
             return () => {
             };
         }, [isMenuOpen])
     );
-    console.log("yyyyyy", travelerId);
 
     useFocusEffect(React.useCallback(() => {
             const travelerIdObj = {
@@ -54,7 +51,6 @@ export default function AroundYou(props) {
     );
 
   
-    console.log("ffffff",traveler)
 
     useEffect(() => {
         if (matchedEvent && matchedEvent.length > 0) {
@@ -89,6 +85,8 @@ export default function AroundYou(props) {
         if (matchedEvent) {
             console.log("this is working!!!", matchedEvent)
         }
+        console.log("kkkhhhhhhhhhhhhhhhhhhhhhhhhhhhkkkkkk",matchedEvent)
+
         fetch(`${cgroup90}/api/newevent`, {
 
             method: 'GET',
@@ -126,11 +124,13 @@ export default function AroundYou(props) {
     AroundYou.navigationOptions = {
         headerShown: false,
     };
+    
     const relatedEvent = (eventNumber) => {
+        
         const updateEventObj = {
             is_related: eventNumber
         }
-
+        console.log("kkkkkkkkkkkkkkkkkkkkkkk",eventNumber)
 
         fetch(`${cgroup90}/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',

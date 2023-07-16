@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { async } from "@firebase/util";
 import { cgroup90 } from '../cgroup90';
 import Icon from "react-native-vector-icons/Ionicons";
+import ChatBackground from "../Components/ChatBackground";
 
 export default function ChatWithSH(props) {
 
@@ -174,7 +175,7 @@ const [isStackholder, setisStackhold] = useState(false);
     };
 
     return (
-        <GradientBackground>
+        <ChatBackground>
              <View style={styles.hamburger}>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Icon name="arrow-back-outline" size={30} color='#144800' />
@@ -207,14 +208,13 @@ const [isStackholder, setisStackhold] = useState(false);
                 )}
 
             </View>
-        </GradientBackground>
+        </ChatBackground>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         marginBottom: 30
     },
     back: {

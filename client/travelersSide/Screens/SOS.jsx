@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch, Alert } from 'react-native';
 import {  useNavigation } from "@react-navigation/native";
 
 import GradientBackground from '../Components/GradientBackground';
@@ -78,9 +78,10 @@ console.log("TTTTT",traveler);
         <View style={styles.container}>
           <View>
             {eventAddresses !== undefined && eventAddresses.length > 0 ? (
-              eventAddresses.map((event, index) => (
+              eventAddresses.map((event) => (
                 <TouchableOpacity onPress={() => {
-                  navigation.navigate('Chat', {  loggeduser: traveler });
+                  Alert.alert(`Starting chat with: ${event.Traveler.first_name} ${event.Traveler.last_name}`)
+                  navigation.navigate('Chat', {  loggeduser: traveler ,user: event.Traveler});
                 }} >
                   <View style={styles.event} key={event.eventNumber}>
                     <View style={styles.detailsContainer}>
@@ -90,6 +91,9 @@ console.log("TTTTT",traveler);
                       <Text>{event.address}</Text>
                     </View>
                     <Image source={{ uri: event.Picture }} style={styles.img} />
+                  <TouchableOpacity>
+                    
+                  </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
               ))

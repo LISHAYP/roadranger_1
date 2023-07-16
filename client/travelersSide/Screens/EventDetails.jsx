@@ -30,6 +30,7 @@ export default function EventDetails(props) {
   const [deletedComment, setDeletedComment] = useState(false)
   const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
   const [trueOrFalse, setTrueOrFalse] = useState('');
+
   const fetchTravelerDetails = async () => {
     const travelerobj = {
       traveler_Id: event.TravelerId
@@ -311,13 +312,13 @@ export default function EventDetails(props) {
     Alert.alert('Thank you! ');
     setTrueOrFalse(false)
   }
-console.log("eeeee",event);
+  console.log("eeeee", event);
   return (
     <GradientBackground>
       <Navbar traveler={traveler} />
 
       <BackButton text="Event Details" />
-  
+
       {trueOrFalse === true && (
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Is it true?</Text>
@@ -339,7 +340,7 @@ console.log("eeeee",event);
         style={styles.container}
       >
         <View style={[styles.eventContainer,
-        // { height: comments.length > 0 ? '75%' : '75%' }
+          // { height: comments.length > 0 ? '75%' : '45%' }
         ]}>
 
           <View style={styles.event}>
@@ -361,9 +362,7 @@ console.log("eeeee",event);
           </View>
           {event.Picture != '#' && (
             <View style={styles.pictureContainer}>
-              <TouchableOpacity onPress={() => Alert.alert("kk")} style={styles.picbtn}>
-              <Image  source={{ uri: event.Picture }} style={styles.picture} resizeMode="cover" />
-              </TouchableOpacity>
+              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="cover" />
             </View>
           )}
 
@@ -424,7 +423,7 @@ console.log("eeeee",event);
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-     
+
     </GradientBackground>
   );
 }
@@ -436,30 +435,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 5,
     marginTop: 120,
-    marginBottom:30
+    marginBottom: 30
 
   },
-  picbtn:{
-    height:"100%", // adjust this value as needed
-    width:"100%",
-  },
+
 
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed
     width: width * 0.9,
     // bottom: 10,
-    // heigh:450,
-    // width: 450,
+     heigh:150,
+     width:150,
     paddingTop: 20,
-    paddingBottom:30
-    
+    paddingBottom: 30
+
   },
   picture: {
     flex: 1,
     width: '100%',
-    height: '20%',
+    height: '10%',
     padding: 5,
     borderRadius: 20,
+    // transform: [{ scaleX: -1 }]
     // scaleX:-1
     // position: 'absolute'
   },
@@ -483,7 +480,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: '75%',
     paddingBottom: 20,
-    
+
   },
   row: {
     flexDirection: 'row',

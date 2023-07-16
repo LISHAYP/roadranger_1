@@ -76,13 +76,14 @@ export default function ContactUs() {
             .then(data => {
                 // Handle the response data as needed
                 console.log("lllllllllllll", data);
-                Alert.alert('Publish')
+                Alert.alert('Thank you for your message. Your message is important to us :)')
                 setDetails('')
                 setEmail('')
                 setFirstName('')
                 setLastName('')
                 setRequestType('')
                 setPhoneNumber('')
+                navigation.goBack()
 
             })
             .catch(error => {
