@@ -7,6 +7,8 @@ import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from "../Components/BackButton";
+import ChatBackground from "../Components/ChatBackground";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -31,13 +33,13 @@ console.log(traveler.Picture)
     }, [navigation]);
 
     useLayoutEffect(() => {
-        const collectionRef = collection(database, 'chats');
+        const collectionRef = collection(database, 'chats1');
         const q = query(collectionRef,orderBy('createdAt', 'desc'));
         const unsubscribe = onSnapshot(q, snapshot => {
             console.log('snapshot');
             setMessage(
                 snapshot.docs.map(doc => ({
-                    _id: doc.id,
+                    _id: uuidv4(),
                     createdAt: doc.data().createdAt.toDate(),
                     text: doc.data().text,
                     user: doc.data().user
@@ -49,9 +51,12 @@ console.log(traveler.Picture)
 
     
     const onSend= useCallback((message=[])=>{
+        console.log('user', message[0])
         setMessage(prevmesseg => GiftedChat.append(prevmesseg,message));
         const {_id,createdAt, text, user}= message[0];
-        addDoc(collection(database,'chats'),{
+        console.log('user', user)
+
+        addDoc(collection(database,'chats1'),{
             _id,
             createdAt,
             text,
@@ -62,17 +67,18 @@ console.log(traveler.Picture)
         <View style={styles.container}>
             <GradientBackground>
             <BackButton />
+            <View style={styles.hamburger}>
+                    <Text style={styles.text}>Group Chat </Text>
+                </View>
             <GiftedChat 
             showAvatarForEveryMessage={true}
             messages={message}
             onSend={message => onSend(message)}
             user={{
-                _id: auth?.currentUser?.email,
+                _id: traveler.travler_email,
                 avatar: traveler.Picture
             }}
-            // messagesContainerStyle={{
 
-            // }}
             />
             </GradientBackground>
         </View>
@@ -84,5 +90,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: 40,
         marginBottom: 30
-    }
+    },
+
+    text: {
+        fontWeight: 'bold',
+        fontSize: 25,
+        color: '#144800',
+        fontSize: 32,
+        alignSelf: 'center',
+        paddingLeft: 30,
+
+
+    },
+    hamburger: {
+        flexDirection: 'row',
+//        position: 'absolute',
+        height: '14%',
+         top: 0,
+         left: 75,
+         zIndex: 1,
+        // backgroundColor: '#F5F5F5',
+        // paddingTop: 55,
+        // paddingHorizontal: 20,
+        // shadowOpacity: 0.95,
+
+    },
 })
