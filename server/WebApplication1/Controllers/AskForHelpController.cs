@@ -103,8 +103,6 @@ namespace WebApplication1.Controllers
             }
         }
 
-
-        // POST: api/post/GetAskForHelpWithin1Km
         [HttpPost]
         [Route("api/post/GetAskForHelpWithin1Km")]
         public IHttpActionResult ShowAskForHelp([FromBody] LocationDto locationData)
@@ -127,7 +125,9 @@ namespace WebApplication1.Controllers
                     // If the event is within 1 km, add it to the result list
                     if (distance <= 1)
                     {
-                        var AskForHelpDto = new AskForHelpDto
+                        var traveler = db.traveleres.FirstOrDefault(t => t.traveler_id == askForHelpEvent.traveler_id);
+
+                        var askForHelpDto = new AskForHelpDto
                         {
                             Details = askForHelpEvent.details,
                             Latitude = askForHelpEvent.latitude,
@@ -137,11 +137,30 @@ namespace WebApplication1.Controllers
                             SerialTypeNumber = askForHelpEvent.serialTypeNumber,
                             CountryNumber = askForHelpEvent.country_number,
                             AreaNumber = askForHelpEvent.area_number,
-                            event_date= askForHelpEvent.event_date,
+                            event_date = askForHelpEvent.event_date,
                             event_time = askForHelpEvent.event_time,
+                            Traveler = new TravelerDto
+                            {
+                                traveler_id = traveler.traveler_id,
+                                first_name = traveler.first_name,
+                                last_name = traveler.last_name,
+                                travler_email = traveler.travler_email,
+                                phone = traveler.phone,
+                                notifications = traveler.notifications,
+                                insurence_company = traveler.insurence_company,
+                                location = traveler.location,
+                                save_location = traveler.save_location,
+                                dateOfBirth = traveler.dateOfBirth,
+                                gender = traveler.gender,
+                                password = traveler.password,
+                                chat = traveler.chat,
+                                Picture = traveler.picture,
+                                token = traveler.token,
+                                missing = traveler.missing
+                            }
                         };
 
-                        askForHelpEventsWithin1Km.Add(AskForHelpDto);
+                        askForHelpEventsWithin1Km.Add(askForHelpDto);
                     }
                 }
 
@@ -159,6 +178,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
 
         [HttpPost]

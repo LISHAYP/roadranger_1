@@ -19,6 +19,8 @@ namespace WebApplication1.DTO
         public int AreaNumber { get; set; }
         public DateTime event_date { get; set; }
         public TimeSpan event_time { get; set; }
+        public TravelerDto Traveler { get; set; }
+
 
     }
     public class ShowAskForHelpDto
