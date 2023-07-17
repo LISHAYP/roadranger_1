@@ -148,7 +148,6 @@ export default function AroundYou(props) {
             .catch((error) => {
                 console.error(error);
             });
-
     }
 
     return (
