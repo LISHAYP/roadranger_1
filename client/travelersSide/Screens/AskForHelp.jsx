@@ -140,9 +140,7 @@ export default function AskForHelp(props) {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          // Handle the response data as needed
-          console.log({ newSOS })
+          navigation.goBack()
           Alert.alert('Publish')
         })
         .catch(error => {

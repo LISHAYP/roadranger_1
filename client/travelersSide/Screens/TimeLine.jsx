@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   title: {
-    fontSize: 16,
-    // fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   descriptionContainer: {
     flexDirection: 'row',
