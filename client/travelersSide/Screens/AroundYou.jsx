@@ -85,7 +85,6 @@ export default function AroundYou(props) {
         if (matchedEvent) {
             console.log("this is working!!!", matchedEvent)
         }
-        console.log("kkkhhhhhhhhhhhhhhhhhhhhhhhhhhhkkkkkk",matchedEvent)
 
         fetch(`${cgroup90}/api/newevent`, {
 
@@ -130,7 +129,6 @@ export default function AroundYou(props) {
         const updateEventObj = {
             is_related: eventNumber
         }
-        console.log("kkkkkkkkkkkkkkkkkkkkkkk",eventNumber)
 
         fetch(`${cgroup90}/api/put/updateevent/${lasteventOfTraveler}`, {
             method: 'PUT',
@@ -159,7 +157,9 @@ export default function AroundYou(props) {
 
                 <View style={styles.container}>
                     <View style={styles.hamburger}>
+                        <TouchableOpacity  onPress={() => { navigation.navigate("Setting", { traveler })}}>
                         <Image source={{ uri: traveler.Picture }} style={styles.user} />
+                        </TouchableOpacity>
                         <View style={styles.textContainer}>
                             <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
                         </View>
