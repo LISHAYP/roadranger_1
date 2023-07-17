@@ -119,7 +119,7 @@ function Navbar(props) {
 
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option}
-                                onPress={() => { navigation.navigate("SOS", traveler ), setIsMenuOpen(false) }}
+                                onPress={() => { navigation.navigate("SOS", {traveler: traveler }), setIsMenuOpen(false) }}
                             >
                                 <Icon name="help-buoy" size={35} style={styles.iconSOS} />
                                 <Text style={styles.textSOS}>SOS</Text>
