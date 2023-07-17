@@ -78,7 +78,7 @@ console.log("TTTTT",traveler);
         <View style={styles.container}>
           <View>
             {eventAddresses !== undefined && eventAddresses.length > 0 ? (
-              eventAddresses.map((event) => (
+              eventAddresses.map((event, index) => (
                 <TouchableOpacity onPress={() => {
                   Alert.alert(`Starting chat with: ${event.Traveler.first_name} ${event.Traveler.last_name}`)
                   navigation.navigate('Chat', {  loggeduser: traveler ,user: event.Traveler});
