@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView,Alert } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
-
+import moment from 'moment';
+ 
 export default function Search(props) {
   const navigation = useNavigation();
  //user-the user who use the app
@@ -49,13 +48,13 @@ console.log("trrrrrrrr",traveler)
   const [isCalendarOpenEnd, setIsCalendarOpenEnd] = useState(false);
 
   const handleStartDateSelect = (date) => {
-    // const formattedDate = date.substr(0, 10);
-    setSelectedStartDate(date);
+    const formattedDate = moment(date).format('DD-MM-YYYY');
+    setSelectedStartDate(formattedDate);
     setIsCalendarOpenStart(false);
   }
   const handleEndDateSelect = (date) => {
-    // const formattedDate = moment(date).format('DD/MM/YY');
-    setSelectedEndDate(date);
+    const formattedDate = moment(date).format('DD-MM-YYYY');
+    setSelectedEndDate(formattedDate);
     setIsCalendarOpenEnd(false);
   }
 
@@ -205,7 +204,7 @@ console.log("trrrrrrrr",traveler)
        <Text style={styles.text}>Start Date:</Text>
         <View>
           <TouchableOpacity onPress={() => setIsCalendarOpenStart(!isCalendarOpenStart)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedStartDate ? selectedStartDate.toISOString().substr(0, 10) : "Select Start Date"}</Text>
+            <Text style={styles.text1}>{selectedStartDate ? selectedStartDate : "Select Start Date"}</Text>
             <Icon style={styles.icon} name="calendar-outline" />
           </TouchableOpacity>
           {isCalendarOpenStart && (
@@ -217,7 +216,7 @@ console.log("trrrrrrrr",traveler)
         <Text style={styles.text}>End Date:</Text>
         <View>
           <TouchableOpacity onPress={() => setIsCalendarOpenEnd(!isCalendarOpenEnd)} style={styles.calendar}>
-            <Text style={styles.text1}>{selectedEndDate ? selectedEndDate.toISOString().substr(0, 10): "Select End Date "}</Text>
+            <Text style={styles.text1}>{selectedEndDate ? selectedEndDate: "Select End Date "}</Text>
             <Icon style={styles.icon} name="calendar-outline" />
           </TouchableOpacity>
           {isCalendarOpenEnd && (
@@ -226,7 +225,6 @@ console.log("trrrrrrrr",traveler)
             </View>
           )}
         </View>
-
         <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
           <Text style={styles.btnText}>
             Search

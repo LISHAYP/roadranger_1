@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useCallback, useState } from "react";
+import React, { useLayoutEffect, useCallback, useState } from "react";
 import { GiftedChat } from 'react-native-gifted-chat'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { collection, addDoc, orderBy, query, onSnapshot } from 'firebase/firestore'
@@ -65,7 +65,7 @@ console.log(traveler.Picture)
     },[])
     return (
         <View style={styles.container}>
-            <GradientBackground>
+            <ChatBackground>
             <BackButton />
             <View style={styles.hamburger}>
                     <Text style={styles.text}>Group Chat </Text>
@@ -80,7 +80,7 @@ console.log(traveler.Picture)
             }}
 
             />
-            </GradientBackground>
+            </ChatBackground>
         </View>
     )
 }
@@ -99,20 +99,12 @@ const styles = StyleSheet.create({
         fontSize: 32,
         alignSelf: 'center',
         paddingLeft: 30,
-
-
     },
     hamburger: {
         flexDirection: 'row',
-//        position: 'absolute',
         height: '14%',
          top: 0,
          left: 75,
          zIndex: 1,
-        // backgroundColor: '#F5F5F5',
-        // paddingTop: 55,
-        // paddingHorizontal: 20,
-        // shadowOpacity: 0.95,
-
     },
 })

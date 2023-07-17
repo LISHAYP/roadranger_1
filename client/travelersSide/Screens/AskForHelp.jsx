@@ -63,8 +63,8 @@ export default function AskForHelp(props) {
   const countryObj = {
     country_name: country,
   };
-  addContry = () => {
 
+  addContry = () => {
     fetch(`${cgroup90}/api/post/country`, {
       method: 'POST',
       headers: {
@@ -75,14 +75,12 @@ export default function AskForHelp(props) {
     })
       .then(response => response.json())
       .then(data => {
-
         setCountryNumber(data)
         addCity();
       }
       )
       .catch(error => {
         console.error(error);
-
       });
   }
 
@@ -123,7 +121,6 @@ export default function AskForHelp(props) {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude
   };
-  console.log('new', newSOS);
 
   const createSOS = async () => {
     if (newSOS.details === '' || newSOS.serialTypeNumber === '') {
@@ -162,7 +159,6 @@ export default function AskForHelp(props) {
 
       <ScrollView>
         <View style={styles.container}>
-          {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
           <Text style={styles.text}>What Happend:</Text>
           <TextInput style={styles.input}
             value={details}

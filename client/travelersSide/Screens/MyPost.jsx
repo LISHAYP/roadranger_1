@@ -1,22 +1,15 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import React, { useEffect, useState} from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
+import {useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
-import { EventsContext } from '../Context/EventsContext';
 import Navbar from '../Components/Navbar';
 import { cgroup90 } from '../cgroup90';
 
 
 export default function MyPost(props) {
     const [events, setEvents] = useState([])
-    // const { events, getEvents } = useContext(EventsContext)
     const traveler = props.route.params.traveler;
     const navigation = useNavigation();
     const [eventWithAddresses, setEventWithAddresses] = useState([]);
@@ -42,28 +35,6 @@ export default function MyPost(props) {
                 });
     }, [])
 
-    // useEffect(async () => {
-    //     // await getEvents();
-    //     console.log("iiiiiii", events)
-    //     Promise.all(events.map(event => {
-    //         const lat = event.Latitude;
-    //         const lng = event.Longitude;
-    //         return Geocoder.from(lat, lng).then(json => {
-    //             const location = json.results[0].address_components;
-    //             const number = location[0].long_name;
-    //             const street = location[1].long_name;
-    //             const city = location[2].long_name;
-    //             const address = `${street} ${number}, ${city}`;
-    //             return { ...event, address };
-    //         });
-    //     })).then(eventsWithAddress => {
-    //         setEventWithAddresses(eventsWithAddress);
-    //     });
-    //     console.log("-----------------", eventWithAddresses)
-
-
-    // }, [events]);
-
     useEffect(() => {
         Promise.all(events.map(event => {
             const lat = event.Latitude;
@@ -80,15 +51,11 @@ export default function MyPost(props) {
             setEventWithAddresses(eventsWithAddress);
 
         });
-        console.log("-----------------", eventWithAddresses)
-
     }, [events]);
 
-    console.log("-----------------", eventWithAddresses)
     return (
         <GradientBackground>
             <BackButton text="My Post" />
-
             <Navbar traveler={traveler} />
             <ScrollView>
 

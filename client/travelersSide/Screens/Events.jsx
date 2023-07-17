@@ -1,18 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
+import {useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
 import Navbar from '../Components/Navbar';
 
 export default function Events(props) {
-  // const [events, setEvents] = useState([]);
   const events = props.route.params.events;
   const traveler = props.route.params.traveler;
   const [eventAddresses, setEventAddresses] = useState([]);
@@ -36,7 +30,6 @@ export default function Events(props) {
       setEventAddresses(eventsWithAddress);
     });
   }, [events]);
-  console.log("+++++++++++++++", eventAddresses);
 
 
   return (
@@ -75,8 +68,6 @@ export default function Events(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 40,
-    // marginVertical: 10,
     marginHorizontal: 10,
     width: "100%",
     height: "100%",
@@ -113,8 +104,4 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     resizeMode: 'cover'
   }
-
-
-
-
 });

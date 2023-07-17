@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
@@ -39,14 +38,10 @@ export default function Setting(props) {
     { label: 'Other', value: 'Other' },
     { label: 'Menura', value: 'Menura' }
   ]
-  const [value, setValue] = useState(null);
   const email = traveler.travler_email;
   const password = traveler.password;
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(traveler.dateOfBirth);
-  const [isEnabledLocation, setIsEnabledLocation] = useState(traveler.location);
-  const [isEnabledChatMode, setIsEnabledChatMode] = useState(traveler.chat);
-  const [isEnabledNotification, setIsEnabledNotification] = useState(traveler.notifications);
   const [selectedGender, setSelectedGender] = useState(traveler.gender);
   const [selectedInsurance, setSelectedInsurance] = useState(traveler.insurence_company);
   const [userPic, setUserPic] = useState(traveler.picture)
@@ -57,26 +52,23 @@ export default function Setting(props) {
     setSelectedDate(formattedDate);
     setIsCalendarOpen(false);
   }
-  console.log("ttttttt",selectedDate);
+  console.log("ttttttt", selectedDate);
   const changeTraveler = {
     travler_email: email,
     password: password,
     first_name: firstName,
     last_name: lastName,
     phone: phone,
-    notifications: isEnabledNotification,
+    notifications: false,
     insurence_company: selectedInsurance,
-    location: isEnabledLocation,
-    save_location: isEnabledLocation,
+    location: false,
+    save_location: false,
     dateOfBirth: selectedDate,
     gender: selectedGender,
-    chat: isEnabledChatMode,
+    chat: false,
     picture: userPic
   };
-  console.log('*******', changeTraveler)
   const saveChanges = async () => {
-    console.log("IM IN saveChanges");
-
     if (phone.length != 10) {
       // Phone is too short
       Alert.alert('Phone must be 10 numbers.');
@@ -108,36 +100,31 @@ export default function Setting(props) {
   }
   const handleSavePhoto = () => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
-    
+
   }
 
   return (
     < GradientBackground>
-                <Navbar traveler={traveler} />
-                <BackButton text="Setting"/>
-
-    <ScrollView>
-  
+      <Navbar traveler={traveler} />
+      <BackButton text="Setting" />
+      <ScrollView>
         <View style={styles.container}>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: traveler.Picture }} style={styles.user} />
           </TouchableOpacity >
           <Text style={styles.text}>First Name:</Text>
           <TextInput style={styles.input}
-            // value={firstName}
             onChangeText={(text) => setFirstName(text)}
             placeholder={traveler.first_name}>
           </TextInput>
           <Text style={styles.text}>Last Name:</Text>
           <TextInput style={styles.input}
-            //value={lastName}
             onChangeText={(text) => setLastName(text)}
             placeholder={traveler.last_name}>
           </TextInput>
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
             placeholder={phone}
-            // value={phone}
             keyboardType='numeric'
             onChangeText={(text) => setPhone(text)}
           >
@@ -153,7 +140,7 @@ export default function Setting(props) {
             labelField="label"
             valueField="value"
             placeholder={selectedGender}
-            value={traveler.gender} 
+            value={traveler.gender}
             onChange={item => {
               setSelectedGender(item.value)
             }} />
@@ -186,46 +173,14 @@ export default function Setting(props) {
               </View>
             )}
           </View>
-          {/* <View style={styles.row}>
-            <Text style={styles.text}>Location Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.location ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchLocation}
-              value={isEnabledLocation}
-            />
-          </View> */}
-          {/* <View style={styles.row}>
-            <Text style={styles.text2}>Notification</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.notifications ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotification}
-              value={isEnabledNotification}
-            />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Chat Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={traveler.chat ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchChatMode}
-              value={isEnabledChatMode}
-            />
-          </View> */}
+        
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>
               Save Changes
             </Text>
           </TouchableOpacity>
         </View>
-    </ScrollView >
+      </ScrollView >
     </GradientBackground>
 
   )
