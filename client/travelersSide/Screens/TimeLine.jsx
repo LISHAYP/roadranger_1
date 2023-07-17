@@ -46,7 +46,7 @@ export default function TimeLine(props) {
     const event = rowData;
     navigation.navigate('Event Details', { event, traveler });
   };
-console.log("yyyy",events);
+  console.log("yyyy", events);
   return (
     <GradientBackground>
       <BackButton text={event.Details} />
@@ -80,14 +80,14 @@ console.log("yyyy",events);
           paddingLeft: 5,
           paddingRight: 5,
           borderRadius: 10,
-          
+
         }}
         renderDetail={(rowData) => (
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={{ flex: 1 }}>
+              <Text style={[styles.title]}>{rowData.Details}</Text>
               <Text style={[styles.date]}>{rowData.EventDate.substring(0, 10)}</Text>
               <Text style={[styles.time]}>{rowData.EventTime.substring(0, 5)}</Text>
-              <Text style={[styles.title]}>{rowData.Details}</Text>
               <View style={styles.descriptionContainer}>
                 <Image source={{ uri: rowData.Picture }} style={styles.image} />
               </View>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
   descriptionContainer: {
     flexDirection: 'row',
