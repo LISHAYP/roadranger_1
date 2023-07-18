@@ -82,6 +82,49 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/stakeholder/details")]
+        public IHttpActionResult StakeholderDetails([FromBody] StackholderDto stakeholderId)
+        {
+            try
+            {
+                // Find the stakeholder in the database based on the ID
+                var stakeholder = db.stakeholders.FirstOrDefault(x => x.stakeholder_id == stakeholderId.StakeholderId);
+
+                if (stakeholder == null)
+                {
+                    // If the stakeholder is not found, return a 404 Not Found response
+                    logger.Error($"Stakeholder with ID: {stakeholderId.StakeholderId} was not found");
+                    return NotFound();
+                }
+
+                // Map the stakeholder entity to a DTO and return it
+                var stakeholderDto = new StackholderDto
+                {
+                    StakeholderId = stakeholder.stakeholder_id,
+                    FullName = stakeholder.full_name,
+                    StakeholderEmail = stakeholder.stakeholder_email,
+                    Phone = stakeholder.phone,
+                    Notifications = stakeholder.notifications,
+                    Chat = stakeholder.chat,
+                    StakeholderName = stakeholder.stakeholder_name,
+                    Approved = stakeholder.approved,
+                    ApprovelDate = stakeholder.approvel_date,
+                    StakeholderType = stakeholder.stakeholder_type,
+                    Password = stakeholder.password,
+                    token = stakeholder.token,
+                    picture = stakeholder.picture
+                };
+
+                return Ok(stakeholderDto);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
         //[HttpPost]
         //[Route("api/post/GetTravelersByInsuranceCompany")]
         //public IHttpActionResult GetTravelersByInsuranceCompany([FromBody] TravelerDto insuranceCompany)
