@@ -7,16 +7,23 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { useRef } from 'react';
 import { Button, Platform } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { cgroup90 } from '../cgroup90';
+import { LocationContext } from '../Context/LocationContext'
 
 export default function SignIn() {
+    const { getPermissionLocation, getUserLocation } = useContext(LocationContext)
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
     const [devaiceToken, setDevaiceToken] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    useEffect(async () => {
+        await getPermissionLocation();
+        await getUserLocation();
+    }, [handleLogin]);
 
     const handleLogin = () => {
         const stakeholder = {

@@ -25,10 +25,11 @@ import YourTravelers from './Screens/YourTravelers';
  import Chat from './Screens/Chat';
  import HomeChat from './Screens/HomeChat';
 import Navbar from './Components/Navbar';
-
+import LocationContextProvider from './Context/LocationContext';
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
+    <LocationContextProvider>
 
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Sign In" screenOptions={{ headerShown: false }}>
@@ -56,6 +57,8 @@ export default function App() {
 
       </Stack.Navigator>
     </NavigationContainer>
+    </LocationContextProvider>
+
   );
 }
 

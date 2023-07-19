@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
+import { Dimensions,Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -206,6 +206,9 @@ export default function EventDetails(props) {
     }
   }
 
+  const onScreenTapped = () => {
+    Keyboard.dismiss();
+  }; 
 
   const renderDeleteLogo = () => {
     if (comments.length === 0 && event.TravelerId == user.traveler_id) {
@@ -339,6 +342,8 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
+          <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
+
         <View style={[styles.eventContainer,
           // { height: comments.length > 0 ? '75%' : '45%' }
         ]}>
@@ -422,6 +427,7 @@ export default function EventDetails(props) {
             </View>
           </View>
         </ScrollView>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
 
     </GradientBackground>
@@ -559,7 +565,7 @@ const styles = StyleSheet.create({
   input: {
     left: 50,
     paddingBottom: 10,
-    // width: '75%',
+    width: '75%',
     // position:'absolute'
   },
 
