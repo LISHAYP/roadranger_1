@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -8,44 +8,70 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { getCenter } from 'geolib';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
+import { LocationContext } from '../Context/LocationContext';
 
 export default function AroundYou(props) {
-    const [location, setLocation] = useState(null);
+
+    const { location } = useContext(LocationContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
+    const [stakeholderId, setStakeholderId] = useState()
+    const [stakeholder, setstakeholder] = useState(props.route.params.stakeholder);
 
-    const stakeholder = props.route.params.stakeholder;
-    console.log("%%%%", stakeholder);
-    // console.log("%%%%", userLocation);
+   console.log("******",stakeholder);
+ 
+
 
     useFocusEffect(
         React.useCallback(() => {
             handleGet();
+            setStakeholderId(stakeholder.StakeholderId)
             return () => {
             };
         }, [])
     );
 
-    const [Events, setEvents] = useState([])
-    const getUserLocation = async () => {
-        const userlocation = await Location.getCurrentPositionAsync();
-        setUserLocation(userlocation); // Save user location in state
-        console.log("************", userLocation.coords.latitude)
-    };
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                console.log('Permission denied');
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            handleGet();
-            getUserLocation();
+    useFocusEffect(React.useCallback(() => {
+        const stakeholderIdObj = {
+            StakeholderId: stakeholder,
+        };
+        fetch(`${cgroup90}/api/stakeholder/details`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(stakeholderIdObj),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setstakeholder(data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [stakeholderId])
+);
 
-        })();
-    }, []);
+    const [Events, setEvents] = useState([])
+    // const getUserLocation = async () => {
+    //     const userlocation = await Location.getCurrentPositionAsync();
+    //     setUserLocation(userlocation); // Save user location in state
+
+    // };
+    // useEffect(() => {
+    //     (async () => {
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== 'granted') {
+    //             console.log('Permission denied');
+    //         }
+    //         let location = await Location.getCurrentPositionAsync({});
+    //         setLocation(location);
+    //         handleGet();
+    //         getUserLocation();
+
+    //     })();
+    // }, [])
 
 
     const handleGet = () => {
@@ -95,11 +121,11 @@ export default function AroundYou(props) {
     return (
         <View style={styles.container}>
             <View style={styles.hamburger}>
-            <Image source={{ uri: stakeholder.picture }} style={styles.user} />
+                <Image source={{ uri: stakeholder.picture }} style={styles.user} />
                 <View style={styles.textContainer}>
                     <Text style={styles.titlename}>Hello, {stakeholder.FullName} !</Text>
                 </View>
-             
+
             </View>
 
             <Navbar stakeholder={stakeholder} />
@@ -251,7 +277,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        backgroundColor:'#F5F5F5',
+        backgroundColor: '#F5F5F5',
         paddingTop: 55,
         paddingHorizontal: 20,
         shadowOpacity: 0.9,
