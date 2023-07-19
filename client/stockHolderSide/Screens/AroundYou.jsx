@@ -21,21 +21,21 @@ export default function AroundYou(props) {
 
    console.log("******",stakeholder);
  
-
-
     useFocusEffect(
         React.useCallback(() => {
-            handleGet();
             setStakeholderId(stakeholder.StakeholderId)
+            handleGet();
+            // console.log("jjjjj",stakeholder.StakeholderId)
             return () => {
             };
-        }, [])
+        }, [isMenuOpen])
     );
 
     useFocusEffect(React.useCallback(() => {
         const stakeholderIdObj = {
-            StakeholderId: stakeholder,
+            StakeholderId: stakeholderId,
         };
+        console.log("jjjjjj",stakeholderIdObj);
         fetch(`${cgroup90}/api/stakeholder/details`, {
             method: 'POST',
             headers: {
@@ -121,7 +121,9 @@ export default function AroundYou(props) {
     return (
         <View style={styles.container}>
             <View style={styles.hamburger}>
+            <TouchableOpacity  onPress={() => { navigation.navigate("Setting", { stakeholder })}}>
                 <Image source={{ uri: stakeholder.picture }} style={styles.user} />
+                </TouchableOpacity>
                 <View style={styles.textContainer}>
                     <Text style={styles.titlename}>Hello, {stakeholder.FullName} !</Text>
                 </View>
