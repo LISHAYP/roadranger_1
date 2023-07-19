@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert, KeyboardAvoidingView } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, KeyboardAvoidingView } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -9,7 +9,6 @@ import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
-import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 import User from '../assets/User.png';
 
@@ -39,12 +38,8 @@ export default function SignUp() {
     { label: 'Harel', value: 'Harel' },
     { label: 'Other', value: 'Other' },
   ]
-  const [value, setValue] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const isEnabledLocation = false
-  const isEnabledChatMode = false
-  const isEnabledNotification = false;
   const [selectedGender, setSelectedGender] = useState(null);
   const [genderSelection, setGenderSelection] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
@@ -53,15 +48,7 @@ export default function SignUp() {
     defaultPic
   );
 
-  // useEffect(() => {
-  //   setupdatednewProfilePic(
-  //     `${cgroup90}/uploadUserPic/U_${email}.jpg`
-  //   );
-  // }, [email]);
 
-  // const toggleSwitchLocation = () => setIsEnabledLocation(previousState => !previousState);
-  // const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
-  // const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
 
   const handleDateSelect = (date) => {
     const formattedDate = moment(date).format('DD/MM/YY');
@@ -73,14 +60,14 @@ export default function SignUp() {
     last_name: lastName,
     travler_email: email,
     phone: phone,
-    notifications: isEnabledNotification,
+    notifications: false,
     insurence_company: selectedInsurance,
-    location: isEnabledLocation,
-    save_location: isEnabledLocation,
+    location: false,
+    save_location: false,
     dateOfBirth: selectedDate,
     gender: selectedGender,
     password: password,
-    chat: isEnabledChatMode,
+    chat: false,
     Picture: updatednewProfilePic
   };
   const handleSignUp = async () => {

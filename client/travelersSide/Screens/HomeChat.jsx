@@ -339,7 +339,6 @@ const styles = StyleSheet.create({
   groupChatBtn: {
     top: 20,
     marginVertical: 20,
-    // width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -360,11 +359,8 @@ const styles = StyleSheet.create({
 
   },
   chatContainer: {
-    // backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    // height: '30%',
-    // width: '50%',
     top: 20,
     marginBottom:30
 
@@ -375,7 +371,6 @@ const styles = StyleSheet.create({
   },
   user: {
     alignSelf: 'center',
-    // resizeMode: 'cover',
     height: 150,
     borderRadius: 75,
     width: 150,

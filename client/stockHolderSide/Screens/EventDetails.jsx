@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { Dimensions, Keyboard, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -14,8 +14,10 @@ const height = Dimensions.get('window').height;
 export default function EventDetails(props) {
   const event = props.route.params.event;
   const stakeholder = props.route.params.stakeholder;
+  const [deletedComment, setDeletedComment] = useState(false)
+  const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
+
   console.log(event)
-  console.log("ssssssssssssssssssssssssss", stakeholder);
   const travelerId = "null";
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
@@ -65,7 +67,6 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log("llllllll", data);
     } catch (error) {
       console.error(error);
       console.log('Error');
@@ -73,7 +74,6 @@ export default function EventDetails(props) {
 
 
   };
-  console.log("##########", stakeholder.StakeholderId);
   const newComment = {
     eventNumber: event.eventNumber,
     Details: details,
@@ -84,11 +84,10 @@ export default function EventDetails(props) {
 
   };
 
-  console.log("********", newComment);
   const createComment = async () => {
 
-    if (newComment === '') {
-      Alert.alert('Please enter details and type');
+    if (newComment.Details == "") {
+      Alert.alert('Please enter details ');
     }
     else {
       // Send a POST request to your backend API with the comment data
@@ -103,7 +102,9 @@ export default function EventDetails(props) {
         .then(data => {
           // Handle the response data as needed
           console.log(data);
+          setNewCommentPublished(true)
           Alert.alert('Publish')
+          setNewCommentPublished(false)
           setDetails('');
         })
         .catch(error => {
@@ -129,90 +130,126 @@ export default function EventDetails(props) {
         console.error(error);
         console.warn('Geocoder.from failed');
       });
-  }, []);
+  }, [newCommentPublished, deletedComment]);
 
+  const deleteComment = (CommentNumber) => {
+    const commentObj = {
+      commentNumber: CommentNumber
+    };
+    console.log(commentObj)
+
+    fetch(`${cgroup90}/api/deletecomment`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(commentObj)
+    })
+      .then(response => response.json())
+      .then(data => {
+        setDeletedComment(true)
+        Alert.alert('Deleted');
+        setDeletedComment(false)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  const onScreenTapped = () => {
+    Keyboard.dismiss();
+  };
 
   return (
     <GradientBackground>
-      <BackButton text="Event Details"/>
+      <BackButton text="Event Details" />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-
-        <View style={[styles.eventContainer, { height: comments.length > 0 ? '71%' : '40%' }]}>
-          <View >
-            <View style={styles.event}>
-              <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: traveler.Picture }} resizeMode="contain" />
-                <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
+        <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
+          <View style={[styles.eventContainer,
+            //  { height: comments.length > 0 ? '71%' : '40%' }
+          ]} >
+            <View >
+              <View style={styles.event}>
+                <View style={styles.row}>
+                  <Image style={styles.img} source={{ uri: stakeholder.picture }} />
+                  <Text style={styles.text}>{stakeholder.FullName} </Text>
+                </View>
+                <View>
+                  <Text style={styles.textdateTime}>{event.EventTime} {new Date(event.EventDate).toLocaleDateString('en-US')}</Text>
+                </View>
               </View>
               <View>
-                <Text style={styles.textdateTime}>{event.EventTime} {new Date(event.EventDate).toLocaleDateString('en-US')}</Text>
+                <Text style={styles.detailsText}>{event.Details}</Text>
               </View>
             </View>
-            <View>
-              <Text style={styles.detailsText}>{event.Details}</Text>
-            </View>
-          </View>
 
-          <View style={styles.locationContainer}>
-            <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
-            <Text style={styles.locationText}>{addressComponents}</Text>
-          </View>
-
-          {event.Picture != '#' && (
-            <View style={styles.pictureContainer}>
-              <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+            <View style={styles.locationContainer}>
+              <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
+              <Text style={styles.locationText}>{addressComponents}</Text>
             </View>
-          )}
-          <ScrollView>
-            {comments && comments.length > 0 && (
-              comments.map((comment, index) => (
-                <View key={index} style={styles.commentContainer}>
-                  <View style={styles.event}>
-                    <View style={styles.row}>
-                      {comment.picture ? (
-                        <Image style={styles.img} source={{ uri: comment.picture }} />
-                      ) : (
-                        <Image style={styles.img} source={{ uri: comment.shpicture }} />
-                      )}
-                      <Text style={styles.text}>{comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
+
+            {event.Picture != '#' && (
+              <View style={styles.pictureContainer}>
+                <Image source={{ uri: event.Picture }} style={styles.picture} resizeMode="contain" />
+              </View>
+            )}
+            <ScrollView>
+              {comments && comments.length > 0 && (
+                comments.map((comment, index) => (
+                  <View key={index} style={styles.commentContainer}>
+                    <View style={styles.event}>
+                      <View style={styles.row}>
+                        {comment.picture ? (
+                          <Image style={styles.img} source={{ uri: comment.picture }} />
+                        ) : (
+                          <Image style={styles.img} source={{ uri: comment.shpicture }} />
+                        )}
+                        <Text style={styles.text}>{comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
+                      </View>
+                      <View>
+                        <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
+                      </View>
                     </View>
                     <View>
-                      <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')}</Text>
+                      <Text style={styles.detailsTextComment}> {comment.Details}  </Text>
+                      {comment.StackholderId == stakeholder.StakeholderId && (
+                        <TouchableOpacity style={styles.deleteIcon} onPress={() => deleteComment(comment.CommentNumber)}>
+                          <Icon name="trash-outline" size={20} color={'black'} />
+                        </TouchableOpacity>
+                      )}
                     </View>
                   </View>
-                  <View>
-                    <Text style={styles.detailsTextComment}>{comment.Details}</Text>
-                  </View>
-                </View>
-              ))
-            )}
-          </ScrollView>
-        </View>
-        <View style={styles.addComment}>
-          <View style={styles.event}>
-            <View style={styles.row}>
-              <Image style={styles.img} source={{ uri: stakeholder.picture }} />
-              <Text style={styles.text}>{stakeholder.FullName}</Text>
+                ))
+              )}
+            </ScrollView>
+          </View>
+          <View style={styles.addComment}>
+            <View style={styles.event}>
+              <View style={styles.row}>
+                <Image style={styles.img} source={{ uri: stakeholder.picture }} />
+                <Text style={styles.text}>{stakeholder.FullName}</Text>
+              </View>
+              <TouchableOpacity onPress={createComment}>
+                <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={createComment}>
-              <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
-            </TouchableOpacity>
+            <View style={styles.row}>
+              <TextInput style={styles.input}
+                placeholder="Add Comment..."
+                value={details}
+                multiline={true}
+                numberOfLines={4}
+                editable={true}
+                onChangeText={(text) => setDetails(text)}>
+              </TextInput>
+            </View>
           </View>
-          <View style={styles.row}>
-            <TextInput style={styles.input}
-              placeholder="Add Comment..."
-              value={details}
-              multiline={true}
-              numberOfLines={4}
-              editable={true}
-              onChangeText={(text) => setDetails(text)}>
-            </TextInput>
-          </View>
-        </View>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
 
     </GradientBackground >
@@ -225,25 +262,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 5,
-    marginTop: 100
+    marginTop: 120,
+    marginBottom: 30
+
   },
+
 
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed
-    width: width + 30,
-    bottom: 10
+    width: width * 0.9,
+    // bottom: 10,
+    heigh: 150,
+    width: 150,
+    paddingTop: 20,
+    paddingBottom: 30
+
   },
   picture: {
     flex: 1,
-    width: width,
-    height: height,
+    width: '100%',
+    height: '10%',
     padding: 5,
     borderRadius: 20,
+    // transform: [{ scaleX: -1 }]
+    // scaleX:-1
+    // position: 'absolute'
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
@@ -251,14 +299,21 @@ const styles = StyleSheet.create({
   },
   event: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    height: '70%',
-    marginTop: 20
+    height: '75%',
+    paddingBottom: 20,
+
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -267,7 +322,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    resizeMode: "contain"
+    resizeMode: "contain",
+
   },
 
   locationText: {
@@ -281,20 +337,23 @@ const styles = StyleSheet.create({
     left: 10,
     marginTop: 10
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
 
-  },
   addComment: {
-
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
     borderRadius: 15,
     backgroundColor: '#F5F5F5',
     margin: 5,
     padding: 10,
-    // width:'95%'
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+    // position:'relative',
   },
   img: {
     height: 40,
@@ -303,6 +362,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
+
   },
   text: {
     fontSize: 16,
@@ -328,7 +388,7 @@ const styles = StyleSheet.create({
     left: 50,
     paddingBottom: 10,
     width: '75%',
-
+    // position:'absolute'
   },
 
   icon: {
@@ -345,6 +405,41 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row-reverse'
 
-  }
+  },
+  headerContainer: {
+    top: 120,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#e1e1e1',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  }, btnModal: {
+    marginVertical: 10,
+    width: "25%",
+    alignSelf: 'center',
+    paddingVertical: 1,
+    paddingHorizontal: 3,
+    borderColor: '#8FBC8F',
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: '#8FBC8F',
+    //margin: 2
+
+  }, textModal1: {
+    fontSize: 15,
+    alignSelf: 'center',
+
+  },
 
 });

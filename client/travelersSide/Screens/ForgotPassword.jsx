@@ -48,7 +48,6 @@ export default function ForgotPassword() {
                 </TouchableOpacity>
                 <Text style={styles.title}>Forgot Your Password?</Text>
 
-                {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input}
                     placeholder="User Email"
@@ -154,8 +153,6 @@ const styles = StyleSheet.create({
         borderColor: '#144800',
         borderWidth: 1,
         borderRadius: 25,
-
-
     },
     error: {
         color: 'red'
@@ -166,6 +163,5 @@ const styles = StyleSheet.create({
     button: {
         left: 5,
         top: 30,
-
     }
 });

@@ -82,9 +82,9 @@ export default function TimeLine(props) {
                 renderDetail={(rowData) => (
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{ flex: 1 }}>
+                        <Text style={[styles.title]}>{rowData.Details}</Text>
                             <Text style={[styles.date]}>{rowData.EventDate.substring(0, 10)}</Text>
                             <Text style={[styles.time]}>{rowData.EventTime.substring(0, 5)}</Text>
-                            <Text style={[styles.title]}>{rowData.Details}</Text>
                             <View style={styles.descriptionContainer}>
                                 <Image source={{ uri: rowData.Picture }} style={styles.image} />
                             </View>
@@ -103,27 +103,40 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        paddingTop: 130,
+        paddingTop: 120,
         backgroundColor: 'white',
-    },
-    time: {
+      },
+      time: {
         fontSize: 14,
         fontWeight: 'bold',
         marginBottom: 5,
-        fontSize: 16,
+        color: 'gray',
+      },
+      list: {
+        flex: 1,
+        marginTop: 90,
+      },
+      date: {
+        fontSize: 14,
         fontWeight: 'bold',
-    },
-    descriptionContainer: {
+        marginBottom: 5,
+        color: 'gray',
+      },
+      title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+      descriptionContainer: {
         flexDirection: 'row',
         paddingRight: 50,
-    },
-    image: {
+      },
+      image: {
         width: 50,
         height: 50,
         //  borderRadius: 25,
-    },
-    textDescription: {
+      },
+      textDescription: {
         marginLeft: 10,
         color: 'gray',
-    },
+      },
 });    
