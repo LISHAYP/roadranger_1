@@ -4842,3 +4842,62 @@
  2023-07-14 18:13:07.6723 ERROR: אובייקט שיכול להיות Null חייב להיות בעל ערך.
  2023-07-14 18:34:22.1347 ERROR: אובייקט שיכול להיות Null חייב להיות בעל ערך.
  2023-07-18 20:57:50.8559 ERROR: Stakeholder with ID: 0 was not found
+ 2023-07-18 21:32:56.1608 INFO: new event was added to the database!
+ 2023-07-18 21:34:04.7182 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:04.7182 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:04.7477 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:04.7477 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:04.7630 INFO: Push notification sent to traveler ID: 94, Event ID: 1003, Response: {"data":{"status":"error","message":"\"abcdef12345\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"abcdef12345"}}}
+ 2023-07-18 21:34:04.7985 INFO: Push notification sent to traveler ID: 80, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:04.7985 INFO: Push notification sent to traveler ID: 96, Event ID: 1003, Response: {"data":{"status":"error","message":"\"hijklm54321\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"hijklm54321"}}}
+ 2023-07-18 21:34:04.8265 INFO: Push notification failed for traveler ID: 96, Event ID: 1003, Status: error
+ 2023-07-18 21:34:04.8265 INFO: Push notification failed for traveler ID: 94, Event ID: 1003, Status: error
+ 2023-07-18 21:34:04.8265 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-18 21:34:04.8441 INFO: Push notification sent to traveler ID: 104, Event ID: 1003, Response: {"data":{"status":"error","message":"\"cdefgh24682\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"cdefgh24682"}}}
+ 2023-07-18 21:34:04.8441 INFO: Push notification failed for traveler ID: 104, Event ID: 1003, Status: error
+ 2023-07-18 21:34:04.8441 INFO: Push notification sent to traveler ID: 105, Event ID: 1003, Response: {"data":{"status":"error","message":"\"ijklmn86421\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"ijklmn86421"}}}
+ 2023-07-18 21:34:04.8502 INFO: Push notification failed for traveler ID: 105, Event ID: 1003, Status: error
+ 2023-07-18 21:34:04.8843 INFO: Push notification sent to traveler ID: 78, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:04.9257 INFO: Push notification sent to traveler ID: 108, Event ID: 1003, Response: {"data":{"status":"error","message":"\"bcdefg52963\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"bcdefg52963"}}}
+ 2023-07-18 21:34:04.9268 INFO: Push notification failed for traveler ID: 108, Event ID: 1003, Status: error
+ 2023-07-18 21:34:04.9589 INFO: Push notification sent to traveler ID: 103, Event ID: 1003, Response: {"data":{"status":"error","message":"\"wxyzab52961\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"wxyzab52961"}}}
+ 2023-07-18 21:34:04.9589 INFO: Push notification failed for traveler ID: 103, Event ID: 1003, Status: error
+ 2023-07-18 21:34:05.0038 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:05.0044 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:05.0044 INFO: Push notification sent to traveler ID: 99, Event ID: 1003, Response: {"data":{"status":"error","message":"\"zabcd24680\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"zabcd24680"}}}
+ 2023-07-18 21:34:05.0240 INFO: Push notification failed for traveler ID: 99, Event ID: 1003, Status: error
+ 2023-07-18 21:34:05.0044 INFO: Push notification sent to traveler ID: 101, Event ID: 1003, Response: {"data":{"status":"error","message":"\"klmnop97531\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"klmnop97531"}}}
+ 2023-07-18 21:34:05.0473 INFO: Push notification failed for traveler ID: 101, Event ID: 1003, Status: error
+ 2023-07-18 21:34:05.0734 INFO: Push notification sent to traveler ID: 81, Event ID: 1003, Response: {"data":{"status":"ok","id":"a26154c5-fd06-43ac-aadc-d748f31e47aa"}}
+ 2023-07-18 21:34:05.0972 INFO: Push notification sent to traveler ID: 55, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:06.1686 INFO: Push notification sent to traveler ID: 53, Event ID: 1003, Response: {"data":{"status":"ok","id":"20189871-d75e-481a-87b2-3ac48b3b5353"}}
+ 2023-07-18 21:34:06.1686 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-18 21:34:06.2109 INFO: Push notification sent to traveler ID: 102, Event ID: 1003, Response: {"data":{"status":"error","message":"\"qrstuv71428\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"qrstuv71428"}}}
+ 2023-07-18 21:34:06.2109 INFO: Push notification failed for traveler ID: 102, Event ID: 1003, Status: error
+ 2023-07-18 21:34:06.2412 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-18 21:34:07.9922 INFO: Push notification sent to traveler ID: 100, Event ID: 1003, Response: {"data":{"status":"error","message":"\"efghij86420\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"efghij86420"}}}
+ 2023-07-18 21:34:07.9922 INFO: Push notification failed for traveler ID: 100, Event ID: 1003, Status: error
+ 2023-07-18 21:34:08.0049 INFO: Push notification sent to traveler ID: 10, Event ID: 1003, Response: {"data":{"status":"ok","id":"b69e47b5-9637-4c40-8090-84df9e2ef4d9"}}
+ 2023-07-18 21:34:08.0381 INFO: Push notification sent to traveler ID: 61, Event ID: 1003, Response: {"data":{"status":"ok","id":"4a6f71bb-5348-4ae4-b267-2c1eefeb651d"}}
+ 2023-07-18 21:34:08.0303 INFO: Push notification sent to traveler ID: 98, Event ID: 1003, Response: {"data":{"status":"error","message":"\"tuvwxy13579\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"tuvwxy13579"}}}
+ 2023-07-18 21:34:08.0381 INFO: Push notification failed for traveler ID: 98, Event ID: 1003, Status: error
+ 2023-07-18 21:34:08.0847 INFO: Push notification sent to traveler ID: 106, Event ID: 1003, Response: {"data":{"status":"error","message":"\"opqrstu97532\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"opqrstu97532"}}}
+ 2023-07-18 21:34:09.2898 INFO: Push notification failed for traveler ID: 106, Event ID: 1003, Status: error
+ 2023-07-18 21:34:10.2456 INFO: Push notification sent to traveler ID: 95, Event ID: 1003, Response: {"data":{"status":"error","message":"\"uvwxyz67890\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"uvwxyz67890"}}}
+ 2023-07-18 21:34:11.0462 INFO: Push notification failed for traveler ID: 95, Event ID: 1003, Status: error
+ 2023-07-18 21:34:11.0462 INFO: Push notification sent to traveler ID: 97, Event ID: 1003, Response: {"data":{"status":"error","message":"\"nopqrs98765\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"nopqrs98765"}}}
+ 2023-07-18 21:34:12.0144 INFO: Push notification failed for traveler ID: 97, Event ID: 1003, Status: error
+ 2023-07-18 21:34:11.0462 INFO: Push notification sent to traveler ID: 54, Event ID: 1003, Response: {"data":{"status":"ok","id":"1bec296e-b70f-457a-b0ce-a585e780c432"}}
+ 2023-07-18 21:34:09.3094 ERROR: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:12.8165 ERROR: Exception occurred during the POST request: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:13.7004 INFO: Push notification sent to traveler ID: 53, Event ID: 1003
+ 2023-07-18 21:34:14.7250 INFO: Push notification sent to traveler ID: 107, Event ID: 1003, Response: {"data":{"status":"error","message":"\"vwxyza71429\" is not a registered push notification recipient","details":{"error":"DeviceNotRegistered","expoPushToken":"vwxyza71429"}}}
+ 2023-07-18 21:34:15.4724 INFO: Push notification failed for traveler ID: 107, Event ID: 1003, Status: error
+ 2023-07-18 21:34:12.8098 INFO: Push notification sent to traveler ID: 10, Event ID: 1003
+ 2023-07-18 21:34:12.8098 INFO: Push notification sent to traveler ID: 61, Event ID: 1003
+ 2023-07-18 21:34:13.7004 INFO: Push notification sent to traveler ID: 81, Event ID: 1003
+ 2023-07-18 21:34:16.3490 INFO: Push notification sent to traveler ID: 51, Event ID: 1003, Response: error: קוד מצב תגובה לא מציין הצלחה: 400 (Bad Request).
+ 2023-07-18 21:34:16.3819 ERROR: Unexpected character encountered while parsing value: e. Path '', line 0, position 0.
+ 2023-07-18 21:34:16.3819 INFO: Push notification sent to traveler ID: 54, Event ID: 1003
+ 2023-07-18 21:34:21.8010 INFO: Push notification sent to traveler ID: 8, Event ID: 1003, Response: {"data":{"status":"ok","id":"7592b1b4-c96f-4df4-a9c3-1a91854c68af"}}
+ 2023-07-18 21:34:24.8191 INFO: Push notification sent to traveler ID: 8, Event ID: 1003
