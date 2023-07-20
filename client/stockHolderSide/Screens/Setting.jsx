@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import RoadRanger from '../assets/RoadRanger.png';
@@ -45,10 +45,10 @@ export default function Setting(props) {
     StakeholderName: satkeholder_name,
     StakeholderEmail: stakeholder_email,
     Phone: phone,
-    Notifications: isEnabledNotification,
+    Notifications: false,
     stakeholderType: selectedStakeholderType,
     password: password,
-    chat: isEnabledChatMode,
+    chat: false,
     picture: userPic,
     token: token
   };
@@ -66,10 +66,9 @@ export default function Setting(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("ddddddddd",data); // stakeholder updated successfully.
+        console.log("ddddddddd", data); // stakeholder updated successfully.
         Alert.alert('Stakeholder updated successfully')
         navigation.goBack(); // Navigate back to the "Around You" screen
-        //console.log({ newEvent })
       })
       .catch((error) => {
         console.error(error);
@@ -86,50 +85,26 @@ export default function Setting(props) {
     setUserPic(`${cgroup90}/uploadUserPic/U_${stakeholder.StakeholderEmail}.jpg`);
   }
   return (
-    < GradientBackground> 
-        <Navbar stakeholder={stakeholder} />
-        <BackButton text="Setting"/>
+    < GradientBackground>
+      <Navbar stakeholder={stakeholder} />
+      <BackButton text="Setting" />
+      <ScrollView>
         <View style={styles.container}>
           <TouchableOpacity onPress={openCamera}>
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
           </TouchableOpacity >
 
-          {/* <Text style={styles.text}>Stakeholder Type:</Text>
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            data={stakeholderType}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={stakeholder.StakeholderType}
-            value={selectedStakeholderType}
-            onChange={item => {
-              setSelectedStakeholderType(item.label)
-            }} /> */}
-
           <Text style={styles.text}>stakeholder Name:</Text>
           <TextInput style={styles.input}
-            //value={StakeholderName}
             onChangeText={(text) => setStakeholderName(text)}
             placeholder={stakeholder.StakeholderName}>
           </TextInput>
 
           <Text style={styles.text}>Company Full Name:</Text>
           <TextInput style={styles.input}
-            // value={FullName}
             onChangeText={(text) => setFullName(text)}
             placeholder={stakeholder.FullName}>
           </TextInput>
-
-
-          {/* <Text style={styles.text}>Email:</Text>
-          <TextInput style={styles.input}
-            // value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder={stakeholder.StakeholderEmail}>
-          </TextInput> */}
 
           <Text style={styles.text}>Phone:</Text>
           <TextInput style={styles.input}
@@ -143,33 +118,11 @@ export default function Setting(props) {
           <Text style={styles.text}>Password:</Text>
           <TextInput style={styles.input}
             placeholder={stakeholder.Password}
-            // value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}>
           </TextInput>
 
-          <View style={styles.row}>
-            <Text style={styles.text2}>Notification</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={stakeholder.notifications ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotification}
-              value={isEnabledNotification}
-            />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.text2}>Chat Mode</Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{ false: "#767577", true: "#8FBC8F" }}
-              thumbColor={stakeholder.chat ? "#f4f3f4" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchChatMode}
-              value={isEnabledChatMode}
-            />
-          </View>
+
 
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>
@@ -177,7 +130,9 @@ export default function Setting(props) {
             </Text>
           </TouchableOpacity>
         </View>
-      </GradientBackground>
+      </ScrollView>
+
+    </GradientBackground>
   )
 }
 const styles = StyleSheet.create({
@@ -187,7 +142,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-    paddingTop:100
+    paddingTop: 100,
+    paddingBottom: 300,
+
   },
   RoadRanger: {
     alignSelf: 'center',
@@ -221,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     width: 150,
     marginBottom: 25,
-    
+
   },
   btnText: {
     color: '#F8F8FF',
@@ -313,8 +270,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#144800',
     shadowColor: "#000",
     shadowOffset: {
-    width: 0,
-    height: 4},
+      width: 0,
+      height: 4
+    },
     shadowOpacity: 0.30,
     shadowRadius: 4.65,
     elevation: 8,

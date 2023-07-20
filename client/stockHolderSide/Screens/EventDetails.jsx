@@ -275,7 +275,8 @@ const styles = StyleSheet.create({
     heigh: 150,
     width: 150,
     paddingTop: 20,
-    paddingBottom: 30
+    paddingBottom: 30,
+
 
   },
   picture: {

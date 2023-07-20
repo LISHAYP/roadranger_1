@@ -146,8 +146,7 @@ const styles = StyleSheet.create({
 
     },
     icon1: {
-        // alignSelf: 'center',
-        color: '#144800',
+         color: '#144800',
         alignItems: 'center',
         size: 30,
         top: 10
@@ -192,7 +191,8 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 5,
         height: '100%',
-        alignContent: 'center',
+        marginTop:150,
+        // alignContent: 'center',
     },
     optionSOS: {
         alignContent: 'center',
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
         elevation: 4,
+        
     },
     text: {
         color: '#144800',
@@ -273,6 +274,7 @@ const styles = StyleSheet.create({
         color: '#144800',
         alignItems: 'center',
         size: 30,
+        marginTop:10
 
 
     },
