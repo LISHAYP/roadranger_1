@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import { AntDesign } from '@expo/vector-icons';
-import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { getCenter } from 'geolib';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
 import { LocationContext } from '../Context/LocationContext';
@@ -25,7 +21,6 @@ export default function AroundYou(props) {
         React.useCallback(() => {
             setStakeholderId(stakeholder.StakeholderId)
             handleGet();
-            // console.log("jjjjj",stakeholder.StakeholderId)
             return () => {
             };
         }, [isMenuOpen])
@@ -35,7 +30,6 @@ export default function AroundYou(props) {
         const stakeholderIdObj = {
             StakeholderId: stakeholderId,
         };
-        console.log("jjjjjj",stakeholderIdObj);
         fetch(`${cgroup90}/api/stakeholder/details`, {
             method: 'POST',
             headers: {
@@ -54,24 +48,6 @@ export default function AroundYou(props) {
 );
 
     const [Events, setEvents] = useState([])
-    // const getUserLocation = async () => {
-    //     const userlocation = await Location.getCurrentPositionAsync();
-    //     setUserLocation(userlocation); // Save user location in state
-
-    // };
-    // useEffect(() => {
-    //     (async () => {
-    //         let { status } = await Location.requestForegroundPermissionsAsync();
-    //         if (status !== 'granted') {
-    //             console.log('Permission denied');
-    //         }
-    //         let location = await Location.getCurrentPositionAsync({});
-    //         setLocation(location);
-    //         handleGet();
-    //         getUserLocation();
-
-    //     })();
-    // }, [])
 
 
     const handleGet = () => {
@@ -127,11 +103,8 @@ export default function AroundYou(props) {
                 <View style={styles.textContainer}>
                     <Text style={styles.titlename}>Hello, {stakeholder.FullName} !</Text>
                 </View>
-
             </View>
-
             <Navbar stakeholder={stakeholder} />
-
             {location && location.coords && (
                 <MapView
                     style={styles.map}
@@ -162,86 +135,9 @@ export default function AroundYou(props) {
                             navigation.navigate('TimeLine', { event, stakeholder });
                         }}
                     />
-
                     ))}
-
                 </MapView>
-
             )}
-            {/* <Modal
-                visible={isMenuOpen}
-                animationType='slide'
-                transparent={true}
-                onRequestClose={() => setIsMenuOpen(false)}
-            >
-                {isMenuOpen && (
-                    <View style={styles.menu}>
-                        <TouchableOpacity style={styles.btnLogOut} onPress={() => {
-                            navigation.navigate("Sign In"), setIsMenuOpen(false);
-                        }}>
-                            <Text style={styles.textLO} > Log out  </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
-                            <AntDesign name="close" size={24} color="black" />
-                        </TouchableOpacity>
-
-                        <View style={styles.optionsContainer}>
-                            <TouchableOpacity style={styles.option}
-                                onPress={() => { navigation.navigate("Home chat", { stakeholder: stakeholder }), setIsMenuOpen(false) }}
-                            >
-
-                                <Icon name="chatbubble-ellipses-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>Chat</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.option}
-                                onPress={() => {
-                                    navigation.navigate("New event", {
-                                        stakeholder: stakeholder,
-                                        userLocation: userLocation
-                                    }), setIsMenuOpen(false);
-                                }}
-                            >
-                                <Icon name="add-circle-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>New Warning</Text>
-
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.option}
-                                onPress={() => { navigation.navigate("Your Travelers", { stakeholder }), setIsMenuOpen(false) }}>
-
-                                <Icon name="people-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>Your Travelers</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { stakeholder }), setIsMenuOpen(false) }}>
-                                <Icon name="search-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>Search </Text>
-
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.option}
-                                onPress={() => { navigation.navigate("Setting", { stakeholder }), setIsMenuOpen(false) }}
-                            >
-                                <Icon name="settings-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>Setting</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.option}
-                                onPress={() => {
-                                    navigation.navigate("Warning", {
-                                        stakeholder: stakeholder,
-                                        userLocation: userLocation
-                                    }), setIsMenuOpen(false);
-                                }}
-                            >
-                                <Icon name="warning-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>Warnings </Text>
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-
-                )}
-            </Modal> */}
         </View>
     );
 }
