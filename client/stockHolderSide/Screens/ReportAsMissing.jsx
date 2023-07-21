@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity,  ScrollView, Alert } from 'react-native';
+// import { useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
@@ -15,12 +12,8 @@ export default function ReportAsMissing(props) {
     const stakeholder = props.route.params.stakeholder;
     const traveler = props.route.params.traveler;
     const userLocation = props.route.params.location
-    // console.log("sta", stakeholder)
-    // console.log("loc", userLocation)
-    console.log("tra", traveler)
-    console.log("**********8", userLocation)
-    // console.log(userLocation.Latitude, userLocation.Longitude)
-    const navigation = useNavigation();
+   
+    // const navigation = useNavigation();
 
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
@@ -42,7 +35,6 @@ export default function ReportAsMissing(props) {
                 const addressComponents = json.results[0].address_components;
                 const countryComponent = addressComponents.find(component => component.types.includes('country'));
                 const cityComponent = addressComponents.find(component => component.types.includes('locality'));
-                // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
                 setCountry(countryComponent.long_name);
                 setCity(cityComponent.long_name);
                 addContry();
@@ -110,12 +102,11 @@ export default function ReportAsMissing(props) {
             .then(response => response.json())
             .then(data => {
                 setAreaNumber(data)
-
             }
             )
             .catch(error => {
                 console.error(error);
-                console.log('Error');
+
             });
     }
 
@@ -140,10 +131,8 @@ export default function ReportAsMissing(props) {
                 .then(data => {
                     // Handle the response data as needed
                     Alert.alert('Missing')
-                    navigation.goBack();
                 })
                 .catch(error => {
-                    console.error(error);
                     Alert.alert('Error', error);
                 });
         }
@@ -163,8 +152,6 @@ export default function ReportAsMissing(props) {
             .then(response => response.json())
             .then(data => {
                 // Handle the response data as needed              
-
-
             })
             .catch(error => {
                 console.error(error);

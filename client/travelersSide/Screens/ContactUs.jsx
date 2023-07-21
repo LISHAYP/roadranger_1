@@ -19,7 +19,6 @@ export default function ContactUs() {
         { label: 'Create a stakeholder', value: '4' },
         { label: 'Faults', value: '5' },
     ]
-    const [value, setValue] = useState(null);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -75,7 +74,6 @@ export default function ContactUs() {
             .then(response => response.json())
             .then(data => {
                 // Handle the response data as needed
-                console.log("lllllllllllll", data);
                 Alert.alert('Thank you for your message. Your message is important to us :)')
                 setDetails('')
                 setEmail('')
@@ -84,7 +82,6 @@ export default function ContactUs() {
                 setRequestType('')
                 setPhoneNumber('')
                 navigation.goBack()
-
             })
             .catch(error => {
                 console.error(error);

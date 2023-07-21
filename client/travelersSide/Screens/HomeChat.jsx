@@ -187,7 +187,7 @@ const HomeChat = (props) => {
                           }}>
                             <View style={styles.row}>
                               <Image style={styles.img} source={{ uri: traveler1.Picture }} />
-                              <Text style={styles.text}>{traveler1.first_name} </Text>
+                              <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
                             </View>
                           </TouchableOpacity>
                         ))}

@@ -17,15 +17,15 @@ export default function YourTravelers(props) {
   Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
   const stakeholder = props.route.params.stakeholder;
-  
+
 
   const [myTravelers, setMyTravelers] = useState([])
-  console.log("*****************",stakeholder)
-  
+  console.log("*****************", stakeholder)
+
   useEffect(() => {
-    console.log("----------",stakeholder.StakeholderType)
+    console.log("----------", stakeholder.StakeholderType)
     if (stakeholder.StakeholderType == 'Insurance Company') {
-      console.log("----------","Insurance Company" )
+      console.log("----------", "Insurance Company")
 
       stackholderTypeInsurence()
     }
@@ -60,18 +60,16 @@ export default function YourTravelers(props) {
           });
         })).then(travelersWithAddress => {
           setMyTravelers(travelersWithAddress);
-
         });
       });
-
   }
 
-
+  console.log("#####################", myTravelers)
   const stackholderTypeInsurence = () => {
     const objInsuranceCompany = {
       insurence_company: stakeholder.StakeholderName
     }
-    console.log("============",objInsuranceCompany)
+    console.log("============", objInsuranceCompany)
     fetch(`${cgroup90}/api/post/GetTravelersByInsuranceCompanyNLL`, {
       method: 'POST',
       headers: {
@@ -120,9 +118,9 @@ export default function YourTravelers(props) {
     < GradientBackground>
       <BackButton text="My Travelers" />
       <Navbar stakeholder={stakeholder} />
-      <View style={styles.container}>
-      
-        <ScrollView>
+      <ScrollView>
+
+        <View style={styles.container}>
           {myTravelers.length > 0 && (
             myTravelers.map((traveler, index) => (
               <View key={index} style={styles.commentContainer}>
@@ -139,9 +137,8 @@ export default function YourTravelers(props) {
               </View>
             ))
           )}
-        </ScrollView>
-
-      </View>
+        </View>
+      </ScrollView>
     </GradientBackground>
   )
 }
@@ -154,7 +151,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-
+    marginBottom: 100
   },
   commentContainer: {
     borderColor: '#DCDCDC',

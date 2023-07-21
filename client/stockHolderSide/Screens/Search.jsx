@@ -90,7 +90,6 @@ export default function Search(props) {
         .then(data => {
           // Handle the response data as needed
           setEvents(data)
-          console.log(data);
           navigation.navigate("Events", { data: data, stakeholder: stakeholder });
         })
         .catch(error => {

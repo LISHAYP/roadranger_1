@@ -17,25 +17,15 @@ export default function Setting(props) {
 
   const navigation = useNavigation();
   const [full_name, setFullName] = useState(stakeholder.FullName);
-  const [satkeholder_name, setStakeholderName] = useState(stakeholder.StakeholderName);
-  const [stakeholder_email, setEmail] = useState(stakeholder.StakeholderEmail);
+  const satkeholder_name= stakeholder.StakeholderName;
+  const stakeholder_email=stakeholder.StakeholderEmail;
   const [password, setPassword] = useState(stakeholder.Password);
   const [phone, setPhone] = useState(stakeholder.Phone);
   const [userPic, setUserPic] = useState(stakeholder.picture)
   const [token, setToken] = useState(null);
-  const stakeholderType = [
-    { label: 'Insurance Company', value: 'Insurance Company' },
-    { label: 'Embassy', value: 'Embassy' },
-    { label: 'Rescue company', value: 'Rescue company' },
-    { label: 'Other', value: 'Other' },
-  ]
-  const [value, setValue] = useState(null);
 
-  const [isEnabledChatMode, setIsEnabledChatMode] = useState(stakeholder.Chat);
-  const [isEnabledNotification, setIsEnabledNotification] = useState(stakeholder.Notifications);
-  const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.StakeholderType);
-  const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
-  const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
+  const selectedStakeholderType=stakeholder.StakeholderType
+
   useEffect(() => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${stakeholder_email}.jpg`);
 
@@ -53,9 +43,7 @@ export default function Setting(props) {
     token: token
   };
 
-  console.log("*****", changeStakeholder);
   const saveChanges = async () => {
-    console.log("IM IN saveChanges", changeStakeholder);
     fetch(`${cgroup90}/api/put/stakeholder/update?email=${stakeholder.StakeholderEmail}`, {
       method: 'PUT',
       headers: {
@@ -66,7 +54,6 @@ export default function Setting(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("ddddddddd", data); // stakeholder updated successfully.
         Alert.alert('Stakeholder updated successfully')
         navigation.goBack(); // Navigate back to the "Around You" screen
       })
@@ -77,7 +64,6 @@ export default function Setting(props) {
   const id = stakeholder.stakeholder_id;
 
   const openCamera = () => {
-    console.log("ereeeee", stakeholder_email);
     navigation.navigate('Camera', stakeholder_email);
     handleSavePhoto();
   }
@@ -94,13 +80,7 @@ export default function Setting(props) {
             <Image source={{ uri: stakeholder.picture }} style={styles.user} />
           </TouchableOpacity >
 
-          <Text style={styles.text}>stakeholder Name:</Text>
-          <TextInput style={styles.input}
-            onChangeText={(text) => setStakeholderName(text)}
-            placeholder={stakeholder.StakeholderName}>
-          </TextInput>
-
-          <Text style={styles.text}>Company Full Name:</Text>
+          <Text style={styles.text}>Full Name:</Text>
           <TextInput style={styles.input}
             onChangeText={(text) => setFullName(text)}
             placeholder={stakeholder.FullName}>
@@ -121,8 +101,6 @@ export default function Setting(props) {
             onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}>
           </TextInput>
-
-
 
           <TouchableOpacity style={styles.btnSave} onPress={saveChanges}>
             <Text style={styles.btnText}>

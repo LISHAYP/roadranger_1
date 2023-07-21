@@ -8,7 +8,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
-import BackButton from '../Components/BackButton';
+import { cgroup90 } from '../cgroup90';
 
 
 export default function ContactUs() {
@@ -63,7 +63,7 @@ export default function ContactUs() {
 
             return;
         }
-        fetch(`${cgroup90}/prod/api/newcontactus`, {
+        fetch(`${cgroup90}/api/newcontactus`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,13 +76,14 @@ export default function ContactUs() {
             .then(data => {
                 // Handle the response data as needed
                 console.log("lllllllllllll", data);
-                Alert.alert('Publish')
+                Alert.alert('Thank you for your message. Your message is important to us :)')
                 setDetails('')
                 setEmail('')
                 setFirstName('')
                 setLastName('')
                 setRequestType('')
                 setPhoneNumber('')
+                navigation.goBack()
 
             })
             .catch(error => {
@@ -92,13 +93,15 @@ export default function ContactUs() {
     }
     return (
         < GradientBackground>
-         <BackButton text={"Contact Us"}/>
+
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.container}
             >
-               
                 <ScrollView>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                        <Icon name="arrow-back-outline" size={35} color='#144800' />
+                    </TouchableOpacity>
                     <View style={styles.container}>
                         <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
                         {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
-        paddingTop:50
+        marginTop: 20
     },
 
     RoadRanger: {
@@ -255,5 +258,10 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         minHeight: 120,
         textAlign: 'top',
+    },
+    button: {
+        left: 5,
+        top: 30,
+        marginBottom:20
     },
 });

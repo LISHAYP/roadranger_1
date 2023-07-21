@@ -1,6 +1,6 @@
 import { Camera, CameraType } from 'expo-camera';
 import React, { useState } from 'react';
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View,Alert } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -79,7 +79,7 @@ export default function OpenCameraE(props) {
   const openGallery = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      Alert.alert("Permission to access camera roll is required!");
       return;
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -124,7 +124,7 @@ export default function OpenCameraE(props) {
 
 const savePhoto = () => {
   console.log('img', true);
-alert("your picture has uploaded :)")
+Alert.alert("your picture has uploaded :)")
   navigation.goBack();
 };
 const closeCamera = () => {
