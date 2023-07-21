@@ -509,7 +509,7 @@ namespace WebApplication1.Controllers
                 {
                     // Retrieve the relevant event for the missing traveler
                     var missingEvent = db.tblEvents.FirstOrDefault(e =>
-                        e.travelerId == travelerid.traveler_id && e.stackholderId != null && e.serialTypeNumber == 1003);
+                        e.travelerId == travelerid.traveler_id && e.stackholderId != null && e.serialTypeNumber == 1003 && e.event_status==true);
 
                     // If the associated event is found, add the traveler and event details to the list
                     if (missingEvent != null)
@@ -580,6 +580,98 @@ namespace WebApplication1.Controllers
             }
         }
 
+        // POST: api/post/AllMissingTravelers
+        [HttpPost]
+        [Route("api/post/AllMissingTravelers")]
+        public IHttpActionResult AllMissingTravelers()
+        {
+            try
+            {
+                // Retrieve all missing travelers
+                var missingTravelers = db.traveleres.Where(t => t.missing == true).ToList();
+
+                // If no missing travelers are found, return a response indicating there are no missing travelers
+                if (missingTravelers.Count == 0)
+                {
+                    return Ok("There are no missing travelers");
+                }
+
+                var missingDetailsList = new List<object>();
+
+                foreach (var traveler in missingTravelers)
+                {
+                    // Retrieve the associated event for the missing traveler
+                    var missingEvent = db.tblEvents.FirstOrDefault(e =>
+                        e.travelerId == traveler.traveler_id && e.stackholderId != null && e.serialTypeNumber == 1003 && e.event_status == true);
+
+                    // If the associated event is found, add the traveler and event details to the list
+                    if (missingEvent != null)
+                    {
+                        var travelerDto = new TravelerDto
+                        {
+                            traveler_id = traveler.traveler_id,
+                            first_name = traveler.first_name,
+                            last_name = traveler.last_name,
+                            travler_email = traveler.travler_email,
+                            phone = traveler.phone,
+                            notifications = traveler.notifications,
+                            insurence_company = traveler.insurence_company,
+                            location = traveler.location,
+                            save_location = traveler.save_location,
+                            dateOfBirth = traveler.dateOfBirth,
+                            gender = traveler.gender,
+                            password = traveler.password,
+                            chat = traveler.chat,
+                            Picture = traveler.picture,
+                            token = traveler.token,
+                            missing = traveler.missing
+                        };
+
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = missingEvent.eventNumber,
+                            Details = missingEvent.details,
+                            EventDate = missingEvent.event_date,
+                            EventTime = missingEvent.event_time,
+                            Latitude = missingEvent.latitude,
+                            Longitude = missingEvent.longitude,
+                            EventStatus = missingEvent.event_status,
+                            Picture = missingEvent.picture,
+                            TravelerId = missingEvent.travelerId,
+                            StackholderId = missingEvent.stackholderId,
+                            SerialTypeNumber = missingEvent.serialTypeNumber,
+                            CountryNumber = missingEvent.country_number,
+                            AreaNumber = missingEvent.area_number,
+                            labels = missingEvent.labels,
+                            is_related = missingEvent.is_related,
+                            approved = missingEvent.approved,
+                            not_approved = missingEvent.not_approved
+                        };
+
+                        var missingDetails = new
+                        {
+                            Traveler = travelerDto,
+                            Event = eventDto
+                        };
+
+                        missingDetailsList.Add(missingDetails);
+                    }
+                }
+
+                // If no missing events were found, return a response indicating there are no missing travelers with events
+                if (missingDetailsList.Count == 0)
+                {
+                    return Ok("There are no missing travelers with events");
+                }
+
+                return Ok(missingDetailsList);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
 
         private string GeneratePassword()
         {
