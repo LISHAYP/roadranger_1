@@ -7,8 +7,8 @@ import BackButton from '../Components/BackButton';
 import Navbar from '../Components/Navbar';
 
 export default function Events(props) {
-  const events = props.route.params.events;
   const traveler = props.route.params.traveler;
+  const events = props.route.params.events;
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
 

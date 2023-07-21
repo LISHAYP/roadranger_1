@@ -56,8 +56,8 @@ export default function SignIn() {
                     })
                         .then((response) => response.json())
                         .then((data1) => {
-                            console.log(data1); // stakeholder updated successfully.
-                            //Alert.alert('Token updated successfully')
+                         // console.log(data1);stakeholder updated successfully.
+                         //Alert.alert('Token updated successfully')
                             navigation.navigate("Around You", {stakeholder: data });
                         })
                         .catch((error) => {

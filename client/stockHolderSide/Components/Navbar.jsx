@@ -98,10 +98,10 @@ function Navbar(props) {
 
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option}
-                                onPress={() => { navigation.navigate("Setting", { stakeholder }), setIsMenuOpen(false) }}
+                                onPress={() => { navigation.navigate("Missing Travelers", { stakeholder }), setIsMenuOpen(false) }}
                             >
-                                <Icon name="settings-outline" size={30} style={styles.icon} />
-                                <Text style={styles.text}>Setting</Text>
+                                  <Icon name="body-outline" size={35} style={styles.icon} />
+                                <Text style={styles.text}>Missing Travelers</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option}
                                 onPress={() => {

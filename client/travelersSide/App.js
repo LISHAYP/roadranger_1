@@ -28,6 +28,8 @@ import Warning from './Screens/Warning';
 import LocationContextProvider from './Context/LocationContext'
 import EventsContextProvider from './Context/EventsContext';
 import SOS from './Screens/SOS';
+import MissingTravelers from './Screens/MissingTravelers';
+import MissingDetails from './Screens/MissingDetails';
 const Stack = createNativeStackNavigator()
 
 export default function App() {
@@ -61,6 +63,8 @@ export default function App() {
             <Stack.Screen name="Chat withSH" component={ChatWithSH} />
             <Stack.Screen name="Warning" component={Warning} />
             <Stack.Screen name="SOS" component={SOS} />
+            <Stack.Screen name="Missing Travelers" component={MissingTravelers} />
+            <Stack.Screen name="Missing Details" component={MissingDetails} />
 
           </Stack.Navigator>
         </NavigationContainer>
