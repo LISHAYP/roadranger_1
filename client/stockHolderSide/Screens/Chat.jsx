@@ -24,7 +24,7 @@ export default function Chat(props) {
     const [isStackholder, setisStackhold] = useState(true);
 
     console.log('im the logged user', userLogged);
-    console.log('im the chosen one!', chosenUser);
+   // console.log('im the chosen one!', chosenUser);
 
     const onSignOut = () => {
         signOut(auth).catch(error => console.log(error));
@@ -113,38 +113,43 @@ export default function Chat(props) {
 
     const onSend = useCallback(async (newMessages = []) => {
         const messagesRef = chatRoomDocRef ? collection(database, `chat_rooms/${chatRoomDocRef.id}/messages`) : null;
+        
         if (messagesRef) {
-            const isStakeholder = !!userLogged.StakeholderId;
-            setisStackhold(isStackholder) // check if user is a stakeholder
-            const promises = newMessages.map((message) => {
-                const createdAt = new Date();
-                const messageData = {
-                    _id: uuidv4(), // add the generated ID to the message object
-                    text: message.text,
-                    createdAt: createdAt,
-                    user: {
-                        _id: isStackholder ? `99${userLogged.StakeholderId}` : userLogged.traveler_id,
-                        avatar: isStackholder ? userLogged.picture : userLogged.Picture
-                    }
-                };
-                setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-                // handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
-                console.log("*********", chosenUser)
-                return addDoc(messagesRef, messageData);
+          const isStakeholder = !!userLogged.StakeholderId;
+          setisStackhold(isStackholder); // check if user is a stakeholder
+      
+          try {
+            const promises = newMessages.map(async (message) => {
+              const createdAt = new Date();
+              const messageData = {
+                _id: uuidv4(), // add the generated ID to the message object
+                text: message.text,
+                createdAt: createdAt,
+                user: {
+                  _id: isStackholder ? `99${userLogged.StakeholderId}` : userLogged.traveler_id,
+                  avatar: isStackholder ? userLogged.picture : userLogged.Picture,
+                },
+              };
+      
+              console.log("*********", chosenUser.token, messageData);
+              await handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
+      
+              setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
+      
+              return addDoc(messagesRef, messageData);
             });
-
-            Promise.all(promises)
-                .then(() => {
-                    console.log('Messages sent');
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+      
+            await Promise.all(promises);
+            console.log('Messages sent');
+          } catch (error) {
+            console.error('Error sending messages:', error);
+          }
         }
-    }, [userLogged, chosenUser, chatRoomDocRef]);
+      }, [userLogged, chosenUser, chatRoomDocRef]);
+      
 
 
-    const handlePushNotification = async (message, recipientToken) => {
+    const handlePushNotification =  (message, recipientToken) => {
         // Construct the message payload
         const notification = {
             to: recipientToken,

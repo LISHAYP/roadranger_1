@@ -130,7 +130,7 @@ const [isStackholder, setisStackhold] = useState(false);
                 };
                 setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
                handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
-                console.log("*********", chosenUser)
+                console.log("*********", chosenUser.token, messageData)
                 return addDoc(messagesRef, messageData);
             });
 
@@ -149,7 +149,7 @@ const [isStackholder, setisStackhold] = useState(false);
         // Construct the message payload
         const notification = {
             to: recipientToken,
-            title: `New message from  `,
+            title: `New message from traveler`,
             body: message.text,
             data: { chatRoomDocRefId: chatRoomDocRef.id },
         };
