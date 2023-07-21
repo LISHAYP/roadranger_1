@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
@@ -7,8 +7,8 @@ import BackButton from '../Components/BackButton';
 import Navbar from '../Components/Navbar';
 
 export default function Events(props) {
-  const events = props.route.params.events;
   const traveler = props.route.params.traveler;
+  const events = props.route.params.events;
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
 

@@ -172,9 +172,8 @@ export default function SignIn() {
 
     return (
         < GradientBackground>
-
-
             <View style={styles.container}>
+                <Text>Traveler</Text>
                 <Image source={RoadRanger} style={styles.RoadRanger} />
 
                 <View style={styles.frame}>

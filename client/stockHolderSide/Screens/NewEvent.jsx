@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch,Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView,Alert } from 'react-native';
+import {  useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
@@ -11,20 +9,14 @@ import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
 import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 export default function NewEvent(props) {
   const stakeholder = props.route.params.stakeholder;
-  // const userLocation = props.route.params.userLocation
   const navigation = useNavigation();
    console.log("--------------", stakeholder)
-  // const serialType = [
-  //   //creating type of different eventtypes
-  //   { label: 'Missing traveler', value: '1003' },
-  //   { label: 'Travel warning', value: '1004' },
-
-  // ]
+ 
   
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
@@ -36,7 +28,6 @@ export default function NewEvent(props) {
   const serialTypeNumber = 1004;
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
-  const [selectedSerialType, setSelectedSerialType] = useState(null);
   const [location, setLocation] = useState('');
   const [locationFetched, setLocationFetched] = useState(false);
 
@@ -62,10 +53,8 @@ export default function NewEvent(props) {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
         const cityComponent = addressComponents.find(component => component.types.includes('locality'));
-        // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
-        console.log("^^^^^^^^^^^^^^^^^^^^",location.coords.latitude)
        
       })
       .catch(error => console.warn(error))
@@ -157,13 +146,10 @@ export default function NewEvent(props) {
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
-          console.log({ data })
           Alert.alert('Publish')
-          navigation.goBack(); // Navigate back to the "Around You" screen
+          // navigation.goBack(); // Navigate back to the "Around You" screen
         })
         .catch(error => {
-          console.error(error);
           Alert.alert('Error', error);
         });
     }
@@ -285,7 +271,7 @@ const styles = StyleSheet.create({
   },
   photo: {
     marginVertical: 20,
-    width: "80%",
+    width: "60%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -310,17 +296,8 @@ const styles = StyleSheet.create({
     marginRight: 50
 
   },
-  // label: {
-  //   position: 'absolute',
-  //   backgroundColor: 'white',
-  //   left: 22,
-  //   top: 8,
-  //   zIndex: 999,
-  //   paddingHorizontal: 8,
-  //   fontSize: 14,
 
 
-  // },
   placeholderStyle: {
     fontSize: 18,
     color: "#A9A9A9"

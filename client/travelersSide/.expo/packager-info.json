@@ -1,7 +1,7 @@
 {
-  "expoServerPort": 19001,
-  "packagerPort": 19001,
+  "expoServerPort": 19002,
+  "packagerPort": 19002,
   "expoServerNgrokUrl": "https://fd-b2v.orian1996.travelersside.exp.direct",
   "packagerNgrokUrl": "https://fd-b2v.orian1996.travelersside.exp.direct",
-  "ngrokPid": 28616
+  "ngrokPid": 8968
 }

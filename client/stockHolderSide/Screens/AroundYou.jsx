@@ -262,6 +262,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#144800',
         alignItems: 'center',
-        size: 30,
+        // size: 30,
     },
 });

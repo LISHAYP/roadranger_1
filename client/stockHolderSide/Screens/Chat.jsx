@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { async } from "@firebase/util";
 import { cgroup90 } from "../cgroup90";
 import Icon from "react-native-vector-icons/Ionicons";
+import ChatBackground from "../Components/ChatBackground";
 
 export default function Chat(props) {
 
@@ -178,7 +179,7 @@ export default function Chat(props) {
     };
 
     return (
-        <GradientBackground>
+        <ChatBackground>
             <View style={styles.hamburger}>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Icon name="arrow-back-outline" size={30} color='#144800' />
@@ -209,7 +210,7 @@ export default function Chat(props) {
                 )}
 
             </View>
-        </GradientBackground>
+        </ChatBackground>
     )
 }
 

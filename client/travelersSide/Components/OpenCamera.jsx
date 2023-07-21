@@ -93,7 +93,7 @@ export default function OpenCamera(props) {
       setImage(image);
       const pic64base = pickerResult.base64;
       const picName64base = `U_${email}.jpg`;
-      console.log(picName64base);
+      // console.log(picName64base);
       const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
       const formData = new FormData();
       formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });

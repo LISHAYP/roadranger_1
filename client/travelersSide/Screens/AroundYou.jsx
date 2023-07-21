@@ -6,6 +6,7 @@ import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
 import { LocationContext } from '../Context/LocationContext'
 import Navbar from '../Components/Navbar';
+import Icon from "react-native-vector-icons/Ionicons";
 
 
 export default function AroundYou(props) {
@@ -162,6 +163,7 @@ export default function AroundYou(props) {
                         <View style={styles.textContainer}>
                             <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
                         </View>
+                       
                     </View>
 
                     <Navbar traveler={traveler} />

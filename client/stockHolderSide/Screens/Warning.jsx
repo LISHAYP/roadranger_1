@@ -50,7 +50,6 @@ export default function Warning(props) {
             )
         ).then((addresses) => setEventAddresses(addresses));
     }, []);
-    // console.log(eventAddresses)
     return (
         <GradientBackground>
             <Navbar stakeholder={stakeholder}  />
@@ -61,7 +60,6 @@ export default function Warning(props) {
                         onPress={() => {
                             navigation.navigate("New event", {
                                 stakeholder: stakeholder,
-                                // userLocation: userLocation
                             });
                         }}
                     >
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
     },
     btnSave: {
         marginVertical: 20,
-        width: "50%",
+        width: "40%",
         alignSelf: 'center',
         paddingVertical: 10,
         paddingHorizontal: 15,
