@@ -1,7 +1,7 @@
 {
-  "expoServerPort": 19001,
-  "packagerPort": 19001,
+  "expoServerPort": 19003,
+  "packagerPort": 19003,
   "expoServerNgrokUrl": "https://sd-txz.orian1996.stockholderside.exp.direct",
   "packagerNgrokUrl": "https://sd-txz.orian1996.stockholderside.exp.direct",
-  "ngrokPid": 22216
+  "ngrokPid": 24428
 }
