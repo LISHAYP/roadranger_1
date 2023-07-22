@@ -5,6 +5,8 @@
     ],
     "name": "RoadRanger",
     "slug": "RoadRanger",
+    "privacy": "public",
+    "description": "Help travelers report and be updated on events on their location",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/RoadRanger1.png",

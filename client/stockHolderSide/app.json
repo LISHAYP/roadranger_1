@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "Project",
-    "slug": "Project",
+    "name": "RoadRanger-StockHolder",
+    "slug": "RoadRanger-StockHolder",
+    "privacy":"public",
+    "description":"An application that helps travelers connect with insurance companies during trips",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
