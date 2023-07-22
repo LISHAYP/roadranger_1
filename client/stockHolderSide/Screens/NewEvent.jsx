@@ -15,9 +15,6 @@ import * as Location from 'expo-location';
 export default function NewEvent(props) {
   const stakeholder = props.route.params.stakeholder;
   const navigation = useNavigation();
-   console.log("--------------", stakeholder)
- 
-  
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [details, setDetails] = useState('');
@@ -36,11 +33,9 @@ export default function NewEvent(props) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Permission to access location was denied');       
       }
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
-      console.log("&&&&&&&&&", currentLocation);
       setLocationFetched(true); // Set locationFetched to true after location is fetched  
       getLocation()
     })();
@@ -111,7 +106,7 @@ export default function NewEvent(props) {
       )
       .catch(error => {
         console.error(error);
-        console.log('Error');
+        
       });
   }
  
@@ -130,7 +125,7 @@ export default function NewEvent(props) {
       country_number: countryNumber,
       area_number: areaNumber,
     };
-    console.log("--------", { newEvent })
+
     if (newEvent.Details === '') {
       Alert.alert('Please enter details and type');
     }
@@ -147,7 +142,6 @@ export default function NewEvent(props) {
         .then(response => response.json())
         .then(data => {
           Alert.alert('Publish')
-          // navigation.goBack(); // Navigate back to the "Around You" screen
         })
         .catch(error => {
           Alert.alert('Error', error);
