@@ -24,12 +24,27 @@ export default function Setting(props) {
   const [userPic, setUserPic] = useState(stakeholder.picture)
   const [token, setToken] = useState(null);
 
-  const selectedStakeholderType=stakeholder.StakeholderType
+  const [isEnabledChatMode, setIsEnabledChatMode] = useState(stakeholder.Chat);
+  const [isEnabledNotification, setIsEnabledNotification] = useState(stakeholder.Notifications);
+  const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.StakeholderType);
+  const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
+  const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
 
-  useEffect(() => {
-    setUserPic(`${cgroup90}/uploadUserPic/U_${stakeholder_email}.jpg`);
+useEffect(() => {
+  const fetchUserPic = async () => {
+    try {
+      const response = await fetch(`${cgroup90}/uploadUserPic/U_${stakeholder_email}.jpg`);
+      if (response.ok) {
+        setUserPic(`${cgroup90}/uploadUserPic/U_${stakeholder_email}.jpg`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  }, [userPic]);
+  fetchUserPic();
+}, [stakeholder_email, stakeholder.Picture]);
+
   const changeStakeholder = {
     FullName: full_name,
     StakeholderName: satkeholder_name,

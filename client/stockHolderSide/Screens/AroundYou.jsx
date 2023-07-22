@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import { AntDesign } from '@expo/vector-icons';
-import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { getCenter } from 'geolib';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
 import { LocationContext } from '../Context/LocationContext';
@@ -25,7 +21,6 @@ export default function AroundYou(props) {
         React.useCallback(() => {
             setStakeholderId(stakeholder.StakeholderId)
             handleGet();
-            // console.log("jjjjj",stakeholder.StakeholderId)
             return () => {
             };
         }, [isMenuOpen])
@@ -35,7 +30,6 @@ export default function AroundYou(props) {
         const stakeholderIdObj = {
             StakeholderId: stakeholderId,
         };
-        console.log("jjjjjj",stakeholderIdObj);
         fetch(`${cgroup90}/api/stakeholder/details`, {
             method: 'POST',
             headers: {
@@ -54,6 +48,8 @@ export default function AroundYou(props) {
 );
 
     const [Events, setEvents] = useState([])
+
+
     const handleGet = () => {
 
         fetch(`${cgroup90}/api/NewEvent`, {
@@ -107,11 +103,8 @@ export default function AroundYou(props) {
                 <View style={styles.textContainer}>
                     <Text style={styles.titlename}>Hello, {stakeholder.FullName} !</Text>
                 </View>
-
             </View>
-
             <Navbar stakeholder={stakeholder} />
-
             {location && location.coords && (
                 <MapView
                     style={styles.map}
