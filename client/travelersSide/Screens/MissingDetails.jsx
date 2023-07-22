@@ -1,4 +1,4 @@
-import { Dimensions,Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
+import { Dimensions, Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -21,15 +21,19 @@ export default function MissingDetails(props) {
 
   const [comments, setComments] = useState('')
   const [details, setDetails] = useState('');
-  const stackholderId= 'null';
+  const stackholderId = 'null';
   const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
   const [deletedComment, setDeletedComment] = useState(false)
-  
+  console.log('event.address', event.address)
 
 
-useEffect(() => {
+
+  useEffect(() => {
     fetchNumberEvent()
-},[deletedComment,newCommentPublished])
+    console.log('event.address', event)
+
+
+  }, [deletedComment, newCommentPublished])
 
   const fetchNumberEvent = async () => {
     console.log("in fetchNumberEvent")
@@ -93,6 +97,8 @@ useEffect(() => {
           Alert.alert('Publish')
           setNewCommentPublished(false)
           setDetails('');
+          console.log('event.Address', event)
+
         })
         .catch(error => {
           console.error(error);
@@ -103,7 +109,7 @@ useEffect(() => {
 
   const onScreenTapped = () => {
     Keyboard.dismiss();
-  }; 
+  };
 
   const renderDeleteLogo = () => {
     if (comments.length === 0 && event.TravelerId == event.Traveler.traveler_id) {
@@ -157,6 +163,8 @@ useEffect(() => {
       .catch(error => {
         console.error(error);
       });
+
+    console.log('event.address', event.address)
   }
 
 
@@ -170,82 +178,82 @@ useEffect(() => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-          <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
+        <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
 
-        <View style={styles.eventContainer}>
-          <View style={styles.event}>      
-            <Text style={styles.detailsText}>{event.Event.Details}</Text>        
-          </View>
-          <View>
-          <Text style={styles.detailsText}>Traveler name: {event.Traveler.first_name} {event.Traveler.last_name}</Text>
-          <Text style={styles.detailsText}>Last seen: {event.Event.EventTime.slice(0, 5)} {new Date(event.Event.EventDate).toLocaleDateString('en-GB')}</Text>
-            {renderDeleteLogo()}
-          </View>
-          <View style={styles.locationContainer}>
-            <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
-            <Text style={styles.locationText}>{event.address}</Text>
-          </View>
+          <View style={styles.eventContainer}>
+            <View style={styles.event}>
+              <Text style={styles.detailsText}>{event.Event.Details}</Text>
+            </View>
+            <View>
+              <Text style={styles.detailsText}>Traveler name: {event.Traveler.first_name} {event.Traveler.last_name}</Text>
+              <Text style={styles.detailsText}>Last seen: {event.Event.EventTime.slice(0, 5)} {new Date(event.Event.EventDate).toLocaleDateString('en-GB')}</Text>
+              {renderDeleteLogo()}
+            </View>
+            <View style={styles.locationContainer}>
+              <Icon name="location-outline" size={30} color={'black'} style={styles.locationIcon} />
+              <Text style={styles.locationText}>{event.Address}</Text>
+            </View>
             <View style={styles.pictureContainer}>
               <Image source={{ uri: event.Traveler.Picture }} style={styles.picture} resizeMode="cover" />
             </View>
-        
 
 
-          <ScrollView>
-            {comments.length > 0 && (
-              comments.map((comment, index) => (
-                <View key={index} style={styles.commentContainer}>
-                  <View style={styles.event}>
-                    <View style={styles.row}>
-                      {comment.picture ? (
-                        <Image style={styles.img} source={{ uri: comment.picture }} />
-                      ) : (
-                        <Image style={styles.img} source={{ uri: comment.shpicture }} />
-                      )}
-                      <Text style={styles.text}>  {comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
+
+            <ScrollView>
+              {comments.length > 0 && (
+                comments.map((comment, index) => (
+                  <View key={index} style={styles.commentContainer}>
+                    <View style={styles.event}>
+                      <View style={styles.row}>
+                        {comment.picture ? (
+                          <Image style={styles.img} source={{ uri: comment.picture }} />
+                        ) : (
+                          <Image style={styles.img} source={{ uri: comment.shpicture }} />
+                        )}
+                        <Text style={styles.text}>  {comment.TravelerName ? comment.TravelerName : comment.StakeholderName} </Text>
+                      </View>
+                      <View>
+                        <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')} </Text>
+                      </View>
                     </View>
                     <View>
-                      <Text style={styles.textdateTime}>{comment.CommentTime.slice(0, 5)} {new Date(comment.CommentDate).toLocaleDateString('en-GB')} </Text>
+                      <Text style={styles.detailsTextComment}> {comment.Details}  </Text>
+                      {comment.TravelerId == traveler.traveler_id && (
+                        <TouchableOpacity style={styles.deleteIcon} onPress={() => deleteComment(comment.CommentNumber)}>
+                          <Icon name="trash-outline" size={20} color={'black'} />
+                        </TouchableOpacity>
+                      )}
                     </View>
-                  </View>
-                  <View>
-                    <Text style={styles.detailsTextComment}> {comment.Details}  </Text>
-                    {comment.TravelerId == traveler.traveler_id && (
-                      <TouchableOpacity style={styles.deleteIcon} onPress={() => deleteComment(comment.CommentNumber)}>
-                        <Icon name="trash-outline" size={20} color={'black'} />
-                      </TouchableOpacity>
-                    )}
-                  </View>
 
-                </View>
-              ))
-            )}
-          </ScrollView>
-        </View>
-        <ScrollView>
-          <View style={styles.addComment}>
-            <View style={styles.event}>
-              <View style={styles.row}>
-                <Image style={styles.img} source={{ uri: traveler.Picture }} />
-                <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
-              </View>
-              <TouchableOpacity onPress={createComment}>
-                <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.row}>
-              <TextInput
-                style={styles.input}
-                placeholder="Add Comment..."
-                value={details}
-                multiline={true}
-                numberOfLines={4}
-                onChangeText={(text) => setDetails(text)}
-              />
-            </View>
+                  </View>
+                ))
+              )}
+            </ScrollView>
           </View>
-        </ScrollView>
+          <ScrollView>
+            <View style={styles.addComment}>
+              <View style={styles.event}>
+                <View style={styles.row}>
+                  <Image style={styles.img} source={{ uri: traveler.Picture }} />
+                  <Text style={styles.text}>{traveler.first_name} {traveler.last_name}</Text>
+                </View>
+                <TouchableOpacity onPress={createComment}>
+                  <Icon name="arrow-forward-circle-outline" size={25} style={styles.icon} />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.row}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Add Comment..."
+                  value={details}
+                  multiline={true}
+                  numberOfLines={4}
+                  onChangeText={(text) => setDetails(text)}
+                />
+              </View>
+            </View>
+          </ScrollView>
         </TouchableOpacity>
       </KeyboardAvoidingView>
 
@@ -269,8 +277,8 @@ const styles = StyleSheet.create({
     height: height * 0.2, // adjust this value as needed
     width: width * 0.9,
     // bottom: 10,
-     heigh:150,
-     width:150,
+    heigh: 150,
+    width: 150,
     paddingTop: 20,
     paddingBottom: 30
 
