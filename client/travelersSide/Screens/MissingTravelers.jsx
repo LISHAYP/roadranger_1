@@ -61,8 +61,7 @@ export default function MissingTravelers(props) {
                 <View style={styles.container}>
                     <View>
                         {loading ? (
-                            <Text>Loading...</Text>
-                        ) : eventAddresses !== undefined && eventAddresses.length > 0 ? (
+          <Image source={{ uri: 'https://media.tenor.com/t5DMW5PI8mgAAAAi/loading-green-loading.gif' }} />                        ) : eventAddresses !== undefined && eventAddresses.length > 0 ? (
                             eventAddresses.map((event, index) => (
                                 <TouchableOpacity
                                     onPress={() => {

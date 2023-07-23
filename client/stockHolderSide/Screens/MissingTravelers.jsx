@@ -63,7 +63,10 @@ export default function MissingTravelers(props) {
                 <View style={styles.container}>
                     <View>
                         {loading ? (
-                            <Image source={{ uri: 'https://media.tenor.com/t5DMW5PI8mgAAAAi/loading-green-loading.gif' }} />
+                   <Image
+                   source={{ uri: 'https://media.tenor.com/t5DMW5PI8mgAAAAi/loading-green-loading.gif' }}
+                   style={styles.image}
+                 />
                         ) : eventAddresses !== undefined && eventAddresses.length > 0 ? (
                             eventAddresses.map((event, index) => (
                                 <TouchableOpacity
@@ -136,5 +139,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
-    }
+    },
+    image: {
+        right:50,
+        top:50,
+        width: 100,
+        height: 100,
+        alignItems:"center"
+      }
 });
