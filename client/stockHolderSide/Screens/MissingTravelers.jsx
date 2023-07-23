@@ -34,24 +34,23 @@ export default function MissingTravelers(props) {
             });
     }, []))
 
+    const fetchAddresses = async () => {
+        const eventsWithAddress = await Promise.all(events.map(event => {
+            const lat = event.Event.Latitude;
+            const lng = event.Event.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+                const location = json.results[0].address_components;
+                const number = location[0].long_name;
+                const street = location[1].long_name;
+                const city = location[2].long_name;
+                const address = `${street} ${number}, ${city}`;
+                return { ...event, address };
+            });
+        }));
+        setEventAddresses(eventsWithAddress);
+        setLoading(false);
+    };
     useEffect(() => {
-        const fetchAddresses = async () => {
-            const eventsWithAddress = await Promise.all(events.map(event => {
-                const lat = event.Event.Latitude;
-                const lng = event.Event.Longitude;
-                return Geocoder.from(lat, lng).then(json => {
-                    const location = json.results[0].address_components;
-                    const number = location[0].long_name;
-                    const street = location[1].long_name;
-                    const city = location[2].long_name;
-                    const address = `${street} ${number}, ${city}`;
-                    return { ...event, address };
-                });
-            }));
-            setEventAddresses(eventsWithAddress);
-            setLoading(false);
-        };
-
         if (events.length > 0) {
             fetchAddresses();
         }
@@ -64,7 +63,7 @@ export default function MissingTravelers(props) {
                 <View style={styles.container}>
                     <View>
                         {loading ? (
-                            <Text>Loading...</Text>
+                            <Image source={{ uri: 'https://media.tenor.com/t5DMW5PI8mgAAAAi/loading-green-loading.gif' }} />
                         ) : eventAddresses !== undefined && eventAddresses.length > 0 ? (
                             eventAddresses.map((event, index) => (
                                 <TouchableOpacity

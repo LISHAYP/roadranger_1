@@ -32,24 +32,23 @@ export default function MissingTravelers(props) {
         });
     }, []);
 
-    useEffect(() => {
-        const fetchAddresses = async () => {
-            const eventsWithAddress = await Promise.all(events.map(event => {
-                const lat = event.Event.Latitude;
-                const lng = event.Event.Longitude;
-                return Geocoder.from(lat, lng).then(json => {
-                    const location = json.results[0].address_components;
-                    const number = location[0].long_name;
-                    const street = location[1].long_name;
-                    const city = location[2].long_name;
-                    const Address = `${street} ${number}, ${city}`;
-                    return { ...event, Address };
-                });
-            }));
-            setEventAddresses(eventsWithAddress);
-            setLoading(false);
-        };
-
+    const fetchAddresses = async () => {
+        const eventsWithAddress = await Promise.all(events.map(event => {
+            const lat = event.Event.Latitude;
+            const lng = event.Event.Longitude;
+            return Geocoder.from(lat, lng).then(json => {
+                const location = json.results[0].address_components;
+                const number = location[0].long_name;
+                const street = location[1].long_name;
+                const city = location[2].long_name;
+                const Address = `${street} ${number}, ${city}`;
+                return { ...event, Address };
+            });
+        }));
+        setEventAddresses(eventsWithAddress);
+       setLoading(false);
+    };
+    useFocusEffect(() => {
         if (events.length > 0) {
             fetchAddresses();
         }
