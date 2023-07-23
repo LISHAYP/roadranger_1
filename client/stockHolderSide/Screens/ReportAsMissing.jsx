@@ -12,9 +12,7 @@ export default function ReportAsMissing(props) {
     const stakeholder = props.route.params.stakeholder;
     const traveler = props.route.params.traveler;
     const userLocation = props.route.params.location
-   
-    // const navigation = useNavigation();
-
+    const navigation = useNavigation();
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [details, setDetails] = useState('');
@@ -25,7 +23,6 @@ export default function ReportAsMissing(props) {
     const serialTypeNumber = 1003;
     const [countryNumber, setCountryNumber] = useState('');
     const [areaNumber, setAreaNumber] = useState('');
-    console.log(TravelerId, stackholderId)
 
     useEffect(() => {
         //insert the API Key
@@ -151,6 +148,8 @@ export default function ReportAsMissing(props) {
         })
             .then(response => response.json())
             .then(data => {
+                Alert.alert("Publish")
+                navigation.goBack();
                 // Handle the response data as needed              
             })
             .catch(error => {

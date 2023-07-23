@@ -447,7 +447,6 @@ const styles = StyleSheet.create({
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed
     width: width * 0.9,
-    // bottom: 10,
      heigh:150,
      width:150,
     paddingTop: 20,
@@ -460,14 +459,11 @@ const styles = StyleSheet.create({
     height: '10%',
     padding: 5,
     borderRadius: 20,
-    // transform: [{ scaleX: -1 }]
-    // scaleX:-1
-    // position: 'absolute'
+    
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
@@ -476,7 +472,6 @@ const styles = StyleSheet.create({
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
@@ -529,7 +524,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    // position:'relative',
   },
   img: {
     height: 40,

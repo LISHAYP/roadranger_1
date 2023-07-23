@@ -142,6 +142,7 @@ export default function NewEvent(props) {
         .then(response => response.json())
         .then(data => {
           Alert.alert('Publish')
+          navigation.goBack();
         })
         .catch(error => {
           Alert.alert('Error', error);

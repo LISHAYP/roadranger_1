@@ -18,9 +18,6 @@ export default function Warning(props) {
 
     const [events, setEvents] = useState([]);
     const stakeholder = props.route.params.stakeholder;
-    // const userLocation = props.route.params.userLocation
-    // console.log("--------------", userLocation)
-    // Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     console.log("--------------", stakeholder)
 
     useEffect(() => {
@@ -107,7 +104,8 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
-        height: "100%"
+        height: "100%",
+        marginBottom:100
     },
     event: {
         backgroundColor: 'rgba(0, 0, 0, 0.07)',

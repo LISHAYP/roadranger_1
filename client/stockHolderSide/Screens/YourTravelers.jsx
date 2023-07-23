@@ -45,7 +45,6 @@ export default function YourTravelers(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("%%%%%%%%%%%%%%", data)
         // Map over the data and get the address for each traveler
         Promise.all(data.map(traveler => {
           const lat = traveler.last_location.Latitude;
@@ -64,7 +63,6 @@ export default function YourTravelers(props) {
       });
   }
 
-  console.log("#####################", myTravelers)
   const stackholderTypeInsurence = () => {
     const objInsuranceCompany = {
       insurence_company: stakeholder.StakeholderName
