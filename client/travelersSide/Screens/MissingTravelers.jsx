@@ -23,13 +23,13 @@ export default function MissingTravelers(props) {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            setEvents(data);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                setEvents(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }, []);
 
     const fetchAddresses = async () => {
@@ -46,7 +46,7 @@ export default function MissingTravelers(props) {
             });
         }));
         setEventAddresses(eventsWithAddress);
-       setLoading(false);
+        setLoading(false);
     };
     useFocusEffect(() => {
         if (events.length > 0) {
@@ -61,7 +61,11 @@ export default function MissingTravelers(props) {
                 <View style={styles.container}>
                     <View>
                         {loading ? (
-          <Image source={{ uri: 'https://media.tenor.com/t5DMW5PI8mgAAAAi/loading-green-loading.gif' }} />                        ) : eventAddresses !== undefined && eventAddresses.length > 0 ? (
+                            <Image
+                                source={{ uri: 'https://media.tenor.com/t5DMW5PI8mgAAAAi/loading-green-loading.gif' }}
+                                style={styles.image}
+                            />
+                        ) : eventAddresses !== undefined && eventAddresses.length > 0 ? (
                             eventAddresses.map((event, index) => (
                                 <TouchableOpacity
                                     onPress={() => {
@@ -133,9 +137,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         resizeMode: 'cover'
+    },
+    image: {
+        right: 50,
+        top: 50,
+        width: 100,
+        height: 100,
+        alignItems: "center"
     }
-
-
-
-
 });

@@ -344,9 +344,7 @@ export default function EventDetails(props) {
       >
           <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
 
-        <View style={[styles.eventContainer,
-          // { height: comments.length > 0 ? '75%' : '45%' }
-        ]}>
+        <View style={styles.eventContainer}>
 
           <View style={styles.event}>
             <View style={styles.row}>

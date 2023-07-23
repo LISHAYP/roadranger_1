@@ -13,7 +13,6 @@ function BackButton({ text }) {
                 <Icon name="arrow-back-outline" size={30} color='#144800' />
             </TouchableOpacity>
             <Text style={styles.text}>{text}</Text>
-
         </View>
     );
 }
@@ -34,14 +33,12 @@ const styles = StyleSheet.create({
         paddingTop: 55,
         paddingHorizontal: 20,
         shadowOpacity: 0.95,
-
     },
     text: {
         color: '#144800',
         fontSize: 32,
         alignSelf: 'center',
         paddingLeft: 30,
-
     }
 
 });

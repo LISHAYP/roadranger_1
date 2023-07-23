@@ -6,7 +6,6 @@ import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
 import { LocationContext } from '../Context/LocationContext'
 import Navbar from '../Components/Navbar';
-import Icon from "react-native-vector-icons/Ionicons";
 
 
 export default function AroundYou(props) {
@@ -86,9 +85,7 @@ export default function AroundYou(props) {
         if (matchedEvent) {
             console.log("this is working!!!", matchedEvent)
         }
-
         fetch(`${cgroup90}/api/newevent`, {
-
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -163,11 +160,8 @@ export default function AroundYou(props) {
                         <View style={styles.textContainer}>
                             <Text style={styles.titlename}>Hello,  {traveler.first_name} {traveler.last_name} !</Text>
                         </View>
-                       
                     </View>
-
                     <Navbar traveler={traveler} />
-
                     {location && location.coords && (
                         <MapView
                             style={styles.map}
@@ -199,9 +193,7 @@ export default function AroundYou(props) {
                                         navigation.navigate('TimeLine', { event, traveler });
                                     }}
                                 />
-
                             ))}
-
                             <Circle
                                 center={{
                                     latitude: location.coords.latitude,
@@ -211,11 +203,8 @@ export default function AroundYou(props) {
                                 strokeColor="#F00"
                                 fillColor="#F007"
                             />
-
                         </MapView>
                     )}
-
-
                     <View>
                         {/* Your screen content */}
                         {matchedEvent && matchedEvent.map((matchedEvent, index) => (
@@ -227,10 +216,7 @@ export default function AroundYou(props) {
                                 transparent={true}
                             >
                                 <View style={styles.modalContent}>
-
-                                    {/* Modal content */}
                                     <Text style={styles.textModal}>Did you mean this event?</Text>
-
                                     <Text style={styles.textModal1}>{matchedEvent.Details}</Text>
                                     <Image style={styles.img} source={{ uri: matchedEvent.Picture }} />
                                     <View style={styles.rowModal}>
@@ -240,16 +226,13 @@ export default function AroundYou(props) {
                                         <TouchableOpacity style={styles.btnModal} onPress={() => setModalVisible(false)} >
                                             <Text style={styles.textModal1}>No</Text>
                                         </TouchableOpacity>
-                                        {/* Add more Text components for other parameters */}
                                     </View>
                                 </View>
                             </Modal>
                         ))}
                     </View>
                 </View>
-
             </TouchableWithoutFeedback >
-
         </GradientBackground >
     );
 }
@@ -265,7 +248,6 @@ const styles = StyleSheet.create({
     textModal1: {
         fontSize: 20,
         alignSelf: 'center',
-
     },
     btnModal: {
         marginVertical: 20,
@@ -278,7 +260,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#8FBC8F',
         margin: 10
-
     },
     modalContent: {
         backgroundColor: 'white',
