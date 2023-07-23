@@ -172,7 +172,7 @@ export default function EventDetails(props) {
     StackholderId: stackholderId,
 
   };
-  console.log("---------", (newComment))
+ 
   const navigation = useNavigation();
 
 
@@ -206,9 +206,9 @@ export default function EventDetails(props) {
     }
   }
 
-  const onScreenTapped = () => {
-    Keyboard.dismiss();
-  }; 
+  // const onScreenTapped = () => {
+  //   Keyboard.dismiss();
+  // }; 
 
   const renderDeleteLogo = () => {
     if (comments.length === 0 && event.TravelerId == user.traveler_id) {
@@ -236,7 +236,7 @@ export default function EventDetails(props) {
     })
       .then(response => response.json())
       .then(data => {
-        Alert.alert(data);
+        Alert.alert("Deleted");
         navigation.goBack(); // Navigate back to the "Around You" screen
       })
       .catch(error => {
@@ -260,7 +260,7 @@ export default function EventDetails(props) {
       .then(response => response.json())
       .then(data => {
         setDeletedComment(true)
-        Alert.alert(data);
+        Alert.alert("Deleted");
         setDeletedComment(false)
       })
       .catch(error => {
@@ -269,8 +269,6 @@ export default function EventDetails(props) {
   }
 
   const handleButtonPress = (approved) => {
-    console.log("2222", approved);
-
     const ansObj = {
       Approved: approved ? 1 : 0,
       Not_approved: approved ? 0 : 1
@@ -342,7 +340,7 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-          <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
+         
 
         <View style={[styles.eventContainer,
           // { height: comments.length > 0 ? '75%' : '45%' }
@@ -427,7 +425,7 @@ export default function EventDetails(props) {
             </View>
           </View>
         </ScrollView>
-        </TouchableOpacity>
+       
       </KeyboardAvoidingView>
 
     </GradientBackground>
