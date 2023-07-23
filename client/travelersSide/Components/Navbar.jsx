@@ -1,7 +1,7 @@
 import { TouchableOpacity, StyleSheet, Text, View, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { AntDesign } from '@expo/vector-icons';
 
 
@@ -26,7 +26,6 @@ function Navbar(props) {
                 <Icon name="menu" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>Menu</Text>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => {
                 navigation.navigate("New event", {
                     traveler: traveler
@@ -35,18 +34,14 @@ function Navbar(props) {
                 <Icon name="add-circle" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>New Post</Text>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => { navigation.navigate("Home chat", traveler), setIsMenuOpen(false) }} style={styles.icon1}>
                 <Icon name="chatbubble-ellipses" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>Chat</Text>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => { navigation.navigate("Around You", { traveler: traveler }), setIsMenuOpen(false) }} style={styles.icon1} >
                 <Icon name="home" size={30} color="#144800" alignItems='center' />
                 <Text style={styles.text1}>Home</Text>
             </TouchableOpacity>
-
-
             <Modal
                 visible={isMenuOpen}
                 animationType='slide'
@@ -60,7 +55,6 @@ function Navbar(props) {
                         }}>
                             <Text style={styles.textLO} > Log out  </Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity onPress={closeMenu} style={styles.closeButton}>
                             <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
@@ -80,11 +74,9 @@ function Navbar(props) {
                                 <Icon name="chatbubble-ellipses-outline" size={35} style={styles.icon} />
                                 <Text style={styles.text}>Chat</Text>
                             </TouchableOpacity>
-
                             <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("Search", { traveler }), setIsMenuOpen(false) }}>
                                 <Icon name="search-outline" size={35} style={styles.icon} />
                                 <Text style={styles.text}>Search </Text>
-
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option} onPress={() => {
                                 navigation.navigate("My Post", {
@@ -100,7 +92,6 @@ function Navbar(props) {
                                 <Icon name="warning-outline" size={35} style={styles.icon} />
                                 <Text style={styles.text}>Warnings </Text>
                             </TouchableOpacity>
-
                             <TouchableOpacity style={styles.option}
                                 onPress={() => { navigation.navigate("Missing Travelers", { traveler }), setIsMenuOpen(false) }} >
                                 <Icon name="body-outline" size={35} style={styles.icon} />
@@ -115,7 +106,6 @@ function Navbar(props) {
                             >
                                 <Icon name="help-circle-outline" size={35} style={styles.icon} />
                                 <Text style={styles.text}>Ask For Help</Text>
-
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.option}
                                 onPress={() => { navigation.navigate("SOS", {traveler: traveler }), setIsMenuOpen(false) }}
@@ -124,13 +114,10 @@ function Navbar(props) {
                                 <Text style={styles.textSOS}>SOS</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
                 )}
             </Modal>
         </View>
-
-
     );
 }
 

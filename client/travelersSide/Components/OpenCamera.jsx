@@ -2,7 +2,7 @@ import { Camera, CameraType } from 'expo-camera';
 import React, { useState } from 'react';
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View,Alert } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import {  useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { cgroup90 } from '../cgroup90';
 
@@ -12,7 +12,7 @@ export default function OpenCamera(props) {
   const [camera, setCamera] = useState(null);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
-  const [animate, setAnimate] = useState(false);
+  const [setAnimate] = useState(false);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -74,7 +74,6 @@ export default function OpenCamera(props) {
     }
   };
 
- 
   const openGallery = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
@@ -93,7 +92,6 @@ export default function OpenCamera(props) {
       setImage(image);
       const pic64base = pickerResult.base64;
       const picName64base = `U_${email}.jpg`;
-      // console.log(picName64base);
       const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
       const formData = new FormData();
       formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
@@ -154,7 +152,6 @@ return (
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={takePicture}>
             <Icon name="radio-button-on-outline" size={100} color='white' style={styles.iconCenter} />
-
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
             <Icon name="sync-circle-outline" size={45} color='white' style={styles.iconRight} />
@@ -225,6 +222,5 @@ const styles = StyleSheet.create({
   textSave: {
     fontSize: 25,
     marginTop: 10
-
   }
 });

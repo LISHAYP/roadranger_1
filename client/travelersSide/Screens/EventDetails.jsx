@@ -342,9 +342,7 @@ export default function EventDetails(props) {
       >
          
 
-        <View style={[styles.eventContainer,
-          // { height: comments.length > 0 ? '75%' : '45%' }
-        ]}>
+        <View style={styles.eventContainer}>
 
           <View style={styles.event}>
             <View style={styles.row}>

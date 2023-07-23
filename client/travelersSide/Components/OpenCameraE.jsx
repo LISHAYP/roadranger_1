@@ -128,7 +128,6 @@ export default function OpenCameraE(props) {
       const image = { uri: pickerResult.uri };
       setImage(image);
       const pic64base = pickerResult.base64;
-      //console.log("******",pic64base)
       const picName64base = `E_${idee}.jpg`;
       const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
       const formData = new FormData();
@@ -200,7 +199,6 @@ export default function OpenCameraE(props) {
   const closeCamera = () => {
     navigation.goBack(); // navigate to the previous screen
   }
-
   return (
     <View style={styles.container}>
       {image ? (
@@ -225,7 +223,6 @@ export default function OpenCameraE(props) {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
               <Icon name="radio-button-on-outline" size={100} color='white' style={styles.iconCenter} />
-
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Icon name="sync-circle-outline" size={45} color='white' style={styles.iconRight} />
@@ -296,6 +293,5 @@ const styles = StyleSheet.create({
   textSave: {
     fontSize: 25,
     marginTop: 10
-
   }
 });

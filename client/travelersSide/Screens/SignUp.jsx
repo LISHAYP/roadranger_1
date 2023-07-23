@@ -36,7 +36,9 @@ export default function SignUp() {
   const insurance = [
     { label: 'PassportCard', value: 'PassportCard' },
     { label: 'Harel', value: 'Harel' },
+    { label: 'Manora', value: 'Manora' },
     { label: 'Other', value: 'Other' },
+    { label: 'Migdal', value: 'Migdal' },
   ]
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);

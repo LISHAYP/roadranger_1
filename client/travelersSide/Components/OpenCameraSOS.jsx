@@ -12,7 +12,7 @@ export default function OpenCameraE(props) {
   const [camera, setCamera] = useState(null);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
-  const [animate, setAnimate] = useState(false);
+  const [setAnimate] = useState(false);
 
   if (!permission) {
     // Camera permissions are still loading
