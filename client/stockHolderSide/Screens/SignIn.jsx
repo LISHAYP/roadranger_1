@@ -1,19 +1,17 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { useRef } from 'react';
-import { Button, Platform } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
 import { cgroup90 } from '../cgroup90';
 import { LocationContext } from '../Context/LocationContext'
 
 export default function SignIn() {
     const { getPermissionLocation, getUserLocation } = useContext(LocationContext)
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
@@ -34,7 +32,6 @@ export default function SignIn() {
             StakeholderEmail: email,
             token: devaiceToken
         };
-        console.log("********", stakeholder);
         fetch(`${cgroup90}/api/post/stackholder`, {
             method: 'POST',
             headers: {
@@ -56,8 +53,6 @@ export default function SignIn() {
                     })
                         .then((response) => response.json())
                         .then((data1) => {
-                         // console.log(data1);stakeholder updated successfully.
-                         //Alert.alert('Token updated successfully')
                             navigation.navigate("Around You", {stakeholder: data });
                         })
                         .catch((error) => {
@@ -70,7 +65,6 @@ export default function SignIn() {
                 }
             })
             .catch(error => {
-                console.error(error);
                 console.log('Error', 'Failed to sign in. Please try again later.');
             });
     };
@@ -90,7 +84,7 @@ export default function SignIn() {
                 finalStatus = status;
             }
             if (finalStatus !== 'granted') {
-                alert('Failed to get push token for push notification!');
+                Alert.alert('Failed to get push token for push notification!');
                 return;
             }
             token = (await Notifications.getExpoPushTokenAsync()).data;
@@ -212,17 +206,11 @@ export default function SignIn() {
     const styles = StyleSheet.create({
         container: {
           padding: 10,
-          // marginVertical: 10,
-          // marginHorizontal: 10,
           padding: 20,
           width: "100%",
           marginTop: 100,
-          // backgroundColor:'#F0FFF0'
-          // backgroundColor:'#3CB371'
-      
         },
         frame: {
-          // backgroundColor:  'rgba(0, 0, 0, 0.07)',
           padding: 20,
           borderWidth: 0,
           borderRadius: 25,
@@ -236,7 +224,6 @@ export default function SignIn() {
           alignSelf: 'center',
           resizeMode: 'contain',
           height: 100
-      
         },
         text: {
           color: '#144800',
@@ -294,6 +281,5 @@ export default function SignIn() {
         text1: {
           fontWeight: 'bold',
           fontSize: 15,
-      
         }
       })

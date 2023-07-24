@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Timeline from 'react-native-timeline-flatlist';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { cgroup90 } from '../cgroup90';
 
 export default function TimeLine(props) {
@@ -39,7 +39,6 @@ export default function TimeLine(props) {
                 console.log('Error');
             });
     }, [event, navigation]);
-
 
     const handleEventPress = (rowData) => {
         const event = rowData;
@@ -91,7 +90,6 @@ export default function TimeLine(props) {
                         </View>
                     </View>
                 )}
-
             />
         </GradientBackground>
     );
@@ -133,7 +131,6 @@ const styles = StyleSheet.create({
       image: {
         width: 50,
         height: 50,
-        //  borderRadius: 25,
       },
       textDescription: {
         marginLeft: 10,

@@ -9,7 +9,6 @@ import Navbar from '../Components/Navbar';
 
 
 export default function AroundYou(props) {
-
     const { location } = useContext(LocationContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigation = useNavigation();
@@ -50,8 +49,6 @@ export default function AroundYou(props) {
         }, [travelerId])
     );
 
-  
-
     useEffect(() => {
         if (matchedEvent && matchedEvent.length > 0) {
             const travelerIdObj = {
@@ -68,9 +65,7 @@ export default function AroundYou(props) {
                 .then(response => response.json())
                 .then(data => {
                     setLasteventOfTraveler(data.lastEventId);
-                    console.log("++++", data.lastEventId);
-                }
-                )
+                })
                 .catch(error => {
                     console.error(error);
                     console.log('Error');
@@ -83,7 +78,6 @@ export default function AroundYou(props) {
 
     const handleGet = () => {
         if (matchedEvent) {
-            console.log("this is working!!!", matchedEvent)
         }
         fetch(`${cgroup90}/api/newevent`, {
             method: 'GET',
@@ -138,7 +132,6 @@ export default function AroundYou(props) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data); // Traveler updated successfully.
                 setModalVisible(false);
                 setLasteventOfTraveler('');
                 handleGet();
@@ -151,7 +144,6 @@ export default function AroundYou(props) {
     return (
         <GradientBackground>
             <TouchableWithoutFeedback >
-
                 <View style={styles.container}>
                     <View style={styles.hamburger}>
                         <TouchableOpacity  onPress={() => { navigation.navigate("Setting", { traveler })}}>
@@ -206,7 +198,6 @@ export default function AroundYou(props) {
                         </MapView>
                     )}
                     <View>
-                        {/* Your screen content */}
                         {matchedEvent && matchedEvent.map((matchedEvent, index) => (
                             <Modal
                                 key={index}
@@ -431,7 +422,6 @@ const styles = StyleSheet.create({
         color: '#144800',
         alignItems: 'center',
         size: 30,
-
     },
     user: {
         width: 50,
@@ -441,21 +431,16 @@ const styles = StyleSheet.create({
         right: -10,
         top: -5,
         alignSelf: 'flex-end'
-
     },
     img: {
         alignSelf: 'center',
         height: 200,
         borderRadius: 20,
         width: 150,
-
     },
     rowModal: {
         flexDirection: 'row',
         alignSelf: "center",
         marginTop: 20
-
-
     },
-
 });

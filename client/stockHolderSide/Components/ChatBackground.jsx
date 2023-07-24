@@ -7,9 +7,7 @@ const ChatBackground = ({ children }) => {
     <View style={styles.container}>
       <LinearGradient
         colors={['#F0FFF0','#F0FFF0','#ffffff','#ffffff']}
-
-        style={styles.gradient}
-      >
+        style={styles.gradient}>
         {children}
       </LinearGradient>
     </View>

@@ -3,10 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'rea
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
-import Navbar from '../Components/Navbar';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { cgroup90 } from "../cgroup90";
-import { Alert } from 'react-native';
 
 
 export default function MissingTravelers(props) {

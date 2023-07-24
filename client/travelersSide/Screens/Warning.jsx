@@ -15,12 +15,10 @@ import Navbar from '../Components/Navbar';
 export default function Warning(props) {
     const navigation = useNavigation();
     const [searchKeyword, setSearchKeyword] = useState('');
-
     const [events, setEvents] = useState([]);
     const traveler = props.route.params.traveler;
 
 
-    // Geocoder.init('AIzaSyDN2je5f_VeKV-DCzkaYBg1nRs_N6zn5so');
 
     useEffect(() => {
         fetch(`${cgroup90}/api/NewEvent`, {
@@ -49,7 +47,6 @@ export default function Warning(props) {
             )
         ).then((addresses) => setEventAddresses(addresses));
     }, []);
-    // console.log(eventAddresses)
     return (
         <GradientBackground>
             <Navbar traveler={traveler} />

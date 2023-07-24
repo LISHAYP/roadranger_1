@@ -1,13 +1,10 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Platform} from 'react-native';
 import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect, useContext } from 'react';
 import GradientBackground from '../Components/GradientBackground';
-import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRef } from 'react';
-import { Button, Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { cgroup90 } from '../cgroup90';
@@ -20,7 +17,6 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [loginFailed, setLoginFailed] = useState(false);
     const navigation = useNavigation();
-    //const [location, setLocation] = useState('');
     const [travelerId, setTravlerId] = useState('')
     const [devaiceToken, setDevaiceToken] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -53,7 +49,6 @@ export default function SignIn() {
             .then(response => response.json())
             .then(data => {
                 if (data.travler_email === email && data.password === password) {
-                    console.log("iiiiiiiiiiiiiii", data.traveler_id)
                     setTravlerId(data.traveler_id)
                     fetch(`${cgroup90}/api/traveler/updatetoken?email=${traveler.travler_email}`, {
                         method: 'PUT',
@@ -65,14 +60,10 @@ export default function SignIn() {
                     })
                         .then((response) => response.json())
                         .then((data1) => {
-                            console.log(data1);
-                            console.log(data); // Traveler updated successfully.
-                            //Alert.alert('Token updated successfully')
-                            //signInWithEmailAndPassword(auth, traveler.travler_email, traveler.password)
                             navigation.navigate("Around You", { traveler: data });
 
                             const now = new Date();
-                            const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`; console.log('dateeeee', DateAndTimeFormat)
+                            const DateAndTimeFormat = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
                             const userLoction = {
                                 DateAndTime: DateAndTimeFormat,
                                 TravelerId: data.traveler_id,
@@ -124,9 +115,8 @@ export default function SignIn() {
             }
             token = (await Notifications.getExpoPushTokenAsync()).data;
             setDevaiceToken(token);
-            console.log(token);
         } else {
-            alert('Must use physical device for Push Notifications');
+        alert('Must use physical device for Push Notifications');
         }
 
         if (Platform.OS === 'android') {
@@ -250,17 +240,11 @@ export default function SignIn() {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        // marginVertical: 10,
-        // marginHorizontal: 10,
         padding: 20,
         width: "100%",
         marginTop: 100,
-        // backgroundColor:'#F0FFF0'
-        // backgroundColor:'#3CB371'
-
     },
     frame: {
-        // backgroundColor:  'rgba(0, 0, 0, 0.07)',
         padding: 20,
         borderWidth: 0,
         borderRadius: 25,
@@ -274,7 +258,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         resizeMode: 'contain',
         height: 100
-
     },
     text: {
         color: '#144800',

@@ -37,7 +37,6 @@ export default function TimeLine(props) {
       })
       .catch((error) => {
         console.error(error);
-        console.log('Error');
       });
   }, [event, navigation]);
 
@@ -46,7 +45,6 @@ export default function TimeLine(props) {
     const event = rowData;
     navigation.navigate('Event Details', { event, traveler });
   };
-  console.log("yyyy", events);
   return (
     <GradientBackground>
       <BackButton text={event.Details} />

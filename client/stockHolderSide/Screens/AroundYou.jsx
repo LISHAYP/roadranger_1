@@ -10,12 +10,9 @@ export default function AroundYou(props) {
 
     const { location } = useContext(LocationContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
     const navigation = useNavigation();
     const [stakeholderId, setStakeholderId] = useState()
     const [stakeholder, setstakeholder] = useState(props.route.params.stakeholder);
-
-   console.log("******",stakeholder);
  
     useFocusEffect(
         React.useCallback(() => {
@@ -65,7 +62,6 @@ export default function AroundYou(props) {
             })
             .then(
                 (result) => {
-
                     setEvents(result)
                 },
                 (error) => {
@@ -262,6 +258,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#144800',
         alignItems: 'center',
-        // size: 30,
     },
 });

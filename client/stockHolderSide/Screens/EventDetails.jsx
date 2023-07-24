@@ -15,9 +15,8 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   const stakeholder = props.route.params.stakeholder;
   const [deletedComment, setDeletedComment] = useState(false)
-  const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
+  const [newCommentPublished, setNewCommentPublished] = useState(false); 
 
-  console.log(event)
   const travelerId = "null";
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
@@ -41,21 +40,18 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setTraveler(data);
-      console.log(data);
       fetchNumberEvent();
     } catch (error) {
       console.error(error);
-      console.log('Error');
+     
     }
   };
   const fetchNumberEvent = async () => {
-    console.log("in fetchNumberEvent")
     const eventNumberObj = {
       eventNumber: event.eventNumber
     };
 
     try {
-      console.log("in try fretchfetchNumberEvent", { eventNumberObj })
       const response = await fetch(`${cgroup90}/api/events/comments`, {
         method: 'POST',
         headers: {
@@ -69,7 +65,6 @@ export default function EventDetails(props) {
       setComments(data);
     } catch (error) {
       console.error(error);
-      console.log('Error');
     }
 
 
@@ -100,15 +95,12 @@ export default function EventDetails(props) {
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
-          console.log(data);
           setNewCommentPublished(true)
           Alert.alert('Publish')
           setNewCommentPublished(false)
           setDetails('');
         })
         .catch(error => {
-          console.error(error);
           Alert.alert('Error', error);
         });
     }
@@ -119,7 +111,6 @@ export default function EventDetails(props) {
     Geocoder.from(`${event.Latitude},${event.Longitude}`)
       .then((json) => {
         const location = json.results[0].address_components;
-        console.log(location)
         const number = json.results[0].address_components[0].long_name;
         const street = json.results[0].address_components[1].long_name;
         const city = json.results[0].address_components[2].long_name;
@@ -127,7 +118,6 @@ export default function EventDetails(props) {
       }
       )
       .catch(error => {
-        console.error(error);
         console.warn('Geocoder.from failed');
       });
   }, [newCommentPublished, deletedComment]);
@@ -136,7 +126,7 @@ export default function EventDetails(props) {
     const commentObj = {
       commentNumber: CommentNumber
     };
-    console.log(commentObj)
+  
 
     fetch(`${cgroup90}/api/deletecomment`, {
       method: 'DELETE',
@@ -170,9 +160,7 @@ export default function EventDetails(props) {
         style={styles.container}
       >
         <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
-          <View style={[styles.eventContainer,
-            //  { height: comments.length > 0 ? '71%' : '40%' }
-          ]} >
+          <View style={styles.eventContainer } >
             <View >
               <View style={styles.event}>
                 <View style={styles.row}>
@@ -251,7 +239,6 @@ export default function EventDetails(props) {
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
     </GradientBackground >
   )
 };
@@ -269,9 +256,8 @@ const styles = StyleSheet.create({
 
 
   pictureContainer: {
-    height: height * 0.2, // adjust this value as needed
+    height: height * 0.2, 
     width: width * 0.9,
-    // bottom: 10,
     heigh: 150,
     width: 150,
     paddingTop: 20,
@@ -292,16 +278,13 @@ const styles = StyleSheet.create({
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
-
   },
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
@@ -309,12 +292,10 @@ const styles = StyleSheet.create({
     padding: 10,
     height: '75%',
     paddingBottom: 20,
-
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -324,9 +305,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     resizeMode: "contain",
-
   },
-
   locationText: {
     fontSize: 15,
     fontWeight: 'bold',
@@ -338,7 +317,6 @@ const styles = StyleSheet.create({
     left: 10,
     marginTop: 10
   },
-
   addComment: {
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
@@ -354,7 +332,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    // position:'relative',
   },
   img: {
     height: 40,
@@ -389,12 +366,9 @@ const styles = StyleSheet.create({
     left: 50,
     paddingBottom: 10,
     width: '75%',
-    // position:'absolute'
   },
-
   icon: {
     top: 20
-
   },
   inputContainer: {
     flexGrow: 1,
@@ -403,9 +377,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   deleteIcon: {
-
     flexDirection: 'row-reverse'
-
   },
   headerContainer: {
     top: 120,
@@ -435,12 +407,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     backgroundColor: '#8FBC8F',
-    //margin: 2
-
   }, textModal1: {
     fontSize: 15,
     alignSelf: 'center',
-
   },
-
 });

@@ -1,10 +1,8 @@
 import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, TextInput } from 'react-native';
 import React from 'react'
 import { KeyboardAvoidingView, Platform } from 'react-native';
-import { Keyboard } from 'react-native';
-import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {  useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -43,7 +41,7 @@ export default function ContactUs() {
             RequestType: requestType,
             Details: details
         };
-        console.log("*****", objNewContactRequest);
+       
         if (!firstName || !lastName | !email || !phoneNumber || !details || !requestType) {
             // Some fields are missing
             Alert.alert('Please fill in all fields.');
@@ -53,7 +51,7 @@ export default function ContactUs() {
         const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         if (!emailPattern.test(email)) {
             // Email format is invalid
-            alert('Please enter a valid email address.');
+            Alert.alert('Please enter a valid email address.');
             return;
         }
         if (phoneNumber.length != 10) {
@@ -101,7 +99,6 @@ export default function ContactUs() {
                     </TouchableOpacity>
                     <View style={styles.container}>
                         <Text>Be sure to leave an accurate message so we can get back to you as soon as possible  </Text>
-                        {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                         <Text style={styles.text}>Email:</Text>
                         <TextInput style={styles.input}
                             onChangeText={(text) => setEmail(text)}
@@ -133,7 +130,6 @@ export default function ContactUs() {
                             placeholderStyle={styles.placeholderStyle}
                             selectedTextStyle={styles.selectedTextStyle}
                             data={Subject}
-                            // maxHeight={300}
                             labelField="label"
                             valueField="value"
                             placeholder={"select a subject type"}
@@ -142,7 +138,6 @@ export default function ContactUs() {
                                 setRequestType(item.label);
                                 setRequestTypeSelection(item)
                             }}
-
                         />
                         <Text style={styles.text}>Message:</Text>
                         <TextInput style={styles.input1}
@@ -164,7 +159,6 @@ export default function ContactUs() {
                             <Text style={styles.btnText}>
                                 Send
                             </Text>
-
                         </TouchableOpacity>
                     </View >
                 </ScrollView>
@@ -175,18 +169,15 @@ export default function ContactUs() {
 }
 const styles = StyleSheet.create({
     container: {
-        // padding: 10,
         marginVertical: 10,
         marginHorizontal: 10,
         width: "100%",
         marginTop: 20
     },
-
     RoadRanger: {
         alignSelf: 'center',
         resizeMode: 'contain',
         height: 100
-
     },
     text: {
         paddingTop: 10,
@@ -226,7 +217,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "#A9A9A9"
     },
-
     dropdown: {
         height: 40,
         borderColor: '#8FBC8F',
@@ -241,7 +231,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
         width: "90%",
-
     },
     input1: {
         flexDirection: 'row',

@@ -1,4 +1,4 @@
-import { Dimensions,Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
+import { Dimensions, Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
@@ -19,13 +19,12 @@ export default function EventDetails(props) {
   const event = props.route.params.event;
   //user-the user who use the app
   const user = props.route.params.traveler;
-
   //traveler-the user who post event
   const [traveler, setTraveler] = useState('');
   const [addressComponents, setAddressComponents] = useState('')
   const [comments, setComments] = useState('')
   const [details, setDetails] = useState('');
-  const [stackholderId, setStackholderId] = useState('null');
+  const stackholderId='null'
   const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
   const [deletedComment, setDeletedComment] = useState(false)
   const [userLocation, setUserLocation] = useState(null); // Add a new state variable for user location
@@ -47,22 +46,18 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setTraveler(data);
-      console.log("***", data);
       fetchNumberEvent();
     } catch (error) {
       console.error(error);
-      console.log('Error');
     }
   };
 
   const fetchNumberEvent = async () => {
-    console.log("in fetchNumberEvent")
     const eventNumberObj = {
       eventNumber: event.eventNumber
     };
 
     try {
-      console.log("in try fretchfetchNumberEvent", { eventNumberObj })
       const response = await fetch(`${cgroup90}/api/events/comments`, {
         method: 'POST',
         headers: {
@@ -74,9 +69,7 @@ export default function EventDetails(props) {
 
       const data = await response.json();
       setComments(data);
-      console.log("commmetssssssss", data);
     } catch (error) {
-      console.error(error);
       console.log('Error');
     }
 
@@ -84,20 +77,16 @@ export default function EventDetails(props) {
   };
   const getUserLocation = async () => {
     try {
-      console.log("here1");
       const { coords } = await Location.getCurrentPositionAsync();
       setUserLocation(coords); // Save user coordinates in state
     } catch (error) {
       console.error(error);
-      // Handle error fetching user location
+      
     }
   };
   useEffect(() => {
     const checkTravelersLocation = async () => {
-      console.log("here2");
       if (!userLocation) {
-        console.log("here7");
-        // User location is not available yet
         return;
       }
       console.log("", event);
@@ -107,7 +96,6 @@ export default function EventDetails(props) {
       };
 
       const { latitude, longitude } = userLocation; // Destructure latitude and longitude
-      console.log("userLocation?", userLocation, latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
 
       try {
         const response = await fetch(`${cgroup90}/api/post/checkdistance?longtiude=${longitude.toString().slice(0, 9)}&latitude=${latitude.toString().slice(0, 9)}`, {
@@ -119,11 +107,7 @@ export default function EventDetails(props) {
         });
 
         const data = await response.json();
-        console.log("here3");
-        console.log("Is it true or false?", data);
         setTrueOrFalse(data);
-        console.log("Is it true or false?", latitude.toString().slice(0, 9), longitude.toString().slice(0, 9));
-        console.log("Is it true or false?", event.Latitude, event.Longitude);
       } catch (error) {
         console.error(error);
         Alert.alert('Error', error);
@@ -153,12 +137,10 @@ export default function EventDetails(props) {
         const street = json.results[0].address_components[1].long_name;
         const city = json.results[0].address_components[2].long_name;
         setAddressComponents(`${street} ${number}, ${city}`);
-        console.log("here5");
       }
       )
       .catch(error => {
         console.error(error);
-        console.warn('Geocoder.from failed');
       });
 
   }, [newCommentPublished, deletedComment,]);
@@ -172,7 +154,7 @@ export default function EventDetails(props) {
     StackholderId: stackholderId,
 
   };
-  console.log("---------", (newComment))
+
   const navigation = useNavigation();
 
 
@@ -193,7 +175,6 @@ export default function EventDetails(props) {
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log(data);
           setNewCommentPublished(true)
           Alert.alert('Publish')
           setNewCommentPublished(false)
@@ -206,9 +187,6 @@ export default function EventDetails(props) {
     }
   }
 
-  const onScreenTapped = () => {
-    Keyboard.dismiss();
-  }; 
 
   const renderDeleteLogo = () => {
     if (comments.length === 0 && event.TravelerId == user.traveler_id) {
@@ -236,7 +214,7 @@ export default function EventDetails(props) {
     })
       .then(response => response.json())
       .then(data => {
-        Alert.alert(data);
+        Alert.alert("Deleted");
         navigation.goBack(); // Navigate back to the "Around You" screen
       })
       .catch(error => {
@@ -260,7 +238,7 @@ export default function EventDetails(props) {
       .then(response => response.json())
       .then(data => {
         setDeletedComment(true)
-        Alert.alert(data);
+        Alert.alert("Deleted");
         setDeletedComment(false)
       })
       .catch(error => {
@@ -269,8 +247,6 @@ export default function EventDetails(props) {
   }
 
   const handleButtonPress = (approved) => {
-    console.log("2222", approved);
-
     const ansObj = {
       Approved: approved ? 1 : 0,
       Not_approved: approved ? 0 : 1
@@ -342,7 +318,7 @@ export default function EventDetails(props) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-          <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
+
 
         <View style={styles.eventContainer}>
 
@@ -425,9 +401,7 @@ export default function EventDetails(props) {
             </View>
           </View>
         </ScrollView>
-        </TouchableOpacity>
       </KeyboardAvoidingView>
-
     </GradientBackground>
   );
 }
@@ -440,19 +414,14 @@ const styles = StyleSheet.create({
     padding: 5,
     marginTop: 120,
     marginBottom: 30
-
   },
-
-
   pictureContainer: {
     height: height * 0.2, // adjust this value as needed
     width: width * 0.9,
-    // bottom: 10,
-     heigh:150,
-     width:150,
+    heigh: 150,
+    width: 150,
     paddingTop: 20,
     paddingBottom: 30
-
   },
   picture: {
     flex: 1,
@@ -460,23 +429,17 @@ const styles = StyleSheet.create({
     height: '10%',
     padding: 5,
     borderRadius: 20,
-    // transform: [{ scaleX: -1 }]
-    // scaleX:-1
-    // position: 'absolute'
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
-
   },
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
@@ -484,12 +447,10 @@ const styles = StyleSheet.create({
     padding: 10,
     height: '75%',
     paddingBottom: 20,
-
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -499,9 +460,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     resizeMode: "contain",
-
   },
-
   locationText: {
     fontSize: 15,
     fontWeight: 'bold',
@@ -513,7 +472,6 @@ const styles = StyleSheet.create({
     left: 10,
     marginTop: 10
   },
-
   addComment: {
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
@@ -529,7 +487,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    // position:'relative',
   },
   img: {
     height: 40,
@@ -538,7 +495,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
-
   },
   text: {
     fontSize: 16,
@@ -547,7 +503,6 @@ const styles = StyleSheet.create({
   dateTimeContainer: {
     alignItems: 'flex-end',
     marginLeft: 'auto',
-
   },
   textdateTime: {
     fontSize: 16,
@@ -564,12 +519,9 @@ const styles = StyleSheet.create({
     left: 50,
     paddingBottom: 10,
     width: '75%',
-    // position:'absolute'
   },
-
   icon: {
     top: 20
-
   },
   inputContainer: {
     flexGrow: 1,
@@ -578,9 +530,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   deleteIcon: {
-
     flexDirection: 'row-reverse'
-
   },
   headerContainer: {
     top: 120,
@@ -610,11 +560,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     backgroundColor: '#8FBC8F',
-    //margin: 2
-
   }, textModal1: {
     fontSize: 15,
     alignSelf: 'center',
-
   },
 });

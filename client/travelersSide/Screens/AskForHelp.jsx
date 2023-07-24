@@ -101,7 +101,6 @@ export default function AskForHelp(props) {
       .then(response => response.json())
       .then(data => {
         setAreaNumber(data)
-
       }
       )
       .catch(error => {
@@ -227,17 +226,13 @@ const styles = StyleSheet.create({
   text: {
     color: '#144800',
     fontSize: 20,
-
   },
-
-
   btnText: {
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
 
   },
-
   dropdown: {
     height: 40,
     borderColor: '#8FBC8F',
@@ -252,14 +247,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     width: "90%",
-
   },
   text1: {
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
   },
-
   input: {
     flexDirection: 'row',
     marginVertical: 10,
@@ -270,8 +263,6 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 25,
-
-
   },
   photo: {
     marginVertical: 20,
@@ -285,15 +276,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#144800',
     marginBottom: 50,
     flexDirection: 'row',
-
   },
   icon: {
     left: 30,
     size: 30,
     marginRight: 50
-
   },
- 
   placeholderStyle: {
     fontSize: 18,
     color: "#A9A9A9"

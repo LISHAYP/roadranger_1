@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import {useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
@@ -47,12 +45,10 @@ export default function Search(props) {
   const [isCalendarOpenEnd, setIsCalendarOpenEnd] = useState(false);
 
   const handleStartDateSelect = (date) => {
-    // const formattedDate = date.substr(0, 10);
     setSelectedStartDate(date);
     setIsCalendarOpenStart(false);
   }
   const handleEndDateSelect = (date) => {
-    // const formattedDate = moment(date).format('DD/MM/YY');
     setSelectedEndDate(date);
     setIsCalendarOpenEnd(false);
   }
@@ -88,7 +84,6 @@ export default function Search(props) {
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
           setEvents(data)
           navigation.navigate("Events", { data: data, stakeholder: stakeholder });
         })
@@ -99,9 +94,6 @@ export default function Search(props) {
     }
 
   }
-
-
-
 
   //GET the countries and cities from data
   const loadData = () => {
@@ -181,9 +173,7 @@ export default function Search(props) {
             value={selectedCity}
             onChange={item => {
               setSelectedCity(item.value)
-            }}
-
-          />
+            }}/>
           <Text style={styles.text}>Type:</Text>
           <Dropdown
             style={styles.dropdown}
@@ -222,7 +212,6 @@ export default function Search(props) {
               </View>
             )}
           </View>
-
           <TouchableOpacity style={styles.btnSave} onPress={searchEvents}>
             <Text style={styles.btnText}>
               Search
@@ -241,12 +230,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-
   },
   text: {
     color: '#144800',
     fontSize: 20,
-
   },
   icon: {
     fontSize: 25
@@ -255,9 +242,7 @@ const styles = StyleSheet.create({
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-
   },
-
   calendar: {
     flexDirection: 'row',
     marginVertical: 10,
@@ -270,7 +255,6 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
-
   },
   dropdown: {
     height: 40,
@@ -279,8 +263,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     borderColor: '#144800',
-    // borderWidth: 1,
-    // borderRadius: 25,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
@@ -288,15 +270,12 @@ const styles = StyleSheet.create({
     width: "90%",
     borderWidth: 1,
     borderRadius: 15,
-
   },
   text1: {
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
-
   },
-
   label: {
     position: 'absolute',
     backgroundColor: 'white',
@@ -305,8 +284,6 @@ const styles = StyleSheet.create({
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
-
-
   },
   placeholderStyle: {
     fontSize: 18,

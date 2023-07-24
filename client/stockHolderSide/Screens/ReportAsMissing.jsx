@@ -12,9 +12,7 @@ export default function ReportAsMissing(props) {
     const stakeholder = props.route.params.stakeholder;
     const traveler = props.route.params.traveler;
     const userLocation = props.route.params.location
-   
-    // const navigation = useNavigation();
-
+    const navigation = useNavigation();
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [details, setDetails] = useState('');
@@ -25,7 +23,6 @@ export default function ReportAsMissing(props) {
     const serialTypeNumber = 1003;
     const [countryNumber, setCountryNumber] = useState('');
     const [areaNumber, setAreaNumber] = useState('');
-    console.log(TravelerId, stackholderId)
 
     useEffect(() => {
         //insert the API Key
@@ -58,7 +55,6 @@ export default function ReportAsMissing(props) {
         country_number: countryNumber,
         area_number: areaNumber,
     };
-    console.log("--------", { newEvent })
     const countryObj = {
         country_name: country,
     };
@@ -74,14 +70,11 @@ export default function ReportAsMissing(props) {
         })
             .then(response => response.json())
             .then(data => {
-
                 setCountryNumber(data)
                 addCity();
-            }
-            )
+            })
             .catch(error => {
                 console.error(error);
-
             });
     }
 
@@ -106,10 +99,8 @@ export default function ReportAsMissing(props) {
             )
             .catch(error => {
                 console.error(error);
-
             });
-    }
-
+         }
 
     const createEvent = async () => {
 
@@ -118,7 +109,6 @@ export default function ReportAsMissing(props) {
         }
         else {
             reportAsTrue()
-            // Send a POST request to your backend API with the event data
             fetch(`${cgroup90}/api/post/newevent`, {
                 method: 'POST',
                 headers: {
@@ -129,7 +119,6 @@ export default function ReportAsMissing(props) {
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Handle the response data as needed
                     Alert.alert('Missing')
                 })
                 .catch(error => {
@@ -151,7 +140,8 @@ export default function ReportAsMissing(props) {
         })
             .then(response => response.json())
             .then(data => {
-                // Handle the response data as needed              
+                Alert.alert("Publish")
+                navigation.goBack();            
             })
             .catch(error => {
                 console.error(error);
@@ -165,7 +155,6 @@ export default function ReportAsMissing(props) {
          <BackButton text="Report As Missing" />
             <ScrollView>
                 <View style={styles.container}>
-
                     <Text style={styles.text}>Description:</Text>
                     <TextInput style={styles.input}
                         value={details}
@@ -174,7 +163,6 @@ export default function ReportAsMissing(props) {
                         multiline
                         spellCheck="true"
                         onSubmitEditing={() => {
-                            //close the keyboard
                             TextInput.State.blur(TextInput.State.currentlyFocusedInput())
                         }}>
                     </TextInput>
@@ -200,28 +188,21 @@ const styles = StyleSheet.create({
         width: "100%",
         paddingTop: 120
     },
-
     RoadRanger: {
         alignSelf: 'center',
         resizeMode: 'contain',
         height: 100,
         marginBottom: 20
-
     },
     text: {
         color: '#144800',
         fontSize: 20,
-
     },
-
-
     btnText: {
         color: '#F8F8FF',
         alignSelf: 'center',
         fontSize: 20,
-
     },
-
     dropdown: {
         height: 40,
         borderColor: '#8FBC8F',
@@ -236,14 +217,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
         width: "90%",
-
     },
     text1: {
         fontSize: 18,
         alignSelf: 'center',
         color: "#A9A9A9"
     },
-
     input: {
         flexDirection: 'row',
         marginVertical: 10,
@@ -267,7 +246,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#144800',
         marginBottom: 50,
         flexDirection: 'row',
-
     },
     icon: {
         left: 30,
@@ -275,17 +253,6 @@ const styles = StyleSheet.create({
         marginRight: 50
 
     },
-    // label: {
-    //   position: 'absolute',
-    //   backgroundColor: 'white',
-    //   left: 22,
-    //   top: 8,
-    //   zIndex: 999,
-    //   paddingHorizontal: 8,
-    //   fontSize: 14,
-
-
-    // },
     placeholderStyle: {
         fontSize: 18,
         color: "#A9A9A9"

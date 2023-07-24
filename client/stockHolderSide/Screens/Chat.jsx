@@ -1,14 +1,11 @@
-import React, { useLayoutEffect, useEffect, useCallback, useState, useRef } from "react";
+import React, { useLayoutEffect,  useCallback, useState } from "react";
 import { GiftedChat } from 'react-native-gifted-chat'
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { collection, doc, addDoc, query, where, getDocs, orderBy, onSnapshot, push, ref } from 'firebase/firestore';
+import { collection, doc, addDoc, query, where, getDocs, orderBy, onSnapshot} from 'firebase/firestore';
 import { signOut } from 'firebase/auth'
 import { auth, database } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
-import GradientBackground from '../Components/GradientBackground';
 import { v4 as uuidv4 } from 'uuid';
-//import * as Notifications from 'expo-notifications';
-import { async } from "@firebase/util";
 import { cgroup90 } from "../cgroup90";
 import Icon from "react-native-vector-icons/Ionicons";
 import ChatBackground from "../Components/ChatBackground";
@@ -22,9 +19,6 @@ export default function Chat(props) {
     const [chatRoomDocRef, setChatRoomDocRef] = useState('')
     const [shouldRender, setShouldRender] = useState(false); // add state variable
     const [isStackholder, setisStackhold] = useState(true);
-
-    console.log('im the logged user', userLogged);
-   // console.log('im the chosen one!', chosenUser);
 
     const onSignOut = () => {
         signOut(auth).catch(error => console.log(error));
@@ -49,7 +43,6 @@ export default function Chat(props) {
         if (chatRoomQuerySnapshot.size !== 0) {
             const existingChatRoomRef = chatRoomQuerySnapshot.docs[0].ref;
             setChatRoomDocRef(chatRoomQuerySnapshot.docs[0].ref);
-            console.log('Chat room exists');
             const messagesRef = collection(database, 'chat_rooms', existingChatRoomRef.id, 'messages');
             const q = query(messagesRef, orderBy('createdAt', 'desc'));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -61,29 +54,25 @@ export default function Chat(props) {
                         text: data.text,
                         user: data.user
                     };
-                });
-                // console.log('Fetched messages:', messages); // add this line
+                });         
                 setMessages(messages);
-                setShouldRender(false); // update state variable to trigger re-render
+                setShouldRender(false); 
             });
-            return false; // indicate that chat room already exists
+            return false; 
         } else {
             const newChatRoomDocRef = await addDoc(collection(database, 'chat_rooms'), {
                 users: sortedUsers,
                 messages: []
             });
             setChatRoomDocRef(newChatRoomDocRef);
-            console.log('Chat room created');
-            return true; // indicate that new chat room was created
+            return true; 
         }
     };
 
     useLayoutEffect(() => {
-        const getMessages = async () => {
-            // Call createChatRoom() to make sure chat room exists
+        const getMessages = async () => {          
             const isNewChatRoom = await createChatRoom();
             if (!isNewChatRoom) {
-                // If a new chat room was created, do any necessary setup here
                 const messagesRef = collection(database, 'chat_rooms', chatRoomDocRef.id, 'messages');
                 const q = query(messagesRef, orderBy('createdAt', 'desc'));
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -96,9 +85,8 @@ export default function Chat(props) {
                             user: data.user
                         };
                     });
-                    // console.log('Fetched messages:', messages); // add this line
                     setMessages(messages);
-                    setShouldRender(false); // update state variable to trigger re-render
+                    setShouldRender(false); 
                 });
 
                 return () => {
@@ -122,7 +110,7 @@ export default function Chat(props) {
             const promises = newMessages.map(async (message) => {
               const createdAt = new Date();
               const messageData = {
-                _id: uuidv4(), // add the generated ID to the message object
+                _id: uuidv4(), 
                 text: message.text,
                 createdAt: createdAt,
                 user: {
@@ -131,34 +119,25 @@ export default function Chat(props) {
                 },
               };
       
-              console.log("*********", chosenUser.token, messageData);
-              await handlePushNotification(messageData, chosenUser.token); // send push notification to the recipient
-      
+              await handlePushNotification(messageData, chosenUser.token); 
               setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
-      
               return addDoc(messagesRef, messageData);
             });
       
             await Promise.all(promises);
-            console.log('Messages sent');
           } catch (error) {
-            console.error('Error sending messages:', error);
           }
         }
       }, [userLogged, chosenUser, chatRoomDocRef]);
       
-
-
     const handlePushNotification =  (message, recipientToken) => {
-        // Construct the message payload
         const notification = {
             to: recipientToken,
             title: `You have new message`,
             body: message.text,
             data: { chatRoomDocRefId: chatRoomDocRef.id },
         };
-
-        // Send the notification to the recipient         
+   
         fetch(`${cgroup90}/sendpushnotification`, {
             method: 'POST',
             headers: {
@@ -167,9 +146,7 @@ export default function Chat(props) {
             body: JSON.stringify(notification),
         })
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
+            .then(data => {})
             .catch(error => {
                 console.error(error);
                 Alert.alert('Error', error);
@@ -208,7 +185,6 @@ export default function Chat(props) {
                         }}
                     />
                 )}
-
             </View>
         </ChatBackground>
     )
@@ -217,7 +193,6 @@ export default function Chat(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#fff',
         marginBottom: 30,
     },
     back: {
@@ -233,27 +208,19 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     text: {
-        // fontSize: 16,
-        // top: 0,
         fontWeight: 'bold',
         fontSize: 25,
         color: '#144800',
         fontSize: 32,
         alignSelf: 'center',
         paddingLeft: 30,
-
-
     },
     row: {
-
-        // marginTop: 75,
         marginBottom: 20,
         height: '10%',
         flexDirection: 'row',
         alignItems: 'center',
-        // backgroundColor: 'white',
         width: '100%',
-        // height:100,
         shadowOpacity: 0.5,
     },
     user: {

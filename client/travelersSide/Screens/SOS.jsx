@@ -1,7 +1,6 @@
 import React, { useEffect, useState,useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import {  useNavigation } from "@react-navigation/native";
-
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
@@ -23,7 +22,6 @@ export default function SOS(props) {
   }, []);
 
   useEffect(() => {
-    console.log({ location });
     const userLocation = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude
@@ -39,12 +37,12 @@ export default function SOS(props) {
       .then(response => response.json())
       .then(data => {
         setEvents(data);
-        console.log("++++", data);
+     
       }
       )
       .catch(error => {
         console.error(error);
-        console.log('Error');
+       
       });
   }, [location]);
 
@@ -66,8 +64,6 @@ export default function SOS(props) {
     });
   }, [events]);
 
-console.log(eventAddresses);
-console.log("TTTTT",traveler);
 
   return (
     <GradientBackground>

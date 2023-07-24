@@ -14,7 +14,6 @@ export default function Search(props) {
   const navigation = useNavigation();
  //user-the user who use the app
  const traveler =  props.route.params.traveler;
-console.log("trrrrrrrr",traveler)
   useEffect(() => {
     loadData();
   }, []);
@@ -69,7 +68,6 @@ console.log("trrrrrrrr",traveler)
   console.log(searchObj)
 
   const searchEvents = async () => {
-    console.log(selectedCity, selectedCountry, selectedStartDate,selectedEndDate, selectedSerialType)
     if (selectedCountry === '' && selectedStartDate === '' && selectedSerialType == '') {
       Alert.alert('Please enter for search');
     }
@@ -151,7 +149,6 @@ console.log("trrrrrrrr",traveler)
     < GradientBackground>
           <Navbar traveler={traveler} />
           <BackButton text="Search"/>
-
     <ScrollView>
       <View style={styles.container}>
 
@@ -244,13 +241,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 20,
     width: "100%",
-  
   },
   text: {
     color: '#144800',
     fontSize: 22,
     left:20,
-
   },
   icon: {
     fontSize: 25
@@ -260,9 +255,7 @@ const styles = StyleSheet.create({
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-
   },
-
   calendar: {
     alignSelf: 'center',
     flexDirection: 'row',
@@ -276,7 +269,6 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
-
   },
   dropdown: {
     height: 40,
@@ -293,19 +285,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     width: "90%",
-
   },
   text1: {
-    
     fontSize: 18,
     alignSelf: 'center',
     color: "#A9A9A9"
-
   },
-
-
   label: {
-    
     position: 'absolute',
     backgroundColor: 'white',
     left: 22,
@@ -313,8 +299,6 @@ const styles = StyleSheet.create({
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
-
-
   },
   placeholderStyle: {
     fontSize: 18,

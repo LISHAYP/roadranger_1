@@ -4,9 +4,7 @@ import GradientBackground from '../Components/GradientBackground';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BackButton from '../Components/BackButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
-import { Dropdown } from 'react-native-element-dropdown';
 import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
@@ -14,7 +12,6 @@ import Navbar from '../Components/Navbar';
 const HomeChat = (props) => {
   const navigation = useNavigation();
   const stakeholder = props.route.params.stakeholder;
-  console.log('aaa', stakeholder)
   const [travelers, setTravelers] = useState([]);
   const [activeChats, setActiveChats] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -25,8 +22,6 @@ const HomeChat = (props) => {
     fetch(`${cgroup90}/api/Traveler`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("All travelers:", data);
-        console.log("Stakeholder name:", stakeholder.StakeholderName);
         const filteredTravelers = data.filter((traveler) => traveler.insurence_company === stakeholder.StakeholderName);
         setTravelers(filteredTravelers);
       })
@@ -58,10 +53,8 @@ const HomeChat = (props) => {
         console.error(e);
       }
     }
-    console.log(user, loggeduser)
     navigation.navigate('Chat', { user, loggeduser });
   };
-
 
   const handleClearActiveChats = async () => {
     try {
@@ -160,7 +153,6 @@ const HomeChat = (props) => {
                       </View>
                     </TouchableOpacity>
                   </Swipeable>
-
                 ))}
               </ScrollView>
 
@@ -188,9 +180,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     marginTop:20,
-    // paddingVertical: 80,
-    paddingBottom: 20,// Adjust this value as needed
-    // marginBottom:150
+    paddingBottom: 20,
   },
   dropdown: {
     height: 40,
@@ -218,10 +208,8 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     alignItems: 'center',
-    // backgroundColor:'white',
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
     padding: 10,
-    // width:'70%'
     borderColor: 'rgba(0, 0, 0, 0.07)',
     borderWidth: 2,
     borderRadius: 15,
@@ -245,7 +233,6 @@ const styles = StyleSheet.create({
   groupChatBtn: {
     top: 20,
     marginVertical: 20,
-    // width: "50%",
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -266,11 +253,8 @@ const styles = StyleSheet.create({
 
   },
   chatContainer: {
-    // backgroundColor: 'rgba(0, 0, 0, 0.07)',
     borderRadius: 15,
     padding: 10,
-    // height: '30%',
-    // width: '50%',
     top: 20,
 
   },
@@ -280,7 +264,6 @@ const styles = StyleSheet.create({
   },
   user: {
     alignSelf: 'center',
-    // resizeMode: 'cover',
     height: 150,
     borderRadius: 75,
     width: 150,

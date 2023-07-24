@@ -2,7 +2,7 @@ import { Camera, CameraType } from 'expo-camera';
 import React, { useState } from 'react';
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View,Alert } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import {  useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { cgroup90 } from '../cgroup90';
 
@@ -35,7 +35,6 @@ export default function OpenCameraE(props) {
 
   const ide = props.route.params.idE;
   const idee = ide.replace(':', '_')
-  console.log("1", idee)
   const takePicture = async () => {
     if (camera) {
       try {
@@ -63,15 +62,12 @@ export default function OpenCameraE(props) {
         })
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
             setAnimate(false);
           })
           .catch((error) => {
-            console.error(error);
             setAnimate(false);
           });
       } catch (error) {
-        console.log(error);
       }
     }
   };
@@ -86,15 +82,12 @@ export default function OpenCameraE(props) {
       quality: 0.1,
       base64: true,
     });
-    console.log({ pickerResult }); // Log the pickerResult object
     if (pickerResult.cancelled) {
-      console.log('Image selection cancelled'); // Handle cancel event
     } else {
       const image = { uri: pickerResult.uri };
       setImage(image);
       const pic64base = pickerResult.base64;
       const picName64base = `E_${idee}.jpg`;
-      console.log(picName64base);
       const picUri = `data:image/jpeg;base64,${pickerResult.base64}`;
       const formData = new FormData();
       formData.append('file', { uri: picUri, name: picName64base, type: 'image/jpeg' });
@@ -111,11 +104,9 @@ export default function OpenCameraE(props) {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log("1", responseJson);
           setAnimate(false);
         })
         .catch((error) => {
-          console.error(error);
           setAnimate(false);
         });
     }
@@ -123,7 +114,6 @@ export default function OpenCameraE(props) {
   
 
 const savePhoto = () => {
-  console.log('img', true);
 Alert.alert("your picture has uploaded :)")
   navigation.goBack();
 };
