@@ -192,7 +192,6 @@ export default function OpenCameraE(props) {
 
 
   const savePhoto = () => {
-    console.log('img', true, labels, traveler, userLocation);
     Alert.alert("your picture has uploaded :)")
     navigation.navigate("New event", { labels, traveler, userLocation });
   };

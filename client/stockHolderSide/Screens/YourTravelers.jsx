@@ -1,11 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { View, Text,  StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
@@ -17,16 +12,10 @@ export default function YourTravelers(props) {
   Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
   const stakeholder = props.route.params.stakeholder;
-
-
   const [myTravelers, setMyTravelers] = useState([])
-  console.log("*****************", stakeholder)
 
   useEffect(() => {
-    console.log("----------", stakeholder.StakeholderType)
     if (stakeholder.StakeholderType == 'Insurance Company') {
-      console.log("----------", "Insurance Company")
-
       stackholderTypeInsurence()
     }
     else {
@@ -45,7 +34,6 @@ export default function YourTravelers(props) {
     })
       .then(response => response.json())
       .then(data => {
-        // Map over the data and get the address for each traveler
         Promise.all(data.map(traveler => {
           const lat = traveler.last_location.Latitude;
           const lng = traveler.last_location.Longitude;
@@ -67,7 +55,6 @@ export default function YourTravelers(props) {
     const objInsuranceCompany = {
       insurence_company: stakeholder.StakeholderName
     }
-    console.log("============", objInsuranceCompany)
     fetch(`${cgroup90}/api/post/GetTravelersByInsuranceCompanyNLL`, {
       method: 'POST',
       headers: {
@@ -78,8 +65,6 @@ export default function YourTravelers(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("^^^^^", data)
-        // Map over the data and get the address for each traveler
         Promise.all(data.map(traveler => {
           const lat = traveler.last_location.Latitude;
           const lng = traveler.last_location.Longitude;
@@ -92,14 +77,12 @@ export default function YourTravelers(props) {
             return { ...traveler, address };
           }).catch(error => {
             console.error(error);
-            // handle the error appropriately
           });
         })).then(travelersWithAddress => {
           setMyTravelers(travelersWithAddress);
 
         }).catch(error => {
           console.error(error);
-          // handle the error appropriately
         });
       });
   }

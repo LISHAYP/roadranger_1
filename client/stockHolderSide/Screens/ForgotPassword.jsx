@@ -1,18 +1,12 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import React from 'react'
-import RoadRanger from '../assets/RoadRanger.png';
-import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
-import { Dropdown } from 'react-native-element-dropdown';
-import { useRef } from 'react';
 import BackButton from '../Components/BackButton';
 import { cgroup90 } from '../cgroup90';
 
 export default function ForgotPassword() {
-
-
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
 
@@ -20,7 +14,6 @@ export default function ForgotPassword() {
        travelerEmail={
         "travler_email":email
        }
-       console.log(travelerEmail);
         fetch(`${cgroup90}/api/post/forgotpassword`, {
             method: 'POST',
             headers: {
@@ -36,7 +29,6 @@ export default function ForgotPassword() {
                 navigation.goBack();
             })
             .catch(error => {
-                console.log(error);
                 Alert.alert("Email does not exist");
             });
 
@@ -45,28 +37,19 @@ export default function ForgotPassword() {
         < GradientBackground>
           <BackButton text={"Forgot Your Password?"}/>
             <View style={styles.container}>
-{/*               
-                <Text style={styles.title}>Forgot Your Password?</Text> */}
-
-                {/* <Image source={RoadRanger} style={styles.RoadRanger} /> */}
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input}
                     placeholder="User Email"
                     onChangeText={(text) => setEmail(text)}>
                 </TextInput>
 
-              
                 <TouchableOpacity style={styles.btnLogIn} onPress={handleSendPress}>
-
                     <Text style={styles.btnText}>
                         Reset Password
                     </Text>
                 </TouchableOpacity>
-
-
             </View >
         </ GradientBackground>
-
     )
 }
 const styles = StyleSheet.create({
@@ -77,19 +60,16 @@ const styles = StyleSheet.create({
         padding: 10,
         width: "100%",
         paddingTop:120
-
     },
     title: {
         paddingTop: 50,
         fontSize: 40,
         marginBottom: 50
     },
-
     RoadRanger: {
         alignSelf: 'center',
         resizeMode: 'contain',
         height: 100
-
     },
     text: {
         paddingTop: 10,
@@ -128,7 +108,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "#A9A9A9"
     },
-
     dropdown: {
         height: 40,
         borderColor: '#8FBC8F',
@@ -143,7 +122,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
         width: "90%",
-
     },
     input1: {
         flexDirection: 'row',
@@ -155,8 +133,6 @@ const styles = StyleSheet.create({
         borderColor: '#144800',
         borderWidth: 1,
         borderRadius: 25,
-
-
     },
     error: {
         color: 'red'

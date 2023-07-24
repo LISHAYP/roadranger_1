@@ -10,7 +10,7 @@ import GradientBackground from '../Components/GradientBackground';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase';
 import { cgroup90 } from '../cgroup90';
-import User from '../assets/User.png';
+
 
 export default function SignUp() {
 
@@ -18,8 +18,6 @@ export default function SignUp() {
   const [newProfilePic, setNewProfilePic] = useState(defaultPic);
 
   useEffect(() => {
-    //setupdatednewProfilePic(`${cgroup90}/profilePictures/U_${email}.jpg`);
-
   }, [email]);
 
   const navigation = useNavigation();
@@ -82,7 +80,7 @@ export default function SignUp() {
     const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (!emailPattern.test(email)) {
       // Email format is invalid
-      alert('Please enter a valid email address.');
+      Alert.alert('Please enter a valid email address.');
       return;
     }
     if (phone.length != 10) {
@@ -109,8 +107,6 @@ export default function SignUp() {
         .then(response => response.json())
         .then(data => {
           // Handle the response data as needed
-          console.log(newTraveler)
-          console.log(data);
           navigation.goBack();
         })
         .catch(error => {
@@ -130,13 +126,11 @@ export default function SignUp() {
     }
   };
   const presentPic = () => {
-    console.log(updatednewProfilePic)
     setupdatednewProfilePic(`${cgroup90}/profilePictures/U_${email}.jpg`);
   }
   return (
 
     < GradientBackground>
-
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
@@ -255,23 +249,17 @@ const styles = StyleSheet.create({
   },
   hamburger: {
     flexDirection: 'row',
-    // position: 'absolute',
     width: '100%',
     height: '12%',
     top: 0,
     left: 0,
-    // zIndex: 1,
-
     paddingTop: 55,
     paddingHorizontal: 20,
-
-
   },
   RoadRanger: {
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 50
-
   },
   user: {
     alignSelf: 'center',
@@ -280,13 +268,10 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     width: 150,
     marginBottom: 25,
-
-
   },
   text: {
     color: '#144800',
     fontSize: 20,
-
   },
   icon: {
     fontSize: 25

@@ -1,14 +1,12 @@
-import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, TextInput } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, TextInput } from 'react-native';
 import React from 'react'
-import { KeyboardAvoidingView, Platform } from 'react-native';
-import { Keyboard } from 'react-native';
-import RoadRanger from '../assets/RoadRanger.png';
+import {KeyboardAvoidingView, Platform } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
-import { Dropdown } from 'react-native-element-dropdown';
-import { cgroup90 } from '../cgroup90';
+import {Dropdown } from 'react-native-element-dropdown';
+import {cgroup90 } from '../cgroup90';
 
 
 export default function ContactUs() {
@@ -19,7 +17,7 @@ export default function ContactUs() {
         { label: 'Create a stakeholder', value: '4' },
         { label: 'Faults', value: '5' },
     ]
-    const [value, setValue] = useState(null);
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -44,7 +42,7 @@ export default function ContactUs() {
             RequestType: requestType,
             Details: details
         };
-        console.log("*****", objNewContactRequest);
+    
         if (!firstName || !lastName | !email || !phoneNumber || !details || !requestType) {
             // Some fields are missing
             Alert.alert('Please fill in all fields.');
@@ -54,7 +52,7 @@ export default function ContactUs() {
         const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         if (!emailPattern.test(email)) {
             // Email format is invalid
-            alert('Please enter a valid email address.');
+            Alert.alert('Please enter a valid email address.');
             return;
         }
         if (phoneNumber.length != 10) {
@@ -75,7 +73,6 @@ export default function ContactUs() {
             .then(response => response.json())
             .then(data => {
                 // Handle the response data as needed
-                console.log("lllllllllllll", data);
                 Alert.alert('Thank you for your message. Your message is important to us :)')
                 setDetails('')
                 setEmail('')

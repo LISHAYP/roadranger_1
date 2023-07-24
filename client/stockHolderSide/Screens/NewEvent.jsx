@@ -36,7 +36,7 @@ export default function NewEvent(props) {
       }
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
-      setLocationFetched(true); // Set locationFetched to true after location is fetched  
+      setLocationFetched(true); 
       getLocation()
     })();
   }, []);
@@ -130,7 +130,6 @@ export default function NewEvent(props) {
       Alert.alert('Please enter details and type');
     }
     else {
-      // Send a POST request to your backend API with the event data
       fetch(`${cgroup90}/api/post/newevent`, {
         method: 'POST',
         headers: {
@@ -170,9 +169,7 @@ export default function NewEvent(props) {
             multiline
             spellCheck="true"
             onSubmitEditing={() => {
-              //close the keyboard
-              TextInput.State.blur(TextInput.State.currentlyFocusedInput())
-            }}>
+              TextInput.State.blur(TextInput.State.currentlyFocusedInput()) }}>
           </TextInput>
        
 

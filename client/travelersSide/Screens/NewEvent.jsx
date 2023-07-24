@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import {  useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
@@ -38,16 +37,13 @@ export default function NewEvent(props) {
 
   const id = traveler.traveler_id;
   const [details, setDetails] = useState('');
-  const [eventStatus, setEventStatus] = useState('true');
+  const eventStatus='true';
   const [picture, setPicture] = useState(`${cgroup90}/profilePictures/no-image.png`);
-  const [stackholderId, setStackholderId] = useState('null');
+  const stackholderId='null';
   const [serialTypeNumber, setSerialTypeNumber] = useState('');
   const [countryNumber, setCountryNumber] = useState('');
   const [areaNumber, setAreaNumber] = useState('');
   const [selectedSerialType, setSelectedSerialType] = useState(null);
-  // const [relatedEvents, setRelatedEvents] = useState('');
-  // const [latitude, setLatitude] = useState(null);
-  // const [longitude, setLongitude] = useState(null);
 
   useEffect(async () => {
     await getUserLocation();
@@ -62,7 +58,6 @@ export default function NewEvent(props) {
         const addressComponents = json.results[0].address_components;
         const countryComponent = addressComponents.find(component => component.types.includes('country'));
         const cityComponent = addressComponents.find(component => component.types.includes('locality'));
-        // const continentComponent = addressComponents.find(component => component.types.includes('continent'));
         setCountry(countryComponent.long_name);
         setCity(cityComponent.long_name);
         addContry();
@@ -86,7 +81,7 @@ export default function NewEvent(props) {
     area_number: areaNumber,
     labels: JSON.stringify(labels)
   };
-  // console.log("--------", { newEvent, labels })
+ 
   const countryObj = {
     country_name: country,
   };
@@ -129,15 +124,13 @@ export default function NewEvent(props) {
       .then(response => response.json())
       .then(data => {
         setAreaNumber(data)
-      }
-      )
+      })
       .catch(error => {
         console.error(error);
         console.log('Error');
       });
   }
   const translations = []; // Array to store translations
-  // const entities = [];
   const createEvent = async () => {
     if (newEvent.Details === '' || newEvent.serialTypeNumber === '') {
       Alert.alert('Please enter details and type');
@@ -211,15 +204,11 @@ export default function NewEvent(props) {
 
     if (event1.labels == null || event2.labels == null) {
       // If either event is missing the labels property, return false
-      console.log(`here1 compareLabels false`)
-
       return false;
     }
 
     if (event1.Details === event2.Details) {
       // If Details are defined and identical, return false
-      console.log(`here1 compareLabels false2`)
-
       return false;
     }
     let labels1, labels2;
@@ -231,8 +220,6 @@ export default function NewEvent(props) {
     for (const label1 of labels1) {
       for (const label2 of labels2) {
         if (label1 === label2) {
-          console.log(`here1 compareLabels true`)
-
           return true;
         }
       }
@@ -243,21 +230,13 @@ export default function NewEvent(props) {
   };
 
   const similarContent = async (event1, event2) => {
-    //console.log(`here1 similarContent`, event1, event2);
-    console.log(`here --1`);
-    console.log('event1', event1)
-    console.log('event2', event2)
-
     // Check if the event times are equal
     if (event1.Details === event2.Details || event1.EventTime.split(':')[0] === event2.event_time.split(':')[0] && event1.EventTime.split(':')[1] === event2.event_time.split(':')[1]) {
-      console.log(`here1 similarContent false2`);
       return false;
     }
-    console.log(`here --2`);
 
     // Initialize the translation client
     const translateUrl = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyCQRIjlNOiWQbf2ldIz6tx4nJfuNhPIycA`;
-    console.log(`here --3`);
 
     // Function to translate text using Google Translate API
     const translateText = async (text, targetLanguage) => {
@@ -265,7 +244,6 @@ export default function NewEvent(props) {
         q: text,
         target: targetLanguage,
       };
-      console.log(`here --4`);
 
       const response = await fetch(translateUrl, {
         method: 'POST',
@@ -274,7 +252,6 @@ export default function NewEvent(props) {
         },
         body: JSON.stringify(requestBody),
       });
-      console.log(`here --5`);
 
       if (!response.ok) {
         throw new Error('Translation request failed');
@@ -295,7 +272,6 @@ export default function NewEvent(props) {
         throw new Error('Translation not available');
       }
     };
-    console.log(`here --6`);
 
     const translation1 = { value: null };
     const textToTranslate1 = event2.Details;
@@ -314,7 +290,6 @@ export default function NewEvent(props) {
     
       return stringSimilarity.compareTwoStrings(translation1.value, translation2.value) > 0.5;
     } catch (error) {
-      console.log('Translation error:', error);
       return false;
     }
   };
@@ -477,17 +452,6 @@ const styles = StyleSheet.create({
     marginRight: 50
 
   },
-  // label: {
-  //   position: 'absolute',
-  //   backgroundColor: 'white',
-  //   left: 22,
-  //   top: 8,
-  //   zIndex: 999,
-  //   paddingHorizontal: 8,
-  //   fontSize: 14,
-
-
-  // },
   placeholderStyle: {
     fontSize: 18,
     color: "#A9A9A9"

@@ -1,15 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
 import Geocoder from 'react-native-geocoding';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
 
@@ -43,7 +38,6 @@ export default function FollowTraveler(props) {
     })
       .then(response => response.json())
       .then(data => {
-        // Map over the data and get the address for each traveler
         Promise.all(data.reverse().map(traveler => {
           const lat = traveler.Latitude;
           const lng = traveler.Longitude;
@@ -64,12 +58,10 @@ export default function FollowTraveler(props) {
       });
   }
   const reportClick = () => {
-    console.log("&&&&&&&", lastLocation)
     setMissing(!missing);
     const newMissing = !missing;
     if (newMissing) {
       navigation.navigate('Report', { stakeholder: stakeholder, traveler: traveler, location: lastLocation })
-      console.log('Reported as missing');
     } else {
       const travelerIdObj = {
         traveler_id: traveler.traveler_id
@@ -90,8 +82,6 @@ export default function FollowTraveler(props) {
           console.error(error);
           Alert.alert('Error', error);
         });
-
-      console.log('Reported as found');
     }
 
   }
@@ -109,7 +99,6 @@ export default function FollowTraveler(props) {
       <Navbar stakeholder={stakeholder} />
       <BackButton text="Follow" />
       <View style={styles.container}>
-
         <View >
           <View style={styles.row}>
             <Image style={styles.img} source={{ uri: traveler.Picture }} />
@@ -121,8 +110,7 @@ export default function FollowTraveler(props) {
           <View>
             <Text style={styles.text}>Last seen at {formatDateTime(lastLocation.DateAndTime)} </Text>
             <Text style={styles.text}>{lastLocation.address}</Text>
-          </View>
-        )}
+          </View> )}
         <TouchableOpacity style={styles.btnSave} onPress={reportClick} >
           <Text style={styles.btnText}  >
             {missing ? 'Report as found' : 'Report as missing'}
@@ -189,9 +177,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     marginTop:20,
-    // paddingVertical: 80,
-    paddingBottom: 150,// Adjust this value as needed
-    // marginBottom:150
+    paddingBottom: 150,
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -202,8 +188,6 @@ const styles = StyleSheet.create({
     padding: 10,
     resizeMode: "contain",
     width:"90%"
-   
-    
   },
   event: {
     flexDirection: 'row',
@@ -212,7 +196,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-
   },
   img: {
     height: 40,
@@ -245,6 +228,5 @@ const styles = StyleSheet.create({
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-
   },
 });

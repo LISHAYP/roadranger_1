@@ -125,7 +125,6 @@ export default function Chat(props) {
                 };
                 setMessages((previousMessages) => GiftedChat.append(previousMessages, messageData));
                 handlePushNotification(messageData, traveler1.token); // send push notification to the recipient
-                console.log("*********", traveler1)
                 return addDoc(messagesRef, messageData);
             });
 
@@ -159,7 +158,7 @@ export default function Chat(props) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+               
             })
             .catch(error => {
                 console.error(error);
@@ -174,15 +173,12 @@ export default function Chat(props) {
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Icon name="arrow-back-outline" size={30} color='#144800' />
                 </TouchableOpacity>
-
                 <View style={styles.user}>
                     <Image style={styles.img} source={{ uri: traveler1.Picture }} />
-
                 </View>
                 <View style={styles.user}>
                     <Text style={styles.text}>{traveler1.first_name} {traveler1.last_name} </Text>
                 </View>
-
             </View>
             <View style={styles.container}>
 

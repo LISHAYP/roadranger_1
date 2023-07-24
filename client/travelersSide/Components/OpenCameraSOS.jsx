@@ -123,7 +123,6 @@ export default function OpenCameraE(props) {
   
 
 const savePhoto = () => {
-  console.log('img', true);
   Alert.alert("your picture has uploaded :)")
   navigation.goBack();
 };

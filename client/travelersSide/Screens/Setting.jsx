@@ -7,7 +7,6 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import GradientBackground from '../Components/GradientBackground';
 import BackButton from '../Components/BackButton';
-import { auth } from '../firebase';
 import 'firebase/database';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
@@ -91,7 +90,6 @@ export default function Setting(props) {
       .catch((error) => {
         console.error(error);
       });
-
   }
   console.log(email)
   const openCamera = () => {
@@ -100,7 +98,6 @@ export default function Setting(props) {
   }
   const handleSavePhoto = () => {
     setUserPic(`${cgroup90}/uploadUserPic/U_${email}.jpg`);
-
   }
 
   return (
@@ -194,14 +191,12 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "100%",
     paddingBottom: 100,
-
   },
 
   RoadRanger: {
     alignSelf: 'center',
     resizeMode: 'contain',
     height: 100
-
   },
   text: {
     color: '#144800',
@@ -234,9 +229,7 @@ const styles = StyleSheet.create({
     color: '#F8F8FF',
     alignSelf: 'center',
     fontSize: 20,
-
   },
-
   calendar: {
     flexDirection: 'row',
     marginVertical: 10,
@@ -249,7 +242,6 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 50,
     justifyContent: 'space-between'
-
   },
   dropdown: {
     height: 40,
@@ -264,7 +256,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     width: "90%",
-
   },
   text1: {
     fontSize: 18,
@@ -274,7 +265,6 @@ const styles = StyleSheet.create({
   text2: {
     fontSize: 18,
     alignSelf: 'center',
-
   },
   input: {
     flexDirection: 'row',
@@ -286,7 +276,6 @@ const styles = StyleSheet.create({
     borderColor: '#144800',
     borderWidth: 1,
     borderRadius: 20,
-
   },
   label: {
     position: 'absolute',
@@ -296,8 +285,6 @@ const styles = StyleSheet.create({
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
-
-
   },
   placeholderStyle: {
     fontSize: 18,

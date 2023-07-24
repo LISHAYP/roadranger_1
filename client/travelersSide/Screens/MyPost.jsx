@@ -58,15 +58,12 @@ export default function MyPost(props) {
             <BackButton text="My Post" />
             <Navbar traveler={traveler} />
             <ScrollView>
-
                 <View style={styles.container}>
-
                     <View>
                         {eventWithAddresses !== undefined ? (
                             eventWithAddresses.filter(event => event.TravelerId === traveler.traveler_id).map((event, index) => (
                                 <TouchableOpacity onPress={() => {
-                                    navigation.navigate('Event Details', { event: event, traveler: traveler });
-                                }} >
+                                    navigation.navigate('Event Details', { event: event, traveler: traveler });  }} >
                                     <View style={styles.event} key={event.eventNumber}>
                                         <View style={styles.detailsContainer}>
                                             <Text style={styles.details}>{event.Details}</Text>
@@ -81,12 +78,9 @@ export default function MyPost(props) {
                         ) : (
                             <Text>No events found.</Text>
                         )}
-
                     </View>
-
                 </View>
             </ScrollView>
-
         </GradientBackground>
     );
 }
@@ -137,8 +131,4 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         resizeMode: 'cover'
     }
-
-
-
-
 });

@@ -1,11 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, Alert } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import React, { useEffect, useState} from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView,Alert } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import BackButton from '../Components/BackButton';
 import GradientBackground from '../Components/GradientBackground';
 import { cgroup90 } from '../cgroup90';
@@ -13,8 +8,6 @@ import Navbar from '../Components/Navbar';
 
 export default function Setting(props) {
   const stakeholder = props.route.params.stakeholder;
-  console.log("********", stakeholder);
-
   const navigation = useNavigation();
   const [full_name, setFullName] = useState(stakeholder.FullName);
   const satkeholder_name= stakeholder.StakeholderName;
@@ -23,12 +16,7 @@ export default function Setting(props) {
   const [phone, setPhone] = useState(stakeholder.Phone);
   const [userPic, setUserPic] = useState(stakeholder.picture)
   const [token, setToken] = useState(null);
-
-  const [isEnabledChatMode, setIsEnabledChatMode] = useState(stakeholder.Chat);
-  const [isEnabledNotification, setIsEnabledNotification] = useState(stakeholder.Notifications);
-  const [selectedStakeholderType, setSelectedStakeholderType] = useState(stakeholder.StakeholderType);
-  const toggleSwitchChatMode = () => setIsEnabledChatMode(previousState => !previousState);
-  const toggleNotification = () => setIsEnabledNotification(previousState => !previousState);
+  const selectedStakeholderType=stakeholder.StakeholderType;
 
 useEffect(() => {
   const fetchUserPic = async () => {
@@ -41,7 +29,6 @@ useEffect(() => {
       console.error(error);
     }
   };
-
   fetchUserPic();
 }, [stakeholder_email, stakeholder.Picture]);
 
@@ -76,7 +63,6 @@ useEffect(() => {
         console.error(error);
       });
   }
-  const id = stakeholder.stakeholder_id;
 
   const openCamera = () => {
     navigation.navigate('Camera', stakeholder_email);
@@ -124,7 +110,6 @@ useEffect(() => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
     </GradientBackground>
   )
 }

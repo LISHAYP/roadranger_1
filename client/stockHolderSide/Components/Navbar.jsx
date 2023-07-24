@@ -1,16 +1,14 @@
 import { TouchableOpacity, StyleSheet, Text, View, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { AntDesign } from '@expo/vector-icons';
 
 
 function Navbar(props) {
     const navigation = useNavigation();
     const stakeholder = props.stakeholder;
-    const userLocation = props.userLocation;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -20,10 +18,7 @@ function Navbar(props) {
         setIsMenuOpen(false);
     };
 
-
     return (
-
-
         <View style={styles.hamburger1}>
             <TouchableOpacity onPress={() => setIsMenuOpen(true) } style={styles.icon1} >
                 <Icon name="menu" size={30} color="#144800" alignItems='center' />
@@ -77,7 +72,6 @@ function Navbar(props) {
                                 onPress={() => {
                                     navigation.navigate("New event", {
                                         stakeholder: stakeholder,
-                                        // userLocation: userLocation
                                     }), setIsMenuOpen(false);
                                 }}
                             >
@@ -107,17 +101,12 @@ function Navbar(props) {
                                 onPress={() => {
                                     navigation.navigate("Warning", {
                                         stakeholder: stakeholder,
-                                        // userLocation: userLocation
-                                    }), setIsMenuOpen(false);
-                                }}
-                            >
+                                    }), setIsMenuOpen(false) }}  >
                                 <Icon name="warning-outline" size={30} style={styles.icon} />
                                 <Text style={styles.text}>Warnings </Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
-
                 )}
             </Modal>
         </View>
@@ -192,7 +181,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         height: '100%',
         marginTop:150,
-        // alignContent: 'center',
     },
     optionSOS: {
         alignContent: 'center',
@@ -291,19 +279,15 @@ const styles = StyleSheet.create({
     },
     img: {
         alignSelf: 'center',
-        // resizeMode: 'cover',
         height: 200,
         borderRadius: 20,
         width: 150,
-        // top: 50
-
     },
     rowModal: {
         flexDirection: 'row',
         alignSelf: "center",
         marginTop: 20
     },
- 
 });
 
 export default Navbar;

@@ -1,14 +1,10 @@
-import { Dimensions, Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
+import { Dimensions, Keyboard, StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { useEffect, useState } from 'react';
 import React from 'react'
 import GradientBackground from '../Components/GradientBackground';
 import Icon from "react-native-vector-icons/Ionicons";
-import Geocoder from 'react-native-geocoding';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import BackButton from '../Components/BackButton';
 import { KeyboardAvoidingView, Platform } from 'react-native';
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import * as Location from 'expo-location';
 import { cgroup90 } from '../cgroup90';
 import Navbar from '../Components/Navbar';
 
@@ -18,31 +14,23 @@ const height = Dimensions.get('window').height;
 export default function MissingDetails(props) {
   const event = props.route.params.event;
   const traveler = props.route.params.traveler;
-
   const [comments, setComments] = useState('')
   const [details, setDetails] = useState('');
   const stackholderId = 'null';
   const [newCommentPublished, setNewCommentPublished] = useState(false); // <-- add new state variable
   const [deletedComment, setDeletedComment] = useState(false)
-  console.log('event.address', event.address)
-
 
 
   useEffect(() => {
     fetchNumberEvent()
-    console.log('event.address', event)
-
-
   }, [deletedComment, newCommentPublished])
 
   const fetchNumberEvent = async () => {
-    console.log("in fetchNumberEvent")
     const eventNumberObj = {
       eventNumber: event.Event.eventNumber
     };
 
     try {
-      console.log("in try fretchfetchNumberEvent", { eventNumberObj })
       const response = await fetch(`${cgroup90}/api/events/comments`, {
         method: 'POST',
         headers: {
@@ -56,11 +44,9 @@ export default function MissingDetails(props) {
       setComments(data);
     } catch (error) {
       console.error(error);
-      console.log('Error');
     }
 
   };
-
 
   const newComment = {
     eventNumber: event.Event.eventNumber,
@@ -71,12 +57,8 @@ export default function MissingDetails(props) {
     StackholderId: stackholderId,
 
   };
-  console.log("---------", (newComment))
-
-
 
   const createComment = async () => {
-
     if (newComment.Details == "") {
       Alert.alert('Please enter details ');
     }
@@ -91,14 +73,10 @@ export default function MissingDetails(props) {
       })
         .then(response => response.json())
         .then(data => {
-          // Handle the response data as needed
-          console.log(data);
           setNewCommentPublished(true)
           Alert.alert('Publish')
           setNewCommentPublished(false)
           setDetails('');
-          console.log('event.Address', event)
-
         })
         .catch(error => {
           console.error(error);
@@ -125,7 +103,6 @@ export default function MissingDetails(props) {
       eventNumber: event.eventNumber,
       travelerId: traveler.traveler_id
     };
-    console.log(eventObj)
 
     fetch(`${cgroup90}/api/deleteevent`, {
       method: 'DELETE',
@@ -144,7 +121,6 @@ export default function MissingDetails(props) {
     const commentObj = {
       commentNumber: CommentNumber
     };
-    console.log(commentObj)
 
     fetch(`${cgroup90}/api/deletecomment`, {
       method: 'DELETE',
@@ -163,23 +139,18 @@ export default function MissingDetails(props) {
       .catch(error => {
         console.error(error);
       });
-
-    console.log('event.address', event.address)
   }
 
 
   return (
     <GradientBackground>
       <Navbar traveler={traveler} />
-
       <BackButton text="Event Details" />
-
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
         <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={onScreenTapped}>
-
           <View style={styles.eventContainer}>
             <View style={styles.event}>
               <Text style={styles.detailsText}>{event.Event.Details}</Text>
@@ -196,8 +167,6 @@ export default function MissingDetails(props) {
             <View style={styles.pictureContainer}>
               <Image source={{ uri: event.Traveler.Picture }} style={styles.picture} resizeMode="cover" />
             </View>
-
-
 
             <ScrollView>
               {comments.length > 0 && (
@@ -274,9 +243,8 @@ const styles = StyleSheet.create({
 
 
   pictureContainer: {
-    height: height * 0.2, // adjust this value as needed
+    height: height * 0.2,
     width: width * 0.9,
-    // bottom: 10,
     heigh: 150,
     width: 150,
     paddingTop: 20,
@@ -289,23 +257,17 @@ const styles = StyleSheet.create({
     height: '10%',
     padding: 5,
     borderRadius: 20,
-    // transform: [{ scaleX: -1 }]
-    // scaleX:-1
-    // position: 'absolute'
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginVertical: 10,
   },
   locationIcon: {
     marginRight: 10,
-
   },
   event: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
   eventContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.07)',
@@ -313,12 +275,10 @@ const styles = StyleSheet.create({
     padding: 10,
     height: '75%',
     paddingBottom: 20,
-
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-
   },
   commentContainer: {
     borderColor: '#DCDCDC',
@@ -328,9 +288,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     resizeMode: "contain",
-
   },
-
   locationText: {
     fontSize: 15,
     fontWeight: 'bold',
@@ -340,9 +298,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 18,
     left: 10,
-    // marginTop: 10
   },
-
   addComment: {
     borderColor: '#DCDCDC',
     borderWidth: 0.5,
@@ -358,7 +314,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    // position:'relative',
   },
   img: {
     height: 40,
@@ -367,7 +322,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
-
   },
   text: {
     fontSize: 16,
@@ -376,7 +330,6 @@ const styles = StyleSheet.create({
   dateTimeContainer: {
     alignItems: 'flex-end',
     marginLeft: 'auto',
-
   },
   textdateTime: {
     fontSize: 16,
@@ -393,12 +346,9 @@ const styles = StyleSheet.create({
     left: 50,
     paddingBottom: 10,
     width: '75%',
-    // position:'absolute'
   },
-
   icon: {
     top: 20
-
   },
   inputContainer: {
     flexGrow: 1,
@@ -407,9 +357,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   deleteIcon: {
-
     flexDirection: 'row-reverse'
-
   },
   headerContainer: {
     top: 120,
@@ -429,7 +377,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  }, btnModal: {
+  }, 
+  btnModal: {
     marginVertical: 10,
     width: "25%",
     alignSelf: 'center',
@@ -439,11 +388,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     backgroundColor: '#8FBC8F',
-    //margin: 2
-
   }, textModal1: {
     fontSize: 15,
     alignSelf: 'center',
-
   },
 });

@@ -8,8 +8,6 @@ import { AntDesign } from '@expo/vector-icons';
 function Navbar(props) {
     const navigation = useNavigation();
     const traveler = props.traveler;
-    // const userLocation = props.userLocation;
-    // const matchedEvents = props.matchedEvents;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -102,8 +100,7 @@ function Navbar(props) {
                                     navigation.navigate("Ask For Help", {
                                         traveler: traveler
                                     }), setIsMenuOpen(false);
-                                }}
-                            >
+                                }} >
                                 <Icon name="help-circle-outline" size={35} style={styles.icon} />
                                 <Text style={styles.text}>Ask For Help</Text>
                             </TouchableOpacity>
@@ -141,7 +138,6 @@ const styles = StyleSheet.create({
 
     },
     icon1: {
-        // alignSelf: 'center',
         color: '#144800',
         alignItems: 'center',
         size: 30,
@@ -247,7 +243,6 @@ const styles = StyleSheet.create({
         size: 30,
         color: '#B00020',
         marginTop: 10
-
     },
     textModal: {
         fontSize: 25,
@@ -261,7 +256,6 @@ const styles = StyleSheet.create({
         color: '#144800',
         fontSize: 20,
         textDecorationLine: 'underline',
-
     },
     icon: {
         alignSelf: 'center',
@@ -269,9 +263,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         size: 30,
         marginTop: 10
-
     },
-
     user: {
         width: 50,
         height: 50,
@@ -280,23 +272,17 @@ const styles = StyleSheet.create({
         right: -10,
         top: -5,
         alignSelf: 'flex-end'
-
     },
     img: {
         alignSelf: 'center',
-        // resizeMode: 'cover',
         height: 200,
         borderRadius: 20,
         width: 150,
-        // top: 50
-
     },
     rowModal: {
         flexDirection: 'row',
         alignSelf: "center",
         marginTop: 20
-
-
     },
 
 });

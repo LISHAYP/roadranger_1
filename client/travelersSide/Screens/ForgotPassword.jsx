@@ -1,17 +1,13 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import React from 'react'
-import RoadRanger from '../assets/RoadRanger.png';
 import Icon from "react-native-vector-icons/Ionicons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import GradientBackground from '../Components/GradientBackground';
-import { Dropdown } from 'react-native-element-dropdown';
-import { useRef } from 'react';
+
 import { cgroup90 } from '../cgroup90';
 
 export default function ForgotPassword() {
-
-
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
 
@@ -35,7 +31,6 @@ export default function ForgotPassword() {
                 navigation.goBack();
             })
             .catch(error => {
-                console.log(error);
                 Alert.alert("Email does not exist");
             });
 
@@ -56,13 +51,10 @@ export default function ForgotPassword() {
 
 
                 <TouchableOpacity style={styles.btnLogIn} onPress={handleSendPress}>
-
                     <Text style={styles.btnText}>
                         Reset Password
                     </Text>
                 </TouchableOpacity>
-
-
             </View >
         </ GradientBackground>
 
@@ -141,7 +133,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
         width: "90%",
-
     },
     input1: {
         flexDirection: 'row',

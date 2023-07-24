@@ -4,21 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
-import Navbar from '../Components/Navbar';
-
 
 export default function Events(props) {
-  // const [events, setEvents] = useState([]);
   const events = props.route.params.data;
   const stakeholder = props.route.params.stakeholder;
   const [eventAddresses, setEventAddresses] = useState([]);
   const navigation = useNavigation();
 
-//  Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
-
 Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
 
-  console.log("kkkkkkkkkkk", events);
   useEffect(() => {
     Promise.all(events.map(event => {
       const lat = event.Latitude;
@@ -36,13 +30,11 @@ Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
     });
   }, [events]);
 
-  console.log("jjjjjjjjjjjjjjjjjjjj", eventAddresses);
   
   return (
     <GradientBackground>
       <BackButton text="Events" />
       <ScrollView>
-
         <View style={styles.container}>
           <View>
             {eventAddresses !== undefined && eventAddresses.length > 0 ? (
@@ -66,7 +58,6 @@ Geocoder.init('AIzaSyAxlmrZ0_Ex8L2b_DYtY7e1zWOFmkfZKNs');
             )}
           </View>
         </View>
-
       </ScrollView>
     </GradientBackground>
   );
@@ -92,7 +83,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     marginRight: 10,
-
   },
   details: {
     width: '90%',
@@ -107,8 +97,4 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     resizeMode: 'cover'
   }
-
-
-
-
 });

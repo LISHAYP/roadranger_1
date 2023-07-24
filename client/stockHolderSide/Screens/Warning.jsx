@@ -1,11 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, Switch } from 'react-native';
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
-import RoadRanger from '../assets/RoadRanger.png';
-import { Dropdown } from 'react-native-element-dropdown';
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {useNavigation } from "@react-navigation/native";
 import GradientBackground from '../Components/GradientBackground';
 import Geocoder from 'react-native-geocoding';
 import BackButton from '../Components/BackButton';
@@ -15,10 +10,8 @@ import Navbar from '../Components/Navbar';
 export default function Warning(props) {
     const navigation = useNavigation();
     const [searchKeyword, setSearchKeyword] = useState('');
-
     const [events, setEvents] = useState([]);
     const stakeholder = props.route.params.stakeholder;
-    console.log("--------------", stakeholder)
 
     useEffect(() => {
         fetch(`${cgroup90}/api/NewEvent`, {
@@ -58,8 +51,7 @@ export default function Warning(props) {
                             navigation.navigate("New event", {
                                 stakeholder: stakeholder,
                             });
-                        }}
-                    >
+                        }}>
                         <Text style={styles.btnText}>
                             Add Warning
                         </Text>
@@ -93,7 +85,6 @@ export default function Warning(props) {
                         )}
                     </View>
                 </View>
-
             </ScrollView>
         </GradientBackground>
     );
@@ -116,7 +107,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%',
-
     },
     detailsContainer: {
         flex: 1,
@@ -155,19 +145,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4.65,
         elevation: 8,
     },
-
     btnText: {
         color: '#F8F8FF',
         alignSelf: 'center',
         fontSize: 20,
-
     },
     searchInput: {
         fontSize: 35,
         marginBottom: 20
     }
-
-
-
-
 });
