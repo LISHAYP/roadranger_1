@@ -25,12 +25,14 @@ namespace data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<pushnotifications> pushnotifications { get; set; }
         public virtual DbSet<stakeholders> stakeholders { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tblApi> tblApi { get; set; }
         public virtual DbSet<tblArea> tblArea { get; set; }
         public virtual DbSet<tblAskForHelp> tblAskForHelp { get; set; }
         public virtual DbSet<tblComments> tblComments { get; set; }
+        public virtual DbSet<tblContactUs> tblContactUs { get; set; }
         public virtual DbSet<tblConversationTravelers> tblConversationTravelers { get; set; }
         public virtual DbSet<tblConversationTravelerStack> tblConversationTravelerStack { get; set; }
         public virtual DbSet<tblCountries> tblCountries { get; set; }

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using WebApplication1.DTO;
 using NLog;
+using System.Web.Http.Routing.Constraints;
 
 namespace WebApplication1.Controllers
 {
@@ -22,7 +23,7 @@ namespace WebApplication1.Controllers
             return new string[] { "value1", "value2" };
         }
         // GET: api/locations
-        [HttpGet]
+        [HttpPost]
         [Route("api/locations")]
         public IHttpActionResult GetTravelerLocations([FromBody] LocationDto travelerId)
         {
@@ -45,6 +46,55 @@ namespace WebApplication1.Controllers
 
             return Ok(locationDtos);
         }
+
+        //bring back all the travelers and their last location
+
+        [HttpPost]
+        [Route("api/lastlocation")]
+        public IHttpActionResult GetLastTravelerLocations()
+        {
+            try
+            {
+                var lastLocations = db.tblLocations
+                              .GroupBy(l => l.travelerId)
+                              .Select(g => g.OrderByDescending(l => l.dateAndTime).FirstOrDefault());
+
+                var travelerDtos = lastLocations.Select(location => new
+                {
+                    traveler_id = location.travelerId,
+                    first_name = location.traveleres.first_name,
+                    last_name = location.traveleres.last_name,
+                    travler_email =location.traveleres.travler_email,
+                    phone = location.traveleres.phone,
+                    notifications = location.traveleres.notifications,
+                    insurence_company = location.traveleres.insurence_company,
+                    location = location.traveleres.location,
+                    save_location = location.traveleres.save_location,
+                    dateOfBirth = location.traveleres.dateOfBirth,
+                    gender = location.traveleres.gender,
+                    password = location.traveleres.password,
+                    chat = location.traveleres.chat,
+                    Picture = location.traveleres.picture,
+                    missing = location.traveleres.missing,
+                    last_location = new LocationDto
+                    {
+                        TravelerId = location.travelerId,
+                        DateAndTime = location.dateAndTime,
+                        Latitude = location.latitude,
+                        Longitude = location.longitude
+                    }
+                }).ToList();
+
+                return Ok(travelerDtos);
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex);
+                return BadRequest(ex.Message);
+            }
+          
+        }
+
 
 
         // GET: api/Location/5
@@ -124,6 +174,52 @@ namespace WebApplication1.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpPost]
+        [Route("api/post/checkdistance")]
+        public IHttpActionResult CheckDistance(EventDto eventNumber, double longtiude, double latitude)
+        {
+            try
+            {
+                // Retrieve the event coordinates based on the event number
+                var eventCoordinates = db.tblEvents
+                    .Where(e => e.eventNumber == eventNumber.eventNumber)
+                    .Select(e => new { e.longitude, e.latitude })
+                    .FirstOrDefault();
+
+                if (eventCoordinates == null)
+                {
+                    return NotFound("the event was not found"); // Event not found
+                }
+
+                // Calculate the distance between the event and traveler coordinates
+                double distance = CalculateDistance((double)eventCoordinates.latitude, (double)eventCoordinates.longitude, latitude, longtiude);
+
+                // Check if the distance is within 1 km
+                bool isWithinRange = distance <= 1.0;
+
+                return Ok(isWithinRange);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            // Implementation of the Haversine formula
+            const double R = 6371; // Earth radius in kilometers
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a =
+                Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var distance = R * c;
+            return distance;
+        }
 
         // POST: api/Location
         public void Post([FromBody] string value)

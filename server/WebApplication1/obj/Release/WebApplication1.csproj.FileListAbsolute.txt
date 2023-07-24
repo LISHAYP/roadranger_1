@@ -569,3 +569,5 @@ C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פ�
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\NLog.xml
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Collections.Immutable.xml
 C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\System.Text.Encodings.Web.xml
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\FluentScheduler.dll
+C:\Users\USER\OneDrive\שולחן העבודה\מנהל עסקים\שנה ג\פרויקט גמר מערכות מידע\git_project\roadranger_1\server\WebApplication1\bin\FluentScheduler.xml

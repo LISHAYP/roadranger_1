@@ -42,6 +42,7 @@ namespace data
         public string gender { get; set; }
         public string picture { get; set; }
         public string token { get; set; }
+        public bool missing { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblAskForHelp> tblAskForHelp { get; set; }

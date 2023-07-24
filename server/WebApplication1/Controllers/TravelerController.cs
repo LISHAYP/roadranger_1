@@ -56,6 +56,7 @@ namespace WebApplication1.Controllers
                     chat = traveler.chat,
                     Picture = traveler.picture,
                     token=traveler.token,
+                    missing=traveler.missing,
                 };
 
                 travelerDtos.Add(travelerDto);
@@ -93,7 +94,8 @@ namespace WebApplication1.Controllers
                     save_location = value.save_location,
                     password = value.password,
                     chat = value.chat,
-                    picture = value.picture
+                    picture = value.picture,
+                    missing=value.missing,
                 };
 
                 db.traveleres.Add(newTraveler);
@@ -113,32 +115,37 @@ namespace WebApplication1.Controllers
         [Route("api/post/login")]
         public IHttpActionResult Post([FromBody] TravelerDto value)
         {
-            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email == value.travler_email);
+            var email = value.travler_email.ToLower(); // Convert email to lowercase
+
+            var existingUser = db.traveleres.FirstOrDefault(x => x.travler_email.ToLower() == email);
             if (existingUser == null)
             {
-                logger.Info("login faild! email does not exist in the system");
-                return BadRequest("login faild! email does not exist in the system, please register first!");
+                logger.Info("login failed! Email does not exist in the system");
+                return BadRequest("login failed! Email does not exist in the system, please register first!");
             }
-            var users = db.traveleres.Where(x => x.travler_email == value.travler_email && x.password == value.password).Select(x => new TravelerDto
-            {
-                traveler_id = x.traveler_id,
-                travler_email = x.travler_email,
-                password = x.password,
-                first_name = x.first_name,
-                last_name = x.last_name,
-                phone = x.phone,
-                dateOfBirth = x.dateOfBirth,
-                gender = x.gender,
-                insurence_company = x.insurence_company,
-                notifications = x.notifications,
-                location = x.location,
-                save_location = x.save_location,
-                chat = x.chat,
-                Picture = x.picture,
-                token=x.token
 
-            })
-        .ToList();
+            var users = db.traveleres
+                .Where(x => x.travler_email.ToLower() == email && x.password == value.password)
+                .Select(x => new TravelerDto
+                {
+                    traveler_id = x.traveler_id,
+                    travler_email = x.travler_email,
+                    password = x.password,
+                    first_name = x.first_name,
+                    last_name = x.last_name,
+                    phone = x.phone,
+                    dateOfBirth = x.dateOfBirth,
+                    gender = x.gender,
+                    insurence_company = x.insurence_company,
+                    notifications = x.notifications,
+                    location = x.location,
+                    save_location = x.save_location,
+                    chat = x.chat,
+                    Picture = x.picture,
+                    token = x.token
+                })
+                .ToList();
+
             try
             {
                 if (users.Count == 1)
@@ -147,16 +154,17 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    logger.Error("wrong email/password in the login");
-                    return BadRequest("wrong email or password");
+                    logger.Error("Wrong email/password in the login");
+                    return BadRequest("Wrong email or password");
                 }
             }
             catch
             {
-                logger.Error($"login failed");
-                return BadRequest("bad");
+                logger.Error("Login failed");
+                return BadRequest("Bad");
             }
         }
+
         // GET: api/Traveler/5
         public string Get(int id)
         {
@@ -199,12 +207,130 @@ namespace WebApplication1.Controllers
                 traveler.password = value.password;
                 traveler.chat = value.chat;
                 traveler.picture = value.Picture;
+                
 
                 db.Entry(traveler).State = EntityState.Modified;
                 db.SaveChanges();
                 logger.Info($"traveler with email: {traveler.travler_email} was updated succesfully!");
 
                 return Ok("Traveler updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/post/missingtrue")]
+        public IHttpActionResult UpdateMissingTrue([FromBody] TravelerDto travelerDto)
+        {
+            try
+            {
+                var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerDto.traveler_id);
+
+                if (traveler == null)
+                {
+                    logger.Error($"Traveler with ID: {travelerDto.traveler_id} was not found");
+                    return NotFound();
+                }
+
+                // Update the missing field to true
+                traveler.missing = true;
+
+                db.SaveChanges();
+
+                logger.Info($"Traveler with ID: {travelerDto.traveler_id} was updated successfully!");
+
+                // Return the updated traveler details
+                var updatedTravelerDto = new TravelerDto
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat,
+                    Picture = traveler.picture,
+                    token = traveler.token,
+                    missing = traveler.missing
+                };
+
+                return Ok(updatedTravelerDto);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/post/missingfalse")]
+        public IHttpActionResult UpdateMissingFalse([FromBody] TravelerDto travelerDto)
+        {
+            try
+            {
+                var traveler = db.traveleres.FirstOrDefault(x => x.traveler_id == travelerDto.traveler_id);
+
+                if (traveler == null)
+                {
+                    logger.Error($"Traveler with ID: {travelerDto.traveler_id} was not found");
+                    return NotFound();
+                }
+
+                // Retrieve the events from the database that match the conditions
+                var events = db.tblEvents.Where(e => e.event_status == true && e.serialTypeNumber == 1003 && e.travelerId == travelerDto.traveler_id);
+
+                // If no matching events are found, return a bad request
+                if (!events.Any())
+                {
+                    return BadRequest("No matching events found.");
+                }
+
+                foreach (var existingEvent in events)
+                {
+                    // Update the event status to false
+                    existingEvent.event_status = false;
+                }
+
+                // Update the missing field to false
+                traveler.missing = false;
+
+                db.SaveChanges();
+
+                logger.Info($"Traveler with ID: {travelerDto.traveler_id} was updated successfully!");
+
+                // Return the updated traveler details
+                var updatedTravelerDto = new TravelerDto
+                {
+                    traveler_id = traveler.traveler_id,
+                    first_name = traveler.first_name,
+                    last_name = traveler.last_name,
+                    travler_email = traveler.travler_email,
+                    phone = traveler.phone,
+                    notifications = traveler.notifications,
+                    insurence_company = traveler.insurence_company,
+                    location = traveler.location,
+                    save_location = traveler.save_location,
+                    dateOfBirth = traveler.dateOfBirth,
+                    gender = traveler.gender,
+                    password = traveler.password,
+                    chat = traveler.chat,
+                    Picture = traveler.picture,
+                    token = traveler.token,
+                    missing = traveler.missing
+                };
+
+                return Ok(updatedTravelerDto);
             }
             catch (Exception ex)
             {
@@ -264,8 +390,8 @@ namespace WebApplication1.Controllers
                     logger.Error($"traveler with email : {value.travler_email} was not found");
                     return NotFound();
                 }
-
-
+                
+                
                 // Generate a new password and update the user's record in the database
                 var newPassword = GeneratePassword();
                 user.password = newPassword;
@@ -273,13 +399,13 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 logger.Info($"new password was saved in the database to traveler id number: {value.traveler_id}");
 
-                var mailapi = db.tblApi.Select(x => x.api).SingleOrDefault();
+                var mailapi = db.tblApi.FirstOrDefault(x => x.name == "mail")?.api;
                 var sendGridClient = new SendGridClient(mailapi);
                 var from = new EmailAddress("roadranger1@walla.com", "Road Ranger Admin");
-                var subject = "New Password";
+                var subject = "New Password for Road Ranger app";
                 var to = new EmailAddress(user.travler_email, user.first_name);
-                var plainContent = "Dear " + user.first_name;
-                var htmlContent = $"Your new password is: {newPassword}";
+                var plainContent = "Dear" + user.first_name;
+                var htmlContent = $"Dear {user.first_name}, \n Your new password is: {newPassword}";
                 var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
                 await sendGridClient.SendEmailAsync(mailMessage);
 
@@ -293,6 +419,27 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+
+        //// POST: api/NotifyTravelers
+        //[HttpPost]
+        //[Route("api/NotifyTravelers")]
+        //public IHttpActionResult NotifyTravelers([FromBody] LocationDto locationDto)
+        //{
+        //    try
+        //    {
+        //        var timerServices = new TimerServices();
+        //        var travelerIdsWithin1km = timerServices.GetTravelerIdsWithin1km(locationDto.Latitude, locationDto.Longitude);
+        //        timerServices.SendPushToTravelersWithin1Km(travelerIdsWithin1km);
+
+        //        return Ok("Push notification sent to travelers within 1 km.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
+
 
         [HttpPost]
         [Route("api/traveler/details")]
@@ -340,6 +487,191 @@ namespace WebApplication1.Controllers
             }
         }
 
+        // POST: api/post/GetMissingTravelerDetails
+        [HttpPost]
+        [Route("api/post/GetMissingTravelerDetails")]
+        public IHttpActionResult GetMissingTravelerDetails([FromBody]TravelerDto travelerid)
+        {
+            try
+            {
+                // Retrieve the missing travelers associated with events based on the specified conditions
+                var missingTravelers = db.traveleres.Where(t => t.missing  == true && t.traveler_id==travelerid.traveler_id).ToList();
+
+                // If no missing travelers are found, return a response indicating there are no missing travelers
+                if (missingTravelers.Count == 0)
+                {
+                    return Ok("There are no missing travelers associated with events");
+                }
+
+                var missingDetailsList = new List<object>();
+
+                foreach (var traveler in missingTravelers)
+                {
+                    // Retrieve the relevant event for the missing traveler
+                    var missingEvent = db.tblEvents.FirstOrDefault(e =>
+                        e.travelerId == travelerid.traveler_id && e.stackholderId != null && e.serialTypeNumber == 1003 && e.event_status==true);
+
+                    // If the associated event is found, add the traveler and event details to the list
+                    if (missingEvent != null)
+                    {
+                        var travelerDto = new TravelerDto
+                        {
+                            traveler_id = traveler.traveler_id,
+                            first_name = traveler.first_name,
+                            last_name = traveler.last_name,
+                            travler_email = traveler.travler_email,
+                            phone = traveler.phone,
+                            notifications = traveler.notifications,
+                            insurence_company = traveler.insurence_company,
+                            location = traveler.location,
+                            save_location = traveler.save_location,
+                            dateOfBirth = traveler.dateOfBirth,
+                            gender = traveler.gender,
+                            password = traveler.password,
+                            chat = traveler.chat,
+                            Picture = traveler.picture,
+                            token = traveler.token,
+                            missing = traveler.missing
+                        };
+
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = missingEvent.eventNumber,
+                            Details = missingEvent.details,
+                            EventDate = missingEvent.event_date,
+                            EventTime = missingEvent.event_time,
+                            Latitude = missingEvent.latitude,
+                            Longitude = missingEvent.longitude,
+                            EventStatus = missingEvent.event_status,
+                            Picture = missingEvent.picture,
+                            TravelerId = missingEvent.travelerId,
+                            StackholderId = missingEvent.stackholderId,
+                            SerialTypeNumber = missingEvent.serialTypeNumber,
+                            CountryNumber = missingEvent.country_number,
+                            AreaNumber = missingEvent.area_number,
+                            labels = missingEvent.labels,
+                            is_related = missingEvent.is_related,
+                            approved = missingEvent.approved,
+                            not_approved = missingEvent.not_approved
+                        };
+
+                        var missingDetails = new
+                        {
+                            Traveler = travelerDto,
+                            Event = eventDto
+                        };
+
+                        missingDetailsList.Add(missingDetails);
+                    }
+                }
+
+                // If no missing events were found, return a response indicating there are no missing travelers associated with events
+                if (missingDetailsList.Count == 0)
+                {
+                    return Ok("There are no missing travelers associated with events");
+                }
+
+                return Ok(missingDetailsList);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // POST: api/post/AllMissingTravelers
+        [HttpPost]
+        [Route("api/post/AllMissingTravelers")]
+        public IHttpActionResult AllMissingTravelers()
+        {
+            try
+            {
+                // Retrieve all missing travelers
+                var missingTravelers = db.traveleres.Where(t => t.missing == true).ToList();
+
+                // If no missing travelers are found, return a response indicating there are no missing travelers
+                if (missingTravelers.Count == 0)
+                {
+                    return Ok("There are no missing travelers");
+                }
+
+                var missingDetailsList = new List<object>();
+
+                foreach (var traveler in missingTravelers)
+                {
+                    // Retrieve the associated event for the missing traveler
+                    var missingEvent = db.tblEvents.FirstOrDefault(e =>
+                        e.travelerId == traveler.traveler_id && e.stackholderId != null && e.serialTypeNumber == 1003 && e.event_status == true);
+
+                    // If the associated event is found, add the traveler and event details to the list
+                    if (missingEvent != null)
+                    {
+                        var travelerDto = new TravelerDto
+                        {
+                            traveler_id = traveler.traveler_id,
+                            first_name = traveler.first_name,
+                            last_name = traveler.last_name,
+                            travler_email = traveler.travler_email,
+                            phone = traveler.phone,
+                            notifications = traveler.notifications,
+                            insurence_company = traveler.insurence_company,
+                            location = traveler.location,
+                            save_location = traveler.save_location,
+                            dateOfBirth = traveler.dateOfBirth,
+                            gender = traveler.gender,
+                            password = traveler.password,
+                            chat = traveler.chat,
+                            Picture = traveler.picture,
+                            token = traveler.token,
+                            missing = traveler.missing
+                        };
+
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = missingEvent.eventNumber,
+                            Details = missingEvent.details,
+                            EventDate = missingEvent.event_date,
+                            EventTime = missingEvent.event_time,
+                            Latitude = missingEvent.latitude,
+                            Longitude = missingEvent.longitude,
+                            EventStatus = missingEvent.event_status,
+                            Picture = missingEvent.picture,
+                            TravelerId = missingEvent.travelerId,
+                            StackholderId = missingEvent.stackholderId,
+                            SerialTypeNumber = missingEvent.serialTypeNumber,
+                            CountryNumber = missingEvent.country_number,
+                            AreaNumber = missingEvent.area_number,
+                            labels = missingEvent.labels,
+                            is_related = missingEvent.is_related,
+                            approved = missingEvent.approved,
+                            not_approved = missingEvent.not_approved
+                        };
+
+                        var missingDetails = new
+                        {
+                            Traveler = travelerDto,
+                            Event = eventDto
+                        };
+
+                        missingDetailsList.Add(missingDetails);
+                    }
+                }
+
+                // If no missing events were found, return a response indicating there are no missing travelers with events
+                if (missingDetailsList.Count == 0)
+                {
+                    return Ok("There are no missing travelers with events");
+                }
+
+                return Ok(missingDetailsList);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
 
         private string GeneratePassword()
         {

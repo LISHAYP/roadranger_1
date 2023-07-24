@@ -4,20 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e9a944bab4e14f6686e11c966896113b" Name="Diagram1">
-        <EntityTypeShape EntityType="igroup190_test1Model.stakeholders" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblApi" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblComments" Width="1.5" PointX="8.25" PointY="20.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelers" Width="1.5" PointX="5.25" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="5.25" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblCountries" Width="1.5" PointX="3.75" PointY="13.625" IsExpanded="true" />
+      <Diagram DiagramId="bcefdf709ae3489c91406cdbb50929ca" Name="Diagram1">
+        <EntityTypeShape EntityType="igroup190_test1Model.pushnotifications" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.stakeholders" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblApi" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblArea" Width="1.5" PointX="6" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblAskForHelp" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblComments" Width="1.5" PointX="8.25" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblContactUs" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelers" Width="1.5" PointX="5.25" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblConversationTravelerStack" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblCountries" Width="1.5" PointX="3.75" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="igroup190_test1Model.tblEvents" Width="1.5" PointX="8.25" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblLocations" Width="1.5" PointX="5.25" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.tblType" Width="1.5" PointX="6" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="igroup190_test1Model.traveleres" Width="1.5" PointX="3" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblLocations" Width="1.5" PointX="5.25" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.tblType" Width="1.5" PointX="6" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="igroup190_test1Model.traveleres" Width="1.5" PointX="3" PointY="29.125" IsExpanded="true" />
         <AssociationConnector Association="igroup190_test1Model.comment_stackholder" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.event_stackholder" ManuallyRouted="false" />
         <AssociationConnector Association="igroup190_test1Model.FK_tblAskForHelp_stakeholders" ManuallyRouted="false" />

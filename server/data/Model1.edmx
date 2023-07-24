@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="igroup190_test1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="pushnotifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eventid" Type="int" Nullable="false" />
+          <Property Name="travelerid" Type="int" Nullable="false" />
+          <Property Name="sent" Type="bit" Nullable="false" />
+          <Property Name="token" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -39,6 +49,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="api" Type="varchar" MaxLength="255" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblArea">
           <Key>
@@ -63,6 +74,8 @@
           <Property Name="country_number" Type="int" Nullable="false" />
           <Property Name="area_number" Type="int" Nullable="false" />
           <Property Name="stakeholder_id" Type="int" />
+          <Property Name="event_date" Type="date" Nullable="false" />
+          <Property Name="event_time" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="tblComments">
           <Key>
@@ -75,6 +88,20 @@
           <Property Name="comment_time" Type="time" Precision="7" Nullable="false" />
           <Property Name="travelerId" Type="int" />
           <Property Name="stackholderId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblContactUs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone_number" Type="int" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="request_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="details" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="tblConversationTravelers">
           <Key>
@@ -121,6 +148,10 @@
           <Property Name="serialTypeNumber" Type="int" Nullable="false" />
           <Property Name="country_number" Type="int" Nullable="false" />
           <Property Name="area_number" Type="int" Nullable="false" />
+          <Property Name="labels" Type="varchar" MaxLength="500" />
+          <Property Name="is_related" Type="int" />
+          <Property Name="approved" Type="int" />
+          <Property Name="not_approved" Type="int" />
         </EntityType>
         <EntityType Name="tblinsuredBy">
           <Key>
@@ -167,6 +198,7 @@
           <Property Name="gender" Type="varchar" MaxLength="50" />
           <Property Name="picture" Type="varchar" MaxLength="500" />
           <Property Name="token" Type="varchar" MaxLength="250" />
+          <Property Name="missing" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="comment_event">
           <End Role="tblEvents" Type="Self.tblEvents" Multiplicity="1" />
@@ -413,12 +445,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="igroup190_test1ModelStoreContainer">
+          <EntitySet Name="pushnotifications" EntityType="Self.pushnotifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblApi" EntityType="Self.tblApi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblComments" EntityType="Self.tblComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblContactUs" EntityType="Self.tblContactUs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTravelers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblConversationTravelerStack" EntityType="Self.tblConversationTravelerStack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCountries" EntityType="Self.tblCountries" Schema="dbo" store:Type="Tables" />
@@ -513,6 +547,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="igroup190_test1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="pushnotifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eventid" Type="Int32" Nullable="false" />
+          <Property Name="travelerid" Type="Int32" Nullable="false" />
+          <Property Name="sent" Type="Boolean" Nullable="false" />
+          <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="stakeholders">
           <Key>
             <PropertyRef Name="stakeholder_id" />
@@ -552,6 +596,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="api" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblArea">
           <Key>
@@ -579,6 +624,8 @@
           <Property Name="country_number" Type="Int32" Nullable="false" />
           <Property Name="area_number" Type="Int32" Nullable="false" />
           <Property Name="stakeholder_id" Type="Int32" />
+          <Property Name="event_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="event_time" Type="Time" Nullable="false" Precision="7" />
           <NavigationProperty Name="stakeholders" Relationship="Self.FK_tblAskForHelp_stakeholders" FromRole="tblAskForHelp" ToRole="stakeholders" />
           <NavigationProperty Name="tblArea" Relationship="Self.country_area_AFH" FromRole="tblAskForHelp" ToRole="tblArea" />
           <NavigationProperty Name="traveleres" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="tblAskForHelp" ToRole="traveleres" />
@@ -598,6 +645,20 @@
           <NavigationProperty Name="stakeholders" Relationship="Self.comment_stackholder" FromRole="tblComments" ToRole="stakeholders" />
           <NavigationProperty Name="tblEvents" Relationship="Self.comment_event" FromRole="tblComments" ToRole="tblEvents" />
           <NavigationProperty Name="traveleres" Relationship="Self.comment_traveler" FromRole="tblComments" ToRole="traveleres" />
+        </EntityType>
+        <EntityType Name="tblContactUs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone_number" Type="Int32" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="request_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="tblConversationTravelers">
           <Key>
@@ -649,6 +710,10 @@
           <Property Name="serialTypeNumber" Type="Int32" Nullable="false" />
           <Property Name="country_number" Type="Int32" Nullable="false" />
           <Property Name="area_number" Type="Int32" Nullable="false" />
+          <Property Name="labels" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="is_related" Type="Int32" />
+          <Property Name="approved" Type="Int32" />
+          <Property Name="not_approved" Type="Int32" />
           <NavigationProperty Name="stakeholders" Relationship="Self.event_stackholder" FromRole="tblEvents" ToRole="stakeholders" />
           <NavigationProperty Name="tblArea" Relationship="Self.country_area_event" FromRole="tblEvents" ToRole="tblArea" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_event" FromRole="tblEvents" ToRole="tblComments" />
@@ -697,6 +762,7 @@
           <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="missing" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblAskForHelp" Relationship="Self.FK_tblAskForHelp_traveleres" FromRole="traveleres" ToRole="tblAskForHelp" />
           <NavigationProperty Name="tblComments" Relationship="Self.comment_traveler" FromRole="traveleres" ToRole="tblComments" />
           <NavigationProperty Name="tblConversationTravelers" Relationship="Self.travelers_traveler1" FromRole="traveleres" ToRole="tblConversationTravelers" />
@@ -931,12 +997,14 @@
           <End Role="traveleres" Type="Self.traveleres" Multiplicity="*" />
         </Association>
         <EntityContainer Name="igroup190_test1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="pushnotifications" EntityType="Self.pushnotifications" />
           <EntitySet Name="stakeholders" EntityType="Self.stakeholders" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tblApi" EntityType="Self.tblApi" />
           <EntitySet Name="tblArea" EntityType="Self.tblArea" />
           <EntitySet Name="tblAskForHelp" EntityType="Self.tblAskForHelp" />
           <EntitySet Name="tblComments" EntityType="Self.tblComments" />
+          <EntitySet Name="tblContactUs" EntityType="Self.tblContactUs" />
           <EntitySet Name="tblConversationTravelers" EntityType="Self.tblConversationTravelers" />
           <EntitySet Name="tblConversationTravelerStack" EntityType="Self.tblConversationTravelerStack" />
           <EntitySet Name="tblCountries" EntityType="Self.tblCountries" />
@@ -1027,6 +1095,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
+          <EntitySetMapping Name="pushnotifications">
+            <EntityTypeMapping TypeName="igroup190_test1Model.pushnotifications">
+              <MappingFragment StoreEntitySet="pushnotifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="eventid" ColumnName="eventid" />
+                <ScalarProperty Name="travelerid" ColumnName="travelerid" />
+                <ScalarProperty Name="sent" ColumnName="sent" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="stakeholders">
             <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
               <MappingFragment StoreEntitySet="stakeholders">
@@ -1062,6 +1141,7 @@
               <MappingFragment StoreEntitySet="tblApi">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="api" ColumnName="api" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1087,6 +1167,8 @@
                 <ScalarProperty Name="country_number" ColumnName="country_number" />
                 <ScalarProperty Name="area_number" ColumnName="area_number" />
                 <ScalarProperty Name="stakeholder_id" ColumnName="stakeholder_id" />
+                <ScalarProperty Name="event_date" ColumnName="event_date" />
+                <ScalarProperty Name="event_time" ColumnName="event_time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1100,6 +1182,21 @@
                 <ScalarProperty Name="comment_time" ColumnName="comment_time" />
                 <ScalarProperty Name="travelerId" ColumnName="travelerId" />
                 <ScalarProperty Name="stackholderId" ColumnName="stackholderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblContactUs">
+            <EntityTypeMapping TypeName="igroup190_test1Model.tblContactUs">
+              <MappingFragment StoreEntitySet="tblContactUs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="request_type" ColumnName="request_type" />
+                <ScalarProperty Name="details" ColumnName="details" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1150,6 +1247,10 @@
                 <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
                 <ScalarProperty Name="country_number" ColumnName="country_number" />
                 <ScalarProperty Name="area_number" ColumnName="area_number" />
+                <ScalarProperty Name="labels" ColumnName="labels" />
+                <ScalarProperty Name="is_related" ColumnName="is_related" />
+                <ScalarProperty Name="approved" ColumnName="approved" />
+                <ScalarProperty Name="not_approved" ColumnName="not_approved" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1190,6 +1291,7 @@
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="missing" ColumnName="missing" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,5 +20,10 @@ namespace WebApplication1.DTO
         public int SerialTypeNumber { get; set; }
         public int CountryNumber { get; set; }
         public int AreaNumber { get; set; }
+        public string labels { get; set; }
+        public Nullable<int> is_related { get; set; }
+        public Nullable<int> approved { get; set; }
+        public Nullable<int> not_approved { get; set; }
+
     }
 }

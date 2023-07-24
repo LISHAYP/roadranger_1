@@ -47,12 +47,42 @@ namespace WebApplication1.Controllers
                     StackholderId = newevent.stackholderId,
                     SerialTypeNumber = newevent.serialTypeNumber,
                     CountryNumber = newevent.country_number,
-                    AreaNumber = newevent.area_number
+                    AreaNumber = newevent.area_number,
+                    labels = newevent.labels,
+                    is_related = newevent.is_related
                 };
                 eventsDto.Add(eventDto);
             }
             return eventsDto;
         }
+
+        // GET: api/NewEvent/{eventNumber}
+        public EventDto Getevent(int eventNumber)
+        {
+            tblEvents newevent = db.tblEvents.FirstOrDefault(e => e.eventNumber == eventNumber);
+
+            EventDto eventDto = new EventDto
+            {
+                eventNumber = newevent.eventNumber,
+                Details = newevent.details,
+                EventDate = newevent.event_date,
+                EventTime = newevent.event_time,
+                Latitude = newevent.latitude,
+                Longitude = newevent.longitude,
+                EventStatus = newevent.event_status,
+                Picture = newevent.picture,
+                TravelerId = newevent.travelerId,
+                StackholderId = newevent.stackholderId,
+                SerialTypeNumber = newevent.serialTypeNumber,
+                CountryNumber = newevent.country_number,
+                AreaNumber = newevent.area_number,
+                labels = newevent.labels,
+                is_related = newevent.is_related
+            };
+
+            return eventDto;
+        }
+
 
         // GET: api/NewEvent?travelerId={travelerId}
         public IEnumerable<EventDto> Get(int travelerId)
@@ -92,7 +122,9 @@ namespace WebApplication1.Controllers
                         StackholderId = e.Event.stackholderId,
                         SerialTypeNumber = e.Event.serialTypeNumber,
                         CountryNumber = e.Event.country_number,
-                        AreaNumber = e.Event.area_number
+                        AreaNumber = e.Event.area_number,
+                        labels = e.Event.labels,
+                        is_related = (int)e.Event.is_related
                     })
                     .ToList();
 
@@ -128,7 +160,11 @@ namespace WebApplication1.Controllers
                     stackholderId = value.stackholderId,
                     serialTypeNumber = value.serialTypeNumber,
                     country_number = value.country_number,
-                    area_number = value.area_number
+                    area_number = value.area_number,
+                    labels = value.labels,
+                    is_related = value.is_related,
+                    approved = value.approved = 0,
+                    not_approved = value.not_approved = 0,
 
                 };
 
@@ -146,6 +182,15 @@ namespace WebApplication1.Controllers
                     {
                         userName = traveler.first_name + " " + traveler.last_name;
                         userPicture = traveler.picture;
+
+                        // Get the event details
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = newEvent.eventNumber,
+                            Latitude = newEvent.latitude,
+                            Longitude = newEvent.longitude
+                        };
+
                     }
                 }
                 else if (newEvent.stackholderId.HasValue)
@@ -155,8 +200,51 @@ namespace WebApplication1.Controllers
                     {
                         userName = stakeholder.full_name;
                         userPicture = stakeholder.picture;
+
+                        // Get the event details
+                        var eventDto = new EventDto
+                        {
+                            eventNumber = newEvent.eventNumber,
+                            Latitude = newEvent.latitude,
+                            Longitude = newEvent.longitude
+                        };
+
                     }
                 }
+                // Check if the serialTypeNumber is 1004 or 1003
+                if (newEvent.serialTypeNumber == 1004 || newEvent.serialTypeNumber == 1003)
+                {
+                    // Send push notifications to all travelers
+                    var timerServices = new TimerServices();
+                    var eventDto = new EventDto
+                    {
+                        eventNumber = newEvent.eventNumber,
+                        Latitude = newEvent.latitude,
+                        Longitude = newEvent.longitude,
+                        SerialTypeNumber = newEvent.serialTypeNumber,
+                        TravelerId = 0,
+                        StackholderId = newEvent.stackholderId,
+                    };
+                    timerServices.SendPushForEvent(eventDto);
+                }
+                else
+                {
+                    // Get the event details
+                    var eventDto = new EventDto
+                    {
+                        eventNumber = newEvent.eventNumber,
+                        Latitude = newEvent.latitude,
+                        Longitude = newEvent.longitude,
+                        SerialTypeNumber = newEvent.serialTypeNumber,
+                        TravelerId = newEvent.travelerId,
+                    };
+
+                    // Send push notifications to travelers within 3 kilometers of the event
+                    var timerServices = new TimerServices();
+                    var travelerIdsWithin3km = timerServices.GetTravelerIdsWithin3km(newEvent.latitude, newEvent.longitude);
+                    timerServices.SendPushToTravelersWithin3Km(travelerIdsWithin3km, eventDto.SerialTypeNumber);
+                }
+
 
                 // Construct the response message
                 var responseMessage = new
@@ -181,50 +269,32 @@ namespace WebApplication1.Controllers
         {
             try
             {
-
                 // Check if there are any existing events within 3 km with the same serialTypeNumber
                 var existingEvents = db.tblEvents
-                    .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber
-                                && e.event_status == true) // only consider events with status "true"
+                    .Where(e => e.serialTypeNumber == newEvent.serialTypeNumber && e.event_status == true)
                     .ToList()
                     .Where(e => CalculateDistance((double)e.latitude, (double)e.longitude, (double)newEvent.latitude, (double)newEvent.longitude) <= 3)
+                    .Select(e => new EventDto
+                    {
+                        eventNumber = e.eventNumber,
+                        Details = e.details,
+                        EventDate = e.event_date,
+                        EventTime = e.event_time,
+                        Latitude = e.latitude,
+                        Longitude = e.longitude,
+                        EventStatus = e.event_status,
+                        Picture = e.picture,
+                        TravelerId = e.travelerId,
+                        StackholderId = e.stackholderId,
+                        SerialTypeNumber = e.serialTypeNumber,
+                        CountryNumber = e.country_number,
+                        AreaNumber = e.area_number,
+                        labels = e.labels,
+                        is_related = e.is_related
+                    })
                     .ToList();
 
-                // Detach deleted entities from the context
-                var deletedEntities = existingEvents.Where(e => db.Entry(e).State == EntityState.Deleted).ToList();
-                if (deletedEntities.Any())
-                {
-                    foreach (var deletedEntity in deletedEntities)
-                    {
-                        db.Entry(deletedEntity).State = EntityState.Detached;
-                    }
-                }
-
-                if (existingEvents.Any())
-                {
-                    // Create a relation between the new event and any existing events within 3 km
-                    foreach (var existingEvent in existingEvents)
-                    {
-                        // Detach the existingEvent entity from the context
-                        db.Entry(existingEvent).State = EntityState.Detached;
-
-                        // Create the relationship between the newEvent and the existingEvent
-                        newEvent.tblEvents1 = existingEvent;
-                        existingEvent.tblEvents2 = newEvent;
-                    }
-                }
-
-                // Generate a new event number that doesn't conflict with any existing event numbers
-                int maxEventNumber = db.tblEvents.Max(e => e.eventNumber);
-                newEvent.eventNumber = maxEventNumber + 1;
-
-                // Add the new event to the database
-                db.tblEvents.Add(newEvent);
-
-                // Save changes to the database
-                db.SaveChanges();
-                return Ok();
-
+                return Ok(existingEvents);
             }
             catch (Exception ex)
             {
@@ -232,6 +302,48 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost]
+        [Route("api/post/relatedevents")]
+        public IHttpActionResult PostRelatedEvents([FromBody] tblEvents newEvent)
+        {
+            try
+            {
+                // Retrieve the events where the event number appears in the "is_related" column
+                var relatedEvents = db.tblEvents
+                    .Where(e => e.is_related == newEvent.eventNumber || e.eventNumber == newEvent.eventNumber)
+                    .OrderBy(e => e.event_date)
+                    .ThenBy(e => e.event_time)
+                    .Select(e => new EventDto
+                    {
+                        eventNumber = e.eventNumber,
+                        Details = e.details,
+                        EventDate = e.event_date,
+                        EventTime = e.event_time,
+                        Latitude = e.latitude,
+                        Longitude = e.longitude,
+                        EventStatus = e.event_status,
+                        Picture = e.picture,
+                        TravelerId = e.travelerId,
+                        StackholderId = e.stackholderId,
+                        SerialTypeNumber = e.serialTypeNumber,
+                        CountryNumber = e.country_number,
+                        AreaNumber = e.area_number,
+                        labels = e.labels,
+                        is_related = e.is_related
+                    })
+                    .ToList();
+
+                return Ok(relatedEvents);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+
+
+
 
         private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
@@ -247,6 +359,7 @@ namespace WebApplication1.Controllers
             var distance = R * c;
             return distance;
         }
+
 
         [HttpPost]
         [Route("api/events/comments")]
@@ -266,7 +379,8 @@ namespace WebApplication1.Controllers
                                                   StackholderId = c.stackholderId,
                                                   TravelerName = c.traveleres.first_name + c.traveleres.last_name,
                                                   StakeholderName = c.stakeholders.stakeholder_name,
-                                                  picture = c.traveleres.picture
+                                                  picture = c.traveleres.picture,
+                                                  shpicture = c.stakeholders.picture
 
                                               }).ToList();
 
@@ -308,6 +422,8 @@ namespace WebApplication1.Controllers
                 existingEvent.serialTypeNumber = updatedEvent.serialTypeNumber;
                 existingEvent.country_number = updatedEvent.country_number;
                 existingEvent.area_number = updatedEvent.area_number;
+                existingEvent.labels = updatedEvent.labels;
+                existingEvent.is_related = updatedEvent.is_related;
 
                 // Save the changes to the database
                 db.SaveChanges();
@@ -322,11 +438,160 @@ namespace WebApplication1.Controllers
             }
         }
 
+        // POST: api/LastEvent
+        [HttpPost]
+        [Route("api/post/lastevent")]
+        public IHttpActionResult GetLastEventId([FromBody] tblEvents travelerId)
+        {
+            try
+            {
+                tblEvents lastEvent = db.tblEvents
+                    .Where(e => e.travelerId == travelerId.travelerId)
+                    .OrderByDescending(e => e.event_date)
+                    .ThenByDescending(e => e.event_time)
+                    .FirstOrDefault();
+
+                int lastEventId = lastEvent != null ? lastEvent.eventNumber : 0;
+
+                // Construct the response message
+                var responseMessage = new
+                {
+                    lastEventId = lastEventId
+                };
+
+                return Ok(responseMessage);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+
+
         // PUT: api/NewEvent/5
         public void Put(int id, [FromBody] string value)
         {
 
         }
+
+        // PUT api/put/updateevent/{eventNumber}
+        [HttpPut]
+        [Route("api/put/updateevent/{eventNumber}")]
+        public IHttpActionResult PutUpdateEvent(int eventNumber, [FromBody] tblEvents isRelated)
+        {
+            try
+            {
+                // Retrieve the existing event from the database
+                tblEvents existingEvent = db.tblEvents.FirstOrDefault(x => x.eventNumber == eventNumber);
+
+                // If the existing event does not exist, return a bad request
+                if (existingEvent == null)
+                {
+                    return BadRequest("Event not found.");
+                }
+
+                // Update the existing event's "is_related" field with the new value
+                existingEvent.is_related = isRelated.is_related;
+
+                // Save the changes to the database
+                db.SaveChanges();
+                logger.Info($"Event number {eventNumber} was updated and saved to the database!");
+
+                return Ok("Event updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+        [HttpPut]
+        [Route("api/put/eventapproval/{eventNumber}")]
+        public IHttpActionResult UpdateEventApproval(int eventNumber, EventDto approvalDto)
+        {
+            try
+            {
+                // Retrieve the event based on the event number
+                var eventToUpdate = db.tblEvents.FirstOrDefault(e => e.eventNumber == eventNumber);
+
+                if (eventToUpdate == null)
+                {
+                    return NotFound(); // Event not found
+                }
+
+                // Validate the input values
+                if (approvalDto.approved != 0 && approvalDto.approved != 1)
+                {
+                    return BadRequest("Invalid value for 'approved'. Only 0 or 1 are allowed.");
+                }
+
+                if (approvalDto.not_approved != 0 && approvalDto.not_approved != 1)
+                {
+                    return BadRequest("Invalid value for 'not_approved'. Only 0 or 1 are allowed.");
+                }
+
+                if ((approvalDto.approved == 0 && approvalDto.not_approved == 0) ||
+                    (approvalDto.approved == 1 && approvalDto.not_approved == 1))
+                {
+                    return BadRequest("Invalid combination of values. 'approved' and 'not_approved' cannot have the same value.");
+                }
+
+                // Update the event approval status
+                eventToUpdate.approved += approvalDto.approved;
+                eventToUpdate.not_approved += approvalDto.not_approved;
+
+                // Update event status to false if not_approved equals 5
+                if (eventToUpdate.not_approved == 5)
+                {
+                    eventToUpdate.event_status = false;
+                }
+
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest();
+            }
+        }
+        //עדכון של סטטוס אירוע - לא למחוק את הקונטרולר
+        //[HttpPut]
+        //[Route("api/put/updateeventstatus")]
+        //public IHttpActionResult PutUpdateEventStatus(int travelerid)
+        //{
+        //    try
+        //    {
+        //        // Retrieve the events from the database that match the conditions
+        //        var events = db.tblEvents.Where(e => e.event_status == true && e.serialTypeNumber == 1003 && e.travelerId == travelerid);
+
+        //        // If no matching events are found, return a bad request
+        //        if (!events.Any())
+        //        {
+        //            return BadRequest("No matching events found.");
+        //        }             
+
+        //        foreach (var existingEvent in events)
+        //        {
+        //            // Update the event status to false
+        //            existingEvent.event_status = false;
+        //        }
+
+        //        // Save the changes to the database
+        //        db.SaveChanges();
+        //        logger.Info($"{events.Count()} events were updated and saved to the database!");
+
+        //        return Ok("Events updated successfully!");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.Error(ex.Message);
+        //        return BadRequest(ex.InnerException.Message);
+        //    }
+        //}
 
         // DELETE: api/NewEvent/5
         public void Delete(int id)
@@ -366,15 +631,26 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.InnerException.Message);
             }
         }
-
+     
         [HttpPost]
-        [Route("sendpushnotification")]        public string PostPN([FromBody] PushNotData pnd)        {
+        [Route("sendpushnotification")]
+        public string PostPN([FromBody] PushNotData pnd)
+        {
             // Create a request using a URL that can receive a post.   
             WebRequest request = WebRequest.Create("https://exp.host/--/api/v2/push/send");
             // Set the Method property of the request to POST.  
             request.Method = "POST";
             // Create POST data and convert it to a byte array.  
-            var objectToSend = new            {                to = pnd.to,                title = pnd.title,                body = pnd.body,            };            string postData = new JavaScriptSerializer().Serialize(objectToSend);            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            var objectToSend = new
+            {
+                to = pnd.to,
+                title = pnd.title,
+                body = pnd.body,
+            };
+
+            string postData = new JavaScriptSerializer().Serialize(objectToSend);
+
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             // Set the ContentType property of the WebRequest.  
             request.ContentType = "application/json";
             // Set the ContentLength property of the WebRequest.  
@@ -399,8 +675,63 @@ namespace WebApplication1.Controllers
             // Display the content.  
             //Console.WriteLine(responseFromServer);
             // Clean up the streams.  
-            reader.Close();            dataStream.Close();            response.Close();            return "success:) --- " + responseFromServer + ", " + returnStatus;        }
+            reader.Close();
+            dataStream.Close();
+            response.Close();
 
+            return "success:) --- " + responseFromServer + ", " + returnStatus;
+        }
+
+        [HttpPost]
+        [Route("api/mytask")]
+        public IHttpActionResult MyTaskAction([FromBody] EventDto eventDto)
+        {
+            try
+            {
+                // Instantiate MyTask class and pass the eventDto object to the constructor
+                MyTask myTask = new MyTask(eventDto);
+
+                // Call Execute method to trigger the SendPushForEvent method
+                myTask.Execute();
+
+                // Return a success response
+                return Ok("Task executed successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during execution
+                // Log the error, return an error response, etc.
+                return BadRequest("An error occurred: " + ex.Message);
+            }
+        }
+
+
+
+
+        //private static async Task<string> PostPN(PushNotData pushNotificationData)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        // Set the API endpoint URL
+        //        string apiUrl = "https://exp.host/--/api/v2/push/send";
+
+        //        // Serialize the push notification data to JSON
+        //        string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(pushNotificationData);
+
+        //        // Create the HTTP request content
+        //
+        //    HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+        //        // Send the POST request and get the response
+        //        HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+
+        //        // Read the response content as string
+        //        string responseContent = await response.Content.ReadAsStringAsync();
+
+        //        // Return the response content
+        //        return responseContent;
+        //    }
+        //}
     }
 
 }

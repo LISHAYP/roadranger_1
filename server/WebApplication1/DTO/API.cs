@@ -10,6 +10,7 @@ namespace WebApplication1.DTO
         public string name { get; set; }
 
         public string api { get; set; }
+
     }
 
 }

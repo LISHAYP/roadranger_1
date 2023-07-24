@@ -1,6 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="igroup190_test1ModelStoreContainer" CdmEntityContainer="igroup190_test1Entities">
+    <EntitySetMapping Name="pushnotifications">
+      <EntityTypeMapping TypeName="igroup190_test1Model.pushnotifications">
+        <MappingFragment StoreEntitySet="pushnotifications">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="eventid" ColumnName="eventid" />
+          <ScalarProperty Name="travelerid" ColumnName="travelerid" />
+          <ScalarProperty Name="sent" ColumnName="sent" />
+          <ScalarProperty Name="token" ColumnName="token" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="stakeholders">
       <EntityTypeMapping TypeName="igroup190_test1Model.stakeholders">
         <MappingFragment StoreEntitySet="stakeholders">
@@ -36,6 +47,7 @@
         <MappingFragment StoreEntitySet="tblApi">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="api" ColumnName="api" />
+          <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -61,6 +73,8 @@
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
           <ScalarProperty Name="stakeholder_id" ColumnName="stakeholder_id" />
+          <ScalarProperty Name="event_date" ColumnName="event_date" />
+          <ScalarProperty Name="event_time" ColumnName="event_time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -74,6 +88,21 @@
           <ScalarProperty Name="comment_time" ColumnName="comment_time" />
           <ScalarProperty Name="travelerId" ColumnName="travelerId" />
           <ScalarProperty Name="stackholderId" ColumnName="stackholderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblContactUs">
+      <EntityTypeMapping TypeName="igroup190_test1Model.tblContactUs">
+        <MappingFragment StoreEntitySet="tblContactUs">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="request_type" ColumnName="request_type" />
+          <ScalarProperty Name="details" ColumnName="details" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -124,6 +153,10 @@
           <ScalarProperty Name="serialTypeNumber" ColumnName="serialTypeNumber" />
           <ScalarProperty Name="country_number" ColumnName="country_number" />
           <ScalarProperty Name="area_number" ColumnName="area_number" />
+          <ScalarProperty Name="labels" ColumnName="labels" />
+          <ScalarProperty Name="is_related" ColumnName="is_related" />
+          <ScalarProperty Name="approved" ColumnName="approved" />
+          <ScalarProperty Name="not_approved" ColumnName="not_approved" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -164,6 +197,7 @@
           <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="picture" ColumnName="picture" />
           <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="missing" ColumnName="missing" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
